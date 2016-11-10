@@ -1,2 +1,11 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.travis\.yml$
+^inst/web$
+^docs$
+^_pkgdown\.yml$
+NEWS\.md
+^data-raw$
+README_files
+README_cache
+^README\.Rmd$
