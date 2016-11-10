@@ -17,7 +17,7 @@
 #' @param ... other arguments supplied to ggmap e.g. \code{zoom}.
 #' @import ggmap ggplot2 dplyr openair
 #'
-#' @return Does not return anything
+#' @return Returns the \code{ggmap} plot object that can be used for further manipulation.
 #' @export
 #'
 #' @examples
@@ -125,6 +125,8 @@ openairMap <- function(data, lat = "latitude", lon = "longitude",
 
 
   print(plt)
+
+  return(plt)
 
 
 }

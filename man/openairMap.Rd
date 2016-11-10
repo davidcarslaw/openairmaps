@@ -41,7 +41,7 @@ openairMap(data, lat = "latitude", lon = "longitude", type = "default",
 \item{...}{other arguments supplied to ggmap e.g. \code{zoom}.}
 }
 \value{
-Does not return anything
+Returns the \code{ggmap} plot object that can be used for further manipulation.
 }
 \description{
 Title
