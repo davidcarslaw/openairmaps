@@ -16,6 +16,7 @@
 #' @param fontface the type of font to be used with \code{annotate}.
 #' @param ... other arguments supplied to ggmap e.g. \code{zoom}.
 #' @import ggmap ggplot2 dplyr openair
+#' @importFrom stats reformulate
 #'
 #' @return Returns the \code{ggmap} plot object that can be used for further manipulation.
 #' @export
@@ -30,6 +31,8 @@ openairMap <- function(data, lat = "latitude", lon = "longitude",
                        col = "jet", range = c(1, 10),
                        annotate = NA,
                        fontface = "plain", ...) {
+
+  LAB <- NULL
 
   # change the column names to make function easier to use
   data <- rename_(data, "lon" = lon,
