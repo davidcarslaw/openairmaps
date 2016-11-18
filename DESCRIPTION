@@ -1,6 +1,6 @@
 Package: openairmaps
 Type: Package
-Title: Package to Plot Openair Outputs and Static and Leaflet Maps
+Title: Package to Plot Openair Outputs on Static and Leaflet Maps
 Version: 0.1.1
 Authors@R: c(person("David", "Carslaw", role = c("aut", "cre"), email =
     "david.carslaw@york.ac.uk"))
