@@ -10,6 +10,8 @@ Description: Package to support openair for plotting on various maps. The maps
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 3.2.0)
 Imports:
     openair,
     dplyr,
