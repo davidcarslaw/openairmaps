@@ -51,6 +51,8 @@ Bivariate polar plots on interactive leaflet maps
 }
 \examples{
 
-# to be added
+
+polarMap(polar_data, latitude = "latitude", longitude = "longitude",
+x = "ws", type = "site", provider = "CartoDB.DarkMatter")
 }
 
