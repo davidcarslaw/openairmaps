@@ -4,9 +4,10 @@
 \alias{polarMap}
 \title{Bivariate polar plots on interactive leaflet maps}
 \usage{
-polarMap(data, pollutant = "nox", latitude = "lat", longitude = "lon",
-  dir_polar = "~/dir_polar", provider = "OpenStreetMap", type = "default",
-  cols = "jet", fig.width = 4, fig.height = 4)
+polarMap(data, pollutant = "nox", x = "ws", latitude = "lat",
+  longitude = "lon", dir_polar = "~/dir_polar",
+  provider = "OpenStreetMap", type = "default", cols = "jet",
+  fig.width = 4, fig.height = 4)
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to
@@ -17,15 +18,24 @@ include a decimal latitude and longitude.}
 
 \item{pollutant}{The column name of the pollutant to plot.}
 
+\item{x}{The radial axis variable to plot.}
+
 \item{latitude}{The decimal latitude.}
 
 \item{longitude}{The decimal longitude.}
 
-\item{dir_polar}{The location of a directory to store the polar plots that are generated. Note, if the directory does not exist it is generated. If the directory does exist all plots will be deleted when the function is run.}
+\item{dir_polar}{The location of a directory to store the polar
+plots that are generated. Note, if the directory does not exist
+it is generated. If the directory does exist all plots will be
+deleted when the function is run.}
 
-\item{provider}{The base map to be used. See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a lits of all base maps that can be used.}
+\item{provider}{The base map to be used. See
+\url{http://leaflet-extras.github.io/leaflet-providers/preview/}
+for a lits of all base maps that can be used.}
 
-\item{type}{See \code{type} in openair \code{polarPlot}.}
+\item{type}{The grouping variable that provides a data set for a
+specific location. Often, with several sites, \code{type =
+"site"} is used.}
 
 \item{cols}{The colours used for plotting.}
 

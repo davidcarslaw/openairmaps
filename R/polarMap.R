@@ -18,7 +18,9 @@
 #' @param provider The base map to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/}
 #'   for a lits of all base maps that can be used.
-#' @param type See \code{type} in openair \code{polarPlot}.
+#' @param type The grouping variable that provides a data set for a
+#'   specific location. Often, with several sites, \code{type =
+#'   "site"} is used.
 #' @param cols The colours used for plotting.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
@@ -43,8 +45,10 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   ## extract variables of interest
   vars <- c("wd", x, pollutant, latitude, longitude, type)
 
-  # check to see if variables exist in data
+  # cut data
+  data <- openair::cutData(data, type)
 
+  # check to see if variables exist in data
   if (length(intersect(vars, names(data))) != length(vars))
     stop(paste(vars[which(!vars %in% names(data))], "not found in data"), call. = FALSE)
 
