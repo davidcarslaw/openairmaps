@@ -43,7 +43,14 @@ specific location. Often, with several sites, \code{type =
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 }
+\value{
+Does not return anything.
+}
 \description{
 Bivariate polar plots on interactive leaflet maps
+}
+\examples{
+
+# to be added
 }
 

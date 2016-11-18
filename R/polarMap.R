@@ -25,12 +25,14 @@
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
 #'
-#' @return
+#' @return Does not return anything.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
 #' @export
 #'
 #' @examples
+#'
+#' # to be added
 polarMap <- function(data, pollutant = "nox", x = "ws",
                      latitude = "lat",
                      longitude = "lon",

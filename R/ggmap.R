@@ -22,6 +22,8 @@
 #' @export
 #'
 #' @examples
+#'
+#' # to be added
 openairMap <- function(data, lat = "latitude", lon = "longitude",
                        type = "default", maptype = "terrain",
                        source = "google",

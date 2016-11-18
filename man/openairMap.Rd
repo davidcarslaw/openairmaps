@@ -46,4 +46,8 @@ Returns the \code{ggmap} plot object that can be used for further manipulation.
 \description{
 Title
 }
+\examples{
+
+# to be added
+}
 
