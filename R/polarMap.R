@@ -97,7 +97,9 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   m <- leaflet(data = plot_data) %>%
     addTiles() %>%
     addProviderTiles(provider = provider) %>%
-    addMarkers(~longitude, ~latitude, icon = leafIcons, popup = ~site)
+    addMarkers(data = plot_data,
+               plot_data[[longitude]], plot_data[[latitude]],
+               icon = leafIcons, popup = plot_data[[type]])
 
   print(m)
 
