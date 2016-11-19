@@ -49,19 +49,29 @@ openairMap <- function(data, lat = "latitude", lon = "longitude",
 
   # map extent
   if (is.na(xlim[1])) {
-    xmin <- min(data[["lon"]])
-    xmax <- max(data[["lon"]])
+
+    delta <- (abs(min(data[["lon"]]) - max(data[["lon"]]))) / 10
+
+    xmin <- min(data[["lon"]]) - delta
+    xmax <- max(data[["lon"]]) + delta
     xlim <- c(xmin, xmax)
+
   } else {
+
     xmin <- xlim[1]
     xmax <- xlim[2]
   }
 
   if (is.na(ylim[1])) {
-    ymin <- min(data[["lat"]])
-    ymax <- max(data[["lat"]])
+
+    delta <- (abs(min(data[["lat"]]) - max(data[["lat"]]))) / 10
+
+    ymin <- min(data[["lat"]]) - delta
+    ymax <- max(data[["lat"]]) + delta
     ylim <- c(ymin, ymax)
+
   } else {
+
     ymin <- ylim[1]
     ymax <- ylim[2]
 
