@@ -7,7 +7,7 @@
 polarMap(data, pollutant = "nox", x = "ws", latitude = "lat",
   longitude = "lon", dir_polar = "~/dir_polar",
   provider = "OpenStreetMap", type = "default", cols = "jet",
-  fig.width = 4, fig.height = 4)
+  iconWidth = 200, iconHeight = 200, fig.width = 4, fig.height = 4)
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to
@@ -38,6 +38,10 @@ specific location. Often, with several sites, \code{type =
 "site"} is used.}
 
 \item{cols}{The colours used for plotting.}
+
+\item{iconWidth}{The actual width of the plot on the map in pixels.}
+
+\item{iconHeight}{The actual height of the plot on the map in pixels.}
 
 \item{fig.width}{The width of the plots to be produced in inches.}
 

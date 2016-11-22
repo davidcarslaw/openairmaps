@@ -22,6 +22,8 @@
 #'   specific location. Often, with several sites, \code{type =
 #'   "site"} is used.
 #' @param cols The colours used for plotting.
+#' @param iconWidth The actual width of the plot on the map in pixels.
+#' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
 #'
@@ -42,6 +44,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
                      provider = "OpenStreetMap",
                      type = "default",
                      cols = "jet",
+                     iconWidth = 200, iconHeight = 200,
                      fig.width = 4, fig.height = 4) {
 
   . <- NULL
@@ -99,7 +102,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   # definition of 'icons' aka the openair plots
   leafIcons <- icons(
     iconUrl = list.files(dir_polar, full.names = TRUE),
-    iconWidth = 200, iconHeight = 200
+    iconWidth = iconWidth, iconHeight = iconHeight
   )
 
   m <- leaflet(data = plot_data) %>%
