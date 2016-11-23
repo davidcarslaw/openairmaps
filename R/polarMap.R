@@ -22,6 +22,9 @@
 #'   specific location. Often, with several sites, \code{type =
 #'   "site"} is used.
 #' @param cols The colours used for plotting.
+#' @param alpha The alpha transparency to use for the plotting surface
+#'   (a value between 0 and 1 with zero being fully transparent and 1
+#'   fully opaque).
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -44,6 +47,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
                      provider = "OpenStreetMap",
                      type = "default",
                      cols = "jet",
+                     alpha = 1,
                      iconWidth = 200, iconHeight = 200,
                      fig.width = 4, fig.height = 4) {
 
@@ -82,6 +86,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
     plt <- polarPlot(data, pollutant = pollutant, x = x,
                      key = FALSE,
                      par.settings = list(axis.line = list(col = "transparent")),
+                     alpha = alpha,
                      ...)
 
     dev.off()
