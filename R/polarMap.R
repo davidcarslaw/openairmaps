@@ -97,7 +97,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
   # go through all sites and make some plots
   group_by_(data, .dots = type) %>%
-    do(plot_polar(., pollutant, cols = cols, x = x))
+    do(plot_polar(., pollutant, cols = cols, x = x, ...))
 
   # summarise data - one line per location
   plot_data <- group_by_(data, .dots = type) %>%
