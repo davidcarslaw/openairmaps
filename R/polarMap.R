@@ -117,6 +117,5 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
                plot_data[[longitude]], plot_data[[latitude]],
                icon = leafIcons, popup = plot_data[[type]])
 
-  print(m)
-
+  
 }
