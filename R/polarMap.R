@@ -25,12 +25,13 @@
 #' @param alpha The alpha transparency to use for the plotting surface
 #'   (a value between 0 and 1 with zero being fully transparent and 1
 #'   fully opaque).
+#' @param key Should the key of the polar plot be drawn. Default is \code{FALSE}.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
 #'
-#' @return Does not return anything.
+#' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
 #' @export
@@ -48,8 +49,9 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
                      type = "default",
                      cols = "jet",
                      alpha = 1,
+                     key = FALSE,
                      iconWidth = 200, iconHeight = 200,
-                     fig.width = 4, fig.height = 4) {
+                     fig.width = 4, fig.height = 4, ...) {
 
   . <- NULL
 
@@ -77,14 +79,14 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   }
 
   # function to produce a polar plot, with transparent background
-  plot_polar <- function(data, pollutant, x, ...) {
+  plot_polar <- function(data, pollutant, type, x, alpha, key, ...) {
 
-    png(paste0(dir_polar, "/", data$site[1], ".png"),
+    png(paste0(dir_polar, "/", data[[type]], ".png"),
         width = fig.width * 300,
         height = fig.height * 300, res = 300, bg = "transparent")
 
     plt <- polarPlot(data, pollutant = pollutant, x = x,
-                     key = FALSE,
+                     key = key,
                      par.settings = list(axis.line = list(col = "transparent")),
                      alpha = alpha,
                      ...)
@@ -95,21 +97,24 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
   }
 
+
+
   # go through all sites and make some plots
   group_by_(data, .dots = type) %>%
-    do(plot_polar(., pollutant, cols = cols, x = x))
+    do(plot_polar(., pollutant, type, x = x, key = key, alpha = alpha, cols = cols, ...))
 
   # summarise data - one line per location
   plot_data <- group_by_(data, .dots = type) %>%
     slice(n = 1)
 
-
   # definition of 'icons' aka the openair plots
-  leafIcons <- icons(
-    iconUrl = list.files(dir_polar, full.names = TRUE),
-    iconWidth = iconWidth, iconHeight = iconHeight
-  )
+  leafIcons = lapply(list.files(dir_polar, full.names = TRUE),
+                     makeIcon, iconWidth = iconWidth, iconHeight = iconHeight)
+  names(leafIcons) = unique(data[[type]])
+  class(leafIcons) <- "leaflet_icon_set"
 
+
+  # plot leaflet
   m <- leaflet(data = plot_data) %>%
     addTiles() %>%
     addProviderTiles(provider = provider) %>%
@@ -117,6 +122,9 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
                plot_data[[longitude]], plot_data[[latitude]],
                icon = leafIcons, popup = plot_data[[type]])
 
-  print(m)
+  # return
+  m
 
 }
+
+
