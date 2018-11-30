@@ -30,17 +30,18 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#'
+#' @param ... Other arguments for \code{polarPlot}.
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
+#' @importFrom stats na.omit
 #' @export
 #'
 #' @examples
 #'
 #'
 #' polarMap(polar_data, latitude = "latitude", longitude = "longitude",
-#' x = "ws", type = "site", provider = "CartoDB.DarkMatter")
+#' x = "ws", type = "site", provider = "Stamen.Toner")
 polarMap <- function(data, pollutant = "nox", x = "ws",
                      latitude = "lat",
                      longitude = "lon",
@@ -58,8 +59,14 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   ## extract variables of interest
   vars <- c("wd", x, pollutant, latitude, longitude, type)
 
+  # check and select variables
+  data <- openair:::checkPrep(data, vars, type = type)
+
   # cut data
   data <- openair::cutData(data, type)
+
+  # remove missing data
+  data <- na.omit(data)
 
   # check to see if variables exist in data
   if (length(intersect(vars, names(data))) != length(vars))

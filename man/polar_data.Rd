@@ -26,4 +26,3 @@ head(polar_data)
 
 }
 \keyword{datasets}
-
