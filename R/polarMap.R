@@ -88,7 +88,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   # function to produce a polar plot, with transparent background
   plot_polar <- function(data, pollutant, type, x, alpha, key, ...) {
 
-    png(paste0(dir_polar, "/", data[[type]], ".png"),
+    png(filename = paste0(dir_polar, "/", data[[type]][1], ".png"),
         width = fig.width * 300,
         height = fig.height * 300, res = 300, bg = "transparent")
 
