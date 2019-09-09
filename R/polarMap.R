@@ -59,6 +59,8 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   ## extract variables of interest
   vars <- c("wd", x, pollutant, latitude, longitude, type)
 
+  if (type == "default") vars <- c("wd", x, pollutant, latitude, longitude)
+
   # check and select variables
   data <- openair:::checkPrep(data, vars, type = type)
 
