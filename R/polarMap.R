@@ -32,6 +32,7 @@
 #' @param fig.height The height of the plots to be produced in inches.
 #' @param ... Other arguments for \code{polarPlot}.
 #' @return A leaflet object.
+#' @importFrom rlang sym syms UQ UQS :=
 #' @import leaflet
 #' @importFrom grDevices dev.off png
 #' @importFrom stats na.omit
@@ -109,11 +110,11 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
 
   # go through all sites and make some plots
-  group_by_(data, .dots = type) %>%
+  group_by(data, UQS(syms(type))) %>%
     do(plot_polar(., pollutant, type, x = x, key = key, alpha = alpha, cols = cols, ...))
 
   # summarise data - one line per location
-  plot_data <- group_by_(data, .dots = type) %>%
+  plot_data <- group_by(data, UQS(syms(type))) %>%
     slice(n = 1)
 
   # definition of 'icons' aka the openair plots

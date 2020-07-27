@@ -15,9 +15,10 @@ Depends:
 Imports:
     openair,
     dplyr,
+    rlang,
     leaflet,
     ggplot2,
     ggmap
 Suggests:
     worldmet
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

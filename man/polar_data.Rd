@@ -4,7 +4,9 @@
 \name{polar_data}
 \alias{polar_data}
 \title{Example data for polarMap function}
-\format{Data frame with example data from four sites in London in 2009.}
+\format{
+Data frame with example data from four sites in London in 2009.
+}
 \source{
 \code{polar_data} was compiled from data using the \code{importAURN} function from the \code{openair} package with meteorological data from the \code{worldmet} package.
 }

@@ -4,11 +4,23 @@
 \alias{openairMap}
 \title{Title}
 \usage{
-openairMap(data, lat = "latitude", lon = "longitude",
-  type = "default", maptype = "terrain", source = "google",
-  pollutant = "o3", statistic = "mean", xlim = NA, ylim = NA,
-  col = "jet", range = c(1, 10), annotate = NA, fontface = "plain",
-  ...)
+openairMap(
+  data,
+  lat = "latitude",
+  lon = "longitude",
+  type = "default",
+  maptype = "terrain",
+  source = "google",
+  pollutant = "o3",
+  statistic = "mean",
+  xlim = NA,
+  ylim = NA,
+  col = "jet",
+  range = c(1, 10),
+  annotate = NA,
+  fontface = "plain",
+  ...
+)
 }
 \arguments{
 \item{data}{name of the data frame containing information to plot.}

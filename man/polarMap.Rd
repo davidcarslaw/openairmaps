@@ -4,11 +4,24 @@
 \alias{polarMap}
 \title{Bivariate polar plots on interactive leaflet maps}
 \usage{
-polarMap(data, pollutant = "nox", x = "ws", latitude = "lat",
-  longitude = "lon", dir_polar = "~/dir_polar",
-  provider = "OpenStreetMap", type = "default", cols = "jet",
-  alpha = 1, key = FALSE, iconWidth = 200, iconHeight = 200,
-  fig.width = 4, fig.height = 4, ...)
+polarMap(
+  data,
+  pollutant = "nox",
+  x = "ws",
+  latitude = "lat",
+  longitude = "lon",
+  dir_polar = "~/dir_polar",
+  provider = "OpenStreetMap",
+  type = "default",
+  cols = "jet",
+  alpha = 1,
+  key = FALSE,
+  iconWidth = 200,
+  iconHeight = 200,
+  fig.width = 4,
+  fig.height = 4,
+  ...
+)
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to
