@@ -15,7 +15,6 @@ Depends:
 Imports:
     openair,
     dplyr,
-    rlang,
     leaflet,
     ggplot2,
     ggmap
