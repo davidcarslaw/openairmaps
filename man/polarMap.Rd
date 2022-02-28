@@ -10,7 +10,6 @@ polarMap(
   x = "ws",
   latitude = "lat",
   longitude = "lon",
-  dir_polar = "~/dir_polar",
   provider = "OpenStreetMap",
   type = "default",
   cols = "jet",
@@ -37,11 +36,6 @@ include a decimal latitude and longitude.}
 \item{latitude}{The decimal latitude.}
 
 \item{longitude}{The decimal longitude.}
-
-\item{dir_polar}{The location of a directory to store the polar
-plots that are generated. Note, if the directory does not exist
-it is generated. If the directory does exist all plots will be
-deleted when the function is run.}
 
 \item{provider}{The base map to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/}

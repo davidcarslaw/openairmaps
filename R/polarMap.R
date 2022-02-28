@@ -11,10 +11,6 @@
 #' @param x The radial axis variable to plot.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
-#' @param dir_polar The location of a directory to store the polar
-#'   plots that are generated. Note, if the directory does not exist
-#'   it is generated. If the directory does exist all plots will be
-#'   deleted when the function is run.
 #' @param provider The base map to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/}
 #'   for a lits of all base maps that can be used.
@@ -46,7 +42,6 @@
 polarMap <- function(data, pollutant = "nox", x = "ws",
                      latitude = "lat",
                      longitude = "lon",
-                     dir_polar = "~/dir_polar",
                      provider = "OpenStreetMap",
                      type = "default",
                      cols = "jet",
@@ -75,18 +70,8 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   if (length(intersect(vars, names(data))) != length(vars))
     stop(paste(vars[which(!vars %in% names(data))], "not found in data"), call. = FALSE)
 
-
-    # check that directory is empty / exists
-  if (dir.exists(dir_polar)) {
-    # remove existing files
-    files <- list.files(dir_polar, full.names = TRUE)
-    file.remove(files)
-
-  } else {
-
-    dir.create(dir_polar)
-
-  }
+  # where to write files
+  dir_polar <- tempdir()
 
   # function to produce a polar plot, with transparent background
   plot_polar <- function(data, pollutant, type, x, alpha, key, ...) {
@@ -118,7 +103,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
     slice(n = 1)
 
   # definition of 'icons' aka the openair plots
-  leafIcons = lapply(list.files(dir_polar, full.names = TRUE),
+  leafIcons = lapply(list.files(dir_polar, full.names = TRUE, pattern = ".png"),
                      makeIcon, iconWidth = iconWidth, iconHeight = iconHeight)
   names(leafIcons) = unique(data[[type]])
   class(leafIcons) <- "leaflet_icon_set"
