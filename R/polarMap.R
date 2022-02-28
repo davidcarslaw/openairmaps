@@ -87,14 +87,12 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
     dev.off()
 
-    return(plt$data)
-
   }
 
 
   # go through all sites and make some plot
   group_by(data, .data[[type]]) %>%
-    group_modify(~ plot_polar(.x, pollutant = pollutant,
+    group_walk(~ plot_polar(.x, pollutant = pollutant,
                               type = type, x= x, alpha = alpha, key = key),
                        .keep = TRUE)
 
