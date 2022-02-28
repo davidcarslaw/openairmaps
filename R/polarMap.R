@@ -103,7 +103,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
     slice(n = 1)
 
   # definition of 'icons' aka the openair plots
-  leafIcons = lapply(list.files(dir_polar, full.names = TRUE, pattern = ".png"),
+  leafIcons = lapply(paste0(dir_polar, "/", unique(data[[type]]), ".png"),
                      makeIcon, iconWidth = iconWidth, iconHeight = iconHeight)
   names(leafIcons) = unique(data[[type]])
   class(leafIcons) <- "leaflet_icon_set"
