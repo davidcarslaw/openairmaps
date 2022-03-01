@@ -73,7 +73,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   dir_polar <- tempdir()
 
   # function to produce a polar plot, with transparent background
-  plot_polar <- function(data, pollutant, type, x, alpha, key, ...) {
+  plot_polar <- function(data, pollutant, type, x, cols, alpha, key, ...) {
 
     png(filename = paste0(dir_polar, "/", data[[type]][1], ".png"),
         width = fig.width * 300,
@@ -81,6 +81,7 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
     plt <- polarPlot(data, pollutant = pollutant, x = x,
                      key = key,
+                     cols = cols,
                      par.settings = list(axis.line = list(col = "transparent")),
                      alpha = alpha,
                      ...)
@@ -91,10 +92,10 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
 
   # go through all sites and make some plot
-  group_by(data, .data[[type]]) %>%
-    group_walk(~ plot_polar(.x, pollutant = pollutant,
-                              type = type, x= x, alpha = alpha, key = key),
-                       .keep = TRUE)
+
+  split(data, data[[type]]) %>%
+    lapply(plot_polar, pollutant = pollutant, type = type, x = x,
+           cols = cols, alpha = alpha, key = key, ...)
 
   # summarise data - one line per location
   plot_data <- group_by(data, .data[[type]]) %>%
