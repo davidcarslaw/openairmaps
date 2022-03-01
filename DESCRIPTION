@@ -17,7 +17,8 @@ Imports:
     dplyr,
     leaflet,
     ggplot2,
-    ggmap
+    ggmap,
+    purrr
 Suggests:
     worldmet
 RoxygenNote: 7.1.2

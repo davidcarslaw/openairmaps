@@ -93,8 +93,8 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
 
   # go through all sites and make some plot
 
-  split(data, data[[type]]) %>%
-    lapply(plot_polar, pollutant = pollutant, type = type, x = x,
+  data %>% group_split(across(type)) %>%
+    map(plot_polar, pollutant = pollutant, type = type, x = x,
            cols = cols, alpha = alpha, key = key, ...)
 
   # summarise data - one line per location
