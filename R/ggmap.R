@@ -11,7 +11,7 @@
 #' @param xlim map extent longitude limits.
 #' @param ylim map extent latitude limits.
 #' @param col the colour of the plot symbols which varies depending on the value of \code{pollutant}.
-#' @param range the range size of the ploy symbols used.
+#' @param range the range size of the plot symbols used.
 #' @param annotate the column name that will be used for plotting the value.
 #' @param fontface the type of font to be used with \code{annotate}.
 #' @param ... other arguments supplied to ggmap e.g. \code{zoom}.
