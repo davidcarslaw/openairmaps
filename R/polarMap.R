@@ -7,7 +7,7 @@
 #'   wind direction (\code{wd}) and the column representing the
 #'   concentration of a pollutant. In addition, \code{data} must
 #'   include a decimal latitude and longitude.
-#' @param pollutant The column name of the pollutant to plot.
+#' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple pollutants are specified, they can be toggled between using a "layer control" interface.
 #' @param x The radial axis variable to plot.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
@@ -35,7 +35,6 @@
 #'
 #' @examples
 #'
-#'
 #' polarMap(polar_data, latitude = "latitude", longitude = "longitude",
 #' x = "ws", type = "site", provider = "Stamen.Toner")
 polarMap <- function(data, pollutant = "nox", x = "ws",
@@ -54,7 +53,8 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   ## extract variables of interest
   vars <- c("wd", x, pollutant, latitude, longitude, type)
 
-  if (type == "default") vars <- c("wd", x, pollutant, latitude, longitude)
+  if (type == "default")
+    vars <- c("wd", x, pollutant, latitude, longitude)
 
   # check and select variables
   data <- openair:::checkPrep(data, vars, type = type)
@@ -73,53 +73,103 @@ polarMap <- function(data, pollutant = "nox", x = "ws",
   dir_polar <- tempdir()
 
   # function to produce a polar plot, with transparent background
-  plot_polar <- function(data, pollutant, type, x, cols, alpha, key, ...) {
 
-    png(filename = paste0(dir_polar, "/", data[[type]][1], ".png"),
+  create_icons <- function(data, pollutant, type, x, cols, alpha, key, ...){
+
+    plot_polar <- function(data, pollutant, type, x, cols, alpha, key, ...) {
+
+      png(
+        filename = paste0(dir_polar, "/", data[[type]][1], "_", pollutant, ".png"),
         width = fig.width * 300,
-        height = fig.height * 300, res = 300, bg = "transparent")
+        height = fig.height * 300,
+        res = 300,
+        bg = "transparent"
+      )
 
-    plt <- polarPlot(data, pollutant = pollutant, x = x,
-                     key = key,
-                     cols = cols,
-                     par.settings = list(axis.line = list(col = "transparent")),
-                     alpha = alpha,
-                     ...)
+      plt <- polarPlot(
+        data,
+        pollutant = pollutant,
+        x = x,
+        key = key,
+        cols = cols,
+        par.settings = list(axis.line = list(col = "transparent")),
+        alpha = alpha,
+        ...
+      )
 
-    dev.off()
+      dev.off()
+
+    }
+
+    # go through all sites and make some plot
+    data %>%
+      group_split(across(type)) %>%
+      purrr::walk(
+        plot_polar,
+        pollutant = pollutant,
+        type = type,
+        x = x,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...
+      )
+
+    # definition of 'icons' aka the openair plots
+    leafIcons = lapply(sort(paste0(dir_polar, "/", unique(data[[type]]), "_", pollutant, ".png")),
+                       makeIcon,
+                       iconWidth = iconWidth,
+                       iconHeight = iconHeight)
+    names(leafIcons) = unique(data[[type]])
+    class(leafIcons) <- "leaflet_icon_set"
+
+    leafIcons
 
   }
 
-
-  # go through all sites and make some plot
-
-  data %>% group_split(across(type)) %>%
-    map(plot_polar, pollutant = pollutant, type = type, x = x,
-           cols = cols, alpha = alpha, key = key, ...)
-
   # summarise data - one line per location
-  plot_data <- group_by(data, .data[[type]]) %>%
+  plot_data <-
+    group_by(data, .data[[type]]) %>%
     slice(n = 1) %>%
     arrange(.data[[type]])
 
-  # definition of 'icons' aka the openair plots
-  leafIcons = lapply(sort(paste0(dir_polar, "/", unique(data[[type]]), ".png")),
-                     makeIcon, iconWidth = iconWidth, iconHeight = iconHeight)
-  names(leafIcons) = unique(data[[type]])
-  class(leafIcons) <- "leaflet_icon_set"
-
+  icons <-
+    purrr::map(.x = sort(pollutant),
+        .f = ~create_icons(data = data, pollutant = .x,
+                           type = type, x = x, cols = cols, alpha = alpha, key = key,
+                           # ...
+        ))
 
   # plot leaflet
   m <- leaflet(data = plot_data) %>%
-    addTiles() %>%
-    addProviderTiles(provider = provider) %>%
-    addMarkers(data = plot_data,
-               plot_data[[longitude]], plot_data[[latitude]],
-               icon = leafIcons, popup = plot_data[[type]])
+    addProviderTiles(provider = provider)
+
+  # add markers
+
+  for (i in 1:length(icons)) {
+
+    m <- addMarkers(
+      m,
+      data = plot_data,
+      lng = plot_data[[longitude]],
+      lat = plot_data[[latitude]],
+      icon = icons[[i]],
+      popup = plot_data[[type]],
+      group = sort(pollutant)[[i]] %>% quickTextHTML()
+    )
+
+  }
+
+  if(length(pollutant) > 1){
+    m <-
+      addLayersControl(
+        m,
+        baseGroups = sort(pollutant) %>% purrr::map_chr(quickTextHTML)
+      )
+  }
+
 
   # return
   m
 
 }
-
-

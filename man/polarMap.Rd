@@ -29,7 +29,7 @@ wind direction (\code{wd}) and the column representing the
 concentration of a pollutant. In addition, \code{data} must
 include a decimal latitude and longitude.}
 
-\item{pollutant}{The column name of the pollutant to plot.}
+\item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple pollutants are specified, they can be toggled between using a "layer control" interface.}
 
 \item{x}{The radial axis variable to plot.}
 
@@ -70,7 +70,6 @@ A leaflet object.
 Bivariate polar plots on interactive leaflet maps
 }
 \examples{
-
 
 polarMap(polar_data, latitude = "latitude", longitude = "longitude",
 x = "ws", type = "site", provider = "Stamen.Toner")

@@ -45,7 +45,7 @@ openairMap(
 
 \item{col}{the colour of the plot symbols which varies depending on the value of \code{pollutant}.}
 
-\item{range}{the range size of the ploy symbols used.}
+\item{range}{the range size of the plot symbols used.}
 
 \item{annotate}{the column name that will be used for plotting the value.}
 
