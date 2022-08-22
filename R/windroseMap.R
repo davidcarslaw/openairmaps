@@ -1,14 +1,9 @@
-#' Bivariate polar plots on interactive leaflet maps
+#' Wind rose plots on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{polarPlot}, which includes wind speed (\code{ws}), wind direction
-#'   (\code{wd}), and the column representing the
-#'   concentration of a pollutant. In addition, \code{data} must include a
-#'   decimal latitude and longitude.
-#' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
-#'   pollutants are specified, they can be toggled between using a "layer
-#'   control" interface.
-#' @param x The radial axis variable to plot.
+#'   \code{windRose}, which includes wind speed (\code{ws}), and wind direction
+#'   (\code{wd}). In addition, \code{data} must include a decimal latitude and
+#'   longitude.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
 #' @param provider The base map(s) to be used. See
@@ -25,7 +20,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{polarPlot}.
+#' @param ... Other arguments for \code{windRose}.
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -34,25 +29,23 @@
 #'
 #' @examples
 #'
-#' polarMap(polar_data,
+#' windroseMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",
 #'   x = "ws", type = "site", provider = "Stamen.Toner"
 #' )
-polarMap <- function(data,
-                     pollutant = "nox",
-                     x = "ws",
-                     latitude = "lat",
-                     longitude = "lon",
-                     provider = "OpenStreetMap",
-                     type = "default",
-                     cols = "jet",
-                     alpha = 1,
-                     key = FALSE,
-                     iconWidth = 200,
-                     iconHeight = 200,
-                     fig.width = 4,
-                     fig.height = 4,
-                     ...) {
+windroseMap <- function(data,
+                        latitude = "lat",
+                        longitude = "lon",
+                        provider = "OpenStreetMap",
+                        type = "default",
+                        cols = "default",
+                        alpha = 1,
+                        key = FALSE,
+                        iconWidth = 200,
+                        iconHeight = 200,
+                        fig.width = 4,
+                        fig.height = 4,
+                        ...) {
   . <- NULL
 
   data <-
@@ -60,8 +53,7 @@ polarMap <- function(data,
       data = data,
       type = type,
       "wd",
-      x,
-      pollutant,
+      "ws",
       latitude,
       longitude
     )
@@ -69,15 +61,15 @@ polarMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::polarPlot, x = x, !!!args, ...)
+    rlang::exec(openair::windRose, !!!args, ...)
   }
 
   # create icons
   icons <-
     purrr::map(
-      .x = sort(pollutant),
+      .x = "ws",
       .f = ~ create_icons(
-        data = data, fun = fun, pollutant = .x,
+        data = data, fun = fun, pollutant = "ws",
         type = type, x = x, cols = cols, alpha = alpha, key = key,
         fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
@@ -92,6 +84,6 @@ polarMap <- function(data,
     longitude = longitude,
     latitude = latitude,
     type = type,
-    pollutant = pollutant
+    pollutant = "ws"
   )
 }

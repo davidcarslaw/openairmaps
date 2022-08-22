@@ -15,8 +15,7 @@
 ##' @keywords methods
 ##'
 
-quickTextHTML <- function(text){
-
+quickTextHTML <- function(text) {
   text <- gsub("NO2|no2", "NO<sub>2</sub>", text)
   text <- gsub("nox|NOx|NOX", "NO<sub>x</sub>", text)
   text <- gsub("CO2|co2", "CO<sub>2</sub>", text)
