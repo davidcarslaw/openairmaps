@@ -19,7 +19,7 @@ The goal of `openairmaps` is to combine the robust analytical methods found in [
 
 ## Installation
 
-You can install the development version of openairmaps from [GitHub](https://github.com/) with:
+You can install the development version of `openairmaps` from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -36,8 +36,40 @@ library(openairmaps)
 polarMap(
   polar_data, 
   latitude = "latitude", 
-  longitude = "longitude"
+  longitude = "longitude",
+  type = "site"
 )
 ```
 
 ![A screenshot of `polarMap()` output.](man/figures/README-polarmap.png)
+
+Multiple pollutants and/or base-maps can be provided, which uses the `leaflet` package's "layer control" interface to allow users to toggle between them.
+
+```{r example2, eval=FALSE}
+annulusMap(
+  polar_data,
+  pollutant = c("no2", "nox"),
+  provider = c("CartoDB.Positron", "OpenStreetMap"),
+  latitude = "latitude", 
+  longitude = "longitude",
+  type = "site"
+)
+```
+
+![A screenshot of `annulusMap()` output, with a layer control menu.](man/figures/README-annuluslayers.png)
+
+As `openairmaps` outputs `leaflet` maps, you can use `leaflet`'s own functions to further customise your `openairmaps` outputs.
+
+```{r custom, eval = FALSE}
+polarMap(
+  polar_data,
+  pollutant = c("no2", "nox"),
+  provider = c("CartoDB.Positron", "OpenStreetMap"),
+  latitude = "latitude", 
+  longitude = "longitude",
+  type = "site"
+) %>% 
+  leaflet::popupOptions(...) %>% 
+  leaflet::mapOptions(...) # etc.
+```
+

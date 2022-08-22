@@ -1,14 +1,17 @@
-#' Bivariate polar plots on interactive leaflet maps
+#' Polar annulus plots on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{polarPlot}, which includes wind speed (\code{ws}), wind direction
-#'   (\code{wd}), and the column representing the
+#'   \code{polarAnnulus}, which includes wind speed (\code{ws}), wind direction
+#'   (\code{wd}), date (\code{date}), and the column representing the
 #'   concentration of a pollutant. In addition, \code{data} must include a
 #'   decimal latitude and longitude.
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
-#' @param x The radial axis variable to plot.
+#' @param period This determines the temporal period to consider. Options are
+#'   “hour” (the default, to plot diurnal variations), “season” to plot
+#'   variation throughout the year, “weekday” to plot day of the week variation
+#'   and “trend” to plot the trend by wind direction.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
 #' @param provider The base map(s) to be used. See
@@ -25,7 +28,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{polarPlot}.
+#' @param ... Other arguments for \code{polarAnnulus}.
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -34,33 +37,34 @@
 #'
 #' @examples
 #'
-#' polarMap(polar_data,
+#' annulusMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",
-#'   x = "ws", type = "site", provider = "Stamen.Toner"
+#'   type = "site", provider = "Stamen.Toner"
 #' )
-polarMap <- function(data,
-                     pollutant = "nox",
-                     x = "ws",
-                     latitude = "lat",
-                     longitude = "lon",
-                     provider = "OpenStreetMap",
-                     type = "default",
-                     cols = "jet",
-                     alpha = 1,
-                     key = FALSE,
-                     iconWidth = 200,
-                     iconHeight = 200,
-                     fig.width = 4,
-                     fig.height = 4,
-                     ...) {
+annulusMap <- function(data,
+                       pollutant = "nox",
+                       period = "hour",
+                       latitude = "lat",
+                       longitude = "lon",
+                       provider = "OpenStreetMap",
+                       type = "default",
+                       cols = "jet",
+                       alpha = 1,
+                       key = FALSE,
+                       iconWidth = 200,
+                       iconHeight = 200,
+                       fig.width = 4,
+                       fig.height = 4,
+                       ...) {
   . <- NULL
 
+  # prepare data for mapping
   data <-
     prepMapData(
       data = data,
       type = type,
       "wd",
-      x,
+      "date",
       pollutant,
       latitude,
       longitude
@@ -69,7 +73,7 @@ polarMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::polarPlot, x = x, !!!args, ...)
+    rlang::exec(openair::polarAnnulus, period = period, !!!args, ...)
   }
 
   # create icons
@@ -78,7 +82,7 @@ polarMap <- function(data,
       .x = sort(pollutant),
       .f = ~ create_icons(
         data = data, fun = fun, pollutant = .x,
-        type = type, x = x, cols = cols, alpha = alpha, key = key,
+        type = type, period = period, cols = cols, alpha = alpha, key = key,
         fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
       )
