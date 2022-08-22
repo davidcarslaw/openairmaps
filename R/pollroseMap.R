@@ -1,26 +1,19 @@
-#' Polar frequency plots on interactive leaflet maps
+#' Pollution rose plots on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{polarFreq}, which includes wind speed (\code{ws}), wind direction
+#'   \code{pollutionRose}, which includes wind speed (\code{ws}), wind direction
 #'   (\code{wd}), and the column representing the
 #'   concentration of a pollutant. In addition, \code{data} must include a
 #'   decimal latitude and longitude.
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
-#' @param statistic The statistic that should be applied to each wind
-#'   speed/direction bin. Can be “frequency”, “mean”, “median”, “max” (maximum),
-#'   “stdev” (standard deviation) or “weighted.mean”. The option “frequency”
-#'   (the default) is the simplest and plots the frequency of wind
-#'   speed/direction in different bins. The scale therefore shows the counts in
-#'   each bin. The option “mean” will plot the mean concentration of a pollutant
-#'   (see next point) in wind speed/direction bins, and so on. Finally,
-#'   “weighted.mean” will plot the concentration of a pollutant weighted by wind
-#'   speed/direction. Each segment therefore provides the percentage overall
-#'   contribution to the total concentration. More information is given in the
-#'   examples. Note that for options other than “frequency”, it is necessary to
-#'   also provide the name of a pollutant. See function cutData for further
-#'   details.
+#' @param statistic The statistic to be applied to each data bin in the plot.
+#'   Options currently include “prop.count”, “prop.mean” and “abs.count”. The
+#'   default “prop.count” sizes bins according to the proportion of the
+#'   frequency of measurements. Similarly, “prop.mean” sizes bins according to
+#'   their relative contribution to the mean. “abs.count” provides the absolute
+#'   count of measurements in each bin.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
 #' @param provider The base map(s) to be used. See
@@ -37,7 +30,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{polarFreq}.
+#' @param ... Other arguments for \code{pollutionRose}.
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -46,25 +39,25 @@
 #'
 #' @examples
 #'
-#' freqMap(polar_data,
+#' pollroseMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",
 #'   x = "ws", type = "site", provider = "Stamen.Toner"
 #' )
-freqMap <- function(data,
-                    pollutant = "nox",
-                    statistic = "mean",
-                    latitude = "lat",
-                    longitude = "lon",
-                    provider = "OpenStreetMap",
-                    type = "default",
-                    cols = "jet",
-                    alpha = 1,
-                    key = FALSE,
-                    iconWidth = 200,
-                    iconHeight = 200,
-                    fig.width = 4,
-                    fig.height = 4,
-                    ...) {
+pollroseMap <- function(data,
+                        pollutant = "nox",
+                        statistic = "prop.count",
+                        latitude = "lat",
+                        longitude = "lon",
+                        provider = "OpenStreetMap",
+                        type = "default",
+                        cols = "jet",
+                        alpha = 1,
+                        key = FALSE,
+                        iconWidth = 200,
+                        iconHeight = 200,
+                        fig.width = 4,
+                        fig.height = 4,
+                        ...) {
   . <- NULL
 
   data <-
@@ -81,7 +74,7 @@ freqMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::polarFreq, statistic = statistic, !!!args, ...)
+    rlang::exec(openair::pollutionRose, statistic = statistic, !!!args, ...)
   }
 
   # create icons

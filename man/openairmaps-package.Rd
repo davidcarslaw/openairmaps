@@ -6,7 +6,7 @@
 \alias{openairmaps-package}
 \title{openairmaps: Package to Plot Openair Outputs on Static and Leaflet Maps}
 \description{
-Package to support openair for plotting on various maps. The maps include those available via the ggmap package e.g. Google Maps and leaflet maps for plotting bivariate polar plots.
+Package to support openair for plotting on various maps. The maps include those available via the ggmap package (e.g., Google Maps) and leaflet maps for plotting directional analysis plots (e.g., Bivariate Polar Plots).
 }
 \author{
 \strong{Maintainer}: David Carslaw \email{david.carslaw@york.ac.uk}

@@ -1,12 +1,12 @@
 Package: openairmaps
 Type: Package
 Title: Package to Plot Openair Outputs on Static and Leaflet Maps
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(person("David", "Carslaw", role = c("aut", "cre"), email =
     "david.carslaw@york.ac.uk"))
 Description: Package to support openair for plotting on various maps. The maps
-    include those available via the ggmap package e.g. Google Maps and leaflet maps
-    for plotting bivariate polar plots.
+    include those available via the ggmap package (e.g., Google Maps) and leaflet maps
+    for plotting directional analysis plots (e.g., Bivariate Polar Plots).
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
