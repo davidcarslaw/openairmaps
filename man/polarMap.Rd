@@ -24,7 +24,7 @@ polarMap(
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to plot a
-\code{polarPlot}, which includes wind speed (\code{ws}), wind direction
+\code{\link[openair:polarPlot]{openair::polarPlot()}}, which includes wind speed (\code{ws}), wind direction
 (\code{wd}), and the column representing the
 concentration of a pollutant. In addition, \code{data} must include a
 decimal latitude and longitude.}
@@ -62,7 +62,7 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 
-\item{...}{Other arguments for \code{polarPlot}.}
+\item{...}{Other arguments for \code{\link[openair:polarPlot]{openair::polarPlot()}}.}
 }
 \value{
 A leaflet object.
@@ -72,8 +72,10 @@ Bivariate polar plots on interactive leaflet maps
 }
 \examples{
 
+\dontrun{
 polarMap(polar_data,
   latitude = "latitude", longitude = "longitude",
   x = "ws", type = "site", provider = "Stamen.Toner"
 )
+}
 }

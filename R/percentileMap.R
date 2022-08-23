@@ -1,7 +1,7 @@
 #' Percentile roses on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{percentileRose}, which includes wind speed (\code{ws}), wind direction
+#'   [openair::percentileRose()], which includes wind speed (\code{ws}), wind direction
 #'   (\code{wd}), and the column representing the
 #'   concentration of a pollutant. In addition, \code{data} must include a
 #'   decimal latitude and longitude.
@@ -24,7 +24,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{percentileRose}.
+#' @param ... Other arguments for [openair::percentileRose()].
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -33,10 +33,12 @@
 #'
 #' @examples
 #'
+#' \dontrun{
 #' percentileMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",
-#'   x = "ws", type = "site", provider = "Stamen.Toner"
+#'   type = "site", provider = "Stamen.Toner"
 #' )
+#' }
 percentileMap <- function(data,
                      pollutant = "nox",
                      latitude = "lat",

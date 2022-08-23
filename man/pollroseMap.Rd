@@ -24,7 +24,7 @@ pollroseMap(
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to plot a
-\code{pollutionRose}, which includes wind speed (\code{ws}), wind direction
+\code{\link[openair:windRose]{openair::pollutionRose()}}, which includes wind speed (\code{ws}), wind direction
 (\code{wd}), and the column representing the
 concentration of a pollutant. In addition, \code{data} must include a
 decimal latitude and longitude.}
@@ -33,12 +33,14 @@ decimal latitude and longitude.}
 pollutants are specified, they can be toggled between using a "layer
 control" interface.}
 
-\item{statistic}{The statistic to be applied to each data bin in the plot.
-Options currently include “prop.count”, “prop.mean” and “abs.count”. The
-default “prop.count” sizes bins according to the proportion of the
-frequency of measurements. Similarly, “prop.mean” sizes bins according to
-their relative contribution to the mean. “abs.count” provides the absolute
-count of measurements in each bin.}
+\item{statistic}{The \code{statistic} to be applied to each data
+bin in the plot. Options currently include \dQuote{prop.count},
+\dQuote{prop.mean} and \dQuote{abs.count}. The default
+\dQuote{prop.count} sizes bins according to the proportion of
+the frequency of measurements.  Similarly, \dQuote{prop.mean}
+sizes bins according to their relative contribution to the mean.
+\dQuote{abs.count} provides the absolute count of measurements
+in each bin.}
 
 \item{latitude}{The decimal latitude.}
 
@@ -67,7 +69,7 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 
-\item{...}{Other arguments for \code{pollutionRose}.}
+\item{...}{Other arguments for \code{\link[openair:windRose]{openair::pollutionRose()}}.}
 }
 \value{
 A leaflet object.
@@ -77,8 +79,10 @@ Pollution rose plots on interactive leaflet maps
 }
 \examples{
 
+\dontrun{
 pollroseMap(polar_data,
-  latitude = "latitude", longitude = "longitude",
-  x = "ws", type = "site", provider = "Stamen.Toner"
+  latitude = "latitude", longitude = "longitude", statistic = "prop.count",
+  type = "site", provider = "Stamen.Toner"
 )
+}
 }

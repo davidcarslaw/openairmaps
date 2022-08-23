@@ -1,19 +1,21 @@
 #' Pollution rose plots on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{pollutionRose}, which includes wind speed (\code{ws}), wind direction
+#'   [openair::pollutionRose()], which includes wind speed (\code{ws}), wind direction
 #'   (\code{wd}), and the column representing the
 #'   concentration of a pollutant. In addition, \code{data} must include a
 #'   decimal latitude and longitude.
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
-#' @param statistic The statistic to be applied to each data bin in the plot.
-#'   Options currently include “prop.count”, “prop.mean” and “abs.count”. The
-#'   default “prop.count” sizes bins according to the proportion of the
-#'   frequency of measurements. Similarly, “prop.mean” sizes bins according to
-#'   their relative contribution to the mean. “abs.count” provides the absolute
-#'   count of measurements in each bin.
+#' @param statistic The \code{statistic} to be applied to each data
+#'   bin in the plot. Options currently include \dQuote{prop.count},
+#'   \dQuote{prop.mean} and \dQuote{abs.count}. The default
+#'   \dQuote{prop.count} sizes bins according to the proportion of
+#'   the frequency of measurements.  Similarly, \dQuote{prop.mean}
+#'   sizes bins according to their relative contribution to the mean.
+#'   \dQuote{abs.count} provides the absolute count of measurements
+#'   in each bin.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
 #' @param provider The base map(s) to be used. See
@@ -30,7 +32,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{pollutionRose}.
+#' @param ... Other arguments for [openair::pollutionRose()].
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -39,10 +41,12 @@
 #'
 #' @examples
 #'
+#' \dontrun{
 #' pollroseMap(polar_data,
-#'   latitude = "latitude", longitude = "longitude",
-#'   x = "ws", type = "site", provider = "Stamen.Toner"
+#'   latitude = "latitude", longitude = "longitude", statistic = "prop.count",
+#'   type = "site", provider = "Stamen.Toner"
 #' )
+#' }
 pollroseMap <- function(data,
                         pollutant = "nox",
                         statistic = "prop.count",

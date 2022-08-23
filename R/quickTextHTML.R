@@ -2,9 +2,9 @@
 ##'
 ##' Workhorse function that automatically applies routine text formatting to
 ##' common pollutant names which may be used in the HTML widgets produced by
-##' openairmaps.
+##' \code{openairmaps}.
 ##'
-##' \code{quickTextHTML} is routine formatting lookup table. It screens the
+##' [quickTextHTML()] is routine formatting lookup table. It screens the
 ##' supplied character vector \code{text} and automatically applies formatting
 ##' to any recognised character sub-series to properly render in HTML.
 ##'
@@ -14,6 +14,10 @@
 ##' @author Jack Davison.
 ##' @keywords methods
 ##'
+##' @examples
+##'
+##' labs <- c("no2", "o3", "so2")
+##' quickTextHTML(labs)
 
 quickTextHTML <- function(text) {
   text <- gsub("NO2|no2", "NO<sub>2</sub>", text)
