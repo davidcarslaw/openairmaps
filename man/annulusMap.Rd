@@ -24,8 +24,8 @@ annulusMap(
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to plot a
-\code{polarAnnulus}, which includes wind speed (\code{ws}), wind direction
-(\code{wd}), date (\code{date}), and the column representing the
+\code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}, which includes wind speed (\code{ws}), wind
+direction (\code{wd}), date (\code{date}), and the column representing the
 concentration of a pollutant. In addition, \code{data} must include a
 decimal latitude and longitude.}
 
@@ -34,9 +34,9 @@ pollutants are specified, they can be toggled between using a "layer
 control" interface.}
 
 \item{period}{This determines the temporal period to consider. Options are
-“hour” (the default, to plot diurnal variations), “season” to plot
-variation throughout the year, “weekday” to plot day of the week variation
-and “trend” to plot the trend by wind direction.}
+\dQuote{hour} (the default, to plot diurnal variations), \dQuote{season} to
+plot variation throughout the year, \dQuote{weekday} to plot day of the
+week variation and \dQuote{trend} to plot the trend by wind direction.}
 
 \item{latitude}{The decimal latitude.}
 
@@ -65,7 +65,7 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 
-\item{...}{Other arguments for \code{polarAnnulus}.}
+\item{...}{Other arguments for \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}.}
 }
 \value{
 A leaflet object.
@@ -75,8 +75,10 @@ Polar annulus plots on interactive leaflet maps
 }
 \examples{
 
+\dontrun{
 annulusMap(polar_data,
-  latitude = "latitude", longitude = "longitude",
+  latitude = "latitude", longitude = "longitude", period = "hour",
   type = "site", provider = "Stamen.Toner"
 )
+}
 }

@@ -2,6 +2,5 @@
 "_PACKAGE"
 
 ## usethis namespace: start
-#' @importFrom purrr map
 ## usethis namespace: end
 NULL

@@ -15,12 +15,17 @@ The function returns an expression for HTML evaluation.
 \description{
 Workhorse function that automatically applies routine text formatting to
 common pollutant names which may be used in the HTML widgets produced by
-openairmaps.
+\code{openairmaps}.
 }
 \details{
-\code{quickTextHTML} is routine formatting lookup table. It screens the
+\code{\link[=quickTextHTML]{quickTextHTML()}} is routine formatting lookup table. It screens the
 supplied character vector \code{text} and automatically applies formatting
 to any recognised character sub-series to properly render in HTML.
+}
+\examples{
+
+labs <- c("no2", "o3", "so2")
+quickTextHTML(labs)
 }
 \author{
 Jack Davison.
