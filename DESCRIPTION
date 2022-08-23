@@ -1,12 +1,18 @@
 Package: openairmaps
 Type: Package
-Title: Package to Plot Openair Outputs on Static and Leaflet Maps
-Version: 0.2.0
-Authors@R: c(person("David", "Carslaw", role = c("aut", "cre"), email =
-    "david.carslaw@york.ac.uk"))
-Description: Package to support openair for plotting on various maps. The maps
-    include those available via the ggmap package (e.g., Google Maps) and leaflet maps
-    for plotting directional analysis plots (e.g., Bivariate Polar Plots).
+Title: Package to Plot Openair Outputs on Leaflet Maps
+Version: 0.3.0
+Authors@R: 
+  c(person(given = "Jack",
+           family = "Davison",
+           role = c("aut", "cre"),
+           email = "davison.jack.jd@gmail.com"),
+    person(given = "David", 
+           family = "Carslaw", 
+           role = c("aut"), 
+           email = "david.carslaw@york.ac.uk"))
+Description: A tool to combine the air quality data analysis methods of openair 
+  with the leaflet mapping system.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
@@ -16,10 +22,11 @@ Imports:
     openair,
     dplyr,
     leaflet,
-    ggplot2,
-    ggmap,
     purrr,
-    magrittr
+    magrittr,
+    rlang,
+    lubridate
 Suggests:
     worldmet
 RoxygenNote: 7.2.1
+Roxygen: list(markdown = TRUE)

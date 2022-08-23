@@ -22,9 +22,9 @@ windroseMap(
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to plot a
-\code{windRose}, which includes wind speed (\code{ws}), and wind direction
-(\code{wd}). In addition, \code{data} must include a decimal latitude and
-longitude.}
+\code{\link[openair:windRose]{openair::windRose()}}, which includes wind speed (\code{ws}), and wind
+direction (\code{wd}). In addition, \code{data} must include a decimal
+latitude and longitude.}
 
 \item{latitude}{The decimal latitude.}
 
@@ -53,7 +53,7 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 
-\item{...}{Other arguments for \code{windRose}.}
+\item{...}{Other arguments for \code{\link[openair:windRose]{openair::windRose()}}.}
 }
 \value{
 A leaflet object.
@@ -63,8 +63,10 @@ Wind rose plots on interactive leaflet maps
 }
 \examples{
 
+\dontrun{
 windroseMap(polar_data,
   latitude = "latitude", longitude = "longitude",
-  x = "ws", type = "site", provider = "Stamen.Toner"
+  type = "site", provider = "Stamen.Toner"
 )
+}
 }

@@ -1,17 +1,17 @@
 #' Polar annulus plots on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{polarAnnulus}, which includes wind speed (\code{ws}), wind direction
-#'   (\code{wd}), date (\code{date}), and the column representing the
+#'   [openair::polarAnnulus()], which includes wind speed (\code{ws}), wind
+#'   direction (\code{wd}), date (\code{date}), and the column representing the
 #'   concentration of a pollutant. In addition, \code{data} must include a
 #'   decimal latitude and longitude.
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
 #' @param period This determines the temporal period to consider. Options are
-#'   “hour” (the default, to plot diurnal variations), “season” to plot
-#'   variation throughout the year, “weekday” to plot day of the week variation
-#'   and “trend” to plot the trend by wind direction.
+#'   \dQuote{hour} (the default, to plot diurnal variations), \dQuote{season} to
+#'   plot variation throughout the year, \dQuote{weekday} to plot day of the
+#'   week variation and \dQuote{trend} to plot the trend by wind direction.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
 #' @param provider The base map(s) to be used. See
@@ -28,7 +28,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{polarAnnulus}.
+#' @param ... Other arguments for [openair::polarAnnulus()].
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -37,10 +37,12 @@
 #'
 #' @examples
 #'
+#' \dontrun{
 #' annulusMap(polar_data,
-#'   latitude = "latitude", longitude = "longitude",
+#'   latitude = "latitude", longitude = "longitude", period = "hour",
 #'   type = "site", provider = "Stamen.Toner"
 #' )
+#' }
 annulusMap <- function(data,
                        pollutant = "nox",
                        period = "hour",

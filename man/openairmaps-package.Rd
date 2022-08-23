@@ -4,12 +4,17 @@
 \name{openairmaps-package}
 \alias{openairmaps}
 \alias{openairmaps-package}
-\title{openairmaps: Package to Plot Openair Outputs on Static and Leaflet Maps}
+\title{openairmaps: Package to Plot Openair Outputs on Leaflet Maps}
 \description{
-Package to support openair for plotting on various maps. The maps include those available via the ggmap package (e.g., Google Maps) and leaflet maps for plotting directional analysis plots (e.g., Bivariate Polar Plots).
+A tool to combine the air quality data analysis methods of openair with the leaflet mapping system.
 }
 \author{
-\strong{Maintainer}: David Carslaw \email{david.carslaw@york.ac.uk}
+\strong{Maintainer}: Jack Davison \email{davison.jack.jd@gmail.com}
+
+Authors:
+\itemize{
+  \item David Carslaw \email{david.carslaw@york.ac.uk}
+}
 
 }
 \keyword{internal}
