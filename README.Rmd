@@ -28,6 +28,8 @@ devtools::install_github("davidcarslaw/openairmaps")
 
 ## Example
 
+### Pre-built Maps
+
 `openairmaps` makes it simple to place polar plots on an interactive `leaflet` map. A static screenshot is provided below, but if the below code is run in your R session you'll find the map can be scrolled, zoomed and otherwise interacted with.
 
 ```{r example, eval=FALSE}
@@ -73,3 +75,31 @@ polarMap(
   leaflet::mapOptions(...) # etc.
 ```
 
+### `leaflet` Tools
+
+If you are comfortable with `leaflet`, `openairmaps` provides a more flexible method of adding `openair` directional analysis functions; the `addPolarMarkers()` function. This allows you to add a layer of polar plots or other directional analysis plots in a similar way that you add ordinary markers using `leaflet::addMarkers()`. Creating `leaflet` plots in this way allows you better customisation of the output. In the below example a map is generated that allows the user to switch between wind roses and polar plots, for example.
+
+```{r add, eval = FALSE}
+library(leaflet)
+library(openairmaps)
+
+leaflet() %>% 
+  addProviderTiles("CartoDB.Positron") %>% 
+  addPolarMarkers(
+    lng = "longitude", lat = "latitude",
+    data = polar_data, fun = openair::windRose,
+    pollutant = "ws", type = "site",
+    group = "Wind Rose"
+  ) %>% 
+  addPolarMarkers(
+    lng = "longitude", lat = "latitude",
+    data = polar_data, fun = openair::polarPlot,
+    pollutant = "nox", type = "site",
+    group = quickTextHTML("NOx Polar Plot")
+  ) %>% 
+  addLayersControl(
+    baseGroups = quickTextHTML(c("Wind Rose", "NOx Polar Plot"))
+  )
+```
+
+![A more customised `leaflet` output using the `addPolarMakers()` function.](man/figures/README-addMarkers.png)
