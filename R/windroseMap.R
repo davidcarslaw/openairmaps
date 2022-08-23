@@ -1,9 +1,9 @@
 #' Wind rose plots on interactive leaflet maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   \code{windRose}, which includes wind speed (\code{ws}), and wind direction
-#'   (\code{wd}). In addition, \code{data} must include a decimal latitude and
-#'   longitude.
+#'   [openair::windRose()], which includes wind speed (\code{ws}), and wind
+#'   direction (\code{wd}). In addition, \code{data} must include a decimal
+#'   latitude and longitude.
 #' @param latitude The decimal latitude.
 #' @param longitude The decimal longitude.
 #' @param provider The base map(s) to be used. See
@@ -20,7 +20,7 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for \code{windRose}.
+#' @param ... Other arguments for [openair::windRose()].
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom grDevices dev.off png
@@ -29,10 +29,12 @@
 #'
 #' @examples
 #'
+#' \dontrun{
 #' windroseMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",
-#'   x = "ws", type = "site", provider = "Stamen.Toner"
+#'   type = "site", provider = "Stamen.Toner"
 #' )
+#' }
 windroseMap <- function(data,
                         latitude = "lat",
                         longitude = "lon",
