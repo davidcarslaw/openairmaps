@@ -8,7 +8,7 @@
 Data frame with example data from four sites in London in 2009.
 \describe{
 \item{date}{The date and time of the measurement}
-\item{nox, no2}{Pollutant concentrations}
+\item{nox, no2, pm2.5, pm10}{Pollutant concentrations}
 \item{site}{The site name. Useful for use with the \code{type} argument in \code{openairmaps} functions.}
 \item{latitude, longitude}{Decimal latitude and longitude of the sites.}
 \item{site.type}{Site type of the site (either "Urban Traffic" or "Urban Background").}
