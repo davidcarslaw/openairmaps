@@ -12,7 +12,7 @@ site_meta <-
 # import aq data
 raw <- openair::importAURN(site = site_meta$code, year = 2009)
 
-raw <- dplyr::select(raw, date, nox, no2, site)
+raw <- dplyr::select(raw, date, nox, no2, pm2.5, pm10, site)
 
 raw <- dplyr::left_join(raw, dplyr::select(meta, -code), by = "site")
 
