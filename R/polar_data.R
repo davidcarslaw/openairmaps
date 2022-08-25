@@ -1,4 +1,4 @@
-#' Example data for polarMap function
+#' Example data for polar mapping functions
 #'
 #' The \code{polar_data} dataset is provided as an example dataset as part of
 #' the \code{openairmaps} package. The dataset contains hourly measurements of
@@ -28,8 +28,7 @@
 #' @keywords datasets
 #' @examples
 #'
-#' #basic structure
+#' # basic structure
 #' head(polar_data)
-#'
 #'
 NULL

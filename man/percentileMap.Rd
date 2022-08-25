@@ -68,7 +68,6 @@ A leaflet object.
 Percentile roses on interactive leaflet maps
 }
 \examples{
-
 \dontrun{
 percentileMap(polar_data,
   latitude = "latitude", longitude = "longitude",
