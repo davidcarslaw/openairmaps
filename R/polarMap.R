@@ -33,7 +33,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' polarMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",

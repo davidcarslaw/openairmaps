@@ -4,9 +4,9 @@
 \name{openairmaps-package}
 \alias{openairmaps}
 \alias{openairmaps-package}
-\title{openairmaps: Package to Plot Openair Outputs on Leaflet Maps}
+\title{openairmaps: Create Interactive Web Maps of Air Pollution Data}
 \description{
-A tool to combine the air quality data analysis methods of openair with the leaflet mapping system.
+Tools to combine the air quality data analysis methods of 'openair' with the JavaScript 'Leaflet' library. Functionality includes plotting site maps, "directional analysis" figures such as polar plots, and air mass trajectories.
 }
 \author{
 \strong{Maintainer}: Jack Davison \email{davison.jack.jd@gmail.com}

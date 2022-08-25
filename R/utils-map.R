@@ -78,7 +78,7 @@ checkMapPrep <- function(mydata, Names, type, remove.calm = TRUE, remove.neg = T
 
       ## check for wd <0 or > 360
       if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-              mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+        mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
         warning("Wind direction < 0 or > 360; removing these data")
         mydata[[wd]][mydata[[wd]] < 0] <- NA
         mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -261,8 +261,7 @@ prepMapData <- function(data, type, ...) {
 #' @noRd
 
 makeMap <- function(data, icons, provider, longitude, latitude, type, pollutant) {
-
-  provider = unique(provider)
+  provider <- unique(provider)
 
   # data for plotting
   plot_data <-

@@ -62,7 +62,6 @@ A leaflet object.
 Wind rose plots on interactive leaflet maps
 }
 \examples{
-
 \dontrun{
 windroseMap(polar_data,
   latitude = "latitude", longitude = "longitude",

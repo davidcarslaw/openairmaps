@@ -78,7 +78,6 @@ A leaflet object.
 Pollution rose plots on interactive leaflet maps
 }
 \examples{
-
 \dontrun{
 pollroseMap(polar_data,
   latitude = "latitude", longitude = "longitude", statistic = "prop.count",

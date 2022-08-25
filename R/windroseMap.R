@@ -28,7 +28,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' windroseMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",

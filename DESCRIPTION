@@ -1,7 +1,7 @@
 Package: openairmaps
 Type: Package
-Title: Package to Plot Openair Outputs on Leaflet Maps
-Version: 0.3.0
+Title: Create Interactive Web Maps of Air Pollution Data
+Version: 0.3.1
 Authors@R: 
   c(person(given = "Jack",
            family = "Davison",
@@ -11,8 +11,10 @@ Authors@R:
            family = "Carslaw", 
            role = c("aut"), 
            email = "david.carslaw@york.ac.uk"))
-Description: A tool to combine the air quality data analysis methods of openair 
-  with the leaflet mapping system.
+Description: Tools to combine the air quality data analysis methods of 'openair' 
+  with the JavaScript 'Leaflet' library. Functionality includes plotting site 
+  maps, "directional analysis" figures such as polar plots, and air mass 
+  trajectories.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
@@ -25,8 +27,12 @@ Imports:
     purrr,
     magrittr,
     rlang,
-    lubridate
+    lubridate,
+    tibble,
+    stringr,
+    forcats
 Suggests:
     worldmet
+Maintainer: Jack Davison <davison.jack.jd@gmail.com>
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)

@@ -5,9 +5,13 @@
 meta <- openair::importMeta(source = "aurn")
 
 site_meta <-
-  dplyr::filter(meta,
-                grepl(pattern = "Marylebone|Kensington|Bloom|Cromwell Road 2",
-                      meta$site))
+  dplyr::filter(
+    meta,
+    grepl(
+      pattern = "Marylebone|Kensington|Bloom|Cromwell Road 2",
+      meta$site
+    )
+  )
 
 # import aq data
 raw <- openair::importAURN(site = site_meta$code, year = 2009)

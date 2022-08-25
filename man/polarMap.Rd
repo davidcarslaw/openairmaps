@@ -71,7 +71,6 @@ A leaflet object.
 Bivariate polar plots on interactive leaflet maps
 }
 \examples{
-
 \dontrun{
 polarMap(polar_data,
   latitude = "latitude", longitude = "longitude",

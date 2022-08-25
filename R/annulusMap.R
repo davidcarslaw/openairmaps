@@ -36,7 +36,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' annulusMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude", period = "hour",
