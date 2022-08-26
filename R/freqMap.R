@@ -45,7 +45,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' freqMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude", statistic = "mean",

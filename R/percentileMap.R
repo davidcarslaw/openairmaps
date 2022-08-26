@@ -32,7 +32,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' percentileMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude",
@@ -40,19 +39,19 @@
 #' )
 #' }
 percentileMap <- function(data,
-                     pollutant = "nox",
-                     latitude = "lat",
-                     longitude = "lon",
-                     provider = "OpenStreetMap",
-                     type = "default",
-                     cols = "jet",
-                     alpha = 1,
-                     key = FALSE,
-                     iconWidth = 200,
-                     iconHeight = 200,
-                     fig.width = 4,
-                     fig.height = 4,
-                     ...) {
+                          pollutant = "nox",
+                          latitude = "lat",
+                          longitude = "lon",
+                          provider = "OpenStreetMap",
+                          type = "default",
+                          cols = "jet",
+                          alpha = 1,
+                          key = FALSE,
+                          iconWidth = 200,
+                          iconHeight = 200,
+                          fig.width = 4,
+                          fig.height = 4,
+                          ...) {
   . <- NULL
 
   data <-

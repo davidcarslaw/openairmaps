@@ -83,7 +83,6 @@ A leaflet object.
 Polar frequency plots on interactive leaflet maps
 }
 \examples{
-
 \dontrun{
 freqMap(polar_data,
   latitude = "latitude", longitude = "longitude", statistic = "mean",

@@ -23,7 +23,7 @@ addPolarMarkers(
 )
 }
 \arguments{
-\item{map}{a map widget object created from leaflet().}
+\item{map}{a map widget object created from \code{\link[leaflet:leaflet]{leaflet::leaflet()}}.}
 
 \item{lng}{The decimal longitude.}
 
@@ -79,14 +79,13 @@ have more control over groups and layerIds than in "all-in-one" functions
 like \code{\link[=polarMap]{polarMap()}}.
 }
 \examples{
-
 \dontrun{
 library(leaflet)
 library(openair)
 
 leaflet() \%>\%
- addTiles() \%>\%
- addPolarMarkers(
+  addTiles() \%>\%
+  addPolarMarkers(
     data = polar_data,
     lat = "latitude",
     lng = "longitude",
@@ -94,17 +93,17 @@ leaflet() \%>\%
     type = "site",
     fun = windRose,
     group = "Wind Rose"
- ) \%>\%
- addPolarMarkers(
+  ) \%>\%
+  addPolarMarkers(
     data = polar_data,
     lat = "latitude",
     lng = "longitude",
     type = "site",
     group = "Polar Plot"
- ) \%>\%
- addLayersControl(
-   baseGroups = c("Wind Rose", "Polar Plot")
- )
- }
+  ) \%>\%
+  addLayersControl(
+    baseGroups = c("Wind Rose", "Polar Plot")
+  )
+}
 
 }
