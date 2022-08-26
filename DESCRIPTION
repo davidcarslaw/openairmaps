@@ -1,11 +1,11 @@
 Package: openairmaps
 Type: Package
 Title: Create Interactive Web Maps of Air Pollution Data
-Version: 0.3.1
+Version: 0.4.0
 Authors@R: 
   c(person(given = "Jack",
            family = "Davison",
-           role = c("aut", "cre"),
+           role = c("cre", "aut"),
            email = "davison.jack.jd@gmail.com"),
     person(given = "David", 
            family = "Carslaw", 
@@ -33,6 +33,5 @@ Imports:
     forcats
 Suggests:
     worldmet
-Maintainer: Jack Davison <davison.jack.jd@gmail.com>
 RoxygenNote: 7.2.1
 Roxygen: list(markdown = TRUE)

@@ -6,7 +6,7 @@
 #' have more control over groups and layerIds than in "all-in-one" functions
 #' like [polarMap()].
 #'
-#' @param map a map widget object created from leaflet().
+#' @param map a map widget object created from [leaflet::leaflet()].
 #' @param lng The decimal longitude.
 #' @param lat The decimal latitude.
 #' @param layerId The layer id.
