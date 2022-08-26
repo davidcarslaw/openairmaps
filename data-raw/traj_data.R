@@ -1,13 +1,21 @@
 
-# Import trajectory data --------------------------------------------------
+# import trajectories
+traj <- openair::importTraj(site = "london", year = 2010)
 
-traj <- openair::importTraj(site = "london", year = 2009)
+# import data for North Kensington
+kc1 <- openair::importAURN("kc1", year = 2010)
 
-kc1 <- openair::importAURN("kc1", year = 2009)
+kc1 <- dplyr::select(kc1, date, nox, no2, o3, pm2.5, pm10)
 
-aq <- dplyr::select(kc1, date, nox, no2, o3, pm10, pm2.5)
+# now merge with trajectory data by 'date'
+traj <- dplyr::left_join(traj, kc1, by = "date")
 
-traj_data <- dplyr::left_join(traj, aq, by = "date")
+traj_data <-
+  openair::selectByDate(
+    traj,
+    start = "15/4/2010",
+    end = "21/4/2010"
+  )
 
 traj_data <- dplyr::tibble(traj_data)
 

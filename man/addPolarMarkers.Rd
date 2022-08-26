@@ -23,7 +23,7 @@ addPolarMarkers(
 )
 }
 \arguments{
-\item{map}{a map widget object created from leaflet().}
+\item{map}{a map widget object created from \code{\link[leaflet:leaflet]{leaflet::leaflet()}}.}
 
 \item{lng}{The decimal longitude.}
 
