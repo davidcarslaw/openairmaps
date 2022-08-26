@@ -74,7 +74,6 @@ A leaflet object.
 Polar annulus plots on interactive leaflet maps
 }
 \examples{
-
 \dontrun{
 annulusMap(polar_data,
   latitude = "latitude", longitude = "longitude", period = "hour",

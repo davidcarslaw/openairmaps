@@ -3,7 +3,7 @@
 \docType{data}
 \name{polar_data}
 \alias{polar_data}
-\title{Example data for polarMap function}
+\title{Example data for polar mapping functions}
 \format{
 Data frame with example data from four sites in London in 2009.
 \describe{
@@ -34,9 +34,8 @@ example dataset for use with documented examples.
 }
 \examples{
 
-#basic structure
+# basic structure
 head(polar_data)
-
 
 }
 \keyword{datasets}

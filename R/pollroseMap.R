@@ -40,7 +40,6 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' pollroseMap(polar_data,
 #'   latitude = "latitude", longitude = "longitude", statistic = "prop.count",

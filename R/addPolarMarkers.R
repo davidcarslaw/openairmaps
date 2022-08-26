@@ -6,7 +6,7 @@
 #' have more control over groups and layerIds than in "all-in-one" functions
 #' like [polarMap()].
 #'
-#' @param map a map widget object created from leaflet().
+#' @param map a map widget object created from [leaflet::leaflet()].
 #' @param lng The decimal longitude.
 #' @param lat The decimal latitude.
 #' @param layerId The layer id.
@@ -44,14 +44,13 @@
 #' @export
 #'
 #' @examples
-#'
 #' \dontrun{
 #' library(leaflet)
 #' library(openair)
 #'
 #' leaflet() %>%
-#'  addTiles() %>%
-#'  addPolarMarkers(
+#'   addTiles() %>%
+#'   addPolarMarkers(
 #'     data = polar_data,
 #'     lat = "latitude",
 #'     lng = "longitude",
@@ -59,33 +58,30 @@
 #'     type = "site",
 #'     fun = windRose,
 #'     group = "Wind Rose"
-#'  ) %>%
-#'  addPolarMarkers(
+#'   ) %>%
+#'   addPolarMarkers(
 #'     data = polar_data,
 #'     lat = "latitude",
 #'     lng = "longitude",
 #'     type = "site",
 #'     group = "Polar Plot"
-#'  ) %>%
-#'  addLayersControl(
-#'    baseGroups = c("Wind Rose", "Polar Plot")
-#'  )
-#'  }
+#'   ) %>%
+#'   addLayersControl(
+#'     baseGroups = c("Wind Rose", "Polar Plot")
+#'   )
+#' }
 #'
-
-addPolarMarkers <- function(
-    map, lng = NULL, lat = NULL, layerId = NULL, group = NULL, popup,
-    data, fun = openair::polarPlot, pollutant = "nox", type = "default",
-    iconWidth = 200, iconHeight = 200, fig.width = 4, fig.height = 4,
-    ...) {
-
+addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group = NULL, popup,
+                            data, fun = openair::polarPlot, pollutant = "nox", type = "default",
+                            iconWidth = 200, iconHeight = 200, fig.width = 4, fig.height = 4,
+                            ...) {
   . <- NULL
 
-  if(type == "default"){
+  if (type == "default") {
     data <- dplyr::mutate(data, type = "default")
   }
 
-  if(missing(popup)) popup <- type
+  if (missing(popup)) popup <- type
 
   # define plotting function
   args <- list(...)
@@ -113,7 +109,8 @@ addPolarMarkers <- function(
       )
 
       plt <- fun(
-        data, key = FALSE,
+        data,
+        key = FALSE,
         pollutant = pollutant,
         par.settings = list(axis.line = list(col = "transparent")),
         # ...
@@ -167,5 +164,4 @@ addPolarMarkers <- function(
   )
 
   map
-
 }
