@@ -82,16 +82,14 @@ pal <- colorNumeric(palette = "viridis", domain = traj_data$nox)
 map <- leaflet() \%>\%
   addTiles()
 
-for (i in seq(length(unique(traj_data$date)))){
-
-  data = dplyr::filter(traj_data, date == unique(traj_data$date)[i])
+for (i in seq(length(unique(traj_data$date)))) {
+  data <- dplyr::filter(traj_data, date == unique(traj_data$date)[i])
 
   map <- map \%>\%
     addTrajPaths(
       data = data,
       color = pal(data$nox)[1]
     )
-
 }
 
 map
