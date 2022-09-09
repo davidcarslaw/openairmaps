@@ -41,9 +41,10 @@ together correspond to slower moving air masses). Defaults to \code{12}.}
 
 \item{...}{Other arguments to pass to both \code{\link[leaflet:map-layers]{leaflet::addCircleMarkers()}} and
 \code{\link[leaflet:map-layers]{leaflet::addPolylines()}}. If you use the \code{color} argument, it is
-recommended to index the input to avoid issues with plotting the lines
-(i.e., do \code{color = ~ pal(nox)[1]}). Note that \code{opacity} controls
-the opacity of the lines and \code{fillOpacity} the opacity of the markers.}
+important to ensure the vector you supply is of length one to avoid issues
+with \code{\link[leaflet:map-layers]{leaflet::addPolylines()}} (i.e., use \code{color = ~ pal(nox)[1]}).
+Note that \code{opacity} controls the opacity of the lines and
+\code{fillOpacity} the opacity of the markers.}
 }
 \value{
 A leaflet object.
@@ -54,27 +55,45 @@ function in \code{leaflet}, which allows users to add trajectory paths to any
 leaflet map and have more control over groups and layerIds than in
 "all-in-one" functions like \code{\link[=trajMap]{trajMap()}}.
 }
+\details{
+\code{\link[=addTrajPaths]{addTrajPaths()}} can be a powerful way of quickly plotting
+trajectories on a leaflet map, but users should take some care due to any
+additional arguments being passed to both \code{\link[leaflet:map-layers]{leaflet::addCircleMarkers()}} and
+\code{\link[leaflet:map-layers]{leaflet::addPolylines()}}. In particular, users should be weary of the use
+of the \code{color} argument. Specifically, if \code{color} is passed a
+vector of length greater than one, multiple polylines will be drawn on top
+of one another. At best this will affect opacity, but at worst this will
+significantly impact the performance of R and the final leaflet map.
+
+To mitigate this, please ensure that any vector passed to \code{color} is
+of length one. This is simple if you want the whole path to be the same
+colour, but more difficult if you want to colour by a pollutant, for
+example. The easiest way to achieve this is to write a for loop or use
+another iterative approach (e.g. the \code{purrr} package) to add one path
+per arrival date. An example of this is provided in the Examples.
+}
 \examples{
 \dontrun{
 library(leaflet)
-library(openair)
+library(openairmaps)
 
-france <- openair::importTraj("paris", year = 2009) \%>\%
-  openair::selectByDate(
-    start = "15/4/2009",
-    end = "21/4/2009"
-  )
+pal <- colorNumeric(palette = "viridis", domain = traj_data$nox)
 
-uk <- openair::importTraj(year = 2009) \%>\%
-  openair::selectByDate(
-    start = "15/4/2009",
-    end = "21/4/2009"
-  )
+map <- leaflet() \%>\%
+  addTiles()
 
-leaflet() \%>\%
-  addTiles() \%>\%
-  addTrajPaths(data = uk, color = "blue", group = "London, UK") \%>\%
-  addTrajPaths(data = france, color = "red", group = "Paris, France") \%>\%
-  addLayersControl(overlayGroups = c("Paris, France", "London, UK"))
+for (i in seq(length(unique(traj_data$date)))){
+
+  data = dplyr::filter(traj_data, date == unique(traj_data$date)[i])
+
+  map <- map \%>\%
+    addTrajPaths(
+      data = data,
+      color = pal(data$nox)[1]
+    )
+
+}
+
+map
 }
 }
