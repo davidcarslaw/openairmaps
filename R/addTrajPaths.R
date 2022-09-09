@@ -5,27 +5,44 @@
 #' leaflet map and have more control over groups and layerIds than in
 #' "all-in-one" functions like [trajMap()].
 #'
+#' @details [addTrajPaths()] can be a powerful way of quickly plotting
+#'   trajectories on a leaflet map, but users should take some care due to any
+#'   additional arguments being passed to both [leaflet::addCircleMarkers()] and
+#'   [leaflet::addPolylines()]. In particular, users should be weary of the use
+#'   of the \code{color} argument. Specifically, if \code{color} is passed a
+#'   vector of length greater than one, multiple polylines will be drawn on top
+#'   of one another. At best this will affect opacity, but at worst this will
+#'   significantly impact the performance of R and the final leaflet map.
+#'
+#'   To mitigate this, please ensure that any vector passed to \code{color} is
+#'   of length one. This is simple if you want the whole path to be the same
+#'   colour, but more difficult if you want to colour by a pollutant, for
+#'   example. The easiest way to achieve this is to write a for loop or use
+#'   another iterative approach (e.g. the \code{purrr} package) to add one path
+#'   per arrival date. An example of this is provided in the Examples.
+#'
 #' @param map a map widget object created from [leaflet::leaflet()].
 #' @param lng The decimal longitude.
 #' @param lat The decimal latitude.
 #' @param layerId The layer id.
 #' @param group the name of the group the newly created layers should belong to
-#'  (for [leaflet::clearGroup()] and [leaflet::addLayersControl()] purposes).
-#'  Human-friendly group names are permitted–they need not be short,
-#'  identifier-style names. Any number of layers and even different types of
-#'  layers (e.g. markers and polygons) can share the same group name.
+#'   (for [leaflet::clearGroup()] and [leaflet::addLayersControl()] purposes).
+#'   Human-friendly group names are permitted–they need not be short,
+#'   identifier-style names. Any number of layers and even different types of
+#'   layers (e.g. markers and polygons) can share the same group name.
 #' @param data Data frame, the result of importing a trajectory file using
-#'  [openair::importTraj()].
+#'   [openair::importTraj()].
 #' @param npoints A dot is placed every \code{npoints} along each full
-#'  trajectory. For hourly back trajectories points are plotted every
-#'  \code{npoints} hours. This helps to understand where the air masses were at
-#'  particular times and get a feel for the speed of the air (points closer
-#'  together correspond to slower moving air masses). Defaults to \code{12}.
+#'   trajectory. For hourly back trajectories points are plotted every
+#'   \code{npoints} hours. This helps to understand where the air masses were at
+#'   particular times and get a feel for the speed of the air (points closer
+#'   together correspond to slower moving air masses). Defaults to \code{12}.
 #' @param ... Other arguments to pass to both [leaflet::addCircleMarkers()] and
-#'  [leaflet::addPolylines()]. If you use the \code{color} argument, it is
-#'  recommended to index the input to avoid issues with plotting the lines
-#'  (i.e., do \code{color = ~ pal(nox)[1]}). Note that \code{opacity} controls
-#'  the opacity of the lines and \code{fillOpacity} the opacity of the markers.
+#'   [leaflet::addPolylines()]. If you use the \code{color} argument, it is
+#'   important to ensure the vector you supply is of length one to avoid issues
+#'   with [leaflet::addPolylines()] (i.e., use \code{color = ~ pal(nox)[1]}).
+#'   Note that \code{opacity} controls the opacity of the lines and
+#'   \code{fillOpacity} the opacity of the markers.
 #' @return A leaflet object.
 #' @import leaflet
 #' @importFrom rlang .data
@@ -36,25 +53,24 @@
 #' @examples
 #' \dontrun{
 #' library(leaflet)
-#' library(openair)
+#' library(openairmaps)
 #'
-#' france <- openair::importTraj("paris", year = 2009) %>%
-#'   openair::selectByDate(
-#'     start = "15/4/2009",
-#'     end = "21/4/2009"
-#'   )
+#' pal <- colorNumeric(palette = "viridis", domain = traj_data$nox)
 #'
-#' uk <- openair::importTraj(year = 2009) %>%
-#'   openair::selectByDate(
-#'     start = "15/4/2009",
-#'     end = "21/4/2009"
-#'   )
+#' map <- leaflet() %>%
+#'   addTiles()
 #'
-#' leaflet() %>%
-#'   addTiles() %>%
-#'   addTrajPaths(data = uk, color = "blue", group = "London, UK") %>%
-#'   addTrajPaths(data = france, color = "red", group = "Paris, France") %>%
-#'   addLayersControl(overlayGroups = c("Paris, France", "London, UK"))
+#' for (i in seq(length(unique(traj_data$date)))) {
+#'   data <- dplyr::filter(traj_data, date == unique(traj_data$date)[i])
+#'
+#'   map <- map %>%
+#'     addTrajPaths(
+#'       data = data,
+#'       color = pal(data$nox)[1]
+#'     )
+#' }
+#'
+#' map
 #' }
 addTrajPaths <-
   function(map,
@@ -66,7 +82,20 @@ addTrajPaths <-
            npoints = 12,
            ...) {
 
-    # get factor version of date to reorder by "colour"
+    # check opts
+    opts <- list(...)
+    if ("color" %in% names(opts)) {
+      if (length(opts$color) > 1) {
+        stop("Length of 'color' argument greater than one.")
+      }
+    }
+    if ("fillColor" %in% names(opts)) {
+      if (length(opts$fillColor) > 1) {
+        stop("Length of 'fillColor' argument greater than one.")
+      }
+    }
+
+    # get factor version of date
     data$datef <- factor(data$date)
 
     # labels

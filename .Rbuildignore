@@ -10,3 +10,5 @@ README_files
 README_cache
 ^README\.Rmd$
 ^\.github$
+^cran-comments\.md$
+^LICENSE\.md$

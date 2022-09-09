@@ -1,7 +1,7 @@
 Package: openairmaps
 Type: Package
 Title: Create Interactive Web Maps of Air Pollution Data
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: 
   c(person(given = "Jack",
            family = "Davison",
@@ -15,7 +15,7 @@ Description: Tools to combine the air quality data analysis methods of 'openair'
   with the JavaScript 'Leaflet' library. Functionality includes plotting site 
   maps, "directional analysis" figures such as polar plots, and air mass 
   trajectories.
-License: GPL (>= 2)
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Depends:
