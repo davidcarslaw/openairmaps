@@ -156,8 +156,7 @@ clustdata <- trajCluster(traj_data)
 trajMap(
   data = clustdata$data$traj,
   colour = "cluster",
-  control
-  = "cluster",
+  control = "cluster",
   provider = "CartoDB.Positron"
 )
 ```
@@ -198,8 +197,7 @@ leaflet() %>%
   addTrajPaths(data = france,
                color = "red",
                group = "Paris, France") %>%
-  addLayersControl(overl
-                   ayGroups = c("Paris, France", "London, UK"))
+  addLayersControl(overlayGroups = c("Paris, France", "London, UK"))
 ```
 
 ![A more customised `leaflet` output using the `addTrajPaths()`
