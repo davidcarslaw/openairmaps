@@ -59,6 +59,7 @@ trajLevelMap <- function(data, lon = "lon", lat = "lat", pollutant = "nox",
   if (statistic == "frequency") {
     title <- "percentage<br>trajectories"
     style <- leaflet::labelFormat(between = " to ", suffix = "%")
+    data[[pollutant]] <- pollutant
   }
   if (statistic == "difference") {
     lastnum <- stringr::str_sub(percentile, 2, 2)
