@@ -6,8 +6,8 @@
 \usage{
 trajMap(
   data,
-  lon = "lon",
-  lat = "lat",
+  longitude = "lon",
+  latitude = "lat",
   colour,
   control = "default",
   cols = "default",
@@ -20,9 +20,9 @@ trajMap(
 \item{data}{Data frame, the result of importing a trajectory file using
 \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{lon}{Column containing the longitude, as a decimal.}
+\item{longitude}{Column containing the longitude, as a decimal.}
 
-\item{lat}{Column containing the latitude, as a decimal.}
+\item{latitude}{Column containing the latitude, as a decimal.}
 
 \item{colour}{Column to be used for colouring each trajectory. This column
 may be numeric, character or factor. This will commonly be a pollutant

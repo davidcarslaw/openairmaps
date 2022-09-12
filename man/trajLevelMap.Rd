@@ -6,8 +6,8 @@
 \usage{
 trajLevelMap(
   data,
-  lon = "lon",
-  lat = "lat",
+  longitude = "lon",
+  latitude = "lat",
   pollutant = "nox",
   statistic = "frequency",
   percentile = 90,
@@ -21,9 +21,9 @@ trajLevelMap(
 \item{data}{Data frame, the result of importing a trajectory file using
 \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{lon}{Column containing the longitude, as a decimal.}
+\item{longitude}{Column containing the longitude, as a decimal.}
 
-\item{lat}{Column containing the latitude, as a decimal.}
+\item{latitude}{Column containing the latitude, as a decimal.}
 
 \item{pollutant}{Pollutant to be plotted.}
 

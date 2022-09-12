@@ -5,8 +5,8 @@
 #'
 #' @param data Data frame, the result of importing a trajectory file using
 #'   [openair::importTraj()].
-#' @param lon Column containing the longitude, as a decimal.
-#' @param lat Column containing the latitude, as a decimal.
+#' @param longitude Column containing the longitude, as a decimal.
+#' @param latitude Column containing the latitude, as a decimal.
 #' @param pollutant Pollutant to be plotted.
 #' @param statistic By default the function will plot the trajectory
 #'   frequencies. There are also various ways of plotting concentrations.
@@ -48,10 +48,17 @@
 #' trajLevelMap(traj_data, pollutant = "pm2.5", statistic = "pscf", min.bin = 10)
 #' }
 #'
-trajLevelMap <- function(data, lon = "lon", lat = "lat", pollutant = "nox",
-                         statistic = "frequency", percentile = 90, min.bin = 1,
-                         cols = "default", alpha = .5,
-                         provider = "OpenStreetMap") {
+trajLevelMap <-
+  function(data,
+           longitude = "lon",
+           latitude = "lat",
+           pollutant = "nox",
+           statistic = "frequency",
+           percentile = 90,
+           min.bin = 1,
+           cols = "default",
+           alpha = .5,
+           provider = "OpenStreetMap") {
 
   # get titles/legend styles
 
@@ -93,8 +100,8 @@ trajLevelMap <- function(data, lon = "lon", lat = "lat", pollutant = "nox",
   png(filename = paste0(tempdir(), "/temp.png"))
   tl <- openair::trajLevel(
     mydata = data,
-    lon = lon,
-    lat = lat,
+    lon = longitude,
+    lat = latitude,
     pollutant = pollutant,
     statistic = statistic,
     percentile = percentile,
