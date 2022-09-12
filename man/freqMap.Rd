@@ -85,8 +85,9 @@ Polar frequency plots on interactive leaflet maps
 \examples{
 \dontrun{
 freqMap(polar_data,
-  latitude = "latitude", longitude = "longitude", statistic = "mean",
-  type = "site", provider = "Stamen.Toner"
+  statistic = "mean",
+  type = "site",
+  provider = "Stamen.Toner"
 )
 }
 }
