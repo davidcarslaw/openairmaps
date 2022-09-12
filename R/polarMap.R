@@ -35,8 +35,9 @@
 #' @examples
 #' \dontrun{
 #' polarMap(polar_data,
-#'   latitude = "latitude", longitude = "longitude",
-#'   x = "ws", type = "site", provider = "Stamen.Toner"
+#'   x = "ws",
+#'   type = "site",
+#'   provider = "Stamen.Toner"
 #' )
 #' }
 polarMap <- function(data,

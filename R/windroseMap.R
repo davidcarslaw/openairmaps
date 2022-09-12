@@ -30,8 +30,8 @@
 #' @examples
 #' \dontrun{
 #' windroseMap(polar_data,
-#'   latitude = "latitude", longitude = "longitude",
-#'   type = "site", provider = "Stamen.Toner"
+#'   type = "site",
+#'   provider = "Stamen.Toner"
 #' )
 #' }
 windroseMap <- function(data,

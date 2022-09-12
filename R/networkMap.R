@@ -33,7 +33,11 @@
 #' }
 #'
 networkMap <-
-  function(source = "aurn", control, date = Sys.Date(), cluster = TRUE, provider = "OpenStreetMap") {
+  function(source = "aurn",
+           control,
+           date = Sys.Date(),
+           cluster = TRUE,
+           provider = "OpenStreetMap") {
     date <- as.character(date)
     date <- lubridate::ymd(date, tz = "GMT")
     if (source == "europe") date <- lubridate::force_tz(date, "UTC")

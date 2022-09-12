@@ -76,8 +76,9 @@ Polar annulus plots on interactive leaflet maps
 \examples{
 \dontrun{
 annulusMap(polar_data,
-  latitude = "latitude", longitude = "longitude", period = "hour",
-  type = "site", provider = "Stamen.Toner"
+  period = "hour",
+  type = "site",
+  provider = "Stamen.Toner"
 )
 }
 }

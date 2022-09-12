@@ -34,8 +34,8 @@
 #' @examples
 #' \dontrun{
 #' percentileMap(polar_data,
-#'   latitude = "latitude", longitude = "longitude",
-#'   type = "site", provider = "Stamen.Toner"
+#'   type = "site",
+#'   provider = "Stamen.Toner"
 #' )
 #' }
 percentileMap <- function(data,

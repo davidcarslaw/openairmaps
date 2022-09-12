@@ -80,8 +80,9 @@ Pollution rose plots on interactive leaflet maps
 \examples{
 \dontrun{
 pollroseMap(polar_data,
-  latitude = "latitude", longitude = "longitude", statistic = "prop.count",
-  type = "site", provider = "Stamen.Toner"
+  statistic = "prop.count",
+  type = "site",
+  provider = "Stamen.Toner"
 )
 }
 }
