@@ -11,10 +11,10 @@ Authors@R:
            family = "Carslaw", 
            role = c("aut"), 
            email = "david.carslaw@york.ac.uk"))
-Description: Tools to combine the air quality data analysis methods of 'openair' 
-  with the JavaScript 'Leaflet' library. Functionality includes plotting site 
-  maps, "directional analysis" figures such as polar plots, and air mass 
-  trajectories.
+Description: Combine the air quality data analysis methods of 'openair' 
+  with the JavaScript 'Leaflet' (<https://leafletjs.com/>) library. 
+  Functionality includes plotting site maps, "directional analysis" 
+  figures such as polar plots, and air mass trajectories.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

@@ -20,7 +20,10 @@ checkMapPrep <- function(mydata, Names, type, remove.calm = TRUE, remove.neg = T
 
   if (any(!matching)) {
     ## not all variables are present
-    stop(cat("Can't find the variable(s)", varNames[!matching], "\n"))
+    stop(
+      "Can't find the variable(s): ",
+      paste(varNames[!matching], collapse = ", "), "\n"
+    )
   }
 
   ## add type to names if not in pre-defined list
