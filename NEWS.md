@@ -1,3 +1,21 @@
+# openairmaps 0.4.3
+
+## Features
+
+* `trajLevelMap()` now contains the `lat.inc` and `lon.inc` arguments.
+
+## Refactoring
+
+* `polar_data` column names changed from "latitude" to "longitude" to "lat" and "lon" to reflect the defaults of the `polarMap()` family.
+
+* `trajMap()` and `trajLevelMap()` now use the argument names "latitude" and "longitude" to match those of the `polarMap()` family.
+
+# openairmaps 0.4.2 (2022-09-12)
+
+* `trajLevelMap()` now works where `statistic = "frequency"` without a "pollutant".
+
+## Breaking Changes
+
 # openairmaps 0.4.1 (2022-09-09)
 
 ## Features
