@@ -26,6 +26,8 @@
 #'   [openair::trajLevel()] for more information.
 #' @param percentile For [openair::trajLevel()]. The percentile concentration of
 #'   \code{pollutant} against which the all trajectories are compared.
+#' @param lon.inc The longitude-interval to be used for binning data.
+#' @param lat.inc The latitude-interval to be used for binning data.
 #' @param min.bin The minimum number of unique points in a grid cell. Counts
 #'   below \code{min.bin} are set as missing.
 #' @param cols Colours to be used for plotting. Options include
@@ -55,6 +57,8 @@ trajLevelMap <-
            pollutant = "nox",
            statistic = "frequency",
            percentile = 90,
+           lon.inc = 1,
+           lat.inc = 1,
            min.bin = 1,
            cols = "default",
            alpha = .5,
@@ -105,6 +109,8 @@ trajLevelMap <-
     pollutant = pollutant,
     statistic = statistic,
     percentile = percentile,
+    lat.inc = lat.inc,
+    lon.inc = lon.inc,
     min.bin = min.bin
   )
   dev.off()
@@ -164,10 +170,10 @@ trajLevelMap <-
   map %>%
     leaflet::addRectangles(
       data = data,
-      lng1 = data[["xgrid"]] - .5,
-      lng2 = data[["xgrid"]] + .5,
-      lat1 = data[["ygrid"]] - .5,
-      lat2 = data[["ygrid"]] + .5,
+      lng1 = data[["xgrid"]] - (lon.inc/2),
+      lng2 = data[["xgrid"]] + (lon.inc/2),
+      lat1 = data[["ygrid"]] - (lat.inc/2),
+      lat2 = data[["ygrid"]] + (lat.inc/2),
       color = "white", weight = 1,
       fillOpacity = alpha,
       fillColor = pal(data[[pollutant]]),
