@@ -28,5 +28,8 @@ met <- dplyr::select(met, date, wd, ws, visibility, air_temp)
 # join
 polar_data <- dplyr::left_join(raw, met, by = "date")
 
+# rename
+polar_data <- dplyr::rename(polar_data, lat = latitude, lon = longitude)
+
 # "save"
 usethis::use_data(polar_data, overwrite = TRUE)
