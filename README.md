@@ -37,8 +37,6 @@ library(openairmaps)
 
 polarMap(
   polar_data, 
-  latitude = "latitude", 
-  longitude = "longitude",
   type = "site"
 )
 ```
@@ -56,8 +54,6 @@ annulusMap(
   polar_data,
   pollutant = c("no2", "nox"),
   provider = c("CartoDB.Positron", "OpenStreetMap"),
-  latitude = "latitude", 
-  longitude = "longitude",
   type = "site"
 )
 ```
@@ -75,8 +71,6 @@ polarMap(
   polar_data,
   pollutant = c("no2", "nox"),
   provider = c("CartoDB.Positron", "OpenStreetMap"),
-  latitude = "latitude",
-  longitude = "longitude",
   type = "site"
 ) %>%
   leaflet::popupOptions(...) %>%
@@ -101,8 +95,8 @@ library(leaflet)
 leaflet() %>%
   addProviderTiles("CartoDB.Positron") %>%
   addPolarMarkers(
-    lng = "longitude",
-    lat = "latitude",
+    lng = "lon",
+    lat = "lat",
     data = polar_data,
     fun = openair::windRose,
     pollutant = "ws",
@@ -110,8 +104,8 @@ leaflet() %>%
     group = "Wind Rose"
   ) %>%
   addPolarMarkers(
-    lng = "longitude",
-    lat = "latitude",
+    lng = "lon",
+    lat = "lat",
     data = polar_data,
     fun = openair::polarPlot,
     pollutant = "nox",
