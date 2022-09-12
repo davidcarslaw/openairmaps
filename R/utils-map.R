@@ -198,6 +198,9 @@ create_icons <-
     # where to write files
     icon_dir <- tempdir()
 
+    # drop missing data
+    data <- tidyr::drop_na(data, .data[[pollutant]])
+
     # go through all sites and make some plot
     data %>%
       dplyr::group_split(dplyr::across(dplyr::all_of(type))) %>%
@@ -250,7 +253,7 @@ prepMapData <- function(data, type, ...) {
   data <- openair::cutData(data, type)
 
   # remove missing data
-  data <- na.omit(data)
+  # data <- na.omit(data)
 
   # check to see if variables exist in data
   if (length(intersect(vars, names(data))) != length(vars)) {
@@ -269,6 +272,7 @@ makeMap <- function(data, icons, provider, longitude, latitude, type, pollutant)
   # data for plotting
   plot_data <-
     dplyr::group_by(data, .data[[type]]) %>%
+    dplyr::mutate(dplyr::across(dplyr::any_of(pollutant), ~ mean(is.na(.x)))) %>%
     dplyr::slice(n = 1) %>%
     dplyr::arrange(.data[[type]])
 
@@ -286,13 +290,17 @@ makeMap <- function(data, icons, provider, longitude, latitude, type, pollutant)
 
   # add markers
   for (i in seq(length(icons))) {
+    # only plot markers where there is data
+    plotdat <- dplyr::filter(plot_data,
+                             .data[[sort(pollutant)[[i]]]] != 1)
+
     m <- leaflet::addMarkers(
       m,
-      data = plot_data,
-      lng = plot_data[[longitude]],
-      lat = plot_data[[latitude]],
+      data = plotdat,
+      lng = plotdat[[longitude]],
+      lat = plotdat[[latitude]],
       icon = icons[[i]],
-      popup = plot_data[[type]],
+      popup = plotdat[[type]],
       group = sort(pollutant)[[i]] %>% quickTextHTML()
     )
   }
