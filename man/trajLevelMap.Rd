@@ -16,6 +16,7 @@ trajLevelMap(
   min.bin = 1,
   cols = "default",
   alpha = 0.5,
+  tile.border = NA,
   provider = "OpenStreetMap"
 )
 }
@@ -64,6 +65,9 @@ colour names recognised by R (type \code{\link[grDevices:colors]{grDevices::colo
 list). An example would be \code{cols = c("yellow", "green", "blue")}.}
 
 \item{alpha}{Opacity of the tiles. Must be between \code{0} and \code{1}.}
+
+\item{tile.border}{Colour to use for the border of binned tiles. Defaults to
+\code{NA}, which draws no border.}
 
 \item{provider}{The base map(s) to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list

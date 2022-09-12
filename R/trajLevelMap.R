@@ -37,6 +37,8 @@
 #'   colour names recognised by R (type [grDevices::colours()] to see the full
 #'   list). An example would be \code{cols = c("yellow", "green", "blue")}.
 #' @param alpha Opacity of the tiles. Must be between \code{0} and \code{1}.
+#' @param tile.border Colour to use for the border of binned tiles. Defaults to
+#'   \code{NA}, which draws no border.
 #' @param provider The base map(s) to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
@@ -62,6 +64,7 @@ trajLevelMap <-
            min.bin = 1,
            cols = "default",
            alpha = .5,
+           tile.border = NA,
            provider = "OpenStreetMap") {
 
   # get titles/legend styles
@@ -174,7 +177,8 @@ trajLevelMap <-
       lng2 = data[["xgrid"]] + (lon.inc/2),
       lat1 = data[["ygrid"]] - (lat.inc/2),
       lat2 = data[["ygrid"]] + (lat.inc/2),
-      color = "white", weight = 1,
+      color = tile.border,
+      weight = 1,
       fillOpacity = alpha,
       fillColor = pal(data[[pollutant]]),
       popup = data[["lab"]],
