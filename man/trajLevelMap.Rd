@@ -11,6 +11,8 @@ trajLevelMap(
   pollutant = "nox",
   statistic = "frequency",
   percentile = 90,
+  lon.inc = 1,
+  lat.inc = 1,
   min.bin = 1,
   cols = "default",
   alpha = 0.5,
@@ -46,6 +48,10 @@ Simplified Quantitative Transport Bias Analysis is used. See "details" of
 
 \item{percentile}{For \code{\link[openair:trajLevel]{openair::trajLevel()}}. The percentile concentration of
 \code{pollutant} against which the all trajectories are compared.}
+
+\item{lon.inc}{The longitude-interval to be used for binning data.}
+
+\item{lat.inc}{The latitude-interval to be used for binning data.}
 
 \item{min.bin}{The minimum number of unique points in a grid cell. Counts
 below \code{min.bin} are set as missing.}
