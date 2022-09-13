@@ -26,6 +26,12 @@ The goal of `{openairmaps}` is to combine the robust analytical methods found in
 
 ## Installation
 
+You can install the release version `{openairmaps}` from CRAN with:
+
+```{r}
+install.packages("openairmaps")
+```
+
 You can install the development version of `{openairmaps}` from [GitHub](https://github.com/) with:
 
 ``` r
