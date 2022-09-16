@@ -56,124 +56,131 @@ trajMap <-
            npoints = 12,
            provider = "OpenStreetMap") {
 
-  # make lat/lon easier to use
-  names(data)[names(data) == longitude] <- "lon"
-  names(data)[names(data) == latitude] <- "lat"
+    # make lat/lon easier to use
+    names(data)[names(data) == longitude] <- "lon"
+    names(data)[names(data) == latitude] <- "lat"
 
-  # get factor version of date to reorder by "colour"
-  data$datef <- factor(data$date)
+    # default colour is black
+    fixedcol <- "black"
 
-  # if no "control", get a fake column
-  if (control == "default") data$default <- "default"
+    # get factor version of date to reorder by "colour"
+    data$datef <- factor(data$date)
 
-  # initialise map
-  map <- leaflet::leaflet() %>%
-    leaflet::addProviderTiles(provider = provider)
+    # if no "control", get a fake column
+    if (control == "default") data$default <- "default"
 
-  # if "colour", create colour palette
-  if (!missing(colour)) {
-    data$datef <- forcats::fct_reorder(data$datef, data[[colour]], .desc = F, na.rm = T)
-    data <- dplyr::arrange(data, .data$datef)
+    # initialise map
+    map <- leaflet::leaflet() %>%
+      leaflet::addProviderTiles(provider = provider)
 
-    if ("factor" %in% class(data[[colour]]) | "character" %in% class(data[[colour]])) {
-      pal <- leaflet::colorFactor(
-        palette = openair::openColours(scheme = cols, n = length(unique(data[[colour]]))),
-        domain = data[[colour]]
-      )
-    } else {
-      pal <- leaflet::colorNumeric(
-        palette = openair::openColours(scheme = cols),
-        domain = data[[colour]]
-      )
+    # if "colour", create colour palette
+    if (!missing(colour)) {
+      if(colour %in% names(data)){
+        data$datef <- forcats::fct_reorder(data$datef, data[[colour]], .desc = F, na.rm = T)
+        data <- dplyr::arrange(data, .data$datef)
+
+        if ("factor" %in% class(data[[colour]]) | "character" %in% class(data[[colour]])) {
+          pal <- leaflet::colorFactor(
+            palette = openair::openColours(scheme = cols, n = length(unique(data[[colour]]))),
+            domain = data[[colour]]
+          )
+        } else {
+          pal <- leaflet::colorNumeric(
+            palette = openair::openColours(scheme = cols),
+            domain = data[[colour]]
+          )
+        }
+      } else {
+        fixedcol <- colour
+      }
     }
-  } else {
-    if (cols == "default") {
-      # if no "colours" or "cols", use black
-      cols <- "black"
-    }
-  }
 
-  # make labels
-  data <- dplyr::mutate(
-    data,
-    lab = stringr::str_glue("<b>Arrival Date:</b> {date}<br>
+    # make labels
+    data <- dplyr::mutate(
+      data,
+      lab = stringr::str_glue("<b>Arrival Date:</b> {date}<br>
                              <b>Trajectory Date:</b> {date2}<br>
                              <b>Lat:</b> {lat} | <b>Lon:</b> {lon}<br>
                              <b>Height:</b> {height} m | <b>Pressure:</b> {pressure} Pa")
-  )
-
-  if (!missing(colour)) {
-    data$lab <- paste(
-      data$lab,
-      paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
-      sep = "<br>"
     )
-  }
 
-  # iterate over columns in "control" column
-  for (j in seq(length(unique(data[[control]])))) {
-
-    # get jth instance of "control"
-    data2 <- dplyr::filter(data, .data[[control]] == unique(data[[control]])[[j]])
-
-    # iterate over different arrival dates to plot separate trajectories
-    for (i in seq(length(unique(data2$datef)))) {
-      # get line/points data
-      ldata <- dplyr::filter(data2, .data$datef == unique(data2$datef)[[i]])
-      pdata <- dplyr::filter(ldata, .data$hour.inc %% npoints == 0)
-
-      # apply color pal if it exists
-      if (!missing(colour)) {
-        lcolors <- pal(ldata[[colour]])[1]
-        pcolors <- pal(pdata[[colour]])
-      } else {
-        lcolors <- cols
-        pcolors <- cols
+    if (!missing(colour)) {
+      if (colour %in% names(data)) {
+        data$lab <- paste(
+          data$lab,
+          paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
+          sep = "<br>"
+        )
       }
+    }
 
-      # add points/lines to plot
+    # iterate over columns in "control" column
+    for (j in seq(length(unique(data[[control]])))) {
+
+      # get jth instance of "control"
+      data2 <- dplyr::filter(data, .data[[control]] == unique(data[[control]])[[j]])
+
+      # iterate over different arrival dates to plot separate trajectories
+      for (i in seq(length(unique(data2$datef)))) {
+        # get line/points data
+        ldata <- dplyr::filter(data2, .data$datef == unique(data2$datef)[[i]])
+        pdata <- dplyr::filter(ldata, .data$hour.inc %% npoints == 0)
+
+        lcolors <- fixedcol
+        pcolors <- fixedcol
+        # apply color pal if it exists
+        if (!missing(colour)) {
+          if (colour %in% names(data)) {
+            lcolors <- pal(ldata[[colour]])[1]
+            pcolors <- pal(pdata[[colour]])
+          }
+        }
+
+        # add points/lines to plot
+        map <-
+          leaflet::addPolylines(
+            map = map,
+            data = ldata,
+            lng = ldata$lon,
+            lat = ldata$lat,
+            opacity = alpha,
+            weight = 2,
+            color = lcolors,
+            group = as.character(unique(data[[control]])[[j]])
+          ) %>%
+          leaflet::addCircleMarkers(
+            data = pdata,
+            radius = 3, stroke = F,
+            lng = pdata$lon,
+            lat = pdata$lat,
+            fillOpacity = alpha,
+            color = pcolors,
+            group = as.character(unique(data[[control]])[[j]]),
+            popup = pdata$lab
+          )
+      }
+    }
+
+    # if "group" exists, add a legend
+    if (!missing(colour)) {
+      if (colour %in% names(data)) {
+        map <-
+          leaflet::addLegend(map,
+                             title = quickTextHTML(colour),
+                             pal = pal,
+                             values = data[[colour]]
+          )
+      }
+    }
+
+    # if "control" exists, add the layer control menu
+    if (control != "default") {
       map <-
-        leaflet::addPolylines(
-          map = map,
-          data = ldata,
-          lng = ldata$lon,
-          lat = ldata$lat,
-          opacity = alpha,
-          weight = 2,
-          color = lcolors,
-          group = as.character(unique(data[[control]])[[j]])
-        ) %>%
-        leaflet::addCircleMarkers(
-          data = pdata,
-          radius = 3, stroke = F,
-          lng = pdata$lon,
-          lat = pdata$lat,
-          fillOpacity = alpha,
-          color = pcolors,
-          group = as.character(unique(data[[control]])[[j]]),
-          popup = ldata$lab
+        leaflet::addLayersControl(
+          map,
+          overlayGroups = as.character(unique(data[[control]]))
         )
     }
-  }
 
-  # if "group" exists, add a legend
-  if (!missing(colour)) {
-    map <-
-      leaflet::addLegend(map,
-        title = quickTextHTML(colour),
-        pal = pal,
-        values = data[[colour]]
-      )
+    map
   }
-
-  # if "control" exists, add the layer control menu
-  if (control != "default") {
-    map <-
-      leaflet::addLayersControl(
-        map,
-        overlayGroups = as.character(unique(data[[control]]))
-      )
-  }
-
-  map
-}
