@@ -84,6 +84,11 @@ trajMap <-
             palette = openair::openColours(scheme = cols, n = length(unique(data[[colour]]))),
             domain = data[[colour]]
           )
+        } else if ("POSIXct" %in% class(data[[colour]])) {
+          pal <- leaflet::colorNumeric(
+            palette = openair::openColours(scheme = cols),
+            domain = as.numeric(data[[colour]], origin = "1964-10-22")
+          )
         } else {
           pal <- leaflet::colorNumeric(
             palette = openair::openColours(scheme = cols),
@@ -105,7 +110,7 @@ trajMap <-
     )
 
     if (!missing(colour)) {
-      if (colour %in% names(data)) {
+      if (colour %in% names(data) & !colour %in% c("date", "date2", "lat", "lon", "height", "pressure")) {
         data$lab <- paste(
           data$lab,
           paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
@@ -164,12 +169,26 @@ trajMap <-
     # if "group" exists, add a legend
     if (!missing(colour)) {
       if (colour %in% names(data)) {
-        map <-
-          leaflet::addLegend(map,
-                             title = quickTextHTML(colour),
-                             pal = pal,
-                             values = data[[colour]]
-          )
+        if ("POSIXct" %in% class(data[[colour]])){
+
+          map <-
+            leaflet::addLegend(map,
+                               title = quickTextHTML(colour),
+                               pal = pal,
+                               values = as.numeric(data[[colour]], origin = "1964-10-22"),
+                               labFormat = leaflet::labelFormat(
+                                 transform = function(x) as.Date.POSIXct(x, origin = "1964-10-22")
+                               )
+            )
+
+        } else {
+          map <-
+            leaflet::addLegend(map,
+                               title = quickTextHTML(colour),
+                               pal = pal,
+                               values = data[[colour]]
+            )
+        }
       }
     }
 
