@@ -28,7 +28,7 @@ The goal of `{openairmaps}` is to combine the robust analytical methods found in
 
 You can install the release version of `{openairmaps}` from CRAN with:
 
-```{r}
+``` r
 install.packages("openairmaps")
 ```
 
@@ -38,6 +38,17 @@ You can install the development version of `{openairmaps}` from [GitHub](https:/
 # install.packages("devtools")
 devtools::install_github("davidcarslaw/openairmaps")
 ```
+
+## Network Visualisation
+
+`{openairmaps}` can easily visualise any of the air quality networks made available by `{openair}`. This opinionated function creates helpful popups for readers to learn more about the different sites, and can optionally employ a "layer control" menu to allow users to toggle on/off different site types, zones, pollutants, and so on.
+
+```{r network, eval = FALSE}
+library(openairmaps)
+networkMap(source = "aurn")
+```
+
+![A screenshot of `networkMap()` output.](man/figures/README-networkmap.png)
 
 ## Directional Analysis
 
