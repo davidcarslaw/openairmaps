@@ -14,7 +14,7 @@ highly capable `{leaflet}` package.
 
 ## Installation
 
-You can install the release version `{openairmaps}` from CRAN with:
+You can install the release version of `{openairmaps}` from CRAN with:
 
 ``` r
 install.packages("openairmaps")
