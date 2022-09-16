@@ -1,3 +1,7 @@
+# openairmaps (development version)
+
+* Fixed issue with `trajMap()` that would cause user-defined colours not to work.
+
 # openairmaps 0.4.3
 
 ## Features
