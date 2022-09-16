@@ -28,6 +28,22 @@ You can install the development version of `{openairmaps}` from
 devtools::install_github("davidcarslaw/openairmaps")
 ```
 
+## Network Visualisation
+
+`{openairmaps}` can easily visualise any of the air quality networks
+made available by `{openair}`. This opinionated function creates helpful
+popups for readers to learn more about the different sites, and can
+optionally employ a “layer control” menu to allow users to toggle on/off
+different site types, zones, pollutants, and so on.
+
+``` r
+library(openairmaps)
+networkMap(source = "aurn")
+```
+
+![A screenshot of `networkMap()`
+output.](man/figures/README-networkmap.png)
+
 ## Directional Analysis
 
 ### Pre-built Maps
