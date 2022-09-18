@@ -75,7 +75,7 @@ trajMap <-
 
     # if "colour", create colour palette
     if (!missing(colour)) {
-      if(colour %in% names(data)){
+      if (colour %in% names(data)) {
         data$datef <- forcats::fct_reorder(data$datef, data[[colour]], .desc = F, na.rm = T)
         data <- dplyr::arrange(data, .data$datef)
 
@@ -169,24 +169,22 @@ trajMap <-
     # if "group" exists, add a legend
     if (!missing(colour)) {
       if (colour %in% names(data)) {
-        if ("POSIXct" %in% class(data[[colour]])){
-
+        if ("POSIXct" %in% class(data[[colour]])) {
           map <-
             leaflet::addLegend(map,
-                               title = quickTextHTML(colour),
-                               pal = pal,
-                               values = as.numeric(data[[colour]], origin = "1964-10-22"),
-                               labFormat = leaflet::labelFormat(
-                                 transform = function(x) as.Date.POSIXct(x, origin = "1964-10-22")
-                               )
+              title = quickTextHTML(colour),
+              pal = pal,
+              values = as.numeric(data[[colour]], origin = "1964-10-22"),
+              labFormat = leaflet::labelFormat(
+                transform = function(x) as.Date.POSIXct(x, origin = "1964-10-22")
+              )
             )
-
         } else {
           map <-
             leaflet::addLegend(map,
-                               title = quickTextHTML(colour),
-                               pal = pal,
-                               values = data[[colour]]
+              title = quickTextHTML(colour),
+              pal = pal,
+              values = data[[colour]]
             )
         }
       }

@@ -291,8 +291,10 @@ makeMap <- function(data, icons, provider, longitude, latitude, type, pollutant)
   # add markers
   for (i in seq(length(icons))) {
     # only plot markers where there is data
-    plotdat <- dplyr::filter(plot_data,
-                             .data[[sort(pollutant)[[i]]]] != 1)
+    plotdat <- dplyr::filter(
+      plot_data,
+      .data[[sort(pollutant)[[i]]]] != 1
+    )
 
     m <- leaflet::addMarkers(
       m,
