@@ -1,5 +1,7 @@
 # openairmaps (development version)
 
+* All directional analysis plots now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
+
 * Fixed issue with `trajMap()` that would cause user-defined colours not to work.
 
 * Allowed `trajMap()` to be coloured by date.

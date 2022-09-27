@@ -4,8 +4,13 @@
 #'   [openair::windRose()], which includes wind speed (\code{ws}), and wind
 #'   direction (\code{wd}). In addition, \code{data} must include a decimal
 #'   latitude and longitude.
-#' @param latitude The decimal latitude.
-#' @param longitude The decimal longitude.
+#' @param latitude The decimal latitude. If not provided, latitude will be
+#'   automatically inferred from data by looking for a column named \dQuote{lat}
+#'   or \dQuote{latitude} (case-insensitively).
+#' @param longitude The decimal longitude. If not provided, longitude will be
+#'   automatically inferred from data by looking for a column named
+#'   \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
+#'   (case-insensitively).
 #' @param provider The base map(s) to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
@@ -35,8 +40,8 @@
 #' )
 #' }
 windroseMap <- function(data,
-                        latitude = "lat",
-                        longitude = "lon",
+                        latitude = NULL,
+                        longitude = NULL,
                         provider = "OpenStreetMap",
                         type = "default",
                         cols = "default",
@@ -48,6 +53,14 @@ windroseMap <- function(data,
                         fig.height = 4,
                         ...) {
   . <- NULL
+
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
+  latitude <- latlon$latitude
+  longitude <- latlon$longitude
 
   data <-
     prepMapData(
