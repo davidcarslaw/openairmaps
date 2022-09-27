@@ -8,8 +8,8 @@ pollroseMap(
   data,
   pollutant = "nox",
   statistic = "prop.count",
-  latitude = "lat",
-  longitude = "lon",
+  latitude = NULL,
+  longitude = NULL,
   provider = "OpenStreetMap",
   type = "default",
   cols = "jet",
@@ -24,27 +24,31 @@ pollroseMap(
 }
 \arguments{
 \item{data}{A data frame. The data frame must contain the data to plot a
-\code{\link[openair:windRose]{openair::pollutionRose()}}, which includes wind speed (\code{ws}), wind direction
-(\code{wd}), and the column representing the
-concentration of a pollutant. In addition, \code{data} must include a
-decimal latitude and longitude.}
+\code{\link[openair:windRose]{openair::pollutionRose()}}, which includes wind speed (\code{ws}), wind
+direction (\code{wd}), and the column representing the concentration of a
+pollutant. In addition, \code{data} must include a decimal latitude and
+longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they can be toggled between using a "layer
 control" interface.}
 
-\item{statistic}{The \code{statistic} to be applied to each data
-bin in the plot. Options currently include \dQuote{prop.count},
-\dQuote{prop.mean} and \dQuote{abs.count}. The default
-\dQuote{prop.count} sizes bins according to the proportion of
-the frequency of measurements.  Similarly, \dQuote{prop.mean}
-sizes bins according to their relative contribution to the mean.
-\dQuote{abs.count} provides the absolute count of measurements
-in each bin.}
+\item{statistic}{The \code{statistic} to be applied to each data bin in the
+plot. Options currently include \dQuote{prop.count}, \dQuote{prop.mean} and
+\dQuote{abs.count}. The default \dQuote{prop.count} sizes bins according to
+the proportion of the frequency of measurements.  Similarly,
+\dQuote{prop.mean} sizes bins according to their relative contribution to
+the mean. \dQuote{abs.count} provides the absolute count of measurements in
+each bin.}
 
-\item{latitude}{The decimal latitude.}
+\item{latitude}{The decimal latitude. If not provided, latitude will be
+automatically inferred from data by looking for a column named \dQuote{lat}
+or \dQuote{latitude} (case-insensitively).}
 
-\item{longitude}{The decimal longitude.}
+\item{longitude}{The decimal longitude. If not provided, longitude will be
+automatically inferred from data by looking for a column named
+\dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
+(case-insensitively).}
 
 \item{provider}{The base map(s) to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list

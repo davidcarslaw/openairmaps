@@ -330,3 +330,51 @@ makeMap <- function(data, icons, provider, longitude, latitude, type, pollutant)
   # return
   return(m)
 }
+
+#' guess latlon
+#' @noRd
+assume_latlon <- function(data, latitude, longitude) {
+  guess_latlon <- function(data, latlon = c("lat", "lon")) {
+    x <- names(data)
+    if (latlon == "lat") {
+      name <- "latitude"
+      str <- c("latitude", "lat")
+    } else if (latlon == "lon") {
+      name <- "longitude"
+      str <- c("longitude", "lon", "long", "lng")
+    }
+    str <- c(str, toupper(str), tolower(str), stringr::str_to_title(str))
+    id <- x %in% str
+    out <- x[id]
+    len <- length(out)
+    if (len > 1) {
+      cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})", call = NULL)
+      return(NULL)
+    } else if (len == 0) {
+      cli::cli_abort("Cannot identify {name}: No clear match.", call = NULL)
+      return(NULL)
+    } else {
+      cli::cli_alert_info("Assuming {name} is '{out}'")
+      return(out)
+    }
+  }
+
+  if (is.null(latitude) | is.null(longitude)) {
+    cli::cli_h1("Assuming Latitude and/or Longitude")
+    if (is.null(latitude)) {
+      latitude <- guess_latlon(data, "lat")
+    } else {
+      cli::cli_alert_success("Latitude provided as '{latitude}'")
+    }
+    if (is.null(longitude)) {
+      longitude <- guess_latlon(data, "lon")
+    } else {
+      cli::cli_alert_success("Latitude provided as '{longitude}'")
+    }
+  }
+
+  out <- list(
+    latitude = latitude,
+    longitude = longitude
+  )
+}
