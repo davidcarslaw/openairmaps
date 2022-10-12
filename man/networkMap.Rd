@@ -26,7 +26,9 @@ column in the \code{\link[openair:importMeta]{openair::importMeta()}} output, su
 \item{date}{By default, \code{\link[=networkMap]{networkMap()}} visualises sites and pollutants which
 are currently operational. Specifying \code{date} will visualise sites
 which were operational at the chosen date. Dates should be provided in the
-\dQuote{YYYY-MM-DD} format.}
+\dQuote{YYYY-MM-DD} format. Alternatively, a single year can be provided
+(\dQuote{YYYY}) and \code{\link[=networkMap]{networkMap()}} will visualise sites which were
+operational at the \emph{end} of that year (December 31st).}
 
 \item{cluster}{When \code{cluster = TRUE}, markers are clustered together.
 This may be useful for sources like \dQuote{kcl} where there are many

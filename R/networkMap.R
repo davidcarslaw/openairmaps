@@ -14,7 +14,9 @@
 #' @param date By default, [networkMap()] visualises sites and pollutants which
 #'   are currently operational. Specifying \code{date} will visualise sites
 #'   which were operational at the chosen date. Dates should be provided in the
-#'   \dQuote{YYYY-MM-DD} format.
+#'   \dQuote{YYYY-MM-DD} format. Alternatively, a single year can be provided
+#'   (\dQuote{YYYY}) and [networkMap()] will visualise sites which were
+#'   operational at the \emph{end} of that year (December 31st).
 #' @param cluster When \code{cluster = TRUE}, markers are clustered together.
 #'   This may be useful for sources like \dQuote{kcl} where there are many
 #'   markers very close together. Defaults to \code{TRUE}, and is forced to be
@@ -38,35 +40,91 @@ networkMap <-
            date = Sys.Date(),
            cluster = TRUE,
            provider = "OpenStreetMap") {
-    date <- as.character(date)
-    date <- lubridate::ymd(date, tz = "GMT")
-    if (source == "europe") date <- lubridate::force_tz(date, "UTC")
+    # sort out date
+    # detect year
+    if (grepl(pattern = "^[1-9]\\d{3}$", x = date)) {
+      date <- paste0(date, "/12/31") %>% lubridate::ymd(tz = "GMT")
+      cli::cli_alert_info("{.code date} provided as a year; showing sites operational on {.code {date}}.")
+    } else {
+      # parse other year types
+      date <- as.character(date)
+      date <- lubridate::ymd(date, tz = "GMT")
+    }
+    if (source == "europe")
+      date <- lubridate::force_tz(date, "UTC")
 
     # import metadata
     meta <- openair::importMeta(source = source, all = TRUE) %>%
-      dplyr::filter(
-        !is.na(.data$latitude),
-        !is.na(.data$longitude)
-      )
+      dplyr::filter(!is.na(.data$latitude),!is.na(.data$longitude))
 
-    names(meta)[names(meta) %in% c("date_start", "OpeningDate")] <- "start_date"
-    names(meta)[names(meta) %in% c("date_end", "ClosingDate")] <- "end_date"
+    names(meta)[names(meta) %in% c("date_start", "OpeningDate")] <-
+      "start_date"
+    names(meta)[names(meta) %in% c("date_end", "ClosingDate")] <-
+      "end_date"
+
+    # check dates
+    if (is.na(date)){
+      cli::cli_abort(
+        c("x" = "{.code date} failed to parse",
+          "i" = "Please provide a date in the 'YYYY-MM-DD' format.")
+      )
+    }
+
+    if (date < min(meta$start_date, na.rm = TRUE)) {
+      cli::cli_abort(
+        c("i" = "Your chosen network, {.code {source}}, started operating on {.code {min(meta$start_date, na.rm = TRUE)}}.",
+          "i" = "You have specified the following date: {.code {date}}",
+          "x" = "Please specify a date after {.code {min(meta$start_date, na.rm = TRUE)}}")
+      )
+    }
+    suppressWarnings(if (date > Sys.Date()) {
+      today <- as.character(Sys.Date())
+      cli::cli_abort(
+        c("i" = "The current date is {.code {today}}.",
+          "i" = "You  have specified the following date: {.code {date}}",
+          "x" = "Please specify a date in the past.")
+      )
+    })
 
     # drop HC vars
     if ("variable" %in% names(meta)) {
       hc_vars <- c(
-        "ETHANE", "ETHENE", "ETHYNE", "PROPANE", "PROPENE", "iBUTANE",
-        "nBUTANE", "1BUTENE", "t2BUTENE", "c2BUTENE", "iPENTANE",
-        "nPENTANE", "13BDIENE", "t2PENTEN", "1PENTEN", "2MEPENT",
-        "ISOPRENE", "nHEXANE", "nHEPTANE", "iOCTANE", "nOCTANE",
-        "BENZENE", "TOLUENE", "ETHBENZ", "mpXYLENE", "oXYLENE",
-        "123TMB", "124TMB", "135TMB", "c2PENTEN", "MEPENT", "3MEPENT"
+        "ETHANE",
+        "ETHENE",
+        "ETHYNE",
+        "PROPANE",
+        "PROPENE",
+        "iBUTANE",
+        "nBUTANE",
+        "1BUTENE",
+        "t2BUTENE",
+        "c2BUTENE",
+        "iPENTANE",
+        "nPENTANE",
+        "13BDIENE",
+        "t2PENTEN",
+        "1PENTEN",
+        "2MEPENT",
+        "ISOPRENE",
+        "nHEXANE",
+        "nHEPTANE",
+        "iOCTANE",
+        "nOCTANE",
+        "BENZENE",
+        "TOLUENE",
+        "ETHBENZ",
+        "mpXYLENE",
+        "oXYLENE",
+        "123TMB",
+        "124TMB",
+        "135TMB",
+        "c2PENTEN",
+        "MEPENT",
+        "3MEPENT"
       )
 
       meta <- dplyr::filter(
-        meta,
-        !.data$variable %in% hc_vars,
-        !.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1")
+        meta,!.data$variable %in% hc_vars,!.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1")
       )
     }
 
@@ -83,7 +141,6 @@ networkMap <-
 
     # network-specific manipulations
     if (!source %in% c("kcl", "europe")) {
-
       # get variable names
       vars <- unique(meta$variable)
       vars[vars == "NO"] <- "NOx"
@@ -106,10 +163,8 @@ networkMap <-
           .data$agglomeration,
           .data$local_authority
         ) %>%
-        dplyr::summarise(
-          lab = paste(.data$lab, collapse = "<br>"),
-          .groups = "drop"
-        ) %>%
+        dplyr::summarise(lab = paste(.data$lab, collapse = "<br>"),
+                         .groups = "drop") %>%
         dplyr::right_join(
           meta,
           by = c(
@@ -150,14 +205,11 @@ networkMap <-
         end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
         start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
       ) %>%
-        dplyr::filter(
-          date >= .data$start_date,
-          date <= .data$end_date2
-        )
+        dplyr::filter(date >= .data$start_date,
+                      date <= .data$end_date2)
     }
 
     if (source == "kcl") {
-
       # format and filter dates
       meta <- dplyr::mutate(
         meta,
@@ -182,7 +234,11 @@ networkMap <-
           meta,
           start_date = lubridate::as_date(.data$start_date),
           end_date = lubridate::as_date(.data$end_date),
-          end_date = dplyr::if_else(is.na(.data$end_date), "ongoing", as.character(.data$end_date)),
+          end_date = dplyr::if_else(
+            is.na(.data$end_date),
+            "ongoing",
+            as.character(.data$end_date)
+          ),
           lab = stringr::str_glue(
             "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
           <b>Lat:</b> {round(latitude, 6)} | <b>Lon:</b> {round(longitude, 6)}<br>
@@ -209,10 +265,8 @@ networkMap <-
           lubridate::as_date(.data$end_date)
         )
       ) %>%
-        dplyr::filter(
-          date >= .data$start_date2,
-          date <= .data$end_date2
-        )
+        dplyr::filter(date >= .data$start_date2,
+                      date <= .data$end_date2)
 
       # create labels
       meta <-
@@ -220,9 +274,17 @@ networkMap <-
           meta,
           site = dplyr::if_else(is.na(.data$site), "Unknown Name", .data$site),
           start_date = lubridate::as_date(.data$start_date),
-          start_date = dplyr::if_else(is.na(.data$start_date), "unknown start", as.character(.data$start_date)),
+          start_date = dplyr::if_else(
+            is.na(.data$start_date),
+            "unknown start",
+            as.character(.data$start_date)
+          ),
           end_date = lubridate::as_date(.data$end_date),
-          end_date = dplyr::if_else(is.na(.data$end_date), "ongoing", as.character(.data$end_date)),
+          end_date = dplyr::if_else(
+            is.na(.data$end_date),
+            "ongoing",
+            as.character(.data$end_date)
+          ),
           lab = stringr::str_glue(
             "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
           <b>Lat:</b> {round(latitude, 6)} | <b>Lon:</b> {round(longitude, 6)}<br>
@@ -238,29 +300,52 @@ networkMap <-
     if (!missing(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-          c(
-            "code", "site", "latitude", "longitude", "country_iso_code",
-            "elevation", "ratified_to", "Address", "la_id",
-            "eu_code", "eoi_code", "data_source",
-            "os_grid_x", "os_grid_y", "start_date", "end_date",
-            "observation_count", "start_date2", "end_date2", "lab"
-          )]
+                                 c(
+                                   "code",
+                                   "site",
+                                   "latitude",
+                                   "longitude",
+                                   "country_iso_code",
+                                   "elevation",
+                                   "ratified_to",
+                                   "Address",
+                                   "la_id",
+                                   "eu_code",
+                                   "eoi_code",
+                                   "data_source",
+                                   "os_grid_x",
+                                   "os_grid_y",
+                                   "start_date",
+                                   "end_date",
+                                   "observation_count",
+                                   "start_date2",
+                                   "end_date2",
+                                   "lab"
+                                 )]
 
         stop(
-          paste0('"', control, '"', " is not an appropriate 'control' option.\n\n"),
-          "Suggested control options: ", paste(trycols, collapse = ", ")
+          paste0(
+            '"',
+            control,
+            '"',
+            " is not an appropriate 'control' option.\n\n"
+          ),
+          "Suggested control options: ",
+          paste(trycols, collapse = ", ")
         )
       }
 
       if (!control %in% c("Parameter_name", "variable")) {
-        meta <- dplyr::distinct(meta, .data$code, .data$site, .keep_all = TRUE)
+        meta <-
+          dplyr::distinct(meta, .data$code, .data$site, .keep_all = TRUE)
       }
 
       # ensure "control" is always present, and that "other" category is at the end
       meta[[control]][is.na(meta[[control]])] <- "Other"
       meta[[control]] <- factor(meta[[control]])
       if ("Other" %in% levels(meta[[control]])) {
-        meta[[control]] <- forcats::fct_relevel(meta[[control]], "Other", after = Inf)
+        meta[[control]] <-
+          forcats::fct_relevel(meta[[control]], "Other", after = Inf)
       }
 
       # get control variables
@@ -284,12 +369,15 @@ networkMap <-
       }
 
       if (control %in% c("Parameter_name", "variable")) {
-        map <- leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)))
+        map <-
+          leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)))
       } else {
-        map <- leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)))
+        map <-
+          leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)))
       }
     } else {
-      meta <- dplyr::distinct(meta, .data$code, .data$site, .keep_all = TRUE)
+      meta <-
+        dplyr::distinct(meta, .data$code, .data$site, .keep_all = TRUE)
 
       dat <- dplyr::distinct(meta, .data$site, .keep_all = TRUE)
 
