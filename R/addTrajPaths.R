@@ -44,10 +44,6 @@
 #'   Note that \code{opacity} controls the opacity of the lines and
 #'   \code{fillOpacity} the opacity of the markers.
 #' @return A leaflet object.
-#' @import leaflet
-#' @importFrom rlang .data
-#' @importFrom grDevices dev.off png
-#' @importFrom stats na.omit
 #' @export
 #'
 #' @examples

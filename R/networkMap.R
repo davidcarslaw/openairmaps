@@ -27,7 +27,6 @@
 #'
 #' @return A leaflet object.
 #' @export
-#' @importFrom rlang .data
 #'
 #' @examples
 #' \dontrun{
@@ -50,12 +49,13 @@ networkMap <-
       date <- as.character(date)
       date <- lubridate::ymd(date, tz = "GMT")
     }
-    if (source == "europe")
+    if (source == "europe") {
       date <- lubridate::force_tz(date, "UTC")
+    }
 
     # import metadata
     meta <- openair::importMeta(source = source, all = TRUE) %>%
-      dplyr::filter(!is.na(.data$latitude),!is.na(.data$longitude))
+      dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude))
 
     names(meta)[names(meta) %in% c("date_start", "OpeningDate")] <-
       "start_date"
@@ -63,26 +63,32 @@ networkMap <-
       "end_date"
 
     # check dates
-    if (is.na(date)){
+    if (is.na(date)) {
       cli::cli_abort(
-        c("x" = "{.code date} failed to parse",
-          "i" = "Please provide a date in the 'YYYY-MM-DD' format.")
+        c(
+          "x" = "{.code date} failed to parse",
+          "i" = "Please provide a date in the 'YYYY-MM-DD' format."
+        )
       )
     }
 
     if (date < min(meta$start_date, na.rm = TRUE)) {
       cli::cli_abort(
-        c("i" = "Your chosen network, {.code {source}}, started operating on {.code {min(meta$start_date, na.rm = TRUE)}}.",
+        c(
+          "i" = "Your chosen network, {.code {source}}, started operating on {.code {min(meta$start_date, na.rm = TRUE)}}.",
           "i" = "You have specified the following date: {.code {date}}",
-          "x" = "Please specify a date after {.code {min(meta$start_date, na.rm = TRUE)}}")
+          "x" = "Please specify a date after {.code {min(meta$start_date, na.rm = TRUE)}}"
+        )
       )
     }
     suppressWarnings(if (date > Sys.Date()) {
       today <- as.character(Sys.Date())
       cli::cli_abort(
-        c("i" = "The current date is {.code {today}}.",
+        c(
+          "i" = "The current date is {.code {today}}.",
           "i" = "You  have specified the following date: {.code {date}}",
-          "x" = "Please specify a date in the past.")
+          "x" = "Please specify a date in the past."
+        )
       )
     })
 
@@ -124,7 +130,7 @@ networkMap <-
       )
 
       meta <- dplyr::filter(
-        meta,!.data$variable %in% hc_vars,!.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1")
+        meta, !.data$variable %in% hc_vars, !.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1")
       )
     }
 
@@ -163,8 +169,10 @@ networkMap <-
           .data$agglomeration,
           .data$local_authority
         ) %>%
-        dplyr::summarise(lab = paste(.data$lab, collapse = "<br>"),
-                         .groups = "drop") %>%
+        dplyr::summarise(
+          lab = paste(.data$lab, collapse = "<br>"),
+          .groups = "drop"
+        ) %>%
         dplyr::right_join(
           meta,
           by = c(
@@ -205,8 +213,10 @@ networkMap <-
         end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
         start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
       ) %>%
-        dplyr::filter(date >= .data$start_date,
-                      date <= .data$end_date2)
+        dplyr::filter(
+          date >= .data$start_date,
+          date <= .data$end_date2
+        )
     }
 
     if (source == "kcl") {
@@ -265,8 +275,10 @@ networkMap <-
           lubridate::as_date(.data$end_date)
         )
       ) %>%
-        dplyr::filter(date >= .data$start_date2,
-                      date <= .data$end_date2)
+        dplyr::filter(
+          date >= .data$start_date2,
+          date <= .data$end_date2
+        )
 
       # create labels
       meta <-
@@ -300,28 +312,28 @@ networkMap <-
     if (!missing(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-                                 c(
-                                   "code",
-                                   "site",
-                                   "latitude",
-                                   "longitude",
-                                   "country_iso_code",
-                                   "elevation",
-                                   "ratified_to",
-                                   "Address",
-                                   "la_id",
-                                   "eu_code",
-                                   "eoi_code",
-                                   "data_source",
-                                   "os_grid_x",
-                                   "os_grid_y",
-                                   "start_date",
-                                   "end_date",
-                                   "observation_count",
-                                   "start_date2",
-                                   "end_date2",
-                                   "lab"
-                                 )]
+          c(
+            "code",
+            "site",
+            "latitude",
+            "longitude",
+            "country_iso_code",
+            "elevation",
+            "ratified_to",
+            "Address",
+            "la_id",
+            "eu_code",
+            "eoi_code",
+            "data_source",
+            "os_grid_x",
+            "os_grid_y",
+            "start_date",
+            "end_date",
+            "observation_count",
+            "start_date2",
+            "end_date2",
+            "lab"
+          )]
 
         stop(
           paste0(

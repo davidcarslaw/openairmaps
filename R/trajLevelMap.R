@@ -104,7 +104,7 @@ trajLevelMap <-
     }
 
     # do trajLevel (temp dir to not print plot)
-    png(filename = paste0(tempdir(), "/temp.png"))
+    grDevices::png(filename = paste0(tempdir(), "/temp.png"))
     tl <- openair::trajLevel(
       mydata = data,
       lon = longitude,
@@ -116,7 +116,7 @@ trajLevelMap <-
       lon.inc = lon.inc,
       min.bin = min.bin
     )
-    dev.off()
+    grDevices::dev.off()
 
     # get data
     data <- tl$data

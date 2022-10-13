@@ -37,10 +37,6 @@
 #' @param ... Other arguments for the plotting function (e.g. \code{period} for
 #'   [openair::polarAnnulus()]).
 #' @return A leaflet object.
-#' @import leaflet
-#' @importFrom rlang .data
-#' @importFrom grDevices dev.off png
-#' @importFrom stats na.omit
 #' @export
 #'
 #' @examples
@@ -75,8 +71,6 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
                             data, fun = openair::polarPlot, pollutant = "nox", type = "default",
                             iconWidth = 200, iconHeight = 200, fig.width = 4, fig.height = 4,
                             ...) {
-  . <- NULL
-
   if (type == "default") {
     data <- dplyr::mutate(data, type = "default")
   }
@@ -100,7 +94,7 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
              fig.width,
              fig.height,
              ...) {
-      png(
+      grDevices::png(
         filename = paste0(dir, "/", data[[type]][1], "_", pollutant, ".png"),
         width = fig.width * 300,
         height = fig.height * 300,
@@ -116,7 +110,7 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
         # ...
       )
 
-      dev.off()
+      grDevices::dev.off()
     }
 
   # go through all sites and make some plot
