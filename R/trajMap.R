@@ -38,7 +38,6 @@
 #'
 #' @return A leaflet object.
 #' @export
-#' @importFrom rlang .data
 #'
 #' @examples
 #' \dontrun{

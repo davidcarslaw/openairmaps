@@ -1,6 +1,5 @@
 #' Check input & prep data
 #' @author David Carslaw
-#' @importFrom lubridate dst
 #' @noRd
 
 checkMapPrep <- function(mydata, Names, type, remove.calm = TRUE, remove.neg = TRUE, wd = "wd") {
@@ -134,7 +133,7 @@ checkMapPrep <- function(mydata, Names, type, remove.calm = TRUE, remove.neg = T
 
     ## daylight saving time can cause terrible problems - best avoided!!
 
-    if (any(dst(mydata$date))) {
+    if (any(lubridate::dst(mydata$date))) {
       message("Detected data with Daylight Saving Time.")
     }
   }
@@ -158,7 +157,7 @@ save_icon_image <-
            fig.width,
            fig.height,
            ...) {
-    png(
+    grDevices::png(
       filename = paste0(dir, "/", data[[type]][1], "_", pollutant, ".png"),
       width = fig.width * 300,
       height = fig.height * 300,
@@ -176,7 +175,7 @@ save_icon_image <-
       ...
     )
 
-    dev.off()
+    grDevices::dev.off()
   }
 
 #' Save all openair plots as images and read as leaflet icons
@@ -251,9 +250,6 @@ prepMapData <- function(data, type, ...) {
 
   # cut data
   data <- openair::cutData(data, type)
-
-  # remove missing data
-  # data <- na.omit(data)
 
   # check to see if variables exist in data
   if (length(intersect(vars, names(data))) != length(vars)) {

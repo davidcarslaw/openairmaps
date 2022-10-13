@@ -44,9 +44,6 @@
 #' @param fig.height The height of the plots to be produced in inches.
 #' @param ... Other arguments for [openair::polarFreq()].
 #' @return A leaflet object.
-#' @import leaflet
-#' @importFrom grDevices dev.off png
-#' @importFrom stats na.omit
 #' @export
 #'
 #' @examples
@@ -72,8 +69,6 @@ freqMap <- function(data,
                     fig.width = 4,
                     fig.height = 4,
                     ...) {
-  . <- NULL
-
   latlon <- assume_latlon(
     data = data,
     latitude = latitude,
