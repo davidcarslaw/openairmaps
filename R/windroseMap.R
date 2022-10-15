@@ -88,7 +88,7 @@ windroseMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::windRose, !!!args, ...)
+    rlang::exec(openair::windRose, annotate = FALSE, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)

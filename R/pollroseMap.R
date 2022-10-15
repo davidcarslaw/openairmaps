@@ -101,7 +101,7 @@ pollroseMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::pollutionRose, statistic = statistic, !!!args, ...)
+    rlang::exec(openair::pollutionRose, annotate = FALSE, statistic = statistic, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
