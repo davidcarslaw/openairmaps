@@ -1,10 +1,24 @@
 # openairmaps (development version)
 
-* All directional analysis plots now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
+## Features
+
+* All directional analysis plotting functions now possess the "control" argument, which allows users to create a "layer control" menu with any arbitrary column. Appropriate columns may be those produced using `openair::cutData()`, `openair::splitByDate()`, or a user-defined `dplyr::case_when()`/`dplyr::if_else()` column transformation.
+
+* All directional analysis plotting functions now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
+
+* Allowed `trajMap()` to be coloured by date.
+
+* Updated many error messages and warnings to use `{cli}` and be broadly more useful.
+
+## Breaking Changes
+
+* The default values for "pollutant" have all been removed. Any users relying on this default should update their code to explicitly state `pollutant = "nox"`.
+
+## Fixes
 
 * Fixed issue with `trajMap()` that would cause user-defined colours not to work.
 
-* Allowed `trajMap()` to be coloured by date.
+
 
 # openairmaps 0.4.3 (2022-09-12)
 
@@ -18,9 +32,13 @@
 
 * `trajMap()` and `trajLevelMap()` now use the argument names "latitude" and "longitude" to match those of the `polarMap()` family.
 
+
+
 # openairmaps 0.4.2 (2022-09-12)
 
 * `trajLevelMap()` now works where `statistic = "frequency"` without a "pollutant".
+
+
 
 # openairmaps 0.4.1 (2022-09-09)
 
