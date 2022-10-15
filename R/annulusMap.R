@@ -27,12 +27,17 @@
 #'   automatically inferred from data by looking for a column named
 #'   \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
 #'   (case-insensitively).
+#' @param type The grouping variable that provides a data set for a specific
+#'   location. Often, with several sites, \code{type = "site"} is used.
+#' @param control Column to be used for splitting the input data into different
+#'   groups which can be selected between using a "layer control" interface.
+#'   Appropriate columns could be those added by [openair::cutData()] or
+#'   [openair::splitByDate()]. \code{control} cannot be used if multiple
+#'   \code{pollutant} columns have been provided.
 #' @param provider The base map(s) to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
-#' @param type The grouping variable that provides a data set for a specific
-#'   location. Often, with several sites, \code{type = "site"} is used.
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
@@ -59,8 +64,9 @@ annulusMap <- function(data,
                        period = "hour",
                        latitude = NULL,
                        longitude = NULL,
-                       provider = "OpenStreetMap",
                        type = "default",
+                       control = NULL,
+                       provider = "OpenStreetMap",
                        cols = "jet",
                        alpha = 1,
                        key = FALSE,
@@ -82,9 +88,10 @@ annulusMap <- function(data,
     prepMapData(
       data = data,
       type = type,
+      pollutant = pollutant,
+      control = control,
       "wd",
       "date",
-      pollutant,
       latitude,
       longitude
     )
@@ -95,13 +102,25 @@ annulusMap <- function(data,
     rlang::exec(openair::polarAnnulus, period = period, !!!args, ...)
   }
 
+  # identify splitting column (defaulting to pollutant)
+  if (length(pollutant) > 1) {
+    split_col <- "pollutant_name"
+  } else if (!is.null(control)) {
+    data[control] <- as.factor(data[[control]])
+    split_col <- control
+  } else {
+    split_col <- "pollutant_name"
+  }
+
   # create icons
   icons <-
-    purrr::map(
-      .x = sort(pollutant),
+    data %>%
+    dplyr::group_split(.data[[split_col]]) %>%
+    rlang::set_names(levels(data[[split_col]])) %>%
+    purrr::imap(
       .f = ~ create_icons(
-        data = data, fun = fun, pollutant = .x,
-        type = type, period = period, cols = cols, alpha = alpha, key = key,
+        data = .x, fun = fun, pollutant = "pollutant_value", split = .y,
+        type = type, x = x, cols = cols, alpha = alpha, key = key,
         fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
       )
@@ -115,6 +134,6 @@ annulusMap <- function(data,
     longitude = longitude,
     latitude = latitude,
     type = type,
-    pollutant = pollutant
+    split_col = split_col
   )
 }

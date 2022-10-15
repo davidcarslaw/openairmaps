@@ -10,8 +10,9 @@ polarMap(
   x = "ws",
   latitude = NULL,
   longitude = NULL,
-  provider = "OpenStreetMap",
   type = "default",
+  control = NULL,
+  provider = "OpenStreetMap",
   cols = "jet",
   alpha = 1,
   key = FALSE,
@@ -44,13 +45,19 @@ automatically inferred from data by looking for a column named
 \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
 (case-insensitively).}
 
+\item{type}{The grouping variable that provides a data set for a specific
+location. Often, with several sites, \code{type = "site"} is used.}
+
+\item{control}{Column to be used for splitting the input data into different
+groups which can be selected between using a "layer control" interface.
+Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
+\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{control} cannot be used if multiple
+\code{pollutant} columns have been provided.}
+
 \item{provider}{The base map(s) to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
-
-\item{type}{The grouping variable that provides a data set for a specific
-location. Often, with several sites, \code{type = "site"} is used.}
 
 \item{cols}{The colours used for plotting.}
 
