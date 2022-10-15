@@ -61,6 +61,7 @@ library(openairmaps)
 
 polarMap(
   polar_data, 
+  pollutant = "nox",
   type = "site"
 )
 ```
