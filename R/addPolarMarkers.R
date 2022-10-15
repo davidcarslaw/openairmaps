@@ -78,6 +78,15 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
 
   if (missing(popup)) popup <- type
 
+  # guess lat/lon
+  latlon <- assume_latlon(
+    data = data,
+    latitude = lat,
+    longitude = lng
+  )
+  lat <- latlon$latitude
+  lng <- latlon$longitude
+
   # define plotting function
   args <- list(...)
   thefun <- function(...) {
