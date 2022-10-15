@@ -40,13 +40,14 @@
 #' @examples
 #' \dontrun{
 #' annulusMap(polar_data,
+#'   pollutant = "nox",
 #'   period = "hour",
 #'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
 annulusMap <- function(data,
-                       pollutant = "nox",
+                       pollutant,
                        period = "hour",
                        latitude = NULL,
                        longitude = NULL,

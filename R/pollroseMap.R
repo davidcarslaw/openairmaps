@@ -43,13 +43,14 @@
 #' @examples
 #' \dontrun{
 #' pollroseMap(polar_data,
+#'   pollutant = "nox",
 #'   statistic = "prop.count",
 #'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
 pollroseMap <- function(data,
-                        pollutant = "nox",
+                        pollutant,
                         statistic = "prop.count",
                         latitude = NULL,
                         longitude = NULL,

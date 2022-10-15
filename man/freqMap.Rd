@@ -6,7 +6,7 @@
 \usage{
 freqMap(
   data,
-  pollutant = "nox",
+  pollutant,
   statistic = "mean",
   latitude = NULL,
   longitude = NULL,
@@ -90,6 +90,7 @@ Polar frequency plots on interactive leaflet maps
 \examples{
 \dontrun{
 freqMap(polar_data,
+  pollutant = "nox",
   statistic = "mean",
   type = "site",
   provider = "Stamen.Toner"

@@ -6,7 +6,7 @@
 \usage{
 pollroseMap(
   data,
-  pollutant = "nox",
+  pollutant,
   statistic = "prop.count",
   latitude = NULL,
   longitude = NULL,
@@ -84,6 +84,7 @@ Pollution rose plots on interactive leaflet maps
 \examples{
 \dontrun{
 pollroseMap(polar_data,
+  pollutant = "nox",
   statistic = "prop.count",
   type = "site",
   provider = "Stamen.Toner"

@@ -6,7 +6,7 @@
 \usage{
 percentileMap(
   data,
-  pollutant = "nox",
+  pollutant,
   latitude = NULL,
   longitude = NULL,
   provider = "OpenStreetMap",
@@ -75,6 +75,7 @@ Percentile roses on interactive leaflet maps
 \examples{
 \dontrun{
 percentileMap(polar_data,
+  pollutant = "nox",
   type = "site",
   provider = "Stamen.Toner"
 )

@@ -59,6 +59,7 @@
 #'     data = polar_data,
 #'     lat = "latitude",
 #'     lng = "longitude",
+#'     pollutant = "nox",
 #'     type = "site",
 #'     group = "Polar Plot"
 #'   ) %>%
@@ -68,7 +69,7 @@
 #' }
 #'
 addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group = NULL, popup,
-                            data, fun = openair::polarPlot, pollutant = "nox", type = "default",
+                            data, fun = openair::polarPlot, pollutant, type = "default",
                             iconWidth = 200, iconHeight = 200, fig.width = 4, fig.height = 4,
                             ...) {
   if (type == "default") {

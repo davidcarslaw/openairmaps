@@ -36,12 +36,13 @@
 #' @examples
 #' \dontrun{
 #' percentileMap(polar_data,
+#'   pollutant = "nox",
 #'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
 percentileMap <- function(data,
-                          pollutant = "nox",
+                          pollutant,
                           latitude = NULL,
                           longitude = NULL,
                           provider = "OpenStreetMap",

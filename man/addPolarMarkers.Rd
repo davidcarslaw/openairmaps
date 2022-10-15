@@ -13,7 +13,7 @@ addPolarMarkers(
   popup,
   data,
   fun = openair::polarPlot,
-  pollutant = "nox",
+  pollutant,
   type = "default",
   iconWidth = 200,
   iconHeight = 200,
@@ -98,6 +98,7 @@ leaflet() \%>\%
     data = polar_data,
     lat = "latitude",
     lng = "longitude",
+    pollutant = "nox",
     type = "site",
     group = "Polar Plot"
   ) \%>\%
