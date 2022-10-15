@@ -82,12 +82,12 @@ addTrajPaths <-
     opts <- list(...)
     if ("color" %in% names(opts)) {
       if (length(opts$color) > 1) {
-        stop("Length of 'color' argument greater than one.")
+        cli::cli_abort("Length of 'color' argument greater than one.")
       }
     }
     if ("fillColor" %in% names(opts)) {
       if (length(opts$fillColor) > 1) {
-        stop("Length of 'fillColor' argument greater than one.")
+        cli::cli_abort("Length of 'fillColor' argument greater than one.")
       }
     }
 
