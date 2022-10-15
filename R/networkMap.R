@@ -335,16 +335,10 @@ networkMap <-
             "lab"
           )]
 
-        stop(
-          paste0(
-            '"',
-            control,
-            '"',
-            " is not an appropriate 'control' option.\n\n"
-          ),
-          "Suggested control options: ",
-          paste(trycols, collapse = ", ")
-        )
+        cli::cli_abort(c(
+          "x" = "'{control}' is not an appropriate {.coed control} option.",
+          "i" = "Suggested control options: {.emph {trycols}}"
+        ))
       }
 
       if (!control %in% c("Parameter_name", "variable")) {
