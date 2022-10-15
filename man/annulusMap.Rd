@@ -76,7 +76,10 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 A leaflet object.
 }
 \description{
-Polar annulus plots on interactive leaflet maps
+\code{\link[=annulusMap]{annulusMap()}} creates a \code{leaflet} map using polar annulus plots as
+markers. Any number of pollutants can be specified using the \code{pollutant}
+argument, and multiple layers of markers can be added and toggled between
+using \code{control}. See \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}} for more information.
 }
 \examples{
 \dontrun{
@@ -87,4 +90,8 @@ annulusMap(polar_data,
   provider = "Stamen.Toner"
 )
 }
+}
+\seealso{
+Directional analysis maps: \code{\link[=annulusMap]{annulusMap()}}, \code{\link[=freqMap]{freqMap()}},
+\code{\link[=percentileMap]{percentileMap()}}, \code{\link[=polarMap]{polarMap()}}, \code{\link[=pollroseMap]{pollroseMap()}}, \code{\link[=windroseMap]{windroseMap()}}.
 }

@@ -1,5 +1,12 @@
 #' Wind rose plots on interactive leaflet maps
 #'
+#' [windroseMap()] creates a \code{leaflet} map using wind roses as
+#' markers. Multiple layers of markers can be added and toggled between
+#' using \code{control}. See [openair::windRose()] for more information.
+#'
+#' @seealso Directional analysis maps: [annulusMap()], [freqMap()],
+#'   [percentileMap()], [polarMap()], [pollroseMap()], [windroseMap()].
+#'
 #' @param data A data frame. The data frame must contain the data to plot a
 #'   [openair::windRose()], which includes wind speed (\code{ws}), and wind
 #'   direction (\code{wd}). In addition, \code{data} must include a decimal

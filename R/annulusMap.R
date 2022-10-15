@@ -1,5 +1,13 @@
 #' Polar annulus plots on interactive leaflet maps
 #'
+#' [annulusMap()] creates a \code{leaflet} map using polar annulus plots as
+#' markers. Any number of pollutants can be specified using the \code{pollutant}
+#' argument, and multiple layers of markers can be added and toggled between
+#' using \code{control}. See [openair::polarAnnulus()] for more information.
+#'
+#' @seealso Directional analysis maps: [annulusMap()], [freqMap()],
+#'   [percentileMap()], [polarMap()], [pollroseMap()], [windroseMap()].
+#'
 #' @param data A data frame. The data frame must contain the data to plot a
 #'   [openair::polarAnnulus()], which includes wind speed (\code{ws}), wind
 #'   direction (\code{wd}), date (\code{date}), and the column representing the

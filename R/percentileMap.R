@@ -1,5 +1,13 @@
 #' Percentile roses on interactive leaflet maps
 #'
+#' [percentileMap()] creates a \code{leaflet} map using percentile roses as
+#' markers. Any number of pollutants can be specified using the \code{pollutant}
+#' argument, and multiple layers of markers can be added and toggled between
+#' using \code{control}. See [openair::percentileRose()] for more information.
+#'
+#' @seealso Directional analysis maps: [annulusMap()], [freqMap()],
+#'   [percentileMap()], [polarMap()], [pollroseMap()], [windroseMap()].
+#'
 #' @param data A data frame. The data frame must contain the data to plot a
 #'   [openair::percentileRose()], which includes wind speed (\code{ws}), wind
 #'   direction (\code{wd}), and the column representing the concentration of a
