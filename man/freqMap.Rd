@@ -85,7 +85,10 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 A leaflet object.
 }
 \description{
-Polar frequency plots on interactive leaflet maps
+\code{\link[=freqMap]{freqMap()}} creates a \code{leaflet} map using binned polar plots as
+markers. Any number of pollutants can be specified using the \code{pollutant}
+argument, and multiple layers of markers can be added and toggled between
+using \code{control}. See \code{\link[openair:polarFreq]{openair::polarFreq()}} for more information.
 }
 \examples{
 \dontrun{
@@ -96,4 +99,8 @@ freqMap(polar_data,
   provider = "Stamen.Toner"
 )
 }
+}
+\seealso{
+Directional analysis maps: \code{\link[=annulusMap]{annulusMap()}}, \code{\link[=freqMap]{freqMap()}},
+\code{\link[=percentileMap]{percentileMap()}}, \code{\link[=polarMap]{polarMap()}}, \code{\link[=pollroseMap]{pollroseMap()}}, \code{\link[=windroseMap]{windroseMap()}}.
 }

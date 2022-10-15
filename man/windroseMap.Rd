@@ -64,7 +64,9 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 A leaflet object.
 }
 \description{
-Wind rose plots on interactive leaflet maps
+\code{\link[=windroseMap]{windroseMap()}} creates a \code{leaflet} map using wind roses as
+markers. Multiple layers of markers can be added and toggled between
+using \code{control}. See \code{\link[openair:windRose]{openair::windRose()}} for more information.
 }
 \examples{
 \dontrun{
@@ -73,4 +75,8 @@ windroseMap(polar_data,
   provider = "Stamen.Toner"
 )
 }
+}
+\seealso{
+Directional analysis maps: \code{\link[=annulusMap]{annulusMap()}}, \code{\link[=freqMap]{freqMap()}},
+\code{\link[=percentileMap]{percentileMap()}}, \code{\link[=polarMap]{polarMap()}}, \code{\link[=pollroseMap]{pollroseMap()}}, \code{\link[=windroseMap]{windroseMap()}}.
 }
