@@ -18,12 +18,16 @@
 #'   automatically inferred from data by looking for a column named
 #'   \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
 #'   (case-insensitively).
+#' @param type The grouping variable that provides a data set for a specific
+#'   location. Often, with several sites, \code{type = "site"} is used.
+#' @param control Column to be used for splitting the input data into different
+#'   groups which can be selected between using a "layer control" interface.
+#'   Appropriate columns could be those added by [openair::cutData()] or
+#'   [openair::splitByDate()].
 #' @param provider The base map(s) to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
-#' @param type The grouping variable that provides a data set for a specific
-#'   location. Often, with several sites, \code{type = "site"} is used.
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
@@ -46,8 +50,9 @@
 windroseMap <- function(data,
                         latitude = NULL,
                         longitude = NULL,
-                        provider = "OpenStreetMap",
                         type = "default",
+                        control = NULL,
+                        provider = "OpenStreetMap",
                         cols = "default",
                         alpha = 1,
                         key = FALSE,
@@ -64,12 +69,18 @@ windroseMap <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
+  # need to put ws in a separate column to work with the rest of openairmaps
+  # utilities...
+  data$ws2 <- data$ws
+
   data <-
     prepMapData(
       data = data,
       type = type,
-      "wd",
+      pollutant = "ws2",
+      control = control,
       "ws",
+      "wd",
       latitude,
       longitude
     )
@@ -80,12 +91,22 @@ windroseMap <- function(data,
     rlang::exec(openair::windRose, !!!args, ...)
   }
 
+  # identify splitting column (defaulting to pollutant)
+  if (!is.null(control)) {
+    data[control] <- as.factor(data[[control]])
+    split_col <- control
+  } else {
+    split_col <- "pollutant_name"
+  }
+
   # create icons
   icons <-
-    purrr::map(
-      .x = "ws",
+    data %>%
+    dplyr::group_split(.data[[split_col]]) %>%
+    rlang::set_names(levels(data[[split_col]])) %>%
+    purrr::imap(
       .f = ~ create_icons(
-        data = data, fun = fun, pollutant = "ws",
+        data = .x, fun = fun, pollutant = "pollutant_value", split = .y,
         type = type, x = x, cols = cols, alpha = alpha, key = key,
         fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
@@ -100,6 +121,6 @@ windroseMap <- function(data,
     longitude = longitude,
     latitude = latitude,
     type = type,
-    pollutant = "ws"
+    split_col = split_col
   )
 }
