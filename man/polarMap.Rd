@@ -6,7 +6,7 @@
 \usage{
 polarMap(
   data,
-  pollutant = "nox",
+  pollutant,
   x = "ws",
   latitude = NULL,
   longitude = NULL,
@@ -78,6 +78,7 @@ Bivariate polar plots on interactive leaflet maps
 \examples{
 \dontrun{
 polarMap(polar_data,
+  pollutant = "nox",
   x = "ws",
   type = "site",
   provider = "Stamen.Toner"

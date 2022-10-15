@@ -37,13 +37,14 @@
 #' @examples
 #' \dontrun{
 #' polarMap(polar_data,
+#'   pollutant = "nox",
 #'   x = "ws",
 #'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
 polarMap <- function(data,
-                     pollutant = "nox",
+                     pollutant,
                      x = "ws",
                      latitude = NULL,
                      longitude = NULL,

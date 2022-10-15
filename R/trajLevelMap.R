@@ -56,7 +56,7 @@ trajLevelMap <-
   function(data,
            longitude = "lon",
            latitude = "lat",
-           pollutant = "nox",
+           pollutant,
            statistic = "frequency",
            percentile = 90,
            lon.inc = 1,
@@ -73,6 +73,7 @@ trajLevelMap <-
     if (statistic == "frequency") {
       title <- "percentage<br>trajectories"
       style <- leaflet::labelFormat(between = " to ", suffix = "%")
+      pollutant <- "default_pollutant"
       data[[pollutant]] <- pollutant
     }
     if (statistic == "difference") {

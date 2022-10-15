@@ -49,13 +49,14 @@
 #' @examples
 #' \dontrun{
 #' freqMap(polar_data,
+#'   pollutant = "nox",
 #'   statistic = "mean",
 #'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
 freqMap <- function(data,
-                    pollutant = "nox",
+                    pollutant,
                     statistic = "mean",
                     latitude = NULL,
                     longitude = NULL,

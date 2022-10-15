@@ -6,7 +6,7 @@
 \usage{
 annulusMap(
   data,
-  pollutant = "nox",
+  pollutant,
   period = "hour",
   latitude = NULL,
   longitude = NULL,
@@ -81,6 +81,7 @@ Polar annulus plots on interactive leaflet maps
 \examples{
 \dontrun{
 annulusMap(polar_data,
+  pollutant = "nox",
   period = "hour",
   type = "site",
   provider = "Stamen.Toner"

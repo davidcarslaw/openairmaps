@@ -8,7 +8,7 @@ trajLevelMap(
   data,
   longitude = "lon",
   latitude = "lat",
-  pollutant = "nox",
+  pollutant,
   statistic = "frequency",
   percentile = 90,
   lon.inc = 1,
