@@ -87,3 +87,6 @@ trajLevelMap(traj_data, pollutant = "pm2.5", statistic = "pscf", min.bin = 10)
 }
 
 }
+\seealso{
+Trajectory maps: \code{\link[=trajMap]{trajMap()}}, \code{\link[=trajLevelMap]{trajLevelMap()}}.
+}

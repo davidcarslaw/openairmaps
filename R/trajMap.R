@@ -6,6 +6,8 @@
 #' pollutant concentrations) or create "layer control" menus to show/hide
 #' different layers.
 #'
+#' @seealso Trajectory maps: [trajMap()], [trajLevelMap()].
+#'
 #' @param data Data frame, the result of importing a trajectory file using
 #'   [openair::importTraj()].
 #' @param longitude Column containing the longitude, as a decimal.
