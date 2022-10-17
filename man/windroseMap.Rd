@@ -8,16 +8,18 @@ windroseMap(
   data,
   latitude = NULL,
   longitude = NULL,
-  type = "default",
   control = NULL,
+  popup = NULL,
+  label = NULL,
   provider = "OpenStreetMap",
-  cols = "default",
+  cols = "jet",
   alpha = 1,
   key = FALSE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 4,
   fig.height = 4,
+  type = NULL,
   ...
 )
 }
@@ -36,13 +38,18 @@ automatically inferred from data by looking for a column named
 \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
 (case-insensitively).}
 
-\item{type}{The grouping variable that provides a data set for a specific
-location. Often, with several sites, \code{type = "site"} is used.}
-
 \item{control}{Column to be used for splitting the input data into different
 groups which can be selected between using a "layer control" interface.
 Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
 \code{\link[openair:splitByDate]{openair::splitByDate()}}.}
+
+\item{popup}{Column to be used as the HTML content for marker popups. Popups
+may be useful to show information about the individual sites (e.g., site
+names, codes, types, etc.).}
+
+\item{label}{Column to be used as the HTML content for hover-over labels.
+Labels are useful for the same reasons as popups, though are typically
+shorter.}
 
 \item{provider}{The base map(s) to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
@@ -63,6 +70,9 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 \item{fig.width}{The width of the plots to be produced in inches.}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
+
+\item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label
+different sites.}
 
 \item{...}{Other arguments for \code{\link[openair:windRose]{openair::windRose()}}.}
 }
