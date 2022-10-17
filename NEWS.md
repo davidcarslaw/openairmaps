@@ -1,22 +1,26 @@
 # openairmaps (development version)
 
-## Features
+## Directional Analysis
 
-* All directional analysis plotting functions now possess the "control" argument, which allows users to create a "layer control" menu with any arbitrary column. Appropriate columns may be those produced using `openair::cutData()`, `openair::splitByDate()`, or a user-defined `dplyr::case_when()`/`dplyr::if_else()` column transformation.
+* All functions now possess the "control" argument, which allows users to create a "layer control" menu with any arbitrary column. Appropriate columns may be those produced using `openair::cutData()`, `openair::splitByDate()`, or a user-defined `dplyr::case_when()`/`dplyr::if_else()` column transformation.
 
-* All directional analysis plotting functions now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
+* All functions now possess the "popup" and "label" arguments, which control pop-up and hover-over labels, respectively. This allows users to define *any* popup or label column, even non-unique ones. For example, multiple sites can be labelled with identical site types.
+
+* All functions now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
+
+* BREAKING: All functions now use latitude and longitude to distinguish between site types. Therefore, "type" is now deprecated. Maps using the old system will still render, but popups will not be displayed. For most users, to restore previous site labels simply rewrite `type = "site"` as `popup = "site"`.
+
+* BREAKING: The default values for "pollutant" have all been removed. Any users relying on this default should update their code to explicitly state `pollutant = "nox"`.
+
+## Trajectory Analysis
 
 * Allowed `trajMap()` to be coloured by date.
 
-* Updated many error messages and warnings to use `{cli}` and be broadly more useful.
+* FIX: Fixed issue with `trajMap()` that would cause user-defined colours not to work.
 
-## Breaking Changes
+## Other
 
-* The default values for "pollutant" have all been removed. Any users relying on this default should update their code to explicitly state `pollutant = "nox"`.
-
-## Fixes
-
-* Fixed issue with `trajMap()` that would cause user-defined colours not to work.
+* Updated many error messages and warnings to use `{cli}` and be broadly more descriptive.
 
 
 
