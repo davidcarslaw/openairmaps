@@ -4,7 +4,6 @@
 checkMapPrep <-
   function(mydata,
            Names,
-           type,
            remove.calm = TRUE,
            remove.neg = TRUE,
            wd = "wd") {
@@ -30,7 +29,7 @@ checkMapPrep <-
     )
     all.vars <- unique(c(names(mydata), conds))
 
-    varNames <- c(Names, type) ## names we want to be there
+    varNames <- c(Names) ## names we want to be there
     matching <- varNames %in% all.vars
 
     if (any(!matching)) {
@@ -40,18 +39,6 @@ checkMapPrep <-
         paste(varNames[!matching], collapse = ", "),
         "\n"
       )
-    }
-
-    ## add type to names if not in pre-defined list
-    if (any(type %in% conds == FALSE)) {
-      ids <- which(type %in% conds == FALSE)
-      Names <- c(Names, type[ids])
-    }
-
-    ## if type already present in data frame
-    if (any(type %in% names(mydata))) {
-      ids <- which(type %in% names(mydata))
-      Names <- unique(c(Names, type[ids]))
     }
 
     ## just select data needed
@@ -167,19 +154,20 @@ checkMapPrep <-
 
 #' Prep data for mapping
 #' @noRd
-prepMapData <- function(data, type, pollutant, control, ..., .to_narrow = TRUE) {
-  ## extract variables of interest
-  vars <- c(pollutant, control, ...)
-
-  if (type != "default") {
-    vars <- c(vars, type)
+prepMapData <- function(data, pollutant, control, ..., .to_narrow = TRUE) {
+  # check pollutant is there
+  if (is.null(pollutant)) {
+    cli::cli_abort(c(
+      "x" = "{.code pollutant} is missing with no default.",
+      "i" = "Please provide a column of {.code data} which represents the pollutant(s) of interest."
+    ))
   }
 
-  # check and select variables
-  data <- checkMapPrep(data, vars, type = type)
+  ## extract variables of interest
+  vars <- unique(c(pollutant, control, ...))
 
-  # cut data
-  data <- openair::cutData(data, type)
+  # check and select variables
+  data <- checkMapPrep(data, vars)
 
   # check to see if variables exist in data
   if (length(intersect(vars, names(data))) != length(vars)) {
@@ -202,7 +190,7 @@ prepMapData <- function(data, type, pollutant, control, ..., .to_narrow = TRUE) 
         data = data,
         cols = dplyr::all_of(pollutant),
         names_to = "pollutant_name",
-        values_to = "pollutant_value"
+        values_to = "conc"
       )
 
     # make pollutant names factors
@@ -225,15 +213,18 @@ save_icon_image <-
            dir,
            pollutant,
            split,
-           type,
+           lat,
+           lon,
            cols,
            alpha,
            key,
            fig.width,
            fig.height,
            ...) {
+    id <- paste0(data[[lat]][1], data[[lon]][1])
+
     grDevices::png(
-      filename = paste0(dir, "/", data[[type]][1], "_", split, ".png"),
+      filename = paste0(dir, "/", id, "_", split, ".png"),
       width = fig.width * 300,
       height = fig.height * 300,
       res = 300,
@@ -260,7 +251,8 @@ create_icons <-
            fun,
            pollutant,
            split,
-           type,
+           lat,
+           lon,
            cols,
            alpha,
            key,
@@ -277,14 +269,15 @@ create_icons <-
 
     # go through all sites and make some plot
     data %>%
-      dplyr::group_split(dplyr::across(dplyr::all_of(type))) %>%
+      dplyr::group_split(.data[[lat]], .data[[lon]]) %>%
       purrr::walk(
         .f = ~ save_icon_image(
           fun = fun,
           dir = icon_dir,
           pollutant = pollutant,
           split = split,
-          type = type,
+          lat = lat,
+          lon = lon,
           cols = cols,
           alpha = alpha,
           key = key,
@@ -294,16 +287,18 @@ create_icons <-
         )
       )
 
+    dat2 <- dplyr::mutate(data, id = paste0(.data[[lat]], .data[[lon]]))
+
     # definition of 'icons' aka the openair plots
     leafIcons <-
       lapply(sort(paste0(
-        icon_dir, "/", unique(data[[type]]), "_", split, ".png"
+        icon_dir, "/", unique(dat2$id), "_", split, ".png"
       )),
       leaflet::makeIcon,
       iconWidth = iconWidth,
       iconHeight = iconHeight
       )
-    names(leafIcons) <- unique(data[[type]])
+    names(leafIcons) <- unique(dat2$id)
     class(leafIcons) <- "leaflet_icon_set"
 
     leafIcons
@@ -318,21 +313,22 @@ makeMap <-
            provider,
            longitude,
            latitude,
-           type,
-           split_col) {
+           split_col,
+           popup,
+           label) {
     provider <- unique(provider)
 
     # data for plotting
     plot_data <-
       data %>%
-      dplyr::group_by(.data[[type]], .data[[split_col]]) %>%
+      dplyr::group_by(.data[[latitude]], .data[[longitude]], .data[[split_col]]) %>%
       dplyr::mutate(dc = mean(!is.na(.data[[split_col]]))) %>%
       dplyr::ungroup() %>%
-      dplyr::distinct(.data[[type]], .data[[split_col]], .keep_all = TRUE) %>%
-      dplyr::arrange(.data[[type]])
+      dplyr::distinct(.data[[latitude]], .data[[longitude]], .data[[split_col]], .keep_all = TRUE) %>%
+      dplyr::arrange(.data[[latitude]], .data[[longitude]])
 
     # create leaflet map
-    m <- leaflet::leaflet(data = plot_data)
+    m <- leaflet::leaflet()
 
     # add tiles
     for (j in seq(length(provider))) {
@@ -349,6 +345,18 @@ makeMap <-
         dplyr::filter(plot_data, .data[[split_col]] == i) %>%
         dplyr::filter(.data$dc != 0)
 
+      if (!is.null(popup)) {
+        thePopup <- plot_data_i[[popup]]
+      } else {
+        thePopup <- popup
+      }
+
+      if (!is.null(label)) {
+        theLabel <- plot_data_i[[label]]
+      } else {
+        theLabel <- label
+      }
+
       # only plot markers where there is data
       m <- leaflet::addMarkers(
         m,
@@ -356,7 +364,8 @@ makeMap <-
         lng = plot_data_i[[longitude]],
         lat = plot_data_i[[latitude]],
         icon = icons[[i]],
-        popup = plot_data_i[[type]],
+        popup = thePopup,
+        label = theLabel,
         group = i %>% quickTextHTML()
       )
     }
@@ -390,10 +399,10 @@ assume_latlon <- function(data, latitude, longitude) {
     x <- names(data)
     if (latlon == "lat") {
       name <- "latitude"
-      str <- c("latitude", "lat")
+      str <- c("latitude", "latitud", "lat")
     } else if (latlon == "lon") {
       name <- "longitude"
-      str <- c("longitude", "lon", "long", "lng")
+      str <- c("longitude", "longitud", "lon", "long", "lng")
     }
     str <-
       c(

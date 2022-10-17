@@ -27,13 +27,17 @@
 #'   automatically inferred from data by looking for a column named
 #'   \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
 #'   (case-insensitively).
-#' @param type The grouping variable that provides a data set for a specific
-#'   location. Often, with several sites, \code{type = "site"} is used.
 #' @param control Column to be used for splitting the input data into different
 #'   groups which can be selected between using a "layer control" interface.
 #'   Appropriate columns could be those added by [openair::cutData()] or
 #'   [openair::splitByDate()]. \code{control} cannot be used if multiple
 #'   \code{pollutant} columns have been provided.
+#' @param popup Column to be used as the HTML content for marker popups. Popups
+#'   may be useful to show information about the individual sites (e.g., site
+#'   names, codes, types, etc.).
+#' @param label Column to be used as the HTML content for hover-over labels.
+#'   Labels are useful for the same reasons as popups, though are typically
+#'   shorter.
 #' @param provider The base map(s) to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
@@ -46,6 +50,8 @@
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
+#' @param type Deprecated. Please use \code{label} and/or \code{popup} to label
+#'   different sites.
 #' @param ... Other arguments for [openair::polarAnnulus()].
 #' @return A leaflet object.
 #' @export
@@ -60,12 +66,13 @@
 #' )
 #' }
 annulusMap <- function(data,
-                       pollutant,
+                       pollutant = NULL,
                        period = "hour",
                        latitude = NULL,
                        longitude = NULL,
-                       type = "default",
                        control = NULL,
+                       popup = NULL,
+                       label = NULL,
                        provider = "OpenStreetMap",
                        cols = "jet",
                        alpha = 1,
@@ -74,7 +81,16 @@ annulusMap <- function(data,
                        iconHeight = 200,
                        fig.width = 4,
                        fig.height = 4,
+                       type = NULL,
                        ...) {
+  if (!is.null(type)) {
+    cli::cli_warn(c(
+      "!" = "{.code type} is deprecated. Different sites are now automatically identified.",
+      "i" = "Please use {.code label} and/or {.code popup} to label sites."
+    ))
+  }
+
+  # assume lat/lon
   latlon <- assume_latlon(
     data = data,
     latitude = latitude,
@@ -93,7 +109,9 @@ annulusMap <- function(data,
       "wd",
       "date",
       latitude,
-      longitude
+      longitude,
+      popup,
+      label
     )
 
   # define plotting function
@@ -119,9 +137,9 @@ annulusMap <- function(data,
     rlang::set_names(levels(data[[split_col]])) %>%
     purrr::imap(
       .f = ~ create_icons(
-        data = .x, fun = fun, pollutant = "pollutant_value", split = .y,
-        type = type, x = x, cols = cols, alpha = alpha, key = key,
-        fig.width = fig.width, fig.height = fig.height,
+        data = .x, fun = fun, pollutant = "conc", split = .y,
+        lat = latitude, lon = longitude, x = x, cols = cols, alpha = alpha,
+        key = key, fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
       )
     )
@@ -133,7 +151,8 @@ annulusMap <- function(data,
     provider = provider,
     longitude = longitude,
     latitude = latitude,
-    type = type,
+    popup = popup,
+    label = label,
     split_col = split_col
   )
 }
