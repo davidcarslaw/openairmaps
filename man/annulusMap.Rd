@@ -103,7 +103,6 @@ using \code{control}. See \code{\link[openair:polarAnnulus]{openair::polarAnnulu
 annulusMap(polar_data,
   pollutant = "nox",
   period = "hour",
-  type = "site",
   provider = "Stamen.Toner"
 )
 }

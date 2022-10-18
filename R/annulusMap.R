@@ -61,7 +61,6 @@
 #' annulusMap(polar_data,
 #'   pollutant = "nox",
 #'   period = "hour",
-#'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }

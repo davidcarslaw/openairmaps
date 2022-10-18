@@ -56,7 +56,6 @@
 #' \dontrun{
 #' percentileMap(polar_data,
 #'   pollutant = "nox",
-#'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }

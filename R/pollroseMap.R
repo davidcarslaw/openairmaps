@@ -64,7 +64,6 @@
 #' pollroseMap(polar_data,
 #'   pollutant = "nox",
 #'   statistic = "prop.count",
-#'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }

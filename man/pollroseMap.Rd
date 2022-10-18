@@ -106,7 +106,6 @@ using \code{control}. See \code{\link[openair:windRose]{openair::pollutionRose()
 pollroseMap(polar_data,
   pollutant = "nox",
   statistic = "prop.count",
-  type = "site",
   provider = "Stamen.Toner"
 )
 }

@@ -96,7 +96,6 @@ using \code{control}. See \code{\link[openair:percentileRose]{openair::percentil
 \dontrun{
 percentileMap(polar_data,
   pollutant = "nox",
-  type = "site",
   provider = "Stamen.Toner"
 )
 }

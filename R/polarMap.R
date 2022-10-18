@@ -58,7 +58,6 @@
 #' polarMap(polar_data,
 #'   pollutant = "nox",
 #'   x = "ws",
-#'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
