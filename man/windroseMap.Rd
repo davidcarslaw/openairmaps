@@ -87,7 +87,6 @@ using \code{control}. See \code{\link[openair:windRose]{openair::windRose()}} fo
 \examples{
 \dontrun{
 windroseMap(polar_data,
-  type = "site",
   provider = "Stamen.Toner"
 )
 }

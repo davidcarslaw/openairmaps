@@ -100,7 +100,6 @@ using \code{control}. See \code{\link[openair:polarPlot]{openair::polarPlot()}} 
 polarMap(polar_data,
   pollutant = "nox",
   x = "ws",
-  type = "site",
   provider = "Stamen.Toner"
 )
 }

@@ -112,7 +112,6 @@ using \code{control}. See \code{\link[openair:polarFreq]{openair::polarFreq()}} 
 freqMap(polar_data,
   pollutant = "nox",
   statistic = "mean",
-  type = "site",
   provider = "Stamen.Toner"
 )
 }

@@ -49,7 +49,6 @@
 #' @examples
 #' \dontrun{
 #' windroseMap(polar_data,
-#'   type = "site",
 #'   provider = "Stamen.Toner"
 #' )
 #' }
