@@ -10,11 +10,11 @@ addPolarMarkers(
   lat = NULL,
   layerId = NULL,
   group = NULL,
-  popup,
+  popup = NULL,
+  label = NULL,
   data,
   fun = openair::polarPlot,
   pollutant,
-  type = "default",
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 4,
@@ -39,6 +39,8 @@ layers (e.g. markers and polygons) can share the same group name.}
 
 \item{popup}{A column of \code{data} to be used as a popup.}
 
+\item{label}{A column of \code{data} to be used as a label.}
+
 \item{data}{A data frame. The data frame must contain the data to plot your
 choice of openair directional analysis plot, which includes wind speed
 (\code{ws}), wind direction (\code{wd}), and the column representing the
@@ -53,9 +55,6 @@ Supported functions include \code{\link[openair:polarPlot]{openair::polarPlot()}
 
 \item{pollutant}{The name of the pollutant to be plot. Note that, if
 \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
-
-\item{type}{The grouping variable that provides a data set for a specific
-location. Often, with several sites, \code{type = "site"} is used.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 
@@ -90,7 +89,6 @@ leaflet() \%>\%
     lat = "latitude",
     lng = "longitude",
     pollutant = "ws",
-    type = "site",
     fun = windRose,
     group = "Wind Rose"
   ) \%>\%
@@ -99,7 +97,6 @@ leaflet() \%>\%
     lat = "latitude",
     lng = "longitude",
     pollutant = "nox",
-    type = "site",
     group = "Polar Plot"
   ) \%>\%
   addLayersControl(
