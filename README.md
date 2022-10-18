@@ -22,8 +22,8 @@ You can install the release version of `{openairmaps}` from CRAN with:
 install.packages("openairmaps")
 ```
 
-You can install the development version of `{openairmaps}` from
-[GitHub](https://github.com/) with:
+You can install the development version of `{openairmaps}` from GitHub
+with:
 
 ``` r
 # install.packages("devtools")
@@ -61,8 +61,7 @@ library(openairmaps)
 
 polarMap(
   polar_data, 
-  pollutant = "nox",
-  type = "site"
+  pollutant = "nox"
 )
 ```
 
@@ -78,8 +77,7 @@ library(openairmaps)
 annulusMap(
   polar_data,
   pollutant = c("no2", "nox"),
-  provider = c("CartoDB.Positron", "OpenStreetMap"),
-  type = "site"
+  provider = c("CartoDB.Positron", "OpenStreetMap")
 )
 ```
 
@@ -95,8 +93,7 @@ library(openairmaps)
 polarMap(
   polar_data,
   pollutant = c("no2", "nox"),
-  provider = c("CartoDB.Positron", "OpenStreetMap"),
-  type = "site"
+  provider = c("CartoDB.Positron", "OpenStreetMap")
 ) %>%
   leaflet::popupOptions(...) %>%
   leaflet::mapOptions(...) # etc.
@@ -125,7 +122,6 @@ leaflet() %>%
     data = polar_data,
     fun = openair::windRose,
     pollutant = "ws",
-    type = "site",
     group = "Wind Rose"
   ) %>%
   addPolarMarkers(
@@ -134,7 +130,6 @@ leaflet() %>%
     data = polar_data,
     fun = openair::polarPlot,
     pollutant = "nox",
-    type = "site",
     group = quickTextHTML("NOx Polar Plot")
   ) %>%
   addLayersControl(baseGroups = quickTextHTML(c("Wind Rose", "NOx Polar Plot")))
