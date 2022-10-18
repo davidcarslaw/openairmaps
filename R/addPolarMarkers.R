@@ -16,6 +16,7 @@
 #'   identifier-style names. Any number of layers and even different types of
 #'   layers (e.g. markers and polygons) can share the same group name.
 #' @param popup A column of \code{data} to be used as a popup.
+#' @param label A column of \code{data} to be used as a label.
 #' @param data A data frame. The data frame must contain the data to plot your
 #'   choice of openair directional analysis plot, which includes wind speed
 #'   (\code{ws}), wind direction (\code{wd}), and the column representing the
@@ -28,8 +29,6 @@
 #'   [openair::windRose()].
 #' @param pollutant The name of the pollutant to be plot. Note that, if
 #'   \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.
-#' @param type The grouping variable that provides a data set for a specific
-#'   location. Often, with several sites, \code{type = "site"} is used.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -51,7 +50,6 @@
 #'     lat = "latitude",
 #'     lng = "longitude",
 #'     pollutant = "ws",
-#'     type = "site",
 #'     fun = windRose,
 #'     group = "Wind Rose"
 #'   ) %>%
@@ -60,7 +58,6 @@
 #'     lat = "latitude",
 #'     lng = "longitude",
 #'     pollutant = "nox",
-#'     type = "site",
 #'     group = "Polar Plot"
 #'   ) %>%
 #'   addLayersControl(
@@ -68,16 +65,22 @@
 #'   )
 #' }
 #'
-addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group = NULL, popup,
-                            data, fun = openair::polarPlot, pollutant, type = "default",
-                            iconWidth = 200, iconHeight = 200, fig.width = 4, fig.height = 4,
-                            ...) {
-  if (type == "default") {
-    data <- dplyr::mutate(data, type = "default")
-  }
-
-  if (missing(popup)) popup <- type
-
+addPolarMarkers <-
+  function(map,
+           lng = NULL,
+           lat = NULL,
+           layerId = NULL,
+           group = NULL,
+           popup = NULL,
+           label = NULL,
+           data,
+           fun = openair::polarPlot,
+           pollutant,
+           iconWidth = 200,
+           iconHeight = 200,
+           fig.width = 4,
+           fig.height = 4,
+           ...) {
   # guess lat/lon
   latlon <- assume_latlon(
     data = data,
@@ -90,7 +93,7 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
   # define plotting function
   args <- list(...)
   thefun <- function(...) {
-    rlang::exec(fun, !!!args, ...)
+    rlang::exec(fun, !!!args, ..., annotate = FALSE)
   }
 
   # where to write files
@@ -105,7 +108,7 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
              fig.height,
              ...) {
       grDevices::png(
-        filename = paste0(dir, "/", data[[type]][1], "_", pollutant, ".png"),
+        filename = paste0(dir, "/", data[[lat]][1], data[[lng]][1], "_", pollutant, ".png"),
         width = fig.width * 300,
         height = fig.height * 300,
         res = 300,
@@ -116,8 +119,7 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
         data,
         key = FALSE,
         pollutant = pollutant,
-        par.settings = list(axis.line = list(col = "transparent")),
-        # ...
+        par.settings = list(axis.line = list(col = "transparent"))
       )
 
       grDevices::dev.off()
@@ -125,7 +127,7 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
 
   # go through all sites and make some plot
   data %>%
-    dplyr::group_split(dplyr::across(dplyr::all_of(type))) %>%
+    dplyr::group_split(.data[[lat]], .data[[lng]]) %>%
     purrr::walk(
       .f = ~ save_icon(
         data = .x,
@@ -133,28 +135,29 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
         dir = icon_dir,
         pollutant = pollutant,
         fig.width = fig.width,
-        fig.height = fig.height,
-        # ...
+        fig.height = fig.height
       )
     )
 
   # definition of 'icons' aka the openair plots
   leafIcons <-
     lapply(sort(paste0(
-      icon_dir, "/", unique(data[[type]]), "_", pollutant, ".png"
+      icon_dir, "/", unique(data[[lat]]), unique(data[[lng]]), "_", pollutant, ".png"
     )),
     leaflet::makeIcon,
     iconWidth = iconWidth,
-    iconHeight = iconHeight
-    )
+    iconHeight = iconHeight)
 
-  names(leafIcons) <- unique(data[[type]])
+  names(leafIcons) <- paste0(unique(data[[lat]]), unique(data[[lng]]))
   class(leafIcons) <- "leaflet_icon_set"
 
   plot_data <-
-    dplyr::group_by(data, .data[[type]]) %>%
+    dplyr::group_by(data, .data[[lat]], .data[[lng]]) %>%
     dplyr::slice(n = 1) %>%
-    dplyr::arrange(.data[[type]])
+    dplyr::arrange(.data[[lat]], .data[[lng]])
+
+  if (!is.null(label)) label <- plot_data[[label]]
+  if (!is.null(popup)) popup <- plot_data[[popup]]
 
   map <- leaflet::addMarkers(
     map,
@@ -162,7 +165,8 @@ addPolarMarkers <- function(map, lng = NULL, lat = NULL, layerId = NULL, group =
     lng = plot_data[[lng]],
     lat = plot_data[[lat]],
     icon = leafIcons,
-    popup = plot_data[[type]],
+    popup = popup,
+    label = label,
     group = group,
     layerId = layerId
   )
