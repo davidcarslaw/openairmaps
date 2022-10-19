@@ -59,7 +59,7 @@ below \code{min.bin} are set as missing.}
 
 \item{cols}{Colours to be used for plotting. Options include
 \dQuote{default}, \dQuote{increment}, \dQuote{heat}, \dQuote{jet} and
-\code{\link[RColorBrewer:ColorBrewer]{RColorBrewer::brewer.pal()}} colours — see the \code{\link[openair:openColours]{openair::openColours()}}
+\code{RColorBrewer} colours — see the \code{\link[openair:openColours]{openair::openColours()}}
 function for more details. For user defined the user can supply a list of
 colour names recognised by R (type \code{\link[grDevices:colors]{grDevices::colours()}} to see the full
 list). An example would be \code{cols = c("yellow", "green", "blue")}.}
