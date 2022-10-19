@@ -34,7 +34,7 @@
 #'   below \code{min.bin} are set as missing.
 #' @param cols Colours to be used for plotting. Options include
 #'   \dQuote{default}, \dQuote{increment}, \dQuote{heat}, \dQuote{jet} and
-#'   [RColorBrewer::brewer.pal()] colours — see the [openair::openColours()]
+#'   \code{RColorBrewer} colours — see the [openair::openColours()]
 #'   function for more details. For user defined the user can supply a list of
 #'   colour names recognised by R (type [grDevices::colours()] to see the full
 #'   list). An example would be \code{cols = c("yellow", "green", "blue")}.
