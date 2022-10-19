@@ -1,4 +1,4 @@
-# openairmaps (development version)
+# openairmaps 0.5.0 (2022-10-19)
 
 ## Directional Analysis
 
