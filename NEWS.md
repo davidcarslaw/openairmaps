@@ -1,3 +1,7 @@
+# openairmaps 0.5.1
+
+* FIX: fixed an issue causing markers to be duplicated when pollutant information is missing for certain sites.
+
 # openairmaps 0.5.0 (2022-10-19)
 
 ## Directional Analysis
