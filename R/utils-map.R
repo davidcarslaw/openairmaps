@@ -322,7 +322,7 @@ makeMap <-
     plot_data <-
       data %>%
       dplyr::group_by(.data[[latitude]], .data[[longitude]], .data[[split_col]]) %>%
-      dplyr::mutate(dc = mean(!is.na(.data[[split_col]]))) %>%
+      dplyr::mutate(dc = mean(!is.na(.data[["conc"]]))) %>%
       dplyr::ungroup() %>%
       dplyr::distinct(.data[[latitude]], .data[[longitude]], .data[[split_col]], .keep_all = TRUE) %>%
       dplyr::arrange(.data[[latitude]], .data[[longitude]])
