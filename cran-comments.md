@@ -1,6 +1,6 @@
 # Submission
 
-This is a minor release which includes new features and bug fixes.
+This is a small patch to fix a potentially damaging bug in openairmaps v0.5.0. The authors apologise to the CRAN maintainers for the inconvenience of having to re-review.
 
 ## Test environments
 
