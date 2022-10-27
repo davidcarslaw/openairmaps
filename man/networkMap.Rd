@@ -9,7 +9,7 @@ networkMap(
   control,
   date = Sys.Date(),
   cluster = TRUE,
-  provider = "OpenStreetMap"
+  provider = c("OpenStreetMap", "Esri.WorldImagery")
 )
 }
 \arguments{
@@ -45,7 +45,10 @@ A leaflet object.
 }
 \description{
 This function uses \code{\link[openair:importMeta]{openair::importMeta()}} to obtain metadata for measurement
-sites and uses it to create an attractive \code{leaflet} map.
+sites and uses it to create an attractive \code{leaflet} map. By default a
+map will be created in which readers may toggle between a vector base map and
+a satellite/aerial image, although users can further customise the control
+menu using the \code{provider} and \code{control} parameters.
 }
 \examples{
 \dontrun{

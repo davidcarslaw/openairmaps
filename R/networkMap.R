@@ -1,7 +1,10 @@
 #' Create a leaflet map of air quality measurement network sites
 #'
 #' This function uses [openair::importMeta()] to obtain metadata for measurement
-#' sites and uses it to create an attractive \code{leaflet} map.
+#' sites and uses it to create an attractive \code{leaflet} map. By default a
+#' map will be created in which readers may toggle between a vector base map and
+#' a satellite/aerial image, although users can further customise the control
+#' menu using the \code{provider} and \code{control} parameters.
 #'
 #' @param source The data source for the meta data to be passed to
 #'   [openair::importMeta()]. Can be \dQuote{aurn}, \dQuote{saqn} (or
@@ -39,7 +42,7 @@ networkMap <-
            control,
            date = Sys.Date(),
            cluster = TRUE,
-           provider = "OpenStreetMap") {
+           provider = c("OpenStreetMap", "Esri.WorldImagery")) {
     provider <- unique(provider)
 
     # sort out date
