@@ -35,16 +35,17 @@ This may be useful for sources like \dQuote{kcl} where there are many
 markers very close together. Defaults to \code{TRUE}, and is forced to be
 \code{TRUE} when \code{source = "europe"} due to the large number of sites.}
 
-\item{provider}{The base map to be used. See
+\item{provider}{The base map(s) to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-of all base maps that can be used.}
+of all base maps that can be used. If multiple base maps are provided, they
+can be toggled between using a "layer control" interface.}
 }
 \value{
 A leaflet object.
 }
 \description{
 This function uses \code{\link[openair:importMeta]{openair::importMeta()}} to obtain metadata for measurement
-sites and creates an attractive \code{leaflet} map.
+sites and uses it to create an attractive \code{leaflet} map.
 }
 \examples{
 \dontrun{

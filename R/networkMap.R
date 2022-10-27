@@ -1,7 +1,7 @@
 #' Create a leaflet map of air quality measurement network sites
 #'
 #' This function uses [openair::importMeta()] to obtain metadata for measurement
-#' sites and creates an attractive \code{leaflet} map.
+#' sites and uses it to create an attractive \code{leaflet} map.
 #'
 #' @param source The data source for the meta data to be passed to
 #'   [openair::importMeta()]. Can be \dQuote{aurn}, \dQuote{saqn} (or
@@ -21,9 +21,10 @@
 #'   This may be useful for sources like \dQuote{kcl} where there are many
 #'   markers very close together. Defaults to \code{TRUE}, and is forced to be
 #'   \code{TRUE} when \code{source = "europe"} due to the large number of sites.
-#' @param provider The base map to be used. See
+#' @param provider The base map(s) to be used. See
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-#'   of all base maps that can be used.
+#'   of all base maps that can be used. If multiple base maps are provided, they
+#'   can be toggled between using a "layer control" interface.
 #'
 #' @return A leaflet object.
 #' @export
@@ -39,6 +40,8 @@ networkMap <-
            date = Sys.Date(),
            cluster = TRUE,
            provider = "OpenStreetMap") {
+    provider <- unique(provider)
+
     # sort out date
     # detect year
     if (grepl(pattern = "^[1-9]\\d{3}$", x = date)) {
@@ -140,10 +143,6 @@ networkMap <-
     } else {
       clusteropts <- NA
     }
-
-    # initialise map
-    map <- leaflet::leaflet() %>%
-      leaflet::addProviderTiles(provider = provider)
 
     # network-specific manipulations
     if (!source %in% c("kcl", "europe")) {
@@ -309,6 +308,15 @@ networkMap <-
     }
 
     # build maps
+    # initialise map
+    map <- leaflet::leaflet()
+
+    # add provider tiles
+    for (i in seq(length(provider))) {
+      map <- leaflet::addProviderTiles(map, provider = provider[i], group = provider[i])
+    }
+
+    # sort out control
     if (!missing(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
@@ -375,11 +383,21 @@ networkMap <-
       }
 
       if (control %in% c("Parameter_name", "variable")) {
-        map <-
-          leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)))
+        if (length(provider) > 1) {
+          map <-
+            leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)), overlayGroups = provider)
+        } else {
+          map <-
+            leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)))
+        }
       } else {
-        map <-
-          leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)))
+        if (length(provider) > 1) {
+          map <-
+            leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)), baseGroups = provider)
+        } else {
+          map <-
+            leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)))
+        }
       }
     } else {
       meta <-
@@ -396,8 +414,11 @@ networkMap <-
           label = dat[["site"]],
           clusterOptions = clusteropts
         )
-    }
 
+      if (length(provider) > 1) {
+        map <- leaflet::addLayersControl(map, baseGroups = provider)
+      }
+    }
 
     map
   }

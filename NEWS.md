@@ -1,3 +1,7 @@
+# openairmaps (development version)
+
+* Multiple basemap providers can now be used with `networkMap()`.
+
 # openairmaps 0.5.1
 
 * FIX: fixed an issue causing markers to be duplicated when pollutant information is missing for certain sites.
