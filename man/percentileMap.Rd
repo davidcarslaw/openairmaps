@@ -7,6 +7,7 @@
 percentileMap(
   data,
   pollutant = NULL,
+  percentile = c(25, 50, 75, 90, 95),
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -16,6 +17,7 @@ percentileMap(
   cols = "jet",
   alpha = 1,
   key = FALSE,
+  draw.legend = TRUE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -34,6 +36,9 @@ longitude.}
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they can be toggled between using a "layer
 control" interface.}
+
+\item{percentile}{The percentile value(s) to plot. Must be between 0–100. If
+\code{percentile = NA} then only a mean line will be shown.}
 
 \item{latitude}{The decimal latitude. If not provided, latitude will be
 automatically inferred from data by looking for a column named \dQuote{lat}
@@ -68,7 +73,10 @@ can be toggled between using a "layer control" interface.}
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
-\item{key}{Should the key of the plot be drawn. Default is \code{FALSE}.}
+\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{draw.legend}{Should a shared legend be created at the side of the map?
+Default is \code{TRUE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 

@@ -20,6 +20,10 @@
 #'   \dQuote{hour} (the default, to plot diurnal variations), \dQuote{season} to
 #'   plot variation throughout the year, \dQuote{weekday} to plot day of the
 #'   week variation and \dQuote{trend} to plot the trend by wind direction.
+#' @param limits By default, each individual polar annulus marker has its own
+#'   colour scale. The \code{limits} argument will force all markers to use the
+#'   same colour scale. The limits are set in the form \code{c(lower, upper}, so
+#'   \code{limits = c(0, 100)} would force the plot limits to span 0-100.
 #' @param latitude The decimal latitude. If not provided, latitude will be
 #'   automatically inferred from data by looking for a column named \dQuote{lat}
 #'   or \dQuote{latitude} (case-insensitively).
@@ -45,7 +49,9 @@
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
-#' @param key Should the key of the plot be drawn. Default is \code{FALSE}.
+#' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
+#' @param draw.legend When \code{limits} are specified, should a shared legend
+#'   be created at the side of the map? Default is \code{TRUE}.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -67,6 +73,7 @@
 annulusMap <- function(data,
                        pollutant = NULL,
                        period = "hour",
+                       limits = NULL,
                        latitude = NULL,
                        longitude = NULL,
                        control = NULL,
@@ -76,6 +83,7 @@ annulusMap <- function(data,
                        cols = "jet",
                        alpha = 1,
                        key = FALSE,
+                       draw.legend = TRUE,
                        iconWidth = 200,
                        iconHeight = 200,
                        fig.width = 3.5,
@@ -98,6 +106,10 @@ annulusMap <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
+  # deal with limits
+  theLimits <- limits
+  if (is.null(limits)) theLimits <- NA
+
   # prepare data for mapping
   data <-
     prepMapData(
@@ -116,7 +128,7 @@ annulusMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::polarAnnulus, period = period, !!!args, ...)
+    rlang::exec(openair::polarAnnulus, period = period, limits = theLimits, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
@@ -144,14 +156,31 @@ annulusMap <- function(data,
     )
 
   # plot leaflet
-  makeMap(
-    data = data,
-    icons = icons,
-    provider = provider,
-    longitude = longitude,
-    latitude = latitude,
-    popup = popup,
-    label = label,
-    split_col = split_col
-  )
+  map <-
+    makeMap(
+      data = data,
+      icons = icons,
+      provider = provider,
+      longitude = longitude,
+      latitude = latitude,
+      popup = popup,
+      label = label,
+      split_col = split_col
+    )
+
+  # add legend if limits are set
+  if (!is.null(limits) & all(!is.na(limits)) & draw.legend) {
+    map <-
+      leaflet::addLegend(
+        map,
+        title = quickTextHTML(paste(pollutant, collapse = ",<br>")),
+        pal = leaflet::colorNumeric(
+          palette = openair::openColours(scheme = cols),
+          domain = theLimits
+        ),
+        values = theLimits
+      )
+  }
+
+  map
 }

@@ -23,6 +23,12 @@
 #'   \dQuote{prop.mean} sizes bins according to their relative contribution to
 #'   the mean. \dQuote{abs.count} provides the absolute count of measurements in
 #'   each bin.
+#' @param breaks Most commonly, the number of break points. If not specified,
+#'   each marker will independently break its supplied data at approximately 6
+#'   sensible break points. When \code{breaks} are specified, all markers will
+#'   use the same break points. Breaks can also be used to set specific break
+#'   points. For example, the argument \code{breaks = c(0, 1, 10, 100)} breaks
+#'   the data into segments <1, 1-10, 10-100, >100.
 #' @param latitude The decimal latitude. If not provided, latitude will be
 #'   automatically inferred from data by looking for a column named \dQuote{lat}
 #'   or \dQuote{latitude} (case-insensitively).
@@ -48,7 +54,9 @@
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
-#' @param key Should the key of the plot be drawn. Default is \code{FALSE}.
+#' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
+#' @param draw.legend When \code{breaks} are specified, should a shared legend
+#'   be created at the side of the map? Default is \code{TRUE}.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -70,6 +78,7 @@
 pollroseMap <- function(data,
                         pollutant = NULL,
                         statistic = "prop.count",
+                        breaks = NULL,
                         latitude = NULL,
                         longitude = NULL,
                         control = NULL,
@@ -79,6 +88,7 @@ pollroseMap <- function(data,
                         cols = "jet",
                         alpha = 1,
                         key = FALSE,
+                        draw.legend = TRUE,
                         iconWidth = 200,
                         iconHeight = 200,
                         fig.width = 3.5,
@@ -115,10 +125,19 @@ pollroseMap <- function(data,
       label
     )
 
+  # work out breaks
+  # needs to happen before plotting to ensure same scales
+  if (!is.null(breaks)) {
+    theBreaks <-
+      getBreaks(breaks = breaks, ws.int = NULL, vec = data$conc, polrose = TRUE)
+  } else {
+    theBreaks <- 6
+  }
+
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::pollutionRose, annotate = FALSE, statistic = statistic, !!!args, ...)
+    rlang::exec(openair::pollutionRose, annotate = FALSE, statistic = statistic, breaks = theBreaks, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
@@ -146,14 +165,31 @@ pollroseMap <- function(data,
     )
 
   # plot leaflet
-  makeMap(
-    data = data,
-    icons = icons,
-    provider = provider,
-    longitude = longitude,
-    latitude = latitude,
-    popup = popup,
-    label = label,
-    split_col = split_col
-  )
+  map <-
+    makeMap(
+      data = data,
+      icons = icons,
+      provider = provider,
+      longitude = longitude,
+      latitude = latitude,
+      popup = popup,
+      label = label,
+      split_col = split_col
+    )
+
+  if (!is.null(breaks) & draw.legend) {
+    map <-
+      leaflet::addLegend(
+        map,
+        pal = leaflet::colorBin(
+          palette = openair::openColours(cols),
+          domain = theBreaks,
+          bins = theBreaks
+        ),
+        values = theBreaks,
+        title = quickTextHTML(paste(pollutant, collapse = ", "))
+      )
+  }
+
+  map
 }

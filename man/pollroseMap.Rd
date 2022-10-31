@@ -8,6 +8,7 @@ pollroseMap(
   data,
   pollutant = NULL,
   statistic = "prop.count",
+  breaks = NULL,
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -17,6 +18,7 @@ pollroseMap(
   cols = "jet",
   alpha = 1,
   key = FALSE,
+  draw.legend = TRUE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -43,6 +45,13 @@ the proportion of the frequency of measurements.  Similarly,
 \dQuote{prop.mean} sizes bins according to their relative contribution to
 the mean. \dQuote{abs.count} provides the absolute count of measurements in
 each bin.}
+
+\item{breaks}{Most commonly, the number of break points. If not specified,
+each marker will independently break its supplied data at approximately 6
+sensible break points. When \code{breaks} are specified, all markers will
+use the same break points. Breaks can also be used to set specific break
+points. For example, the argument \code{breaks = c(0, 1, 10, 100)} breaks
+the data into segments <1, 1-10, 10-100, >100.}
 
 \item{latitude}{The decimal latitude. If not provided, latitude will be
 automatically inferred from data by looking for a column named \dQuote{lat}
@@ -77,7 +86,10 @@ can be toggled between using a "layer control" interface.}
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
-\item{key}{Should the key of the plot be drawn. Default is \code{FALSE}.}
+\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{draw.legend}{When \code{breaks} are specified, should a shared legend
+be created at the side of the map? Default is \code{TRUE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 

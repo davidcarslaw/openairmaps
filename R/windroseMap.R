@@ -1,8 +1,8 @@
 #' Wind rose plots on interactive leaflet maps
 #'
-#' [windroseMap()] creates a \code{leaflet} map using wind roses as
-#' markers. Multiple layers of markers can be added and toggled between
-#' using \code{control}. See [openair::windRose()] for more information.
+#' [windroseMap()] creates a \code{leaflet} map using wind roses as markers.
+#' Multiple layers of markers can be added and toggled between using
+#' \code{control}. See [openair::windRose()] for more information.
 #'
 #' @seealso Directional analysis maps: [annulusMap()], [freqMap()],
 #'   [percentileMap()], [polarMap()], [pollroseMap()], [windroseMap()].
@@ -11,6 +11,13 @@
 #'   [openair::windRose()], which includes wind speed (\code{ws}), and wind
 #'   direction (\code{wd}). In addition, \code{data} must include a decimal
 #'   latitude and longitude.
+#' @param ws.int The wind speed interval. Default is 2 m/s but for low met masts
+#'   with low mean wind speeds a value of 1 or 0.5 m/s may be better.
+#' @param breaks Most commonly, the number of break points for wind speed in
+#'   windRose. For windRose and the ws.int default of 2 m/s, the default, 4,
+#'   generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
+#'   specific break points. For example, the argument breaks = c(0, 1, 10, 100)
+#'   breaks the data into segments <1, 1-10, 10-100, >100.
 #' @param latitude The decimal latitude. If not provided, latitude will be
 #'   automatically inferred from data by looking for a column named \dQuote{lat}
 #'   or \dQuote{latitude} (case-insensitively).
@@ -35,7 +42,9 @@
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
-#' @param key Should the key of the plot be drawn. Default is \code{FALSE}.
+#' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
+#' @param draw.legend Should a shared legend be created at the side of the map?
+#'   Default is \code{TRUE}.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -53,6 +62,8 @@
 #' )
 #' }
 windroseMap <- function(data,
+                        ws.int = 2,
+                        breaks = 4,
                         latitude = NULL,
                         longitude = NULL,
                         control = NULL,
@@ -62,6 +73,7 @@ windroseMap <- function(data,
                         cols = "jet",
                         alpha = 1,
                         key = FALSE,
+                        draw.legend = TRUE,
                         iconWidth = 200,
                         iconHeight = 200,
                         fig.width = 3.5,
@@ -86,13 +98,13 @@ windroseMap <- function(data,
 
   # need to put ws in a separate column to work with the rest of openairmaps
   # utilities...
-  data$ws2 <- data$ws
+  data$ws_dup <- data$ws
 
   data <-
     prepMapData(
       data = data,
       type = type,
-      pollutant = "ws2",
+      pollutant = "ws_dup",
       control = control,
       "ws",
       "wd",
@@ -102,6 +114,11 @@ windroseMap <- function(data,
       label
     )
 
+  # work out breaks
+  # needs to happen before plotting to ensure same scales
+  breaks <-
+    getBreaks(breaks = breaks, ws.int = ws.int, vec = data$conc, polrose = FALSE)
+
   # define plotting function
   args <- list(...)
   if ("pollutant" %in% names(args)) {
@@ -110,7 +127,7 @@ windroseMap <- function(data,
   }
 
   fun <- function(...) {
-    rlang::exec(openair::windRose, annotate = FALSE, !!!args, ...)
+    rlang::exec(openair::windRose, annotate = FALSE, breaks = breaks, ws.int = ws.int, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
@@ -136,14 +153,31 @@ windroseMap <- function(data,
     )
 
   # plot leaflet
-  makeMap(
-    data = data,
-    icons = icons,
-    provider = provider,
-    longitude = longitude,
-    latitude = latitude,
-    popup = popup,
-    label = label,
-    split_col = split_col
-  )
+  map <-
+    makeMap(
+      data = data,
+      icons = icons,
+      provider = provider,
+      longitude = longitude,
+      latitude = latitude,
+      popup = popup,
+      label = label,
+      split_col = split_col
+    )
+
+  if (draw.legend) {
+    map <-
+      leaflet::addLegend(
+        map,
+        pal = leaflet::colorBin(
+          palette = openair::openColours(cols),
+          domain = breaks,
+          bins = breaks
+        ),
+        values = breaks,
+        title = "Wind Speed"
+      )
+  }
+
+  map
 }
