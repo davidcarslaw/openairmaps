@@ -47,8 +47,6 @@
 #'   of all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
 #' @param cols The colours used for plotting.
-#' @param alpha The alpha transparency to use for the plotting surface (a value
-#'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
 #' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
 #' @param draw.legend When \code{limits} are specified, should a shared legend
 #'   be created at the side of the map? Default is \code{TRUE}.
@@ -81,7 +79,6 @@ annulusMap <- function(data,
                        label = NULL,
                        provider = "OpenStreetMap",
                        cols = "jet",
-                       alpha = 1,
                        key = FALSE,
                        draw.legend = TRUE,
                        iconWidth = 200,
@@ -155,7 +152,7 @@ annulusMap <- function(data,
     purrr::imap(
       .f = ~ create_icons(
         data = .x, fun = fun, pollutant = "conc", split = .y,
-        lat = latitude, lon = longitude, x = x, cols = cols, alpha = alpha,
+        lat = latitude, lon = longitude, x = x, cols = cols,
         key = key, fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
       )

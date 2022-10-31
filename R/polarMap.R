@@ -125,7 +125,7 @@ polarMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::polarPlot, x = x, limits = theLimits, !!!args, ...)
+    rlang::exec(openair::polarPlot, x = x, limits = theLimits, alpha = alpha, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
@@ -146,7 +146,7 @@ polarMap <- function(data,
     purrr::imap(
       .f = ~ create_icons(
         data = .x, fun = fun, pollutant = "conc", split = .y,
-        lat = latitude, lon = longitude, x = x, cols = cols, alpha = alpha,
+        lat = latitude, lon = longitude, x = x, cols = cols,
         key = key, fig.width = fig.width, fig.height = fig.height,
         iconWidth = iconWidth, iconHeight = iconHeight, ...
       )
