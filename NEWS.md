@@ -1,6 +1,12 @@
 # openairmaps (development version)
 
+* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc. depending on function). This was always possible, but is now more explicit.
+
+* If limits are defined in a directional analysis function, a shared legend will now be drawn at the top-right of the map. This functionality can be disabled by setting `draw.legend` to FALSE.
+
 * Multiple basemap providers can now be used with `networkMap()`.
+
+* The "alpha" option has been removed for all directional analysis functions except `polarMap()` as it only ever worked for `polarMap()`.
 
 # openairmaps 0.5.1
 
