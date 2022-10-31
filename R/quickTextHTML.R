@@ -15,7 +15,6 @@
 ##' @keywords methods
 ##'
 ##' @examples
-##'
 ##' labs <- c("no2", "o3", "so2")
 ##' quickTextHTML(labs)
 
@@ -34,6 +33,8 @@ quickTextHTML <- function(text) {
   text <- gsub("v10|V10", "V<sub>10</sub>", text)
   text <- gsub("nv25|NV25|Nv25|nv2.5|NV2.5|Nv2.5", "NV<sub>2.5</sub>", text)
   text <- gsub("v25|V25|v2.5|V2.5", "V<sub>2.5</sub>", text)
+  text <- gsub("ug/m3", "\u00B5g m<sup>-3</sup>", text)
+  text <- gsub("m/s", "m s<sup>-1</sup>", text)
 
   return(text)
 }
