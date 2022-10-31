@@ -23,7 +23,6 @@ supplied character vector \code{text} and automatically applies formatting
 to any recognised character sub-series to properly render in HTML.
 }
 \examples{
-
 labs <- c("no2", "o3", "so2")
 quickTextHTML(labs)
 }
