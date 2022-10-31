@@ -127,8 +127,14 @@ annulusMap <- function(data,
 
   # define plotting function
   args <- list(...)
-  fun <- function(...) {
-    rlang::exec(openair::polarAnnulus, period = period, limits = theLimits, !!!args, ...)
+  if (is.null(limits)){
+    fun <- function(...) {
+      rlang::exec(openair::polarAnnulus, period = period, !!!args, ...)
+    }
+  } else {
+    fun <- function(...) {
+      rlang::exec(openair::polarAnnulus, period = period, limits = theLimits, !!!args, ...)
+    }
   }
 
   # identify splitting column (defaulting to pollutant)
