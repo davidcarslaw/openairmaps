@@ -15,7 +15,6 @@ windroseMap(
   label = NULL,
   provider = "OpenStreetMap",
   cols = "jet",
-  alpha = 1,
   key = FALSE,
   draw.legend = TRUE,
   iconWidth = 200,
@@ -69,9 +68,6 @@ of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
 
 \item{cols}{The colours used for plotting.}
-
-\item{alpha}{The alpha transparency to use for the plotting surface (a value
-between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 

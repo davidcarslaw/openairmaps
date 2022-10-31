@@ -216,7 +216,6 @@ save_icon_image <-
            lat,
            lon,
            cols,
-           alpha,
            key,
            fig.width,
            fig.height,
@@ -237,7 +236,6 @@ save_icon_image <-
       key = key,
       cols = cols,
       par.settings = list(axis.line = list(col = "transparent")),
-      alpha = alpha,
       ...
     )
 
@@ -254,7 +252,6 @@ create_icons <-
            lat,
            lon,
            cols,
-           alpha,
            key,
            fig.width,
            fig.height,
@@ -279,7 +276,6 @@ create_icons <-
           lat = lat,
           lon = lon,
           cols = cols,
-          alpha = alpha,
           key = key,
           fig.width = fig.width,
           fig.height = fig.height,
