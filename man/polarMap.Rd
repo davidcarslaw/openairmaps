@@ -8,6 +8,7 @@ polarMap(
   data,
   pollutant = NULL,
   x = "ws",
+  limits = NULL,
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -17,6 +18,7 @@ polarMap(
   cols = "jet",
   alpha = 1,
   key = FALSE,
+  draw.legend = TRUE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -37,6 +39,11 @@ pollutants are specified, they can be toggled between using a "layer
 control" interface.}
 
 \item{x}{The radial axis variable to plot.}
+
+\item{limits}{By default, each individual polar plot marker has its own
+colour scale. The \code{limits} argument will force all markers to use the
+same colour scale. The limits are set in the form \code{c(lower, upper}, so
+\code{limits = c(0, 100)} would force the plot limits to span 0-100.}
 
 \item{latitude}{The decimal latitude. If not provided, latitude will be
 automatically inferred from data by looking for a column named \dQuote{lat}
@@ -71,7 +78,10 @@ can be toggled between using a "layer control" interface.}
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
-\item{key}{Should the key of the plot be drawn. Default is \code{FALSE}.}
+\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{draw.legend}{When \code{limits} are specified, should a shared legend
+be created at the side of the map? Default is \code{TRUE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 

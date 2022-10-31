@@ -7,6 +7,7 @@
 freqMap(
   data,
   pollutant = NULL,
+  breaks = NULL,
   statistic = "mean",
   latitude = NULL,
   longitude = NULL,
@@ -17,6 +18,7 @@ freqMap(
   cols = "jet",
   alpha = 1,
   key = FALSE,
+  draw.legend = TRUE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -36,14 +38,20 @@ longitude.}
 pollutants are specified, they can be toggled between using a "layer
 control" interface.}
 
+\item{breaks}{The user can provide their own scale. breaks expects a sequence
+of numbers that define the range of the scale. The sequence could represent
+one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale
+from 0-10 in intervals of 10, or a more flexible sequence, e.g.,
+\code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.}
+
 \item{statistic}{The statistic that should be applied to each wind
 speed/direction bin. Can be \dQuote{frequency}, \dQuote{mean},
 \dQuote{median}, \dQuote{max} (maximum), \dQuote{stdev} (standard
-deviation) or \dQuote{weighted.mean}. The option \dQuote{frequency} (the
-default) is the simplest and plots the frequency of wind speed/direction in
-different bins. The scale therefore shows the counts in each bin. The
-option \dQuote{mean} will plot the mean concentration of a pollutant (see
-next point) in wind speed/direction bins, and so on.  Finally,
+deviation) or \dQuote{weighted.mean}. The option \dQuote{frequency} is the
+simplest and plots the frequency of wind speed/direction in different bins.
+The scale therefore shows the counts in each bin. The option \dQuote{mean}
+(the default) will plot the mean concentration of a pollutant (see next
+point) in wind speed/direction bins, and so on.  Finally,
 \dQuote{weighted.mean} will plot the concentration of a pollutant weighted
 by wind speed/direction. Each segment therefore provides the percentage
 overall contribution to the total concentration. Note that for options
@@ -83,7 +91,10 @@ can be toggled between using a "layer control" interface.}
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
-\item{key}{Should the key of the plot be drawn. Default is \code{FALSE}.}
+\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{draw.legend}{When \code{breaks} are specified, should a shared legend
+be created at the side of the map? Default is \code{TRUE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 
@@ -102,8 +113,8 @@ different sites.}
 A leaflet object.
 }
 \description{
-\code{\link[=freqMap]{freqMap()}} creates a \code{leaflet} map using binned polar plots as
-markers. Any number of pollutants can be specified using the \code{pollutant}
+\code{\link[=freqMap]{freqMap()}} creates a \code{leaflet} map using binned polar plots as markers.
+Any number of pollutants can be specified using the \code{pollutant}
 argument, and multiple layers of markers can be added and toggled between
 using \code{control}. See \code{\link[openair:polarFreq]{openair::polarFreq()}} for more information.
 }

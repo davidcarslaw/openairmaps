@@ -6,6 +6,8 @@
 \usage{
 windroseMap(
   data,
+  ws.int = 2,
+  breaks = 4,
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -15,6 +17,7 @@ windroseMap(
   cols = "jet",
   alpha = 1,
   key = FALSE,
+  draw.legend = TRUE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -28,6 +31,15 @@ windroseMap(
 \code{\link[openair:windRose]{openair::windRose()}}, which includes wind speed (\code{ws}), and wind
 direction (\code{wd}). In addition, \code{data} must include a decimal
 latitude and longitude.}
+
+\item{ws.int}{The wind speed interval. Default is 2 m/s but for low met masts
+with low mean wind speeds a value of 1 or 0.5 m/s may be better.}
+
+\item{breaks}{Most commonly, the number of break points for wind speed in
+windRose. For windRose and the ws.int default of 2 m/s, the default, 4,
+generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
+specific break points. For example, the argument breaks = c(0, 1, 10, 100)
+breaks the data into segments <1, 1-10, 10-100, >100.}
 
 \item{latitude}{The decimal latitude. If not provided, latitude will be
 automatically inferred from data by looking for a column named \dQuote{lat}
@@ -61,7 +73,10 @@ can be toggled between using a "layer control" interface.}
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
-\item{key}{Should the key of the plot be drawn. Default is \code{FALSE}.}
+\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{draw.legend}{Should a shared legend be created at the side of the map?
+Default is \code{TRUE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 
@@ -80,9 +95,9 @@ different sites.}
 A leaflet object.
 }
 \description{
-\code{\link[=windroseMap]{windroseMap()}} creates a \code{leaflet} map using wind roses as
-markers. Multiple layers of markers can be added and toggled between
-using \code{control}. See \code{\link[openair:windRose]{openair::windRose()}} for more information.
+\code{\link[=windroseMap]{windroseMap()}} creates a \code{leaflet} map using wind roses as markers.
+Multiple layers of markers can be added and toggled between using
+\code{control}. See \code{\link[openair:windRose]{openair::windRose()}} for more information.
 }
 \examples{
 \dontrun{

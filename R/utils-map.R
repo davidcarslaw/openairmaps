@@ -447,3 +447,29 @@ assume_latlon <- function(data, latitude, longitude) {
     longitude = longitude
   )
 }
+
+#' get breaks for the "rose" functions
+#' @param breaks as given by windrose
+#' @param ws.int as given by windrose
+#' @param vec the vector to calc max/min/q90
+#' @param polrose use pollutionrose method? T/F
+#' @noRd
+getBreaks <- function(breaks, ws.int, vec, polrose) {
+  if (is.numeric(breaks) & length(breaks) == 1 & polrose) {
+    breaks <- unique(pretty(
+      c(
+        min(vec, na.rm = TRUE),
+        stats::quantile(vec, probs = 0.9, na.rm = TRUE)
+      ),
+      breaks
+    ))
+  }
+  if (length(breaks) == 1) {
+    breaks <- 0:(breaks - 1) * ws.int
+  }
+  if (max(breaks) < max(vec, na.rm = T)) {
+    breaks <- c(breaks, max(vec, na.rm = T))
+  }
+  breaks <- unique(breaks)
+  breaks
+}

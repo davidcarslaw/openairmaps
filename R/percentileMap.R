@@ -16,6 +16,8 @@
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
+#' @param percentile The percentile value(s) to plot. Must be between 0–100. If
+#'   \code{percentile = NA} then only a mean line will be shown.
 #' @param latitude The decimal latitude. If not provided, latitude will be
 #'   automatically inferred from data by looking for a column named \dQuote{lat}
 #'   or \dQuote{latitude} (case-insensitively).
@@ -41,7 +43,9 @@
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
-#' @param key Should the key of the plot be drawn. Default is \code{FALSE}.
+#' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
+#' @param draw.legend Should a shared legend be created at the side of the map?
+#'   Default is \code{TRUE}.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -61,6 +65,7 @@
 #' }
 percentileMap <- function(data,
                           pollutant = NULL,
+                          percentile = c(25, 50, 75, 90, 95),
                           latitude = NULL,
                           longitude = NULL,
                           control = NULL,
@@ -70,6 +75,7 @@ percentileMap <- function(data,
                           cols = "jet",
                           alpha = 1,
                           key = FALSE,
+                          draw.legend = TRUE,
                           iconWidth = 200,
                           iconHeight = 200,
                           fig.width = 3.5,
@@ -108,7 +114,7 @@ percentileMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::percentileRose, !!!args, ...)
+    rlang::exec(openair::percentileRose, !!!args, percentile = percentile, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
@@ -136,14 +142,32 @@ percentileMap <- function(data,
     )
 
   # plot leaflet
-  makeMap(
-    data = data,
-    icons = icons,
-    provider = provider,
-    longitude = longitude,
-    latitude = latitude,
-    popup = popup,
-    label = label,
-    split_col = split_col
-  )
+  map <-
+    makeMap(
+      data = data,
+      icons = icons,
+      provider = provider,
+      longitude = longitude,
+      latitude = latitude,
+      popup = popup,
+      label = label,
+      split_col = split_col
+    )
+
+  if (all(!is.na(percentile)) & draw.legend) {
+    percs <- unique(c(0, percentile))
+    map <-
+      leaflet::addLegend(
+        title = "Percentile",
+        map,
+        pal = leaflet::colorBin(
+          palette = openair::openColours(scheme = cols, n = length(percs)),
+          bins = percs,
+          domain = 0:100
+        ),
+        values = 0:100
+      )
+  }
+
+  map
 }
