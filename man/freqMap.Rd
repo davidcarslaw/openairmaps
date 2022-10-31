@@ -19,8 +19,8 @@ freqMap(
   key = FALSE,
   iconWidth = 200,
   iconHeight = 200,
-  fig.width = 4,
-  fig.height = 4,
+  fig.width = 3.5,
+  fig.height = 3.5,
   type = NULL,
   ...
 )
