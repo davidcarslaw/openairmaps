@@ -4,9 +4,15 @@
 
 * If limits are defined in a directional analysis function, a shared legend will now be drawn at the top-right of the map. This functionality can be disabled by setting `draw.legend` to FALSE.
 
+* `networkMap()` now supports `source = "local"`.
+
 * Multiple basemap providers can now be used with `networkMap()`.
 
+* The default options for fig.width and fig.height are now `3.5` rather than `4`. This appears to remove some visual artefacts and makes the axis labels more legible.
+
 * The "alpha" option has been removed for all directional analysis functions except `polarMap()` as it only ever worked for `polarMap()`.
+
+
 
 # openairmaps 0.5.1
 
