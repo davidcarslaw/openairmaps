@@ -124,7 +124,7 @@ annulusMap <- function(data,
 
   # define plotting function
   args <- list(...)
-  if (is.null(limits)){
+  if (is.null(limits)) {
     fun <- function(...) {
       rlang::exec(openair::polarAnnulus, period = period, !!!args, ...)
     }

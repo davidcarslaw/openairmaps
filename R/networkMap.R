@@ -8,8 +8,8 @@
 #'
 #' @param source The data source for the meta data to be passed to
 #'   [openair::importMeta()]. Can be \dQuote{aurn}, \dQuote{saqn} (or
-#'   \dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni}, \dQuote{kcl} or
-#'   \dQuote{europe}.
+#'   \dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni}, \dQuote{local},
+#'   \dQuote{kcl} or \dQuote{europe}.
 #' @param control Option to add a "layer control" menu to allow readers to
 #'   select between different site types. Can choose between effectively any
 #'   column in the [openair::importMeta()] output, such as \dQuote{variable},
@@ -149,76 +149,69 @@ networkMap <-
 
     # network-specific manipulations
     if (!source %in% c("kcl", "europe")) {
-      # get variable names
-      vars <- unique(meta$variable)
-      vars[vars == "NO"] <- "NOx"
-
-      # create labels
-      meta <- meta %>%
-        dplyr::filter(.data$variable != "NO") %>%
-        dplyr::mutate(
-          lab = stringr::str_glue(
-            "<b>{quickTextHTML(Parameter_name)} ({quickTextHTML(variable)})</b><br>{start_date} - {end_date}"
+      if (source == "local") {
+        meta <-
+          prepNetworkData(
+            meta,
+            c(
+              "code",
+              "site",
+              "site_type",
+              "latitude",
+              "longitude",
+              "zone",
+              "agglomeration",
+              "provider"
+            ),
+            date = date
+          ) %>%
+          dplyr::mutate(
+            lab = stringr::str_glue(
+              "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
+      <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
+      <b>Site Type:</b> {site_type}<br>
+      <b>Zone:</b> {zone}<br>
+      <b>Agglomeration:</b> {agglomeration}<br>
+      <b>Provider:</b> {provider}<br>
+      <hr>{lab}"
+            )
+          ) %>%
+          dplyr::mutate(
+            lab = stringr::str_remove_all(.data$lab, "<b>Agglomeration:</b> NA<br>"),
+            lab = stringr::str_remove_all(.data$lab, "<b>Site Type:</b> unknown unknown<br>")
           )
-        ) %>%
-        dplyr::group_by(
-          .data$code,
-          .data$site,
-          .data$site_type,
-          .data$latitude,
-          .data$longitude,
-          .data$zone,
-          .data$agglomeration,
-          .data$local_authority
-        ) %>%
-        dplyr::summarise(
-          lab = paste(.data$lab, collapse = "<br>"),
-          .groups = "drop"
-        ) %>%
-        dplyr::right_join(
-          meta,
-          by = c(
-            "code",
-            "site",
-            "site_type",
-            "latitude",
-            "longitude",
-            "zone",
-            "agglomeration",
-            "local_authority"
-          )
-        ) %>%
-        dplyr::mutate(
-          lab = stringr::str_glue(
-            "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
+      } else {
+        meta <-
+          prepNetworkData(
+            meta,
+            c(
+              "code",
+              "site",
+              "site_type",
+              "latitude",
+              "longitude",
+              "zone",
+              "agglomeration",
+              "local_authority"
+            ),
+            date = date
+          ) %>%
+          dplyr::mutate(
+            lab = stringr::str_glue(
+              "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
       <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
       <b>Site Type:</b> {site_type}<br>
       <b>Zone:</b> {zone}<br>
       <b>Agglomeration:</b> {agglomeration}<br>
       <b>Local Authority:</b> {local_authority}<br>
       <hr>{lab}"
+            )
+          ) %>%
+          dplyr::mutate(
+            lab = stringr::str_remove_all(.data$lab, "<b>Agglomeration:</b> NA<br>"),
+            lab = stringr::str_remove_all(.data$lab, "<b>Local Authority:</b> NA<br>")
           )
-        ) %>%
-        dplyr::mutate(
-          lab = stringr::str_remove_all(.data$lab, "<b>Agglomeration:</b> NA<br>"),
-          lab = stringr::str_remove_all(.data$lab, "<b>Local Authority:</b> NA<br>")
-        )
-
-      # format and filter dates
-      meta <- dplyr::mutate(
-        meta,
-        end_date2 = dplyr::if_else(
-          .data$end_date == "ongoing" | is.na(.data$end_date),
-          as.character(Sys.Date()),
-          .data$end_date
-        ),
-        end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
-        start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
-      ) %>%
-        dplyr::filter(
-          date >= .data$start_date,
-          date <= .data$end_date2
-        )
+      }
     }
 
     if (source == "kcl") {
@@ -343,7 +336,8 @@ networkMap <-
             "observation_count",
             "start_date2",
             "end_date2",
-            "lab"
+            "lab",
+            "pcode"
           )]
 
         cli::cli_abort(c(
@@ -425,3 +419,51 @@ networkMap <-
 
     map
   }
+
+#' function to prep AURN and LMAM data for plotting
+#' not used for Europe and KCL
+#' @param data metadata
+#' @param vec char vector of columns - used for grouping/joining
+#' @param date from parent func
+#' @noRd
+prepNetworkData <- function(data, vec, date) {
+  # get variable names
+  vars <- unique(data$variable)
+  vars[vars == "NO"] <- "NOx"
+
+  # create labels
+  data <- data %>%
+    dplyr::filter(.data$variable != "NO") %>%
+    dplyr::mutate(
+      lab = stringr::str_glue(
+        "<b>{quickTextHTML(Parameter_name)} ({quickTextHTML(variable)})</b><br>{start_date} - {end_date}"
+      )
+    ) %>%
+    dplyr::group_by(dplyr::across(dplyr::all_of(vec))) %>%
+    dplyr::summarise(
+      lab = paste(.data$lab, collapse = "<br>"),
+      .groups = "drop"
+    ) %>%
+    dplyr::right_join(
+      data,
+      by = vec
+    )
+
+  # format and filter dates
+  data <- dplyr::mutate(
+    data,
+    end_date2 = dplyr::if_else(
+      .data$end_date == "ongoing" | is.na(.data$end_date),
+      as.character(Sys.Date()),
+      .data$end_date
+    ),
+    end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
+    start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
+  ) %>%
+    dplyr::filter(
+      date >= .data$start_date,
+      date <= .data$end_date2
+    )
+
+  return(data)
+}

@@ -15,8 +15,8 @@ networkMap(
 \arguments{
 \item{source}{The data source for the meta data to be passed to
 \code{\link[openair:importMeta]{openair::importMeta()}}. Can be \dQuote{aurn}, \dQuote{saqn} (or
-\dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni}, \dQuote{kcl} or
-\dQuote{europe}.}
+\dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni}, \dQuote{local},
+\dQuote{kcl} or \dQuote{europe}.}
 
 \item{control}{Option to add a "layer control" menu to allow readers to
 select between different site types. Can choose between effectively any
