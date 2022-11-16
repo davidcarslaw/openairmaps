@@ -13,7 +13,7 @@
 #' \describe{
 #'   \item{date}{The date and time of the measurement}
 #'   \item{nox, no2, pm2.5, pm10}{Pollutant concentrations}
-#'   \item{site}{The site name. Useful for use with the \code{type} argument in \code{openairmaps} functions.}
+#'   \item{site}{The site name. Useful for use with the \code{popup} and \code{label} arguments in \code{openairmaps} functions.}
 #'   \item{latitude, longitude}{Decimal latitude and longitude of the sites.}
 #'   \item{site.type}{Site type of the site (either "Urban Traffic" or "Urban Background").}
 #'   \item{wd}{Wind direction, in degrees from North, as a numeric vector.}
