@@ -1,22 +1,30 @@
 # openairmaps (development version)
 
-* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc. depending on function). This was always possible, but is now more explicit.
+## Directional Analysis
+
+* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc., depending on function). This was always possible, but is now more explicit.
 
 * If limits are defined in a directional analysis function, a shared legend will now be drawn at the top-right of the map. This functionality can be disabled by setting `draw.legend` to FALSE.
 
-* `networkMap()` now supports `source = "local"`.
-
-* Multiple basemap providers can now be used with `networkMap()`.
+* All directional analysis maps now possess the "collapse.control" argument, which controls whether the control menu starts collapsed or not. It defaults to `FALSE`, which means the control menu is not collapsed.
 
 * The default options for fig.width and fig.height are now `3.5` rather than `4`. This appears to remove some visual artefacts and makes the axis labels more legible.
 
 * The "alpha" option has been removed for all directional analysis functions except `polarMap()` as it only ever worked for `polarMap()`.
+
+## Network Visualisation
+
+* `networkMap()` now supports `source = "local"`.
+
+* Multiple basemap providers can now be used with `networkMap()`.
 
 
 
 # openairmaps 0.5.1
 
 * FIX: fixed an issue causing markers to be duplicated when pollutant information is missing for certain sites.
+
+
 
 # openairmaps 0.5.0 (2022-10-19)
 
