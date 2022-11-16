@@ -32,7 +32,8 @@ Imports:
     stringr,
     forcats,
     tidyr,
-    cli
+    cli,
+    tidyselect
 Suggests:
     worldmet
 RoxygenNote: 7.2.1
