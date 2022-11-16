@@ -2,9 +2,11 @@
 
 ## Directional Analysis
 
-* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc., depending on function). This was always possible, but is now more explicit.
+* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc., depending on function). This was always possible through `...`, but it is now explicitly listed as an option.
 
 * If limits are defined in a directional analysis function, a shared legend will now be drawn at the top-right of the map. This functionality can be disabled by setting `draw.legend` to FALSE.
+
+* Added the `buildPopup()` function, which allows users to easily construct HTML popups for use with the "popup" argument of directional analysis maps (or `leaflet` maps more widely).
 
 * All directional analysis maps now possess the "collapse.control" argument, which controls whether the control menu starts collapsed or not. It defaults to `FALSE`, which means the control menu is not collapsed.
 
