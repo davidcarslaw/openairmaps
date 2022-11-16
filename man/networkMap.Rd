@@ -9,7 +9,8 @@ networkMap(
   control,
   date = Sys.Date(),
   cluster = TRUE,
-  provider = c("OpenStreetMap", "Esri.WorldImagery")
+  provider = c("OpenStreetMap", "Esri.WorldImagery"),
+  collapse.control = FALSE
 )
 }
 \arguments{
@@ -39,6 +40,9 @@ markers very close together. Defaults to \code{TRUE}, and is forced to be
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
+
+\item{collapse.control}{Should the "layer control" interface be collapsed?
+Defaults to \code{FALSE}.}
 }
 \value{
 A leaflet object.

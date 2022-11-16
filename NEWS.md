@@ -8,7 +8,7 @@
 
 * Added the `buildPopup()` function, which allows users to easily construct HTML popups for use with the "popup" argument of directional analysis maps (or `leaflet` maps more widely).
 
-* All directional analysis maps now possess the "collapse.control" argument, which controls whether the control menu starts collapsed or not. It defaults to `FALSE`, which means the control menu is not collapsed.
+* All directional analysis maps now possess the `collapse.control` argument, which controls whether the control menu starts collapsed or not. It defaults to `FALSE`, which means the control menu is not collapsed.
 
 * The default options for fig.width and fig.height are now `3.5` rather than `4`. This appears to remove some visual artefacts and makes the axis labels more legible.
 
@@ -19,6 +19,12 @@
 * `networkMap()` now supports `source = "local"`.
 
 * Multiple basemap providers can now be used with `networkMap()`.
+
+* `networkMap()` has gained the `collapse.control` argument.
+
+## Trajectory Analysis
+
+* `trajMap()` has gained the `collapse.control` argument.
 
 
 
