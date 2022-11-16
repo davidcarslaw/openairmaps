@@ -311,7 +311,8 @@ makeMap <-
            latitude,
            split_col,
            popup,
-           label) {
+           label,
+           collapse) {
     provider <- unique(provider)
 
     # data for plotting
@@ -370,16 +371,16 @@ makeMap <-
     if (length(icons) > 1 & length(provider) > 1) {
       m <-
         leaflet::addLayersControl(
-          m,
+          m, options = leaflet::layersControlOptions(collapsed = collapse),
           baseGroups = names(icons) %>% purrr::map_chr(quickTextHTML),
           overlayGroups = provider
         )
     } else if (length(icons) > 1 & length(provider) == 1) {
-      m <- leaflet::addLayersControl(m,
+      m <- leaflet::addLayersControl(m, options = leaflet::layersControlOptions(collapsed = collapse),
         baseGroups = names(icons) %>% purrr::map_chr(quickTextHTML)
       )
     } else if (length(provider) > 1 & length(icons) == 1) {
-      m <- leaflet::addLayersControl(m,
+      m <- leaflet::addLayersControl(m, options = leaflet::layersControlOptions(collapsed = collapse),
         baseGroups = provider
       )
     }

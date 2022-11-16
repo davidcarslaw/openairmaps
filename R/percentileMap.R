@@ -44,6 +44,9 @@
 #' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
 #' @param draw.legend Should a shared legend be created at the side of the map?
 #'   Default is \code{TRUE}.
+#' @param collapse.control When \code{control} or multiple \code{pollutant}
+#'   columns are specified, should the "layer control" interface be
+#'   collapsed? Defaults to \code{FALSE}.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
@@ -73,6 +76,7 @@ percentileMap <- function(data,
                           cols = "jet",
                           key = FALSE,
                           draw.legend = TRUE,
+                          collapse.control = FALSE,
                           iconWidth = 200,
                           iconHeight = 200,
                           fig.width = 3.5,
@@ -148,7 +152,8 @@ percentileMap <- function(data,
       latitude = latitude,
       popup = popup,
       label = label,
-      split_col = split_col
+      split_col = split_col,
+      collapse = collapse.control
     )
 
   if (all(!is.na(percentile)) & draw.legend) {
