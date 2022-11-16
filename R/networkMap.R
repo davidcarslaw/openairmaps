@@ -386,21 +386,25 @@ networkMap <-
         if (length(provider) > 1) {
           map <-
             leaflet::addLayersControl(map,
-                                      options = leaflet::layersControlOptions(collapsed = collapse.control), baseGroups = quickTextHTML(sort(control_vars)), overlayGroups = provider)
+              options = leaflet::layersControlOptions(collapsed = collapse.control), baseGroups = quickTextHTML(sort(control_vars)), overlayGroups = provider
+            )
         } else {
           map <-
             leaflet::addLayersControl(map,
-                                      options = leaflet::layersControlOptions(collapsed = collapse.control), baseGroups = quickTextHTML(sort(control_vars)))
+              options = leaflet::layersControlOptions(collapsed = collapse.control), baseGroups = quickTextHTML(sort(control_vars))
+            )
         }
       } else {
         if (length(provider) > 1) {
           map <-
             leaflet::addLayersControl(map,
-                                      options = leaflet::layersControlOptions(collapsed = collapse.control), overlayGroups = quickTextHTML(sort(control_vars)), baseGroups = provider)
+              options = leaflet::layersControlOptions(collapsed = collapse.control), overlayGroups = quickTextHTML(sort(control_vars)), baseGroups = provider
+            )
         } else {
           map <-
             leaflet::addLayersControl(map,
-                                      options = leaflet::layersControlOptions(collapsed = collapse.control), overlayGroups = quickTextHTML(sort(control_vars)))
+              options = leaflet::layersControlOptions(collapsed = collapse.control), overlayGroups = quickTextHTML(sort(control_vars))
+            )
         }
       }
     } else {

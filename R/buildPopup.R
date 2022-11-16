@@ -39,7 +39,6 @@
 #' ) %>%
 #'   polarMap("nox", popup = "popup")
 #' }
-
 buildPopup <-
   function(data,
            cols,
@@ -59,44 +58,44 @@ buildPopup <-
     longitude <- latlon$longitude
 
     # multiple columns
-      summary <-
-        data %>%
-        dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
-        dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
-        dplyr::summarise(dplyr::across(tidyselect::where(is.character), fun.character),
-                         dplyr::across(tidyselect::where(is.numeric), fun.numeric),
-                         dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
-                  .groups = "drop")
+    summary <-
+      data %>%
+      dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
+      dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
+      dplyr::summarise(dplyr::across(tidyselect::where(is.character), fun.character),
+        dplyr::across(tidyselect::where(is.numeric), fun.numeric),
+        dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
+        .groups = "drop"
+      )
 
-      if (!is.null(names)) {
-        summary <- dplyr::rename(summary, dplyr::all_of(names))
-      }
-
-      out <-
-        summary %>%
-        dplyr::select(-dplyr::all_of(c(latitude, longitude))) %>%
-        purrr::imodify(.f = ~ stringr::str_glue("<b>{.y}</b>: {.x}"))
-
-      if (typeof(out) == "list") {
-        out <- as.data.frame(out)
-        names(out) <- cols
-      }
-
-      out <-
-        out %>%
-        dplyr::mutate(dplyr::across(.cols = dplyr::everything(), .fns = quickTextHTML)) %>%
-        dplyr::rowwise() %>%
-        dplyr::mutate(
-          popup = paste(dplyr::c_across(), collapse = "<br>"),
-          .keep = "unused"
-        )
-
-      out[[latitude]] <- summary[[latitude]]
-      out[[longitude]] <- summary[[longitude]]
-
-      out <-
-        dplyr::left_join(data, out, by = c(latitude, longitude))
-
-      return(out)
+    if (!is.null(names)) {
+      summary <- dplyr::rename(summary, dplyr::all_of(names))
     }
 
+    out <-
+      summary %>%
+      dplyr::select(-dplyr::all_of(c(latitude, longitude))) %>%
+      purrr::imodify(.f = ~ stringr::str_glue("<b>{.y}</b>: {.x}"))
+
+    if (typeof(out) == "list") {
+      out <- as.data.frame(out)
+      names(out) <- cols
+    }
+
+    out <-
+      out %>%
+      dplyr::mutate(dplyr::across(.cols = dplyr::everything(), .fns = quickTextHTML)) %>%
+      dplyr::rowwise() %>%
+      dplyr::mutate(
+        popup = paste(dplyr::c_across(), collapse = "<br>"),
+        .keep = "unused"
+      )
+
+    out[[latitude]] <- summary[[latitude]]
+    out[[longitude]] <- summary[[longitude]]
+
+    out <-
+      dplyr::left_join(data, out, by = c(latitude, longitude))
+
+    return(out)
+  }

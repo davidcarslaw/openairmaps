@@ -197,7 +197,8 @@ trajMap <-
     if (control != "default") {
       map <-
         leaflet::addLayersControl(
-          map, options = leaflet::layersControlOptions(collapsed = collapse.control),
+          map,
+          options = leaflet::layersControlOptions(collapsed = collapse.control),
           overlayGroups = as.character(unique(data[[control]]))
         )
     }
