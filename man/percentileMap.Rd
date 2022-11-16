@@ -75,9 +75,8 @@ can be toggled between using a "layer control" interface.}
 \item{draw.legend}{Should a shared legend be created at the side of the map?
 Default is \code{TRUE}.}
 
-\item{collapse.control}{When \code{control} or multiple \code{pollutant}
-columns are specified, should the "layer control" interface be
-collapsed? Defaults to \code{FALSE}.}
+\item{collapse.control}{Should the "layer control" interface be collapsed?
+Defaults to \code{FALSE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 
