@@ -17,6 +17,7 @@ windroseMap(
   cols = "jet",
   key = FALSE,
   draw.legend = TRUE,
+  collapse.control = FALSE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -73,6 +74,9 @@ can be toggled between using a "layer control" interface.}
 
 \item{draw.legend}{Should a shared legend be created at the side of the map?
 Default is \code{TRUE}.}
+
+\item{collapse.control}{Should the "layer control" interface be collapsed?
+Defaults to \code{FALSE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 

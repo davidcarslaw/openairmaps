@@ -28,6 +28,8 @@
 #'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
+#' @param collapse.control Should the "layer control" interface be collapsed?
+#'   Defaults to \code{FALSE}.
 #'
 #' @return A leaflet object.
 #' @export
@@ -42,7 +44,8 @@ networkMap <-
            control,
            date = Sys.Date(),
            cluster = TRUE,
-           provider = c("OpenStreetMap", "Esri.WorldImagery")) {
+           provider = c("OpenStreetMap", "Esri.WorldImagery"),
+           collapse.control = FALSE) {
     provider <- unique(provider)
 
     # sort out date
@@ -382,18 +385,26 @@ networkMap <-
       if (control %in% c("Parameter_name", "variable")) {
         if (length(provider) > 1) {
           map <-
-            leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)), overlayGroups = provider)
+            leaflet::addLayersControl(map,
+              options = leaflet::layersControlOptions(collapsed = collapse.control), baseGroups = quickTextHTML(sort(control_vars)), overlayGroups = provider
+            )
         } else {
           map <-
-            leaflet::addLayersControl(map, baseGroups = quickTextHTML(sort(control_vars)))
+            leaflet::addLayersControl(map,
+              options = leaflet::layersControlOptions(collapsed = collapse.control), baseGroups = quickTextHTML(sort(control_vars))
+            )
         }
       } else {
         if (length(provider) > 1) {
           map <-
-            leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)), baseGroups = provider)
+            leaflet::addLayersControl(map,
+              options = leaflet::layersControlOptions(collapsed = collapse.control), overlayGroups = quickTextHTML(sort(control_vars)), baseGroups = provider
+            )
         } else {
           map <-
-            leaflet::addLayersControl(map, overlayGroups = quickTextHTML(sort(control_vars)))
+            leaflet::addLayersControl(map,
+              options = leaflet::layersControlOptions(collapsed = collapse.control), overlayGroups = quickTextHTML(sort(control_vars))
+            )
         }
       }
     } else {
@@ -413,7 +424,12 @@ networkMap <-
         )
 
       if (length(provider) > 1) {
-        map <- leaflet::addLayersControl(map, baseGroups = provider)
+        map <-
+          leaflet::addLayersControl(
+            map,
+            options = leaflet::layersControlOptions(collapsed = collapse.control),
+            baseGroups = provider
+          )
       }
     }
 

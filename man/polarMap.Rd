@@ -19,6 +19,7 @@ polarMap(
   alpha = 1,
   key = FALSE,
   draw.legend = TRUE,
+  collapse.control = FALSE,
   iconWidth = 200,
   iconHeight = 200,
   fig.width = 3.5,
@@ -82,6 +83,9 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{draw.legend}{When \code{limits} are specified, should a shared legend
 be created at the side of the map? Default is \code{TRUE}.}
+
+\item{collapse.control}{Should the "layer control" interface be collapsed?
+Defaults to \code{FALSE}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 
