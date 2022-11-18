@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# openairmaps
+# openairmaps <img src="man/figures/logo.png" align="right" height="134" />
 
 <!-- badges: start -->
 
