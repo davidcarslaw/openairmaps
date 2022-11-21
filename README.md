@@ -8,8 +8,7 @@
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
-[![Total
-Downloads](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)
+<https://cranlogs.r-pkg.org/badges/grand-total/openairmaps>
 <!-- badges: end -->
 
 The goal of `{openairmaps}` is to combine the robust analytical methods
