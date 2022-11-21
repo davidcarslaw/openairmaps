@@ -14,6 +14,8 @@
 
 * The "alpha" option has been removed for all directional analysis functions except `polarMap()` as it only ever worked for `polarMap()`.
 
+* All documentation has been improved; function parameters are more consistent between functions and arguments passed to `openair` via `...` are now explicitly listed.
+
 ## Network Visualisation
 
 * `networkMap()` now supports `source = "local"`.
