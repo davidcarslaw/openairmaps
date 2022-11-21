@@ -8,11 +8,15 @@
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)
 <!-- badges: end -->
 
 The goal of `{openairmaps}` is to combine the robust analytical methods
 found in [openair](https://davidcarslaw.github.io/openair/) with the
-highly capable `{leaflet}` package.
+highly capable `{leaflet}` package. `{openairmaps}` is thoroughly
+documented in the [openair
+book](https://bookdown.org/david_carslaw/openair/appendix-openairmaps.html).
 
 ## Installation
 
