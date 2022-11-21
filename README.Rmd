@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%", 
+  out.width = "100%",
   eval = FALSE
 )
 ```
@@ -21,7 +21,6 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
-[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)
 <!-- badges: end -->
 
 The goal of `{openairmaps}` is to combine the robust analytical methods found in [openair](https://davidcarslaw.github.io/openair/) with the highly capable `{leaflet}` package. `{openairmaps}` is thoroughly documented in the [openair book](https://bookdown.org/david_carslaw/openair/appendix-openairmaps.html).
@@ -62,7 +61,7 @@ networkMap(source = "aurn")
 library(openairmaps)
 
 polarMap(
-  polar_data, 
+  polar_data,
   pollutant = "nox"
 )
 ```
@@ -188,14 +187,17 @@ uk <- importTraj(year = 2009) %>%
 
 leaflet() %>%
   addTiles() %>%
-  addTrajPaths(data = uk,
-               color = "blue",
-               group = "London, UK") %>%
-  addTrajPaths(data = france,
-               color = "red",
-               group = "Paris, France") %>%
+  addTrajPaths(
+    data = uk,
+    color = "blue",
+    group = "London, UK"
+  ) %>%
+  addTrajPaths(
+    data = france,
+    color = "red",
+    group = "Paris, France"
+  ) %>%
   addLayersControl(overlayGroups = c("Paris, France", "London, UK"))
-
 ```
 
 ![A more customised `{leaflet}` output using the `addTrajPaths()` function.](man/figures/README-addtrajpath.png)

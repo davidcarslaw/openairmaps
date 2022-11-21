@@ -77,7 +77,6 @@ addTrajPaths <-
            data,
            npoints = 12,
            ...) {
-
     # check opts
     opts <- list(...)
     if ("color" %in% names(opts)) {
