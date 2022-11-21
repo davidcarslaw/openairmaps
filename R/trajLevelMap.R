@@ -3,7 +3,7 @@
 #' This function plots back trajectories on a \code{leaflet} map. This function
 #' requires that data are imported using the [openair::importTraj()] function.
 #'
-#' @seealso Trajectory maps: [trajMap()], [trajLevelMap()].
+#' @family trajectory maps
 #'
 #' @param data Data frame, the result of importing a trajectory file using
 #'   [openair::importTraj()].

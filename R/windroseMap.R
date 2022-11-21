@@ -4,9 +4,9 @@
 #' Multiple layers of markers can be added and toggled between using
 #' \code{control}. See [openair::windRose()] for more information.
 #'
-#' @seealso Directional analysis maps: [annulusMap()], [freqMap()],
-#'   [percentileMap()], [polarMap()], [pollroseMap()], [windroseMap()].
+#' @family directional analysis maps
 #'
+#' @inheritParams polarMap
 #' @param data A data frame. The data frame must contain the data to plot a
 #'   [openair::windRose()], which includes wind speed (\code{ws}), and wind
 #'   direction (\code{wd}). In addition, \code{data} must include a decimal
@@ -18,40 +18,7 @@
 #'   generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
 #'   specific break points. For example, the argument breaks = c(0, 1, 10, 100)
 #'   breaks the data into segments <1, 1-10, 10-100, >100.
-#' @param latitude The decimal latitude. If not provided, latitude will be
-#'   automatically inferred from data by looking for a column named \dQuote{lat}
-#'   or \dQuote{latitude} (case-insensitively).
-#' @param longitude The decimal longitude. If not provided, longitude will be
-#'   automatically inferred from data by looking for a column named
-#'   \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
-#'   (case-insensitively).
-#' @param control Column to be used for splitting the input data into different
-#'   groups which can be selected between using a "layer control" interface.
-#'   Appropriate columns could be those added by [openair::cutData()] or
-#'   [openair::splitByDate()].
-#' @param popup Column to be used as the HTML content for marker popups. Popups
-#'   may be useful to show information about the individual sites (e.g., site
-#'   names, codes, types, etc.).
-#' @param label Column to be used as the HTML content for hover-over labels.
-#'   Labels are useful for the same reasons as popups, though are typically
-#'   shorter.
-#' @param provider The base map(s) to be used. See
-#'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-#'   of all base maps that can be used. If multiple base maps are provided, they
-#'   can be toggled between using a "layer control" interface.
-#' @param cols The colours used for plotting.
-#' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
-#' @param draw.legend Should a shared legend be created at the side of the map?
-#'   Default is \code{TRUE}.
-#' @param collapse.control Should the "layer control" interface be collapsed?
-#'   Defaults to \code{FALSE}.
-#' @param iconWidth The actual width of the plot on the map in pixels.
-#' @param iconHeight The actual height of the plot on the map in pixels.
-#' @param fig.width The width of the plots to be produced in inches.
-#' @param fig.height The height of the plots to be produced in inches.
-#' @param type Deprecated. Please use \code{label} and/or \code{popup} to label
-#'   different sites.
-#' @param ... Other arguments for [openair::windRose()].
+#' @inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate -pollutant -type -cols -key
 #' @return A leaflet object.
 #' @export
 #'

@@ -28,8 +28,8 @@ pollroseMap(
 )
 }
 \arguments{
-\item{data}{A data frame. The data frame must contain the data to plot a
-\code{\link[openair:windRose]{openair::pollutionRose()}}, which includes wind speed (\code{ws}), wind
+\item{data}{A data frame. The data frame must contain the data to plot the
+directional analysis marker, which includes wind speed (\code{ws}), wind
 direction (\code{wd}), and the column representing the concentration of a
 pollutant. In addition, \code{data} must include a decimal latitude and
 longitude.}
@@ -85,7 +85,7 @@ can be toggled between using a "layer control" interface.}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
-\item{draw.legend}{When \code{breaks} are specified, should a shared legend
+\item{draw.legend}{When \code{limits} are specified, should a shared legend
 be created at the side of the map? Default is \code{TRUE}.}
 
 \item{collapse.control}{Should the "layer control" interface be collapsed?
@@ -102,7 +102,26 @@ Defaults to \code{FALSE}.}
 \item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label
 different sites.}
 
-\item{...}{Other arguments for \code{\link[openair:windRose]{openair::pollutionRose()}}.}
+\item{...}{
+  Arguments passed on to \code{\link[openair:windRose]{openair::pollutionRose}}
+  \describe{
+    \item{\code{seg}}{For \code{pollutionRose} \code{seg} determines with
+width of the segments. For example, \code{seg = 0.5} will
+produce segments 0.5 * \code{angle}.}
+    \item{\code{normalise}}{If \code{TRUE} each wind direction segment of a
+pollution rose is normalised to equal one. This is useful for
+showing how the concentrations (or other parameters) contribute
+to each wind sector when the proprtion of time the wind is from
+that direction is low. A line showing the probability that the
+wind directions is from a particular wind sector is also shown.}
+    \item{\code{paddle}}{Either \code{TRUE} (default) or \code{FALSE}. If
+\code{TRUE} plots rose using `paddle' style spokes. If
+\code{FALSE} plots rose using `wedge' style spokes.}
+    \item{\code{key.footer}}{see \code{key.footer}.}
+    \item{\code{key.position}}{Location where the scale key is to plotted.
+Allowed arguments currently include \dQuote{top},
+\dQuote{right}, \dQuote{bottom} and \dQuote{left}.}
+  }}
 }
 \value{
 A leaflet object.
@@ -123,6 +142,11 @@ pollroseMap(polar_data,
 }
 }
 \seealso{
-Directional analysis maps: \code{\link[=annulusMap]{annulusMap()}}, \code{\link[=freqMap]{freqMap()}},
-\code{\link[=percentileMap]{percentileMap()}}, \code{\link[=polarMap]{polarMap()}}, \code{\link[=pollroseMap]{pollroseMap()}}, \code{\link[=windroseMap]{windroseMap()}}.
+Other directional analysis maps: 
+\code{\link{annulusMap}()},
+\code{\link{freqMap}()},
+\code{\link{percentileMap}()},
+\code{\link{polarMap}()},
+\code{\link{windroseMap}()}
 }
+\concept{directional analysis maps}

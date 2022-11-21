@@ -28,8 +28,8 @@ freqMap(
 )
 }
 \arguments{
-\item{data}{A data frame. The data frame must contain the data to plot a
-\code{\link[openair:polarFreq]{openair::polarFreq()}}, which includes wind speed (\code{ws}), wind
+\item{data}{A data frame. The data frame must contain the data to plot the
+directional analysis marker, which includes wind speed (\code{ws}), wind
 direction (\code{wd}), and the column representing the concentration of a
 pollutant. In addition, \code{data} must include a decimal latitude and
 longitude.}
@@ -90,7 +90,7 @@ can be toggled between using a "layer control" interface.}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
-\item{draw.legend}{When \code{breaks} are specified, should a shared legend
+\item{draw.legend}{When \code{limits} are specified, should a shared legend
 be created at the side of the map? Default is \code{TRUE}.}
 
 \item{collapse.control}{Should the "layer control" interface be collapsed?
@@ -107,7 +107,50 @@ Defaults to \code{FALSE}.}
 \item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label
 different sites.}
 
-\item{...}{Other arguments for \code{\link[openair:polarFreq]{openair::polarFreq()}}.}
+\item{...}{
+  Arguments passed on to \code{\link[openair:polarFreq]{openair::polarFreq}}
+  \describe{
+    \item{\code{ws.int}}{Wind speed interval assumed. In some cases e.g. a low met
+mast, an interval of 0.5 may be more appropriate.}
+    \item{\code{wd.nint}}{Number of intervals of wind direction.}
+    \item{\code{grid.line}}{Radial spacing of grid lines.}
+    \item{\code{trans}}{Should a transformation be applied? Sometimes when producing
+plots of this kind they can be dominated by a few high points. The default
+therefore is \code{TRUE} and a square-root transform is applied. This
+results in a non-linear scale and (usually) a better representation of the
+distribution. If set to \code{FALSE} a linear scale is used.}
+    \item{\code{min.bin}}{The minimum number of points allowed in a wind speed/wind
+direction bin.  The default is 1. A value of two requires at least 2 valid
+records in each bin an so on; bins with less than 2 valid records are set
+to NA. Care should be taken when using a value > 1 because of the risk of
+removing real data points. It is recommended to consider your data with
+care. Also, the \code{polarPlot} function can be of use in such
+circumstances.}
+    \item{\code{ws.upper}}{A user-defined upper wind speed to use. This is useful for
+ensuring a consistent scale between different plots. For example, to
+always ensure that wind speeds are displayed between 1-10, set
+\code{ws.int = 10}.}
+    \item{\code{offset}}{\code{offset} controls the size of the \sQuote{hole} in the
+middle and is expressed as a percentage of the maximum wind speed. Setting
+a higher \code{offset} e.g. 50 is useful for \code{statistic =
+"weighted.mean"} when \code{ws.int} is greater than the maximum wind
+speed. See example below.}
+    \item{\code{border.col}}{The colour of the boundary of each wind speed/direction
+bin. The default is transparent. Another useful choice sometimes is
+"white".}
+    \item{\code{key.header,key.footer}}{Adds additional text/labels to the scale key.
+For example, passing options \code{key.header = "header", key.footer =
+"footer"} adds addition text above and below the scale key. These
+arguments are passed to \code{drawOpenKey} via \code{quickText}, applying
+the \code{auto.text} argument, to handle formatting.}
+    \item{\code{key.position}}{Location where the scale key is to plotted.  Allowed
+arguments currently include \code{"top"}, \code{"right"}, \code{"bottom"}
+and \code{"left"}.}
+    \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If
+\code{TRUE} titles and axis labels will automatically try and format
+pollutant names and units properly e.g.  by subscripting the \sQuote{2} in
+NO2.}
+  }}
 }
 \value{
 A leaflet object.
@@ -128,6 +171,11 @@ freqMap(polar_data,
 }
 }
 \seealso{
-Directional analysis maps: \code{\link[=annulusMap]{annulusMap()}}, \code{\link[=freqMap]{freqMap()}},
-\code{\link[=percentileMap]{percentileMap()}}, \code{\link[=polarMap]{polarMap()}}, \code{\link[=pollroseMap]{pollroseMap()}}, \code{\link[=windroseMap]{windroseMap()}}.
+Other directional analysis maps: 
+\code{\link{annulusMap}()},
+\code{\link{percentileMap}()},
+\code{\link{polarMap}()},
+\code{\link{pollroseMap}()},
+\code{\link{windroseMap}()}
 }
+\concept{directional analysis maps}
