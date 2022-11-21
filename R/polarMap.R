@@ -5,11 +5,10 @@
 #' argument, and multiple layers of markers can be added and toggled between
 #' using \code{control}. See [openair::polarPlot()] for more information.
 #'
-#' @seealso Directional analysis maps: [annulusMap()], [freqMap()],
-#'   [percentileMap()], [polarMap()], [pollroseMap()], [windroseMap()].
+#' @family directional analysis maps
 #'
-#' @param data A data frame. The data frame must contain the data to plot a
-#'   [openair::polarPlot()], which includes wind speed (\code{ws}), wind
+#' @param data A data frame. The data frame must contain the data to plot the
+#'   directional analysis marker, which includes wind speed (\code{ws}), wind
 #'   direction (\code{wd}), and the column representing the concentration of a
 #'   pollutant. In addition, \code{data} must include a decimal latitude and
 #'   longitude.
@@ -17,9 +16,9 @@
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
 #' @param x The radial axis variable to plot.
-#' @param limits By default, each individual polar plot marker has its own
-#'   colour scale. The \code{limits} argument will force all markers to use the
-#'   same colour scale. The limits are set in the form \code{c(lower, upper}, so
+#' @param limits By default, each individual polar marker has its own colour
+#'   scale. The \code{limits} argument will force all markers to use the same
+#'   colour scale. The limits are set in the form \code{c(lower, upper}, so
 #'   \code{limits = c(0, 100)} would force the plot limits to span 0-100.
 #' @param latitude The decimal latitude. If not provided, latitude will be
 #'   automatically inferred from data by looking for a column named \dQuote{lat}
@@ -57,7 +56,7 @@
 #' @param fig.height The height of the plots to be produced in inches.
 #' @param type Deprecated. Please use \code{label} and/or \code{popup} to label
 #'   different sites.
-#' @param ... Other arguments for [openair::polarPlot()].
+#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type -cols -key -alpha -plot
 #' @return A leaflet object.
 #' @export
 #'

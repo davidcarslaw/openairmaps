@@ -6,6 +6,8 @@
 \alias{openairmaps-package}
 \title{openairmaps: Create Interactive Web Maps of Air Pollution Data}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Combine the air quality data analysis methods of 'openair' with the JavaScript 'Leaflet' (\url{https://leafletjs.com/}) library. Functionality includes plotting site maps, "directional analysis" figures such as polar plots, and air mass trajectories.
 }
 \author{

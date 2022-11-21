@@ -75,5 +75,7 @@ trajMap(traj_data, colour = "nox")
 
 }
 \seealso{
-Trajectory maps: \code{\link[=trajMap]{trajMap()}}, \code{\link[=trajLevelMap]{trajLevelMap()}}.
+Other trajectory maps: 
+\code{\link{trajLevelMap}()}
 }
+\concept{trajectory maps}

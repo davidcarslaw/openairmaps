@@ -28,11 +28,11 @@ annulusMap(
 )
 }
 \arguments{
-\item{data}{A data frame. The data frame must contain the data to plot a
-\code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}, which includes wind speed (\code{ws}), wind
-direction (\code{wd}), date (\code{date}), and the column representing the
-concentration of a pollutant. In addition, \code{data} must include a
-decimal latitude and longitude.}
+\item{data}{A data frame. The data frame must contain the data to plot the
+directional analysis marker, which includes wind speed (\code{ws}), wind
+direction (\code{wd}), and the column representing the concentration of a
+pollutant. In addition, \code{data} must include a decimal latitude and
+longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they can be toggled between using a "layer
@@ -43,9 +43,9 @@ control" interface.}
 plot variation throughout the year, \dQuote{weekday} to plot day of the
 week variation and \dQuote{trend} to plot the trend by wind direction.}
 
-\item{limits}{By default, each individual polar annulus marker has its own
-colour scale. The \code{limits} argument will force all markers to use the
-same colour scale. The limits are set in the form \code{c(lower, upper}, so
+\item{limits}{By default, each individual polar marker has its own colour
+scale. The \code{limits} argument will force all markers to use the same
+colour scale. The limits are set in the form \code{c(lower, upper}, so
 \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
 
 \item{latitude}{The decimal latitude. If not provided, latitude will be
@@ -97,7 +97,106 @@ Defaults to \code{FALSE}.}
 \item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label
 different sites.}
 
-\item{...}{Other arguments for \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}.}
+\item{...}{
+  Arguments passed on to \code{\link[openair:polarAnnulus]{openair::polarAnnulus}}
+  \describe{
+    \item{\code{resolution}}{Two plot resolutions can be set: \dQuote{normal} and
+\dQuote{fine} (the default).}
+    \item{\code{local.tz}}{Should the results be calculated in local time
+that includes a treatment of daylight savings time (DST)? The
+default is not to consider DST issues, provided the data were
+imported without a DST offset. Emissions activity tends to occur
+at local time e.g. rush hour is at 8 am every day. When the clocks
+go forward in spring, the emissions are effectively released into
+the atmosphere typically 1 hour earlier during the summertime
+i.e. when DST applies. When plotting diurnal profiles, this has
+the effect of \dQuote{smearing-out} the concentrations. Sometimes,
+a useful approach is to express time as local time. This
+correction tends to produce better-defined diurnal profiles of
+concentration (or other variables) and allows a better comparison
+to be made with emissions/activity data. If set to \code{FALSE}
+then GMT is used. Examples of usage include \code{local.tz =
+"Europe/London"}, \code{local.tz = "America/New_York"}. See
+\code{cutData} and \code{import} for more details.}
+    \item{\code{statistic}}{The statistic that should be applied to each wind
+speed/direction bin. Can be \dQuote{mean} (default),
+\dQuote{median}, \dQuote{max} (maximum),
+\dQuote{frequency}. \dQuote{stdev} (standard deviation),
+\dQuote{weighted.mean} or \dQuote{cpf} (Conditional Probability
+Function). Because of the smoothing involved, the colour scale for
+some of these statistics is only to provide an indication of
+overall pattern and should not be interpreted in concentration
+units e.g. for \code{statistic = "weighted.mean"} where the bin
+mean is multiplied by the bin frequency and divided by the total
+frequency. In many cases using \code{polarFreq} will be
+better. Setting \code{statistic = "weighted.mean"} can be useful
+because it provides an indication of the concentration * frequency
+of occurrence and will highlight the wind speed/direction
+conditions that dominate the overall mean.}
+    \item{\code{percentile}}{If \code{statistic = "percentile"} or
+\code{statistic = "cpf"} then \code{percentile} is used, expressed
+from 0 to 100. Note that the percentile value is calculated in the
+wind speed, wind direction \sQuote{bins}. For this reason it can
+also be useful to set \code{min.bin} to ensure there are a
+sufficient number of points available to estimate a
+percentile. See \code{quantile} for more details of how
+percentiles are calculated.}
+    \item{\code{width}}{The width of the annulus; can be \dQuote{normal} (the
+default), \dQuote{thin} or \dQuote{fat}.}
+    \item{\code{min.bin}}{The minimum number of points allowed in a wind speed/wind
+direction bin.  The default is 1. A value of two requires at least 2
+valid records in each bin an so on; bins with less than 2 valid records
+are set to NA. Care should be taken when using a value > 1 because of the
+risk of removing real data points. It is recommended to consider your
+data with care. Also, the \code{polarFreq} function can be of use in such
+circumstances.}
+    \item{\code{exclude.missing}}{Setting this option to \code{TRUE} (the default)
+removes points from the plot that are too far from the original data. The
+smoothing routines will produce predictions at points where no data exist
+i.e. they predict. By removing the points too far from the original data
+produces a plot where it is clear where the original data lie. If set to
+\code{FALSE} missing data will be interpolated.}
+    \item{\code{date.pad}}{For \code{type = "trend"} (default), \code{date.pad = TRUE}
+will pad-out missing data to the beginning of the first year and the end
+of the last year. The purpose is to ensure that the trend plot begins and
+ends at the beginning or end of year.}
+    \item{\code{force.positive}}{The default is \code{TRUE}. Sometimes if smoothing
+data with steep gradients it is possible for predicted values to be
+negative. \code{force.positive = TRUE} ensures that predictions remain
+postive. This is useful for several reasons. First, with lots of missing
+data more interpolation is needed and this can result in artifacts
+because the predictions are too far from the original data. Second, if it
+is known beforehand that the data are all postive, then this option
+carries that assumption through to the prediction. The only likely time
+where setting \code{force.positive = FALSE} would be if background
+concentrations were first subtracted resulting in data that is
+legitimately negative. For the vast majority of situations it is expected
+that the user will not need to alter the default option.}
+    \item{\code{k}}{The smoothing value supplied to \code{gam} for the temporal and
+wind direction components, respectively. In some cases e.g. a trend plot
+with less than 1-year of data the smoothing with the default values may
+become too noisy and affected more by outliers. Choosing a lower value of
+\code{k} (say 10) may help produce a better plot.}
+    \item{\code{normalise}}{If \code{TRUE} concentrations are normalised by dividing
+by their mean value. This is done \emph{after} fitting the smooth
+surface. This option is particularly useful if one is interested in the
+patterns of concentrations for several pollutants on different scales
+e.g. NOx and CO. Often useful if more than one \code{pollutant} is
+chosen.}
+    \item{\code{key.header}}{Adds additional text/labels to the scale key.
+For example, passing the options \code{key.header = "header", key.footer
+= "footer1"} adds addition text above and below the scale key. These
+arguments are passed to \code{drawOpenKey} via \code{quickText}, applying
+the \code{auto.text} argument, to handle formatting.}
+    \item{\code{key.footer}}{see \code{key.header}.}
+    \item{\code{key.position}}{Location where the scale key is to plotted.
+Allowed arguments currently include \dQuote{top}, \dQuote{right},
+\dQuote{bottom} and \dQuote{left}.}
+    \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If
+\code{TRUE} titles and axis labels will automatically try and format
+pollutant names and units properly e.g.  by subscripting the \sQuote{2}
+in NO2.}
+  }}
 }
 \value{
 A leaflet object.
@@ -118,6 +217,11 @@ annulusMap(polar_data,
 }
 }
 \seealso{
-Directional analysis maps: \code{\link[=annulusMap]{annulusMap()}}, \code{\link[=freqMap]{freqMap()}},
-\code{\link[=percentileMap]{percentileMap()}}, \code{\link[=polarMap]{polarMap()}}, \code{\link[=pollroseMap]{pollroseMap()}}, \code{\link[=windroseMap]{windroseMap()}}.
+Other directional analysis maps: 
+\code{\link{freqMap}()},
+\code{\link{percentileMap}()},
+\code{\link{polarMap}()},
+\code{\link{pollroseMap}()},
+\code{\link{windroseMap}()}
 }
+\concept{directional analysis maps}
