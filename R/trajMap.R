@@ -58,7 +58,6 @@ trajMap <-
            npoints = 12,
            provider = "OpenStreetMap",
            collapse.control = FALSE) {
-
     # make lat/lon easier to use
     names(data)[names(data) == longitude] <- "lon"
     names(data)[names(data) == latitude] <- "lat"
@@ -124,7 +123,6 @@ trajMap <-
 
     # iterate over columns in "control" column
     for (j in seq(length(unique(data[[control]])))) {
-
       # get jth instance of "control"
       data2 <- dplyr::filter(data, .data[[control]] == unique(data[[control]])[[j]])
 

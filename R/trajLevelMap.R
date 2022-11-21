@@ -68,7 +68,6 @@ trajLevelMap <-
            alpha = .5,
            tile.border = NA,
            provider = "OpenStreetMap") {
-
     # get titles/legend styles
 
     style <- leaflet::labelFormat()

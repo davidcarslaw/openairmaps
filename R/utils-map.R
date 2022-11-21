@@ -133,11 +133,12 @@ checkMapPrep <-
       ids <- which(is.na(mydata$date))
       if (length(ids) > 0) {
         mydata <- mydata[-ids, ]
-        warning(paste(
-          "Missing dates detected, removing",
-          length(ids), "lines"
-        ),
-        call. = FALSE
+        warning(
+          paste(
+            "Missing dates detected, removing",
+            length(ids), "lines"
+          ),
+          call. = FALSE
         )
       }
 
@@ -287,12 +288,13 @@ create_icons <-
 
     # definition of 'icons' aka the openair plots
     leafIcons <-
-      lapply(sort(paste0(
-        icon_dir, "/", unique(dat2$id), "_", split, ".png"
-      )),
-      leaflet::makeIcon,
-      iconWidth = iconWidth,
-      iconHeight = iconHeight
+      lapply(
+        sort(paste0(
+          icon_dir, "/", unique(dat2$id), "_", split, ".png"
+        )),
+        leaflet::makeIcon,
+        iconWidth = iconWidth,
+        iconHeight = iconHeight
       )
     names(leafIcons) <- unique(dat2$id)
     class(leafIcons) <- "leaflet_icon_set"
