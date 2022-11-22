@@ -105,9 +105,8 @@ trajLevelMap <-
       map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
     }
 
-    # do trajLevel (temp dir to not print plot)
-    grDevices::png(filename = paste0(tempdir(), "/temp.png"))
-    tl <- openair::trajLevel(
+    # run openair::trajLevel()
+    data <- openair::trajLevel(
       mydata = data,
       lon = longitude,
       lat = latitude,
@@ -116,12 +115,10 @@ trajLevelMap <-
       percentile = percentile,
       lat.inc = lat.inc,
       lon.inc = lon.inc,
-      min.bin = min.bin
-    )
-    grDevices::dev.off()
+      min.bin = min.bin,
+      plot = FALSE
+    )$data
 
-    # get data
-    data <- tl$data
     names(data)[names(data) == "height"] <- pollutant
 
     if (statistic == "frequency") {
