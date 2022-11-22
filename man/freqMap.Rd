@@ -115,26 +115,26 @@ mast, an interval of 0.5 may be more appropriate.}
     \item{\code{wd.nint}}{Number of intervals of wind direction.}
     \item{\code{grid.line}}{Radial spacing of grid lines.}
     \item{\code{trans}}{Should a transformation be applied? Sometimes when producing
-plots of this kind they can be dominated by a few high points. The default
-therefore is \code{TRUE} and a square-root transform is applied. This
-results in a non-linear scale and (usually) a better representation of the
-distribution. If set to \code{FALSE} a linear scale is used.}
+plots of this kind they can be dominated by a few high points. The
+default therefore is \code{TRUE} and a square-root transform is applied.
+This results in a non-linear scale and (usually) a better representation
+of the distribution. If set to \code{FALSE} a linear scale is used.}
     \item{\code{min.bin}}{The minimum number of points allowed in a wind speed/wind
-direction bin.  The default is 1. A value of two requires at least 2 valid
-records in each bin an so on; bins with less than 2 valid records are set
-to NA. Care should be taken when using a value > 1 because of the risk of
-removing real data points. It is recommended to consider your data with
-care. Also, the \code{polarPlot} function can be of use in such
+direction bin.  The default is 1. A value of two requires at least 2
+valid records in each bin an so on; bins with less than 2 valid records
+are set to NA. Care should be taken when using a value > 1 because of the
+risk of removing real data points. It is recommended to consider your
+data with care. Also, the \code{polarPlot} function can be of use in such
 circumstances.}
     \item{\code{ws.upper}}{A user-defined upper wind speed to use. This is useful for
 ensuring a consistent scale between different plots. For example, to
 always ensure that wind speeds are displayed between 1-10, set
 \code{ws.int = 10}.}
-    \item{\code{offset}}{\code{offset} controls the size of the \sQuote{hole} in the
-middle and is expressed as a percentage of the maximum wind speed. Setting
-a higher \code{offset} e.g. 50 is useful for \code{statistic =
-"weighted.mean"} when \code{ws.int} is greater than the maximum wind
-speed. See example below.}
+    \item{\code{offset}}{\code{offset} controls the size of the \sQuote{hole}
+in the middle and is expressed as a percentage of the maximum wind
+speed. Setting a higher \code{offset} e.g. 50 is useful for
+\code{statistic = "weighted.mean"} when \code{ws.int} is greater
+than the maximum wind speed. See example below.}
     \item{\code{border.col}}{The colour of the boundary of each wind speed/direction
 bin. The default is transparent. Another useful choice sometimes is
 "white".}
@@ -148,8 +148,8 @@ arguments currently include \code{"top"}, \code{"right"}, \code{"bottom"}
 and \code{"left"}.}
     \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If
 \code{TRUE} titles and axis labels will automatically try and format
-pollutant names and units properly e.g.  by subscripting the \sQuote{2} in
-NO2.}
+pollutant names and units properly e.g.  by subscripting the \sQuote{2}
+in NO2.}
   }}
 }
 \value{
