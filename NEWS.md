@@ -18,6 +18,8 @@
 
 ## Network Visualisation
 
+* `networkMap()` now supports multiple sources. For example, using `source = c("aurn", "saqn")` will show both the AURN and SAQN on one map. This may be useful if users are interested in air quality in a specific region of the UK (e.g., users may wish to locate AURN, AQE *and* locally managed sites near to a given urban centre).
+
 * `networkMap()` now supports `source = "local"`.
 
 * Multiple basemap providers can now be used with `networkMap()`.
