@@ -1,4 +1,4 @@
-# openairmaps (development version)
+# openairmaps 0.6.0
 
 ## Directional Analysis
 
