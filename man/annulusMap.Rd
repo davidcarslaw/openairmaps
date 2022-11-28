@@ -45,16 +45,13 @@ week variation and \dQuote{trend} to plot the trend by wind direction.}
 
 \item{limits}{By default, each individual polar marker has its own colour
 scale. The \code{limits} argument will force all markers to use the same
-colour scale. The limits are set in the form \code{c(lower, upper}, so
+colour scale. The limits are set in the form \code{c(lower, upper)}, so
 \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
 
-\item{latitude}{The decimal latitude. If not provided, latitude will be
-automatically inferred from data by looking for a column named \dQuote{lat}
-or \dQuote{latitude} (case-insensitively).}
-
-\item{longitude}{The decimal longitude. If not provided, longitude will be
-automatically inferred from data by looking for a column named
-\dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
+\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
+will be automatically inferred from data by looking for a column named
+\dQuote{lat}/\dQuote{latitude} or
+\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
 (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
