@@ -1,7 +1,7 @@
 Package: openairmaps
 Type: Package
 Title: Create Interactive Web Maps of Air Pollution Data
-Version: 0.5.1.9004
+Version: 0.5.1.9005
 Authors@R: 
   c(person(given = "Jack",
            family = "Davison",
