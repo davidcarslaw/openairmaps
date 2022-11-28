@@ -18,6 +18,8 @@
 #'   generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
 #'   specific break points. For example, the argument breaks = c(0, 1, 10, 100)
 #'   breaks the data into segments <1, 1-10, 10-100, >100.
+#' @param draw.legend Should a shared legend be created at the side of the map?
+#'   Default is \code{TRUE}.
 #' @inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate -pollutant -type -cols -key
 #' @return A leaflet object.
 #' @export

@@ -10,7 +10,10 @@
 #' @inheritParams polarMap
 #' @param percentile The percentile value(s) to plot. Must be between 0–100. If
 #'   \code{percentile = NA} then only a mean line will be shown.
-#' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile -type -cols -key -plot
+#' @param draw.legend Should a shared legend be created at the side of the map?
+#'   Default is \code{TRUE}.
+#' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
+#'   -type -cols -key -plot
 #' @return A leaflet object.
 #' @export
 #'

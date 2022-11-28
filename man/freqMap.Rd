@@ -87,7 +87,7 @@ can be toggled between using a "layer control" interface.}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
-\item{draw.legend}{When \code{limits} are specified, should a shared legend
+\item{draw.legend}{When \code{breaks} are specified, should a shared legend
 be created at the side of the map? Default is \code{TRUE}.}
 
 \item{collapse.control}{Should the "layer control" interface be collapsed?
