@@ -14,15 +14,17 @@ networkMap(
 )
 }
 \arguments{
-\item{source}{The data source for the meta data to be passed to
-\code{\link[openair:importMeta]{openair::importMeta()}}. Can be \dQuote{aurn}, \dQuote{saqn} (or
-\dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni}, \dQuote{local},
-\dQuote{kcl} or \dQuote{europe}.}
+\item{source}{One or more data source for the meta data to be passed to
+\code{\link[openair:importMeta]{openair::importMeta()}}. Can be any combination of \dQuote{aurn},
+\dQuote{saqn} (or \dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni},
+\dQuote{local}, \dQuote{kcl} or \dQuote{europe}. See the "details" section
+for further information about selecting multiple sites.}
 
 \item{control}{Option to add a "layer control" menu to allow readers to
 select between different site types. Can choose between effectively any
 column in the \code{\link[openair:importMeta]{openair::importMeta()}} output, such as \dQuote{variable},
-\dQuote{site_type}, or \dQuote{agglomeration}.}
+\dQuote{site_type}, or \dQuote{agglomeration}, as well as \dQuote{network}
+when more than one \code{source} was specified.}
 
 \item{date}{By default, \code{\link[=networkMap]{networkMap()}} visualises sites and pollutants which
 are currently operational. Specifying \code{date} will visualise sites
@@ -54,9 +56,29 @@ map will be created in which readers may toggle between a vector base map and
 a satellite/aerial image, although users can further customise the control
 menu using the \code{provider} and \code{control} parameters.
 }
+\details{
+When selecting multiple data sources using \code{source}, please be mindful
+that there can be overlap between the different networks. For example, an air
+quality site in Scotland may be part of the AURN \emph{and} the SAQN.
+\code{\link[=networkMap]{networkMap()}} will only show one marker for such sites, and uses the order
+in which \code{source} arguments are provided as the hierarchy by which to
+assign sites to networks. The aforementioned AURN & SAQN site will therefore
+have its SAQN code displayed if \code{source = c("saqn", "aurn")}, and its
+AURN code displayed if \code{source = c("aurn", "saqn")}.
+
+This hierarchy is also reflected when \code{control = "network"} is used. As
+\code{leaflet} markers cannot be part of multiple groups, the AURN & SAQN
+site will be part of the "SAQN" layer control group when \code{source =
+c("saqn", "aurn")} and the "AURN" layer control group when \code{source =
+c("aurn", "saqn")}.
+}
 \examples{
 \dontrun{
+# view one network, grouped by site type
 networkMap(source = "aurn", control = "site_type")
+
+# view multiple networks, grouped by network
+networkMap(source = c("aurn", "waqn", "saqn"), control = "network")
 }
 
 }
