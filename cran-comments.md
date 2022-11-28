@@ -1,6 +1,6 @@
 # Submission
 
-This is a very small patch to fix a potentially damaging bug in openairmaps v0.5.0. The authors apologise to the CRAN maintainers for the inconvenience of having to re-review the package so soon after the previous release.
+This is a minor release for openairmaps, with some new features, documentation improvements and updates in step with its upstream package, openair.
 
 ## Test environments
 
@@ -9,11 +9,7 @@ This is a very small patch to fix a potentially damaging bug in openairmaps v0.5
 
 ## R CMD check results
 
-Local: 0 errors | 0 warnings | 0 notes
-
-Win-builder: 0 errors | 0 warnings | 1 notes
-
-> NOTE: checking CRAN incoming feasibility ... [16s] NOTE
+0 errors | 0 warnings | 0 notes
 
 ## Downstream dependencies
 
