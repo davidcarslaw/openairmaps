@@ -7,8 +7,7 @@
 #'
 #' @param data Data frame, the result of importing a trajectory file using
 #'   [openair::importTraj()].
-#' @param longitude Column containing the longitude, as a decimal.
-#' @param latitude Column containing the latitude, as a decimal.
+#' @param latitude,longitude The decimal latitude/longitude.
 #' @param pollutant Pollutant to be plotted.
 #' @param statistic By default the function will plot the trajectory
 #'   frequencies. There are also various ways of plotting concentrations.

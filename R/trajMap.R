@@ -10,8 +10,7 @@
 #'
 #' @param data Data frame, the result of importing a trajectory file using
 #'   [openair::importTraj()].
-#' @param longitude Column containing the longitude, as a decimal.
-#' @param latitude Column containing the latitude, as a decimal.
+#' @param latitude,longitude The decimal latitude/longitude.
 #' @param colour Column to be used for colouring each trajectory. This column
 #'   may be numeric, character or factor. This will commonly be a pollutant
 #'   concentration which has been joined (e.g., by [dplyr::left_join()]) to the

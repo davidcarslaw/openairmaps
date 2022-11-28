@@ -18,14 +18,12 @@
 #' @param x The radial axis variable to plot.
 #' @param limits By default, each individual polar marker has its own colour
 #'   scale. The \code{limits} argument will force all markers to use the same
-#'   colour scale. The limits are set in the form \code{c(lower, upper}, so
+#'   colour scale. The limits are set in the form \code{c(lower, upper)}, so
 #'   \code{limits = c(0, 100)} would force the plot limits to span 0-100.
-#' @param latitude The decimal latitude. If not provided, latitude will be
-#'   automatically inferred from data by looking for a column named \dQuote{lat}
-#'   or \dQuote{latitude} (case-insensitively).
-#' @param longitude The decimal longitude. If not provided, longitude will be
-#'   automatically inferred from data by looking for a column named
-#'   \dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
+#' @param latitude,longitude The decimal latitude/longitude. If not provided,
+#'   will be automatically inferred from data by looking for a column named
+#'   \dQuote{lat}/\dQuote{latitude} or
+#'   \dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
 #'   (case-insensitively).
 #' @param control Column to be used for splitting the input data into different
 #'   groups which can be selected between using a "layer control" interface.
@@ -56,7 +54,8 @@
 #' @param fig.height The height of the plots to be produced in inches.
 #' @param type Deprecated. Please use \code{label} and/or \code{popup} to label
 #'   different sites.
-#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type -cols -key -alpha -plot
+#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
+#'   -cols -key -alpha -plot
 #' @return A leaflet object.
 #' @export
 #'
