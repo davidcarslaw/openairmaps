@@ -10,6 +10,7 @@ buildPopup(
   latitude = NULL,
   longitude = NULL,
   names = NULL,
+  control = NULL,
   fun.character = function(x) paste(unique(x), collapse = ", "),
   fun.numeric = function(x) signif(mean(x, na.rm = TRUE), 3),
   fun.dttm = function(x) paste(lubridate::floor_date(range(x, na.rm = TRUE), "day"),
@@ -23,20 +24,23 @@ will go on to be used in a function such as \code{\link[=polarMap]{polarMap()}}.
 \item{cols}{A character vector of column names, the data from which will
 appear in the popup.}
 
-\item{latitude}{The decimal latitude. If not provided, latitude will be
-automatically inferred from data by looking for a column named \dQuote{lat}
-or \dQuote{latitude} (case-insensitively).}
-
-\item{longitude}{The decimal longitude. If not provided, longitude will be
-automatically inferred from data by looking for a column named
-\dQuote{lon}, \dQuote{lng}, \dQuote{long}, or \dQuote{longitude}
+\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
+will be automatically inferred from data by looking for a column named
+\dQuote{lat}/\dQuote{latitude} or
+\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
 (case-insensitively).}
 
 \item{names}{Optional. A named vector used to rename certain columns in the
 popups. See the Example for more information.}
 
-\item{fun.character}{A function to summarise character columns. Defaults to
-collapsing unique values into a comma-separated list.}
+\item{control}{Optional. Column which will be used for the \code{control}
+argument of other mapping functions. This only needs to be used if
+\code{control} is going to be used in \code{\link[=polarMap]{polarMap()}} or another similar
+function, and you'd expect different values for the different map layers
+(for example, if you are calculating a mean pollutant concentration).}
+
+\item{fun.character}{A function to summarise character and factor columns.
+Defaults to collapsing unique values into a comma-separated list.}
 
 \item{fun.numeric}{A function to summarise numeric columns. Defaults to
 taking the mean to three significant figures.}
