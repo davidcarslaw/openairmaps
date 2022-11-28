@@ -26,6 +26,8 @@
 #'   one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale
 #'   from 0-10 in intervals of 10, or a more flexible sequence, e.g.,
 #'   \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.
+#' @param draw.legend When \code{breaks} are specified, should a shared legend
+#'   be created at the side of the map? Default is \code{TRUE}.
 #' @inheritDotParams openair::polarFreq -mydata -pollutant -statistic -breaks -type -cols -key -plot
 #' @return A leaflet object.
 #' @export

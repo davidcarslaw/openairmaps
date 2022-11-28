@@ -21,6 +21,8 @@
 #'   use the same break points. Breaks can also be used to set specific break
 #'   points. For example, the argument \code{breaks = c(0, 1, 10, 100)} breaks
 #'   the data into segments <1, 1-10, 10-100, >100.
+#' @param draw.legend When \code{breaks} are specified, should a shared legend
+#'   be created at the side of the map? Default is \code{TRUE}.
 #' @inheritDotParams openair::pollutionRose -breaks -mydata -pollutant -plot
 #' @return A leaflet object.
 #' @export
