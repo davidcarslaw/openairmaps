@@ -267,6 +267,7 @@ create_icons <-
 
     # go through all sites and make some plot
     data %>%
+      dplyr::arrange(.data[[lat]], .data[[lon]]) %>%
       dplyr::group_split(.data[[lat]], .data[[lon]]) %>%
       purrr::walk(
         .f = ~ save_icon_image(
@@ -284,14 +285,16 @@ create_icons <-
         )
       )
 
-    dat2 <- dplyr::mutate(data, id = paste0(.data[[lat]], .data[[lon]]))
+    dat2 <- data %>%
+      dplyr::arrange(.data[[lat]], .data[[lon]]) %>%
+      dplyr::mutate(id = paste0(.data[[lat]], .data[[lon]]))
 
     # definition of 'icons' aka the openair plots
     leafIcons <-
       lapply(
-        sort(paste0(
+        paste0(
           icon_dir, "/", unique(dat2$id), "_", split, ".png"
-        )),
+        ),
         leaflet::makeIcon,
         iconWidth = iconWidth,
         iconHeight = iconHeight
