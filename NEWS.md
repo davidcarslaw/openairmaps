@@ -1,4 +1,8 @@
-# openairmaps 0.6.0
+# openairmaps 0.6.1
+
+* Fixed issue with polar marker maps (e.g., `polarMap()`) where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford for noticing this issue.
+
+# openairmaps 0.6.0 (29/11/2022)
 
 ## Directional Analysis
 
