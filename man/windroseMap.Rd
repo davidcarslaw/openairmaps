@@ -129,7 +129,7 @@ expressed as a percentage of the polar axis scale, default 10.}
     \item{\code{normalise}}{If \code{TRUE} each wind direction segment of a
 pollution rose is normalised to equal one. This is useful for
 showing how the concentrations (or other parameters) contribute
-to each wind sector when the proprtion of time the wind is from
+to each wind sector when the proportion of time the wind is from
 that direction is low. A line showing the probability that the
 wind directions is from a particular wind sector is also shown.}
     \item{\code{max.freq}}{Controls the scaling used by setting the maximum
@@ -148,7 +148,7 @@ argument, to handle formatting.}
     \item{\code{key.position}}{Location where the scale key is to plotted.
 Allowed arguments currently include \dQuote{top},
 \dQuote{right}, \dQuote{bottom} and \dQuote{left}.}
-    \item{\code{dig.lab}}{The number of signficant figures at which
+    \item{\code{dig.lab}}{The number of significant figures at which
 scientific number formatting is used in break point and key
 labelling. Default 5.}
     \item{\code{include.lowest}}{Logical. If \code{FALSE} (the default), the first wind
