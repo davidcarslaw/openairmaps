@@ -108,7 +108,7 @@ produce segments 0.5 * \code{angle}.}
     \item{\code{normalise}}{If \code{TRUE} each wind direction segment of a
 pollution rose is normalised to equal one. This is useful for
 showing how the concentrations (or other parameters) contribute
-to each wind sector when the proprtion of time the wind is from
+to each wind sector when the proportion of time the wind is from
 that direction is low. A line showing the probability that the
 wind directions is from a particular wind sector is also shown.}
     \item{\code{paddle}}{Either \code{TRUE} (default) or \code{FALSE}. If
