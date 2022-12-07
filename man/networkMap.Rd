@@ -6,7 +6,7 @@
 \usage{
 networkMap(
   source = "aurn",
-  control,
+  control = NULL,
   date = Sys.Date(),
   cluster = TRUE,
   provider = c("OpenStreetMap", "Esri.WorldImagery"),
