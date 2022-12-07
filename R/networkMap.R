@@ -62,7 +62,7 @@
 #'
 networkMap <-
   function(source = "aurn",
-           control,
+           control = NULL,
            date = Sys.Date(),
            cluster = TRUE,
            provider = c("OpenStreetMap", "Esri.WorldImagery"),
@@ -100,8 +100,10 @@ networkMap <-
       dplyr::select(-"network2")
 
     # get unique pollutants if control = pollutant
-    if (control %in% c("Parameter_name", "variable")) {
-      meta <- dplyr::group_by(meta, .data$site, .data$latitude, .data$longitude, .data$variable)
+    if (!is.null(control)) {
+      if (control %in% c("Parameter_name", "variable")) {
+        meta <- dplyr::group_by(meta, .data$site, .data$latitude, .data$longitude, .data$variable)
+      }
     }
 
     # get unique sites (& pollutants if appropriate)
@@ -125,7 +127,7 @@ networkMap <-
     }
 
     # sort out control
-    if (!missing(control)) {
+    if (!is.null(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
                                  c(
