@@ -1,0 +1,29 @@
+url: ~
+template:
+  bootstrap: 5
+
+reference:
+- title: Network Visualisation
+  desc: Quickly visualise UK air quality networks.
+  contents:
+  - networkMap
+
+- title: Directional Analysis
+  desc: Create leaflet maps with polar plot markers.
+  contents:
+  - polar_data
+  - has_concept("directional analysis maps")
+  - addPolarMarkers
+
+- title: Trajectory Analysis
+  desc: Visualise HYSPLIT trajectories as interactive leaflet maps.
+  contents:
+  - traj_data
+  - has_concept("trajectory maps")
+  - addTrajPaths
+
+- title: Utilities
+  desc: Tools to assist other openairmaps functions.
+  contents:
+  - buildPopup
+  - quickTextHTML
