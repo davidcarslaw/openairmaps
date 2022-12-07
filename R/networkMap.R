@@ -97,8 +97,15 @@ networkMap <-
         ),
         lab = stringr::str_replace(.data$lab, .data$network, .data$network2)
       ) %>%
-      dplyr::select(-"network2") %>%
-      dplyr::slice_head(n = 1)
+      dplyr::select(-"network2")
+
+    # get unique pollutants if control = pollutant
+    if (control %in% c("Parameter_name", "variable")) {
+      meta <- dplyr::group_by(meta, .data$site, .data$latitude, .data$longitude, .data$variable)
+    }
+
+    # get unique sites (& pollutants if appropriate)
+    meta <- dplyr::slice_head(meta, n = 1)
 
     # build maps
     # initialise map

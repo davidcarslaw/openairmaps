@@ -2,6 +2,8 @@
 
 * Fixed issue with polar marker maps (e.g., `polarMap()`) where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford for noticing this issue.
 
+* Fixed an issue with `networkMap()` where `control = "variable"` would fail to show all pollutants.
+
 # openairmaps 0.6.0 (29/11/2022)
 
 ## Directional Analysis
