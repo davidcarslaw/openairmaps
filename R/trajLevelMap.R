@@ -1,6 +1,6 @@
 #' Trajectory level plots in leaflet
 #'
-#' This function plots back trajectories on a \code{leaflet} map. This function
+#' This function plots back trajectories on a `leaflet` map. This function
 #' requires that data are imported using the [openair::importTraj()] function.
 #'
 #' @family trajectory maps
@@ -12,37 +12,37 @@
 #' @param statistic By default the function will plot the trajectory
 #'   frequencies. There are also various ways of plotting concentrations.
 #'
-#'   It is also possible to set \code{statistic = "difference"}. In this case
+#'   It is also possible to set `statistic = "difference"`. In this case
 #'   trajectories where the associated concentration is greater than
-#'   \code{percentile} are compared with the the full set of trajectories to
+#'   `percentile` are compared with the the full set of trajectories to
 #'   understand the differences in frequencies of the origin of air masses. The
 #'   comparison is made by comparing the percentage change in gridded
 #'   frequencies. For example, such a plot could show that the top 10\% of
 #'   concentrations of PM10 tend to originate from air-mass origins to the east.
 #'
-#'   If \code{statistic = "pscf"} then a Potential Source Contribution Function
-#'   map is produced. If \code{statistic = "cwt"} then the Concentration
-#'   Weighted Trajectory approach is used. If \code{statistic = "saqn"} then
-#'   Simplified Quantitative Transport Bias Analysis is used. See "details" of
+#'   If `statistic = "pscf"` then a Potential Source Contribution Function map
+#'   is produced. If `statistic = "cwt"` then the Concentration Weighted
+#'   Trajectory approach is used. If `statistic = "saqn"` then Simplified
+#'   Quantitative Transport Bias Analysis is used. See "details" of
 #'   [openair::trajLevel()] for more information.
 #' @param percentile For [openair::trajLevel()]. The percentile concentration of
-#'   \code{pollutant} against which the all trajectories are compared.
+#'   `pollutant` against which the all trajectories are compared.
 #' @param lon.inc The longitude-interval to be used for binning data.
 #' @param lat.inc The latitude-interval to be used for binning data.
 #' @param min.bin The minimum number of unique points in a grid cell. Counts
-#'   below \code{min.bin} are set as missing.
-#' @param cols Colours to be used for plotting. Options include
-#'   \dQuote{default}, \dQuote{increment}, \dQuote{heat}, \dQuote{jet} and
-#'   \code{RColorBrewer} colours — see the [openair::openColours()]
-#'   function for more details. For user defined the user can supply a list of
-#'   colour names recognised by R (type [grDevices::colours()] to see the full
-#'   list). An example would be \code{cols = c("yellow", "green", "blue")}.
-#' @param alpha Opacity of the tiles. Must be between \code{0} and \code{1}.
+#'   below `min.bin` are set as missing.
+#' @param cols Colours to be used for plotting. Options include "default",
+#'   "increment", "heat", "jet" and `RColorBrewer` colours — see the
+#'   [openair::openColours()] function for more details. For user defined the
+#'   user can supply a list of colour names recognised by R (type
+#'   [grDevices::colours()] to see the full list). An example would be `cols =
+#'   c("yellow", "green", "blue")`.
+#' @param alpha Opacity of the tiles. Must be between `0` and `1`.
 #' @param tile.border Colour to use for the border of binned tiles. Defaults to
-#'   \code{NA}, which draws no border.
+#'   `NA`, which draws no border.
 #' @param provider The base map(s) to be used. See
-#'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-#'   of all base maps that can be used. If multiple base maps are provided, they
+#'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
+#'   all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
 #'
 #' @return A leaflet object.

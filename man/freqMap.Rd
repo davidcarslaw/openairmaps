@@ -45,23 +45,23 @@ from 0-10 in intervals of 10, or a more flexible sequence, e.g.,
 \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.}
 
 \item{statistic}{The statistic that should be applied to each wind
-speed/direction bin. Can be \dQuote{frequency}, \dQuote{mean},
-\dQuote{median}, \dQuote{max} (maximum), \dQuote{stdev} (standard
-deviation) or \dQuote{weighted.mean}. The option \dQuote{frequency} is the
+speed/direction bin. Can be "frequency", "mean",
+"median", "max" (maximum), "stdev" (standard
+deviation) or "weighted.mean". The option "frequency" is the
 simplest and plots the frequency of wind speed/direction in different bins.
-The scale therefore shows the counts in each bin. The option \dQuote{mean}
+The scale therefore shows the counts in each bin. The option "mean"
 (the default) will plot the mean concentration of a pollutant (see next
 point) in wind speed/direction bins, and so on.  Finally,
-\dQuote{weighted.mean} will plot the concentration of a pollutant weighted
+"weighted.mean" will plot the concentration of a pollutant weighted
 by wind speed/direction. Each segment therefore provides the percentage
 overall contribution to the total concentration. Note that for options
-other than \dQuote{frequency}, it is necessary to also provide the name of
+other than "frequency", it is necessary to also provide the name of
 a pollutant. See function \code{\link[openair:cutData]{openair::cutData()}} for further details.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-\dQuote{lat}/\dQuote{latitude} or
-\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
+"lat"/"latitude" or
+"lon"/"lng"/"long"/"longitude"
 (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
@@ -121,7 +121,7 @@ direction bin.  The default is 1. A value of two requires at least 2 valid
 records in each bin an so on; bins with less than 2 valid records are set
 to NA. Care should be taken when using a value > 1 because of the risk of
 removing real data points. It is recommended to consider your data with
-care. Also, the \code{polarPlot} function can be of use in such
+care. Also, the \code{polarFreq} function can be of use in such
 circumstances.}
     \item{\code{ws.upper}}{A user-defined upper wind speed to use. This is useful for
 ensuring a consistent scale between different plots. For example, to
@@ -130,23 +130,23 @@ always ensure that wind speeds are displayed between 1-10, set
     \item{\code{offset}}{\code{offset} controls the size of the \sQuote{hole} in the
 middle and is expressed as a percentage of the maximum wind speed. Setting
 a higher \code{offset} e.g. 50 is useful for \code{statistic =
-"weighted.mean"} when \code{ws.int} is greater than the maximum wind
+  "weighted.mean"} when \code{ws.int} is greater than the maximum wind
 speed. See example below.}
     \item{\code{border.col}}{The colour of the boundary of each wind speed/direction
 bin. The default is transparent. Another useful choice sometimes is
 "white".}
-    \item{\code{key.header,key.footer}}{Adds additional text/labels to the scale key.
-For example, passing options \code{key.header = "header", key.footer =
-"footer"} adds addition text above and below the scale key. These
-arguments are passed to \code{drawOpenKey} via \code{quickText}, applying
-the \code{auto.text} argument, to handle formatting.}
-    \item{\code{key.position}}{Location where the scale key is to plotted.  Allowed
+    \item{\code{key.header}}{Adds additional text/labels to the scale key. For example,
+passing the options \code{key.header = "header", key.footer = "footer1"}
+adds addition text above and below the scale key. These arguments are
+passed to \code{drawOpenKey} via \code{quickText}, applying the
+\code{auto.text} argument, to handle formatting.}
+    \item{\code{key.footer}}{see \code{key.footer}.}
+    \item{\code{key.position}}{Location where the scale key is to plotted. Allowed
 arguments currently include \code{"top"}, \code{"right"}, \code{"bottom"}
 and \code{"left"}.}
-    \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If
-\code{TRUE} titles and axis labels will automatically try and format
-pollutant names and units properly e.g.  by subscripting the \sQuote{2} in
-NO2.}
+    \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If \code{TRUE}
+titles and axis labels will automatically try and format pollutant names
+and units properly e.g.  by subscripting the `2' in NO2.}
   }}
 }
 \value{

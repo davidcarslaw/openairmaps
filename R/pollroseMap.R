@@ -1,28 +1,28 @@
 #' Pollution rose plots on interactive leaflet maps
 #'
-#' [pollroseMap()] creates a \code{leaflet} map using "pollution roses" as
-#' markers. Any number of pollutants can be specified using the \code{pollutant}
+#' [pollroseMap()] creates a `leaflet` map using "pollution roses" as
+#' markers. Any number of pollutants can be specified using the `pollutant`
 #' argument, and multiple layers of markers can be added and toggled between
-#' using \code{control}. See [openair::pollutionRose()] for more information.
+#' using `control`. See [openair::pollutionRose()] for more information.
 #'
 #' @family directional analysis maps
 #'
 #' @inheritParams polarMap
-#' @param statistic The \code{statistic} to be applied to each data bin in the
-#'   plot. Options currently include \dQuote{prop.count}, \dQuote{prop.mean} and
-#'   \dQuote{abs.count}. The default \dQuote{prop.count} sizes bins according to
+#' @param statistic The `statistic` to be applied to each data bin in the
+#'   plot. Options currently include "prop.count", "prop.mean" and
+#'   "abs.count". The default "prop.count" sizes bins according to
 #'   the proportion of the frequency of measurements.  Similarly,
-#'   \dQuote{prop.mean} sizes bins according to their relative contribution to
-#'   the mean. \dQuote{abs.count} provides the absolute count of measurements in
+#'   "prop.mean" sizes bins according to their relative contribution to
+#'   the mean. "abs.count" provides the absolute count of measurements in
 #'   each bin.
 #' @param breaks Most commonly, the number of break points. If not specified,
 #'   each marker will independently break its supplied data at approximately 6
-#'   sensible break points. When \code{breaks} are specified, all markers will
+#'   sensible break points. When `breaks` are specified, all markers will
 #'   use the same break points. Breaks can also be used to set specific break
-#'   points. For example, the argument \code{breaks = c(0, 1, 10, 100)} breaks
+#'   points. For example, the argument `breaks = c(0, 1, 10, 100)` breaks
 #'   the data into segments <1, 1-10, 10-100, >100.
-#' @param draw.legend When \code{breaks} are specified, should a shared legend
-#'   be created at the side of the map? Default is \code{TRUE}.
+#' @param draw.legend When `breaks` are specified, should a shared legend
+#'   be created at the side of the map? Default is `TRUE`.
 #' @inheritDotParams openair::pollutionRose -breaks -mydata -pollutant -plot
 #' @return A leaflet object.
 #' @export

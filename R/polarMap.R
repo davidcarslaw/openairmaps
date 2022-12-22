@@ -1,35 +1,35 @@
 #' Bivariate polar plots on interactive leaflet maps
 #'
-#' [polarMap()] creates a \code{leaflet} map using bivariate polar plots as
-#' markers. Any number of pollutants can be specified using the \code{pollutant}
+#' [polarMap()] creates a `leaflet` map using bivariate polar plots as
+#' markers. Any number of pollutants can be specified using the `pollutant`
 #' argument, and multiple layers of markers can be added and toggled between
-#' using \code{control}. See [openair::polarPlot()] for more information.
+#' using `control`. See [openair::polarPlot()] for more information.
 #'
 #' @family directional analysis maps
 #'
 #' @param data A data frame. The data frame must contain the data to plot the
-#'   directional analysis marker, which includes wind speed (\code{ws}), wind
-#'   direction (\code{wd}), and the column representing the concentration of a
-#'   pollutant. In addition, \code{data} must include a decimal latitude and
+#'   directional analysis marker, which includes wind speed (`ws`), wind
+#'   direction (`wd`), and the column representing the concentration of a
+#'   pollutant. In addition, `data` must include a decimal latitude and
 #'   longitude.
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
 #' @param x The radial axis variable to plot.
 #' @param limits By default, each individual polar marker has its own colour
-#'   scale. The \code{limits} argument will force all markers to use the same
-#'   colour scale. The limits are set in the form \code{c(lower, upper)}, so
-#'   \code{limits = c(0, 100)} would force the plot limits to span 0-100.
+#'   scale. The `limits` argument will force all markers to use the same
+#'   colour scale. The limits are set in the form `c(lower, upper)`, so
+#'   `limits = c(0, 100)` would force the plot limits to span 0-100.
 #' @param latitude,longitude The decimal latitude/longitude. If not provided,
 #'   will be automatically inferred from data by looking for a column named
-#'   \dQuote{lat}/\dQuote{latitude} or
-#'   \dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
+#'   "lat"/"latitude" or
+#'   "lon"/"lng"/"long"/"longitude"
 #'   (case-insensitively).
 #' @param control Column to be used for splitting the input data into different
 #'   groups which can be selected between using a "layer control" interface.
 #'   Appropriate columns could be those added by [openair::cutData()] or
-#'   [openair::splitByDate()]. \code{control} cannot be used if multiple
-#'   \code{pollutant} columns have been provided.
+#'   [openair::splitByDate()]. `control` cannot be used if multiple
+#'   `pollutant` columns have been provided.
 #' @param popup Column to be used as the HTML content for marker popups. Popups
 #'   may be useful to show information about the individual sites (e.g., site
 #'   names, codes, types, etc.).
@@ -37,22 +37,22 @@
 #'   Labels are useful for the same reasons as popups, though are typically
 #'   shorter.
 #' @param provider The base map(s) to be used. See
-#'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
+#'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list
 #'   of all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
 #' @param cols The colours used for plotting.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
 #'   between 0 and 1 with zero being fully transparent and 1 fully opaque).
-#' @param key Should a key for each marker be drawn? Default is \code{FALSE}.
-#' @param draw.legend When \code{limits} are specified, should a shared legend
-#'   be created at the side of the map? Default is \code{TRUE}.
+#' @param key Should a key for each marker be drawn? Default is `FALSE`.
+#' @param draw.legend When `limits` are specified, should a shared legend
+#'   be created at the side of the map? Default is `TRUE`.
 #' @param collapse.control Should the "layer control" interface be collapsed?
-#'   Defaults to \code{FALSE}.
+#'   Defaults to `FALSE`.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param type Deprecated. Please use \code{label} and/or \code{popup} to label
+#' @param type Deprecated. Please use `label` and/or `popup` to label
 #'   different sites.
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot

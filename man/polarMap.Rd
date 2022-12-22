@@ -48,8 +48,8 @@ colour scale. The limits are set in the form \code{c(lower, upper)}, so
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-\dQuote{lat}/\dQuote{latitude} or
-\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
+"lat"/"latitude" or
+"lon"/"lng"/"long"/"longitude"
 (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
@@ -100,63 +100,63 @@ different sites.}
   \describe{
     \item{\code{wd}}{Name of wind direction field.}
     \item{\code{statistic}}{The statistic that should be applied to each wind
-  speed/direction bin. Because of the smoothing involved, the colour scale
-  for some of these statistics is only to provide an indication of overall
-  pattern and should not be interpreted in concentration units e.g. for
-  \code{statistic = "weighted.mean"} where the bin mean is multiplied by the
-  bin frequency and divided by the total frequency. In many cases using
-  \code{polarFreq} will be better. Setting \code{statistic = "weighted.mean"}
-  can be useful because it provides an indication of the concentration *
-  frequency of occurrence and will highlight the wind speed/direction
-  conditions that dominate the overall mean.Can be:
+speed/direction bin. Because of the smoothing involved, the colour scale
+for some of these statistics is only to provide an indication of overall
+pattern and should not be interpreted in concentration units e.g. for
+\code{statistic = "weighted.mean"} where the bin mean is multiplied by the
+bin frequency and divided by the total frequency. In many cases using
+\code{polarFreq} will be better. Setting \code{statistic = "weighted.mean"}
+can be useful because it provides an indication of the concentration *
+frequency of occurrence and will highlight the wind speed/direction
+conditions that dominate the overall mean.Can be:
 
-  \itemize{ \item  \dQuote{mean} (default), \dQuote{median}, \dQuote{max}
-  (maximum), \dQuote{frequency}. \dQuote{stdev} (standard deviation),
-  \dQuote{weighted.mean}.
+\itemize{ \item  \dQuote{mean} (default), \dQuote{median}, \dQuote{max}
+(maximum), \dQuote{frequency}. \dQuote{stdev} (standard deviation),
+\dQuote{weighted.mean}.
 
-  \item \code{statistic = "nwr"} Implements the Non-parametric Wind
-  Regression approach of Henry et al. (2009) that uses kernel smoothers. The
-  \code{openair} implementation is not identical because Gaussian kernels are
-  used for both wind direction and speed. The smoothing is controlled by
-  \code{ws_spread} and \code{wd_spread}.
+\item \code{statistic = "nwr"} Implements the Non-parametric Wind
+Regression approach of Henry et al. (2009) that uses kernel smoothers. The
+\code{openair} implementation is not identical because Gaussian kernels are
+used for both wind direction and speed. The smoothing is controlled by
+\code{ws_spread} and \code{wd_spread}.
 
-  \item \code{statistic = "cpf"} the conditional probability function (CPF)
-  is plotted and a single (usually high) percentile level is supplied. The
-  CPF is defined as CPF = my/ny, where my is the number of samples in the y
-  bin (by default a wind direction, wind speed interval) with mixing ratios
-  greater than the \emph{overall} percentile concentration, and ny is the
-  total number of samples in the same wind sector (see Ashbaugh et al.,
-  1985). Note that percentile intervals can also be considered; see
-  \code{percentile} for details.
+\item \code{statistic = "cpf"} the conditional probability function (CPF)
+is plotted and a single (usually high) percentile level is supplied. The
+CPF is defined as CPF = my/ny, where my is the number of samples in the y
+bin (by default a wind direction, wind speed interval) with mixing ratios
+greater than the \emph{overall} percentile concentration, and ny is the
+total number of samples in the same wind sector (see Ashbaugh et al.,
+1985). Note that percentile intervals can also be considered; see
+\code{percentile} for details.
 
-  \item When \code{statistic = "r"} or \code{statistic = "Pearson"}, the
-  Pearson correlation coefficient is calculated for \emph{two} pollutants.
-  The calculation involves a weighted Pearson correlation coefficient, which
-  is weighted by Gaussian kernels for wind direction an the radial variable
-  (by default wind speed). More weight is assigned to values close to a wind
-  speed-direction interval. Kernel weighting is used to ensure that all data
-  are used rather than relying on the potentially small number of values in a
-  wind speed-direction interval.
+\item When \code{statistic = "r"} or \code{statistic = "Pearson"}, the
+Pearson correlation coefficient is calculated for \emph{two} pollutants.
+The calculation involves a weighted Pearson correlation coefficient, which
+is weighted by Gaussian kernels for wind direction an the radial variable
+(by default wind speed). More weight is assigned to values close to a wind
+speed-direction interval. Kernel weighting is used to ensure that all data
+are used rather than relying on the potentially small number of values in a
+wind speed-direction interval.
 
-  \item When \code{statistic = "Spearman"}, the Spearman correlation
-  coefficient is calculated for \emph{two} pollutants. The calculation
-  involves a weighted Spearman correlation coefficient, which is weighted by
-  Gaussian kernels for wind direction an the radial variable (by default wind
-  speed). More weight is assigned to values close to a wind speed-direction
-  interval. Kernel weighting is used to ensure that all data are used rather
-  than relying on the potentially small number of values in a wind
-  speed-direction interval.
+\item When \code{statistic = "Spearman"}, the Spearman correlation
+coefficient is calculated for \emph{two} pollutants. The calculation
+involves a weighted Spearman correlation coefficient, which is weighted by
+Gaussian kernels for wind direction an the radial variable (by default wind
+speed). More weight is assigned to values close to a wind speed-direction
+interval. Kernel weighting is used to ensure that all data are used rather
+than relying on the potentially small number of values in a wind
+speed-direction interval.
 
-  \item \code{"robust_slope"} is another option for pair-wise statistics and
-  \code{"quantile.slope"}, which uses quantile regression to estimate the
-  slope for a particular quantile level (see also \code{tau} for setting the
-  quantile level).
+\item \code{"robust_slope"} is another option for pair-wise statistics and
+\code{"quantile.slope"}, which uses quantile regression to estimate the
+slope for a particular quantile level (see also \code{tau} for setting the
+quantile level).
 
-  \item \code{"york_slope"} is another option for pair-wise statistics which
-  uses the \emph{York regression method} to estimate the slope. In this
-  method the uncertainties in \code{x} and \code{y} are used in the
-  determination of the slope. The uncertainties are provided by
-  \code{x_error} and \code{y_error} --- see below.}}
+\item \code{"york_slope"} is another option for pair-wise statistics which
+uses the \emph{York regression method} to estimate the slope. In this
+method the uncertainties in \code{x} and \code{y} are used in the
+determination of the slope. The uncertainties are provided by
+\code{x_error} and \code{y_error} --- see below.}}
     \item{\code{exclude.missing}}{Setting this option to \code{TRUE} (the default)
 removes points from the plot that are too far from the original data. The
 smoothing routines will produce predictions at points where no data exist
@@ -166,7 +166,7 @@ produces a plot where it is clear where the original data lie. If set to
     \item{\code{uncertainty}}{Should the uncertainty in the calculated surface be shown?
 If \code{TRUE} three plots are produced on the same scale showing the
 predicted surface together with the estimated lower and upper uncertainties
-at the 95% confidence interval. Calculating the uncertainties is useful to
+at the 95\% confidence interval. Calculating the uncertainties is useful to
 understand whether features are real or not.  For example, at high wind
 speeds where there are few data there is greater uncertainty over the
 predicted values. The uncertainties are calculated using the GAM and
@@ -174,36 +174,36 @@ weighting is done by the frequency of measurements in each wind
 speed-direction bin. Note that if uncertainties are calculated then the
 type is set to "default".}
     \item{\code{percentile}}{If \code{statistic = "percentile"} then \code{percentile}
-  is used, expressed from 0 to 100. Note that the percentile value is
-  calculated in the wind speed, wind direction \sQuote{bins}. For this reason
-  it can also be useful to set \code{min.bin} to ensure there are a
-  sufficient number of points available to estimate a percentile. See
-  \code{quantile} for more details of how percentiles are calculated.
+is used, expressed from 0 to 100. Note that the percentile value is
+calculated in the wind speed, wind direction \sQuote{bins}. For this reason
+it can also be useful to set \code{min.bin} to ensure there are a
+sufficient number of points available to estimate a percentile. See
+\code{quantile} for more details of how percentiles are calculated.
 
-  \code{percentile} is also used for the Conditional Probability Function
-  (CPF) plots. \code{percentile} can be of length two, in which case the
-  percentile \emph{interval} is considered for use with CPF. For example,
-  \code{percentile = c(90, 100)} will plot the CPF for concentrations between
-  the 90 and 100th percentiles. Percentile intervals can be useful for
-  identifying specific sources. In addition, \code{percentile} can also be of
-  length 3. The third value is the \sQuote{trim} value to be applied. When
-  calculating percentile intervals many can cover very low values where there
-  is no useful information. The trim value ensures that values greater than
-  or equal to the trim * mean value are considered \emph{before} the
-  percentile intervals are calculated. The effect is to extract more detail
-  from many source signatures. See the manual for examples. Finally, if the
-  trim value is less than zero the percentile range is interpreted as
-  absolute concentration values and subsetting is carried out directly.}
+\code{percentile} is also used for the Conditional Probability Function
+(CPF) plots. \code{percentile} can be of length two, in which case the
+percentile \emph{interval} is considered for use with CPF. For example,
+\code{percentile = c(90, 100)} will plot the CPF for concentrations between
+the 90 and 100th percentiles. Percentile intervals can be useful for
+identifying specific sources. In addition, \code{percentile} can also be of
+length 3. The third value is the \sQuote{trim} value to be applied. When
+calculating percentile intervals many can cover very low values where there
+is no useful information. The trim value ensures that values greater than
+or equal to the trim * mean value are considered \emph{before} the
+percentile intervals are calculated. The effect is to extract more detail
+from many source signatures. See the manual for examples. Finally, if the
+trim value is less than zero the percentile range is interpreted as
+absolute concentration values and subsetting is carried out directly.}
     \item{\code{weights}}{At the edges of the plot there may only be a few data points
-  in each wind speed-direction interval, which could in some situations
-  distort the plot if the concentrations are high. \code{weights} applies a
-  weighting to reduce their influence. For example and by default if only a
-  single data point exists then the weighting factor is 0.25 and for two
-  points 0.5. To not apply any weighting and use the data as is, use
-  \code{weights = c(1, 1, 1)}.
+in each wind speed-direction interval, which could in some situations
+distort the plot if the concentrations are high. \code{weights} applies a
+weighting to reduce their influence. For example and by default if only a
+single data point exists then the weighting factor is 0.25 and for two
+points 0.5. To not apply any weighting and use the data as is, use
+\code{weights = c(1, 1, 1)}.
 
-  An alternative to down-weighting these points they can be removed
-  altogether using \code{min.bin}.}
+An alternative to down-weighting these points they can be removed
+altogether using \code{min.bin}.}
     \item{\code{min.bin}}{The minimum number of points allowed in a wind speed/wind
 direction bin.  The default is 1. A value of two requires at least 2 valid
 records in each bin an so on; bins with less than 2 valid records are set
@@ -218,10 +218,9 @@ choose \code{mis.col = "transparent"}.}
     \item{\code{upper}}{This sets the upper limit wind speed to be used. Often there are
 only a relatively few data points at very high wind speeds and plotting all
 of them can reduce the useful information in the plot.}
-    \item{\code{angle.scale}}{The wind speed scale is by default shown at a 315 degree
-angle. Sometimes the placement of the scale may interfere with an
+    \item{\code{angle.scale}}{Sometimes the placement of the scale may interfere with an
 interesting feature. The user can therefore set \code{angle.scale} to
-another value (between 0 and 360 degrees) to mitigate such problems. For
+any value between 0 and 360 degrees to mitigate such problems. For
 example \code{angle.scale = 45} will draw the scale heading in a NE
 direction.}
     \item{\code{units}}{The units shown on the polar axis scale.}

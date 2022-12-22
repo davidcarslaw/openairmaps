@@ -1,33 +1,33 @@
 #' Polar frequency plots on interactive leaflet maps
 #'
-#' [freqMap()] creates a \code{leaflet} map using binned polar plots as markers.
-#' Any number of pollutants can be specified using the \code{pollutant}
+#' [freqMap()] creates a `leaflet` map using binned polar plots as markers.
+#' Any number of pollutants can be specified using the `pollutant`
 #' argument, and multiple layers of markers can be added and toggled between
-#' using \code{control}. See [openair::polarFreq()] for more information.
+#' using `control`. See [openair::polarFreq()] for more information.
 #'
 #' @family directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param statistic The statistic that should be applied to each wind
-#'   speed/direction bin. Can be \dQuote{frequency}, \dQuote{mean},
-#'   \dQuote{median}, \dQuote{max} (maximum), \dQuote{stdev} (standard
-#'   deviation) or \dQuote{weighted.mean}. The option \dQuote{frequency} is the
+#'   speed/direction bin. Can be "frequency", "mean",
+#'   "median", "max" (maximum), "stdev" (standard
+#'   deviation) or "weighted.mean". The option "frequency" is the
 #'   simplest and plots the frequency of wind speed/direction in different bins.
-#'   The scale therefore shows the counts in each bin. The option \dQuote{mean}
+#'   The scale therefore shows the counts in each bin. The option "mean"
 #'   (the default) will plot the mean concentration of a pollutant (see next
 #'   point) in wind speed/direction bins, and so on.  Finally,
-#'   \dQuote{weighted.mean} will plot the concentration of a pollutant weighted
+#'   "weighted.mean" will plot the concentration of a pollutant weighted
 #'   by wind speed/direction. Each segment therefore provides the percentage
 #'   overall contribution to the total concentration. Note that for options
-#'   other than \dQuote{frequency}, it is necessary to also provide the name of
+#'   other than "frequency", it is necessary to also provide the name of
 #'   a pollutant. See function [openair::cutData()] for further details.
 #' @param breaks The user can provide their own scale. breaks expects a sequence
 #'   of numbers that define the range of the scale. The sequence could represent
-#'   one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale
+#'   one with equal spacing, e.g., `breaks = seq(0, 100, 10)` - a scale
 #'   from 0-10 in intervals of 10, or a more flexible sequence, e.g.,
-#'   \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.
-#' @param draw.legend When \code{breaks} are specified, should a shared legend
-#'   be created at the side of the map? Default is \code{TRUE}.
+#'   `breaks = c(0, 1, 5, 7, 10)`, which may be useful for some situations.
+#' @param draw.legend When `breaks` are specified, should a shared legend
+#'   be created at the side of the map? Default is `TRUE`.
 #' @inheritDotParams openair::polarFreq -mydata -pollutant -statistic -breaks -type -cols -key -plot
 #' @return A leaflet object.
 #' @export

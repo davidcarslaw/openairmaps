@@ -39,10 +39,10 @@ comparison is made by comparing the percentage change in gridded
 frequencies. For example, such a plot could show that the top 10\\% of
 concentrations of PM10 tend to originate from air-mass origins to the east.
 
-If \code{statistic = "pscf"} then a Potential Source Contribution Function
-map is produced. If \code{statistic = "cwt"} then the Concentration
-Weighted Trajectory approach is used. If \code{statistic = "saqn"} then
-Simplified Quantitative Transport Bias Analysis is used. See "details" of
+If \code{statistic = "pscf"} then a Potential Source Contribution Function map
+is produced. If \code{statistic = "cwt"} then the Concentration Weighted
+Trajectory approach is used. If \code{statistic = "saqn"} then Simplified
+Quantitative Transport Bias Analysis is used. See "details" of
 \code{\link[openair:trajLevel]{openair::trajLevel()}} for more information.}
 
 \item{percentile}{For \code{\link[openair:trajLevel]{openair::trajLevel()}}. The percentile concentration of
@@ -55,12 +55,11 @@ Simplified Quantitative Transport Bias Analysis is used. See "details" of
 \item{min.bin}{The minimum number of unique points in a grid cell. Counts
 below \code{min.bin} are set as missing.}
 
-\item{cols}{Colours to be used for plotting. Options include
-\dQuote{default}, \dQuote{increment}, \dQuote{heat}, \dQuote{jet} and
-\code{RColorBrewer} colours — see the \code{\link[openair:openColours]{openair::openColours()}}
-function for more details. For user defined the user can supply a list of
-colour names recognised by R (type \code{\link[grDevices:colors]{grDevices::colours()}} to see the full
-list). An example would be \code{cols = c("yellow", "green", "blue")}.}
+\item{cols}{Colours to be used for plotting. Options include "default",
+"increment", "heat", "jet" and \code{RColorBrewer} colours — see the
+\code{\link[openair:openColours]{openair::openColours()}} function for more details. For user defined the
+user can supply a list of colour names recognised by R (type
+\code{\link[grDevices:colors]{grDevices::colours()}} to see the full list). An example would be \code{cols = c("yellow", "green", "blue")}.}
 
 \item{alpha}{Opacity of the tiles. Must be between \code{0} and \code{1}.}
 
@@ -68,8 +67,8 @@ list). An example would be \code{cols = c("yellow", "green", "blue")}.}
 \code{NA}, which draws no border.}
 
 \item{provider}{The base map(s) to be used. See
-\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-of all base maps that can be used. If multiple base maps are provided, they
+\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
+all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
 }
 \value{

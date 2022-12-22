@@ -42,8 +42,8 @@ control" interface.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-\dQuote{lat}/\dQuote{latitude} or
-\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
+"lat"/"latitude" or
+"lon"/"lng"/"long"/"longitude"
 (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
@@ -89,47 +89,42 @@ different sites.}
 \item{...}{
   Arguments passed on to \code{\link[openair:percentileRose]{openair::percentileRose}}
   \describe{
-    \item{\code{wd}}{Name of the wind direction field.}
-    \item{\code{smooth}}{Should the wind direction data be smoothed using a
-cyclic spline?}
-    \item{\code{method}}{When \code{method = "default"} the supplied
-percentiles by wind direction are calculated. When \code{method
-= "cpf"} the conditional probability function (CPF) is plotted
-and a single (usually high) percentile level is supplied. The
-CPF is defined as CPF = my/ny, where my is the number of samples
-in the wind sector y with mixing ratios greater than the
-\emph{overall} percentile concentration, and ny is the total
-number of samples in the same wind sector (see Ashbaugh et al.,
-1985).}
+    \item{\code{wd}}{Name of wind direction field.}
+    \item{\code{smooth}}{Should the wind direction data be smoothed using a cyclic
+spline?}
+    \item{\code{method}}{When \code{method = "default"} the supplied percentiles by wind
+direction are calculated. When \code{method = "cpf"} the conditional
+probability function (CPF) is plotted and a single (usually high)
+percentile level is supplied. The CPF is defined as CPF = my/ny, where my
+is the number of samples in the wind sector y with mixing ratios greater
+than the \emph{overall} percentile concentration, and ny is the total
+number of samples in the same wind sector (see Ashbaugh et al., 1985).}
     \item{\code{angle}}{Default angle of \dQuote{spokes} is when \code{smooth = FALSE}.}
     \item{\code{mean}}{Show the mean by wind direction as a line?}
     \item{\code{mean.lty}}{Line type for mean line.}
     \item{\code{mean.lwd}}{Line width for mean line.}
     \item{\code{mean.col}}{Line colour for mean line.}
-    \item{\code{fill}}{Should the percentile intervals be filled (default) or
-should lines be drawn (\code{fill = FALSE}).}
-    \item{\code{intervals}}{User-supplied intervals for the scale e.g.
-\code{intervals = c(0, 10, 30, 50)}}
-    \item{\code{angle.scale}}{The pollutant scale is by default shown at a 45
-degree angle. Sometimes the placement of the scale may interfere
-with an interesting feature. The user can therefore set
-\code{angle.scale} to another value (between 0 and 360 degrees)
-to mitigate such problems. For example \code{angle.scale = 315}
-will draw the scale heading in a NW direction.}
-    \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If
-\code{TRUE} titles and axis labels will automatically try and
-format pollutant names and units properly e.g.  by subscripting
-the \sQuote{2} in NO2.}
-    \item{\code{key.header}}{Adds additional text/labels to the scale key.
-For example, passing options \code{key.header = "header",
-key.footer = "footer"} adds addition text above and below the
-scale key. These arguments are passed to \code{drawOpenKey} via
-\code{quickText}, applying the \code{auto.text} argument, to
-handle formatting.}
-    \item{\code{key.footer}}{\code{key.header}.}
-    \item{\code{key.position}}{Location where the scale key is to plotted.
-Allowed arguments currently include \code{"top"},
-\code{"right"}, \code{"bottom"} and \code{"left"}.}
+    \item{\code{fill}}{Should the percentile intervals be filled (default) or should
+lines be drawn (\code{fill = FALSE}).}
+    \item{\code{intervals}}{User-supplied intervals for the scale e.g. \code{intervals =
+c(0, 10, 30, 50)}}
+    \item{\code{angle.scale}}{Sometimes the placement of the scale may interfere with an
+interesting feature. The user can therefore set \code{angle.scale} to
+any value between 0 and 360 degrees to mitigate such problems. For
+example \code{angle.scale = 45} will draw the scale heading in a NE
+direction.}
+    \item{\code{auto.text}}{Either \code{TRUE} (default) or \code{FALSE}. If \code{TRUE}
+titles and axis labels will automatically try and format pollutant names
+and units properly e.g.  by subscripting the `2' in NO2.}
+    \item{\code{key.header}}{Adds additional text/labels to the scale key. For example,
+passing the options \code{key.header = "header", key.footer = "footer1"}
+adds addition text above and below the scale key. These arguments are
+passed to \code{drawOpenKey} via \code{quickText}, applying the
+\code{auto.text} argument, to handle formatting.}
+    \item{\code{key.footer}}{see \code{key.footer}.}
+    \item{\code{key.position}}{Location where the scale key is to plotted. Allowed
+arguments currently include \code{"top"}, \code{"right"}, \code{"bottom"}
+and \code{"left"}.}
   }}
 }
 \value{

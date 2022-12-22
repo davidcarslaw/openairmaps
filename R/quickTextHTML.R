@@ -2,10 +2,10 @@
 ##'
 ##' Workhorse function that automatically applies routine text formatting to
 ##' common pollutant names which may be used in the HTML widgets produced by
-##' \code{openairmaps}.
+##' `openairmaps`.
 ##'
 ##' [quickTextHTML()] is routine formatting lookup table. It screens the
-##' supplied character vector \code{text} and automatically applies formatting
+##' supplied character vector `text` and automatically applies formatting
 ##' to any recognised character sub-series to properly render in HTML.
 ##'
 ##' @param text A character vector.

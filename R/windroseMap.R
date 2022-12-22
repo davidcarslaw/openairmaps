@@ -1,16 +1,15 @@
 #' Wind rose plots on interactive leaflet maps
 #'
-#' [windroseMap()] creates a \code{leaflet} map using wind roses as markers.
-#' Multiple layers of markers can be added and toggled between using
-#' \code{control}. See [openair::windRose()] for more information.
+#' [windroseMap()] creates a `leaflet` map using wind roses as markers. Multiple
+#' layers of markers can be added and toggled between using `control`. See
+#' [openair::windRose()] for more information.
 #'
 #' @family directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param data A data frame. The data frame must contain the data to plot a
-#'   [openair::windRose()], which includes wind speed (\code{ws}), and wind
-#'   direction (\code{wd}). In addition, \code{data} must include a decimal
-#'   latitude and longitude.
+#'   [openair::windRose()], which includes wind speed (`ws`), and wind direction
+#'   (`wd`). In addition, `data` must include a decimal latitude and longitude.
 #' @param ws.int The wind speed interval. Default is 2 m/s but for low met masts
 #'   with low mean wind speeds a value of 1 or 0.5 m/s may be better.
 #' @param breaks Most commonly, the number of break points for wind speed in
@@ -19,8 +18,9 @@
 #'   specific break points. For example, the argument breaks = c(0, 1, 10, 100)
 #'   breaks the data into segments <1, 1-10, 10-100, >100.
 #' @param draw.legend Should a shared legend be created at the side of the map?
-#'   Default is \code{TRUE}.
-#' @inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate -pollutant -type -cols -key
+#'   Default is `TRUE`.
+#' @inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate
+#'   -pollutant -type -cols -key
 #' @return A leaflet object.
 #' @export
 #'

@@ -1,6 +1,6 @@
 #' Trajectory line plots in leaflet
 #'
-#' This function plots back trajectories on a \code{leaflet} map. This function
+#' This function plots back trajectories on a `leaflet` map. This function
 #' requires that data are imported using the [openair::importTraj()] function.
 #' Options are provided to colour the individual trajectories (e.g., by
 #' pollutant concentrations) or create "layer control" menus to show/hide
@@ -14,29 +14,29 @@
 #' @param colour Column to be used for colouring each trajectory. This column
 #'   may be numeric, character or factor. This will commonly be a pollutant
 #'   concentration which has been joined (e.g., by [dplyr::left_join()]) to the
-#'   trajectory data by \dQuote{date}.
+#'   trajectory data by "date".
 #' @param control Column to be used for splitting the trajectories into
 #'   different groups which can be selected between using a "layer control"
 #'   menu.
-#' @param cols Colours to be used for plotting. Options include
-#'   \dQuote{default}, \dQuote{increment}, \dQuote{heat}, \dQuote{jet} and
-#'   \code{RColorBrewer} colours — see the [openair::openColours()] function for
-#'   more details. For user defined the user can supply a list of colour names
-#'   recognised by R (type [grDevices::colours()] to see the full list). An
-#'   example would be \code{cols = c("yellow", "green", "blue")}. If the
-#'   \code{"colour"} argument was not used, a single colour can be named which
-#'   will be used consistently for all lines/points (e.g., \code{cols = "red"}).
-#' @param alpha Opacity of lines/points. Must be between \code{0} and \code{1}.
-#' @param npoints A dot is placed every \code{npoints} along each full
-#'   trajectory. For hourly back trajectories points are plotted every
-#'   \code{npoints} hours. This helps to understand where the air masses were at
-#'   particular times and get a feel for the speed of the air (points closer
-#'   together correspond to slower moving air masses). Defaults to \code{12}.
+#' @param cols Colours to be used for plotting. Options include "default",
+#'   "increment", "heat", "jet" and `RColorBrewer` colours — see the
+#'   [openair::openColours()] function for more details. For user defined the
+#'   user can supply a list of colour names recognised by R (type
+#'   [grDevices::colours()] to see the full list). An example would be `cols =
+#'   c("yellow", "green", "blue")`. If the `"colour"` argument was not used, a
+#'   single colour can be named which will be used consistently for all
+#'   lines/points (e.g., `cols = "red"`).
+#' @param alpha Opacity of lines/points. Must be between `0` and `1`.
+#' @param npoints A dot is placed every `npoints` along each full trajectory.
+#'   For hourly back trajectories points are plotted every `npoints` hours. This
+#'   helps to understand where the air masses were at particular times and get a
+#'   feel for the speed of the air (points closer together correspond to slower
+#'   moving air masses). Defaults to `12`.
 #' @param provider The base map to be used. See
-#'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-#'   of all base maps that can be used.
+#'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
+#'   all base maps that can be used.
 #' @param collapse.control Should the "layer control" interface be collapsed?
-#'   Defaults to \code{FALSE}.
+#'   Defaults to `FALSE`.
 #'
 #' @return A leaflet object.
 #' @export

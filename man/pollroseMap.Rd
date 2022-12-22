@@ -39,11 +39,11 @@ pollutants are specified, they can be toggled between using a "layer
 control" interface.}
 
 \item{statistic}{The \code{statistic} to be applied to each data bin in the
-plot. Options currently include \dQuote{prop.count}, \dQuote{prop.mean} and
-\dQuote{abs.count}. The default \dQuote{prop.count} sizes bins according to
+plot. Options currently include "prop.count", "prop.mean" and
+"abs.count". The default "prop.count" sizes bins according to
 the proportion of the frequency of measurements.  Similarly,
-\dQuote{prop.mean} sizes bins according to their relative contribution to
-the mean. \dQuote{abs.count} provides the absolute count of measurements in
+"prop.mean" sizes bins according to their relative contribution to
+the mean. "abs.count" provides the absolute count of measurements in
 each bin.}
 
 \item{breaks}{Most commonly, the number of break points. If not specified,
@@ -55,8 +55,8 @@ the data into segments <1, 1-10, 10-100, >100.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-\dQuote{lat}/\dQuote{latitude} or
-\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
+"lat"/"latitude" or
+"lon"/"lng"/"long"/"longitude"
 (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
@@ -100,24 +100,24 @@ Defaults to \code{FALSE}.}
 different sites.}
 
 \item{...}{
-  Arguments passed on to \code{\link[openair:windRose]{openair::pollutionRose}}
+  Arguments passed on to \code{\link[openair:pollutionRose]{openair::pollutionRose}}
   \describe{
-    \item{\code{seg}}{For \code{pollutionRose} \code{seg} determines with
-width of the segments. For example, \code{seg = 0.5} will
-produce segments 0.5 * \code{angle}.}
-    \item{\code{normalise}}{If \code{TRUE} each wind direction segment of a
-pollution rose is normalised to equal one. This is useful for
-showing how the concentrations (or other parameters) contribute
-to each wind sector when the proportion of time the wind is from
-that direction is low. A line showing the probability that the
+    \item{\code{key.footer}}{Adds additional text/labels below the scale key. See
+\code{key.header} for further information.}
+    \item{\code{key.position}}{Location where the scale key is to plotted. Allowed
+arguments currently include \dQuote{top}, \dQuote{right}, \dQuote{bottom}
+and \dQuote{left}.}
+    \item{\code{paddle}}{Either \code{TRUE} or \code{FALSE}. If \code{TRUE} plots rose
+using 'paddle' style spokes. If \code{FALSE} plots rose using 'wedge' style
+spokes.}
+    \item{\code{seg}}{When \code{paddle = TRUE}, \code{seg} determines with width of the
+segments. For example, \code{seg = 0.5} will produce segments 0.5 *
+\code{angle}.}
+    \item{\code{normalise}}{If \code{TRUE} each wind direction segment is normalised to
+equal one. This is useful for showing how the concentrations (or other
+parameters) contribute to each wind sector when the proportion of time the
+wind is from that direction is low. A line showing the probability that the
 wind directions is from a particular wind sector is also shown.}
-    \item{\code{paddle}}{Either \code{TRUE} (default) or \code{FALSE}. If
-\code{TRUE} plots rose using `paddle' style spokes. If
-\code{FALSE} plots rose using `wedge' style spokes.}
-    \item{\code{key.footer}}{see \code{key.footer}.}
-    \item{\code{key.position}}{Location where the scale key is to plotted.
-Allowed arguments currently include \dQuote{top},
-\dQuote{right}, \dQuote{bottom} and \dQuote{left}.}
   }}
 }
 \value{
@@ -127,7 +127,7 @@ A leaflet object.
 \code{\link[=pollroseMap]{pollroseMap()}} creates a \code{leaflet} map using "pollution roses" as
 markers. Any number of pollutants can be specified using the \code{pollutant}
 argument, and multiple layers of markers can be added and toggled between
-using \code{control}. See \code{\link[openair:windRose]{openair::pollutionRose()}} for more information.
+using \code{control}. See \code{\link[openair:pollutionRose]{openair::pollutionRose()}} for more information.
 }
 \examples{
 \dontrun{

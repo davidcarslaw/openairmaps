@@ -1,18 +1,19 @@
 #' Polar annulus plots on interactive leaflet maps
 #'
-#' [annulusMap()] creates a \code{leaflet} map using polar annulus plots as
-#' markers. Any number of pollutants can be specified using the \code{pollutant}
-#' argument, and multiple layers of markers can be added and toggled between
-#' using \code{control}. See [openair::polarAnnulus()] for more information.
+#' [annulusMap()] creates a `leaflet` map using polar annulus plots as markers.
+#' Any number of pollutants can be specified using the `pollutant` argument, and
+#' multiple layers of markers can be added and toggled between using `control`.
+#' See [openair::polarAnnulus()] for more information.
 #'
 #' @family directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param period This determines the temporal period to consider. Options are
-#'   \dQuote{hour} (the default, to plot diurnal variations), \dQuote{season} to
-#'   plot variation throughout the year, \dQuote{weekday} to plot day of the
-#'   week variation and \dQuote{trend} to plot the trend by wind direction.
-#' @inheritDotParams openair::polarAnnulus -mydata -pollutant -period -limits -type -cols -key -plot
+#'   "hour" (the default, to plot diurnal variations), "season" to plot
+#'   variation throughout the year, "weekday" to plot day of the week variation
+#'   and "trend" to plot the trend by wind direction.
+#' @inheritDotParams openair::polarAnnulus -mydata -pollutant -period -limits
+#'   -type -cols -key -plot
 #' @return A leaflet object.
 #' @export
 #'

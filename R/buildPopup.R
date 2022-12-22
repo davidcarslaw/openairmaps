@@ -13,16 +13,14 @@
 #'   appear in the popup.
 #' @param latitude,longitude The decimal latitude/longitude. If not provided,
 #'   will be automatically inferred from data by looking for a column named
-#'   \dQuote{lat}/\dQuote{latitude} or
-#'   \dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
-#'   (case-insensitively).
+#'   "lat"/"latitude" or "lon"/"lng"/"long"\"longitude". (case-insensitively).
 #' @param names Optional. A named vector used to rename certain columns in the
 #'   popups. See the Example for more information.
-#' @param control Optional. Column which will be used for the \code{control}
-#'   argument of other mapping functions. This only needs to be used if
-#'   \code{control} is going to be used in [polarMap()] or another similar
-#'   function, and you'd expect different values for the different map layers
-#'   (for example, if you are calculating a mean pollutant concentration).
+#' @param control Optional. Column which will be used for the `control` argument
+#'   of other mapping functions. This only needs to be used if `control` is
+#'   going to be used in [polarMap()] or another similar function, and you'd
+#'   expect different values for the different map layers (for example, if you
+#'   are calculating a mean pollutant concentration).
 #' @param fun.character A function to summarise character and factor columns.
 #'   Defaults to collapsing unique values into a comma-separated list.
 #' @param fun.numeric A function to summarise numeric columns. Defaults to
@@ -61,16 +59,16 @@ buildPopup <-
     latitude <- latlon$latitude
     longitude <- latlon$longitude
 
-    make_popup <- function(data){
+    make_popup <- function(data) {
       # multiple columns
       summary <-
         data %>%
         dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
         dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
-        dplyr::summarise(dplyr::across(tidyselect::where(is.character)|tidyselect::where(is.factor), fun.character),
-                         dplyr::across(tidyselect::where(is.numeric), fun.numeric),
-                         dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
-                         .groups = "drop"
+        dplyr::summarise(dplyr::across(tidyselect::where(is.character) | tidyselect::where(is.factor), fun.character),
+          dplyr::across(tidyselect::where(is.numeric), fun.numeric),
+          dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
+          .groups = "drop"
         )
 
       if (!is.null(names)) {
