@@ -1,10 +1,10 @@
 #' Add polar markers to leaflet map
 #'
 #' This function is similar (but not identical to) the [leaflet::addMarkers()]
-#' and [leaflet::addCircleMarkers()] functions in \code{leaflet}, which allows
-#' users to add \code{openair} directional analysis plots to any leaflet map and
-#' have more control over groups and layerIds than in "all-in-one" functions
-#' like [polarMap()].
+#' and [leaflet::addCircleMarkers()] functions in `leaflet`, which allows users
+#' to add `openair` directional analysis plots to any leaflet map and have more
+#' control over groups and layerIds than in "all-in-one" functions like
+#' [polarMap()].
 #'
 #' @param map a map widget object created from [leaflet::leaflet()].
 #' @param lng The decimal longitude.
@@ -15,25 +15,25 @@
 #'   Human-friendly group names are permitted–they need not be short,
 #'   identifier-style names. Any number of layers and even different types of
 #'   layers (e.g. markers and polygons) can share the same group name.
-#' @param popup A column of \code{data} to be used as a popup.
-#' @param label A column of \code{data} to be used as a label.
+#' @param popup A column of `data` to be used as a popup.
+#' @param label A column of `data` to be used as a label.
 #' @param data A data frame. The data frame must contain the data to plot your
 #'   choice of openair directional analysis plot, which includes wind speed
-#'   (\code{ws}), wind direction (\code{wd}), and the column representing the
-#'   concentration of a pollutant. In addition, \code{data} must include a
-#'   decimal latitude and longitude.
-#' @param fun An \code{openair} directional analysis plotting function.
-#'   Supported functions include [openair::polarPlot()] (the default),
+#'   (`ws`), wind direction (`wd`), and the column representing the
+#'   concentration of a pollutant. In addition, `data` must include a decimal
+#'   latitude and longitude.
+#' @param fun An `openair` directional analysis plotting function. Supported
+#'   functions include [openair::polarPlot()] (the default),
 #'   [openair::polarAnnulus()], [openair::polarFreq()],
 #'   [openair::percentileRose()], [openair::pollutionRose()] and
 #'   [openair::windRose()].
-#' @param pollutant The name of the pollutant to be plot. Note that, if
-#'   \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.
+#' @param pollutant The name of the pollutant to be plot. Note that, if `fun =
+#'   openair::windRose`, you must set `pollutant = "ws"`.
 #' @param iconWidth The actual width of the plot on the map in pixels.
 #' @param iconHeight The actual height of the plot on the map in pixels.
 #' @param fig.width The width of the plots to be produced in inches.
 #' @param fig.height The height of the plots to be produced in inches.
-#' @param ... Other arguments for the plotting function (e.g. \code{period} for
+#' @param ... Other arguments for the plotting function (e.g. `period` for
 #'   [openair::polarAnnulus()]).
 #' @return A leaflet object.
 #' @export

@@ -44,17 +44,16 @@ layers (e.g. markers and polygons) can share the same group name.}
 \item{data}{A data frame. The data frame must contain the data to plot your
 choice of openair directional analysis plot, which includes wind speed
 (\code{ws}), wind direction (\code{wd}), and the column representing the
-concentration of a pollutant. In addition, \code{data} must include a
-decimal latitude and longitude.}
+concentration of a pollutant. In addition, \code{data} must include a decimal
+latitude and longitude.}
 
-\item{fun}{An \code{openair} directional analysis plotting function.
-Supported functions include \code{\link[openair:polarPlot]{openair::polarPlot()}} (the default),
+\item{fun}{An \code{openair} directional analysis plotting function. Supported
+functions include \code{\link[openair:polarPlot]{openair::polarPlot()}} (the default),
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}, \code{\link[openair:polarFreq]{openair::polarFreq()}},
-\code{\link[openair:percentileRose]{openair::percentileRose()}}, \code{\link[openair:windRose]{openair::pollutionRose()}} and
+\code{\link[openair:percentileRose]{openair::percentileRose()}}, \code{\link[openair:pollutionRose]{openair::pollutionRose()}} and
 \code{\link[openair:windRose]{openair::windRose()}}.}
 
-\item{pollutant}{The name of the pollutant to be plot. Note that, if
-\code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
+\item{pollutant}{The name of the pollutant to be plot. Note that, if \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
 
 \item{iconWidth}{The actual width of the plot on the map in pixels.}
 
@@ -72,10 +71,10 @@ A leaflet object.
 }
 \description{
 This function is similar (but not identical to) the \code{\link[leaflet:map-layers]{leaflet::addMarkers()}}
-and \code{\link[leaflet:map-layers]{leaflet::addCircleMarkers()}} functions in \code{leaflet}, which allows
-users to add \code{openair} directional analysis plots to any leaflet map and
-have more control over groups and layerIds than in "all-in-one" functions
-like \code{\link[=polarMap]{polarMap()}}.
+and \code{\link[leaflet:map-layers]{leaflet::addCircleMarkers()}} functions in \code{leaflet}, which allows users
+to add \code{openair} directional analysis plots to any leaflet map and have more
+control over groups and layerIds than in "all-in-one" functions like
+\code{\link[=polarMap]{polarMap()}}.
 }
 \examples{
 \dontrun{

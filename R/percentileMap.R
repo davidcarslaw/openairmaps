@@ -1,17 +1,17 @@
 #' Percentile roses on interactive leaflet maps
 #'
-#' [percentileMap()] creates a \code{leaflet} map using percentile roses as
-#' markers. Any number of pollutants can be specified using the \code{pollutant}
+#' [percentileMap()] creates a `leaflet` map using percentile roses as
+#' markers. Any number of pollutants can be specified using the `pollutant`
 #' argument, and multiple layers of markers can be added and toggled between
-#' using \code{control}. See [openair::percentileRose()] for more information.
+#' using `control`. See [openair::percentileRose()] for more information.
 #'
 #' @family directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param percentile The percentile value(s) to plot. Must be between 0–100. If
-#'   \code{percentile = NA} then only a mean line will be shown.
+#'   `percentile = NA` then only a mean line will be shown.
 #' @param draw.legend Should a shared legend be created at the side of the map?
-#'   Default is \code{TRUE}.
+#'   Default is `TRUE`.
 #' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
 #'   -type -cols -key -plot
 #' @return A leaflet object.

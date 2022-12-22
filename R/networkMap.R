@@ -1,52 +1,51 @@
 #' Create a leaflet map of air quality measurement network sites
 #'
 #' This function uses [openair::importMeta()] to obtain metadata for measurement
-#' sites and uses it to create an attractive \code{leaflet} map. By default a
-#' map will be created in which readers may toggle between a vector base map and
-#' a satellite/aerial image, although users can further customise the control
-#' menu using the \code{provider} and \code{control} parameters.
+#' sites and uses it to create an attractive `leaflet` map. By default a map
+#' will be created in which readers may toggle between a vector base map and a
+#' satellite/aerial image, although users can further customise the control menu
+#' using the `provider` and `control` parameters.
 #'
-#' When selecting multiple data sources using \code{source}, please be mindful
-#' that there can be overlap between the different networks. For example, an air
+#' When selecting multiple data sources using `source`, please be mindful that
+#' there can be overlap between the different networks. For example, an air
 #' quality site in Scotland may be part of the AURN *and* the SAQN.
 #' [networkMap()] will only show one marker for such sites, and uses the order
-#' in which \code{source} arguments are provided as the hierarchy by which to
-#' assign sites to networks. The aforementioned AURN & SAQN site will therefore
-#' have its SAQN code displayed if \code{source = c("saqn", "aurn")}, and its
-#' AURN code displayed if \code{source = c("aurn", "saqn")}.
+#' in which `source` arguments are provided as the hierarchy by which to assign
+#' sites to networks. The aforementioned AURN & SAQN site will therefore have
+#' its SAQN code displayed if `source = c("saqn", "aurn")`, and its AURN code
+#' displayed if `source = c("aurn", "saqn")`.
 #'
-#' This hierarchy is also reflected when \code{control = "network"} is used. As
-#' \code{leaflet} markers cannot be part of multiple groups, the AURN & SAQN
-#' site will be part of the "SAQN" layer control group when \code{source =
-#' c("saqn", "aurn")} and the "AURN" layer control group when \code{source =
-#' c("aurn", "saqn")}.
+#' This hierarchy is also reflected when `control = "network"` is used. As
+#' `leaflet` markers cannot be part of multiple groups, the AURN & SAQN site
+#' will be part of the "SAQN" layer control group when `source = c("saqn",
+#' "aurn")` and the "AURN" layer control group when `source = c("aurn",
+#' "saqn")`.
 #'
-#' @param source One or more data source for the meta data to be passed to
-#'   [openair::importMeta()]. Can be any combination of \dQuote{aurn},
-#'   \dQuote{saqn} (or \dQuote{saqd}), \dQuote{aqe}, \dQuote{waqn}, \dQuote{ni},
-#'   \dQuote{local}, \dQuote{kcl} or \dQuote{europe}. See the "details" section
-#'   for further information about selecting multiple sites.
+#' @param source One or more sources of meta data. Can be `aurn`, `saqn` (or
+#'   `saqd`), `aqe`, `waqn`, `ni`, `local` (or `lmam`), `kcl` or `europe`; upper
+#'   or lower case. See the "details" section for further information about
+#'   selecting multiple sites.
 #' @param control Option to add a "layer control" menu to allow readers to
 #'   select between different site types. Can choose between effectively any
-#'   column in the [openair::importMeta()] output, such as \dQuote{variable},
-#'   \dQuote{site_type}, or \dQuote{agglomeration}, as well as \dQuote{network}
-#'   when more than one \code{source} was specified.
+#'   column in the [openair::importMeta()] output, such as "variable",
+#'   "site_type", or "agglomeration", as well as "network" when more than one
+#'   `source` was specified.
 #' @param date By default, [networkMap()] visualises sites and pollutants which
-#'   are currently operational. Specifying \code{date} will visualise sites
-#'   which were operational at the chosen date. Dates should be provided in the
-#'   \dQuote{YYYY-MM-DD} format. Alternatively, a single year can be provided
-#'   (\dQuote{YYYY}) and [networkMap()] will visualise sites which were
-#'   operational at the \emph{end} of that year (December 31st).
-#' @param cluster When \code{cluster = TRUE}, markers are clustered together.
-#'   This may be useful for sources like \dQuote{kcl} where there are many
-#'   markers very close together. Defaults to \code{TRUE}, and is forced to be
-#'   \code{TRUE} when \code{source = "europe"} due to the large number of sites.
+#'   are currently operational. Specifying `date` will visualise sites which
+#'   were operational at the chosen date. Dates should be provided in the
+#'   "YYYY-MM-DD" format. Alternatively, a single year can be provided ("YYYY")
+#'   and [networkMap()] will visualise sites which were operational at the *end*
+#'   of that year (December 31st).
+#' @param cluster When `cluster = TRUE`, markers are clustered together. This
+#'   may be useful for sources like "kcl" where there are many markers very
+#'   close together. Defaults to `TRUE`, and is forced to be `TRUE` when `source
+#'   = "europe"` due to the large number of sites.
 #' @param provider The base map(s) to be used. See
-#'   \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-#'   of all base maps that can be used. If multiple base maps are provided, they
+#'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
+#'   all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
 #' @param collapse.control Should the "layer control" interface be collapsed?
-#'   Defaults to \code{FALSE}.
+#'   Defaults to `FALSE`.
 #'
 #' @return A leaflet object.
 #' @export
@@ -82,8 +81,10 @@ networkMap <-
 
     # read in data
     meta <-
-      purrr::map_dfr(.x = source,
-                     .f = ~ prepNetworkData(source = .x, date = date))
+      purrr::map_dfr(
+        .x = source,
+        .f = ~ prepNetworkData(source = .x, date = date)
+      )
 
     meta <-
       meta %>%
@@ -130,33 +131,35 @@ networkMap <-
     if (!is.null(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-                                 c(
-                                   "code",
-                                   "site",
-                                   "latitude",
-                                   "longitude",
-                                   "country_iso_code",
-                                   "elevation",
-                                   "ratified_to",
-                                   "Address",
-                                   "la_id",
-                                   "eu_code",
-                                   "eoi_code",
-                                   "data_source",
-                                   "os_grid_x",
-                                   "os_grid_y",
-                                   "start_date",
-                                   "end_date",
-                                   "observation_count",
-                                   "start_date2",
-                                   "end_date2",
-                                   "lab",
-                                   "pcode"
-                                 )]
+          c(
+            "code",
+            "site",
+            "latitude",
+            "longitude",
+            "country_iso_code",
+            "elevation",
+            "ratified_to",
+            "Address",
+            "la_id",
+            "eu_code",
+            "eoi_code",
+            "data_source",
+            "os_grid_x",
+            "os_grid_y",
+            "start_date",
+            "end_date",
+            "observation_count",
+            "start_date2",
+            "end_date2",
+            "lab",
+            "pcode"
+          )]
 
         cli::cli_abort(
-          c("x" = "'{control}' is not an appropriate {.coed control} option.",
-            "i" = "Suggested control options: {.emph {trycols}}")
+          c(
+            "x" = "'{control}' is not an appropriate {.coed control} option.",
+            "i" = "Suggested control options: {.emph {trycols}}"
+          )
         )
       }
 
@@ -270,9 +273,10 @@ prepNetworkData <- function(source, date) {
 
   # import metadata
   meta <- openair::importMeta(source = source, all = TRUE) %>%
-    dplyr::filter(!is.na(.data$latitude),!is.na(.data$longitude)) %>%
+    dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude)) %>%
     dplyr::mutate(network = dplyr::if_else(source == "local",
-                                           "Locally Managed", toupper(source)))
+      "Locally Managed", toupper(source)
+    ))
 
   names(meta)[names(meta) %in% c("date_start", "OpeningDate")] <-
     "start_date"
@@ -282,24 +286,30 @@ prepNetworkData <- function(source, date) {
   # check dates
   if (is.na(date)) {
     cli::cli_abort(
-      c("x" = "{.code date} failed to parse",
-        "i" = "Please provide a date in the 'YYYY-MM-DD' format.")
+      c(
+        "x" = "{.code date} failed to parse",
+        "i" = "Please provide a date in the 'YYYY-MM-DD' format."
+      )
     )
   }
 
   if (date < min(meta$start_date, na.rm = TRUE)) {
     cli::cli_abort(
-      c("i" = "Your chosen network, {.code {source}}, started operating on {.code {min(meta$start_date, na.rm = TRUE)}}.",
+      c(
+        "i" = "Your chosen network, {.code {source}}, started operating on {.code {min(meta$start_date, na.rm = TRUE)}}.",
         "i" = "You have specified the following date: {.code {date}}",
-        "x" = "Please specify a date after {.code {min(meta$start_date, na.rm = TRUE)}}")
+        "x" = "Please specify a date after {.code {min(meta$start_date, na.rm = TRUE)}}"
+      )
     )
   }
   suppressWarnings(if (date > Sys.Date()) {
     today <- as.character(Sys.Date())
     cli::cli_abort(
-      c("i" = "The current date is {.code {today}}.",
+      c(
+        "i" = "The current date is {.code {today}}.",
         "i" = "You  have specified the following date: {.code {date}}",
-        "x" = "Please specify a date in the past.")
+        "x" = "Please specify a date in the past."
+      )
     )
   })
 
@@ -475,8 +485,10 @@ prepNetworkData <- function(source, date) {
         lubridate::as_date(.data$end_date)
       )
     ) %>%
-      dplyr::filter(date >= .data$start_date2,
-                    date <= .data$end_date2)
+      dplyr::filter(
+        date >= .data$start_date2,
+        date <= .data$end_date2
+      )
 
     # create labels
     meta <-
@@ -530,10 +542,13 @@ prepManagedNetwork <- function(data, vec, date) {
       )
     ) %>%
     dplyr::group_by(dplyr::across(dplyr::all_of(vec))) %>%
-    dplyr::summarise(lab = paste(.data$lab, collapse = "<br>"),
-                     .groups = "drop") %>%
+    dplyr::summarise(
+      lab = paste(.data$lab, collapse = "<br>"),
+      .groups = "drop"
+    ) %>%
     dplyr::right_join(data,
-                      by = vec)
+      by = vec
+    )
 
   # format and filter dates
   data <- dplyr::mutate(
@@ -546,8 +561,10 @@ prepManagedNetwork <- function(data, vec, date) {
     end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
     start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
   ) %>%
-    dplyr::filter(date >= .data$start_date,
-                  date <= .data$end_date2)
+    dplyr::filter(
+      date >= .data$start_date,
+      date <= .data$end_date2
+    )
 
   return(data)
 }

@@ -26,18 +26,16 @@ appear in the popup.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-\dQuote{lat}/\dQuote{latitude} or
-\dQuote{lon}/\dQuote{lng}/\dQuote{long}/\dQuote{longitude}
-(case-insensitively).}
+"lat"/"latitude" or "lon"/"lng"/"long"\"longitude". (case-insensitively).}
 
 \item{names}{Optional. A named vector used to rename certain columns in the
 popups. See the Example for more information.}
 
-\item{control}{Optional. Column which will be used for the \code{control}
-argument of other mapping functions. This only needs to be used if
-\code{control} is going to be used in \code{\link[=polarMap]{polarMap()}} or another similar
-function, and you'd expect different values for the different map layers
-(for example, if you are calculating a mean pollutant concentration).}
+\item{control}{Optional. Column which will be used for the \code{control} argument
+of other mapping functions. This only needs to be used if \code{control} is
+going to be used in \code{\link[=polarMap]{polarMap()}} or another similar function, and you'd
+expect different values for the different map layers (for example, if you
+are calculating a mean pollutant concentration).}
 
 \item{fun.character}{A function to summarise character and factor columns.
 Defaults to collapsing unique values into a comma-separated list.}
