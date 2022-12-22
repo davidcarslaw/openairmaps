@@ -29,13 +29,11 @@
 #'   a similar syntax to the `openair` package, which should make moving between
 #'   the two relatively seamless.
 #'
-#' @seealso The [openair][openair::openair-package] package, from which
-#'   `openairmaps` is based.
+#' @seealso The `openair` package, from which `openairmaps` is based.
 #' @seealso The `worldmet` package, which simplifies the access of
 #'   meteorological data in R.
 #' @seealso The [openair book](https://bookdown.org/david_carslaw/openair/) for
-#'   more in-depth documentation of [openair][openair::openair-package] and
-#'   `openairmaps`.
+#'   more in-depth documentation of `openair` and `openairmaps`.
 #'
 #' @keywords internal
 "_PACKAGE"
