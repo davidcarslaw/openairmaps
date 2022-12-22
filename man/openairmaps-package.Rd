@@ -42,15 +42,13 @@ a similar syntax to the \code{openair} package, which should make moving between
 the two relatively seamless.
 }
 \seealso{
-The \link[openair:openair-package]{openair} package, from which
-\code{openairmaps} is based.
+The \code{openair} package, from which \code{openairmaps} is based.
 
 The \code{worldmet} package, which simplifies the access of
 meteorological data in R.
 
 The \href{https://bookdown.org/david_carslaw/openair/}{openair book} for
-more in-depth documentation of \link[openair:openair-package]{openair} and
-\code{openairmaps}.
+more in-depth documentation of \code{openair} and \code{openairmaps}.
 }
 \author{
 \strong{Maintainer}: Jack Davison \email{davison.jack.jd@gmail.com}
