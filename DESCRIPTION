@@ -21,7 +21,7 @@ LazyData: true
 Depends:
     R (>= 3.2.0)
 Imports:
-    openair,
+    openair (>= 2.13),
     dplyr,
     leaflet,
     purrr,
