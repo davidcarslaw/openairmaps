@@ -15,7 +15,7 @@ freqMap(
   popup = NULL,
   label = NULL,
   provider = "OpenStreetMap",
-  cols = "jet",
+  cols = "turbo",
   key = FALSE,
   draw.legend = TRUE,
   collapse.control = FALSE,

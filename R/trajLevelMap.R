@@ -32,7 +32,7 @@
 #' @param min.bin The minimum number of unique points in a grid cell. Counts
 #'   below `min.bin` are set as missing.
 #' @param cols Colours to be used for plotting. Options include "default",
-#'   "increment", "heat", "jet" and `RColorBrewer` colours — see the
+#'   "increment", "heat", "turbo" and `RColorBrewer` colours — see the
 #'   [openair::openColours()] function for more details. For user defined the
 #'   user can supply a list of colour names recognised by R (type
 #'   [grDevices::colours()] to see the full list). An example would be `cols =
