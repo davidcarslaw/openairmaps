@@ -140,11 +140,16 @@ addPolarMarkers <-
       )
 
     # definition of 'icons' aka the openair plots
+    dat2 <- data %>%
+      dplyr::arrange(.data[[lat]], .data[[lng]]) %>%
+      dplyr::mutate(id = paste0(.data[[lat]], .data[[lng]]))
+
+    # definition of 'icons' aka the openair plots
     leafIcons <-
       lapply(
-        sort(paste0(
-          icon_dir, "/", unique(data[[lat]]), unique(data[[lng]]), "_", pollutant, ".png"
-        )),
+        paste0(
+          icon_dir, "/", unique(dat2$id), "_", pollutant, ".png"
+        ),
         leaflet::makeIcon,
         iconWidth = iconWidth,
         iconHeight = iconHeight
