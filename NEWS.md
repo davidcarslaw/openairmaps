@@ -1,8 +1,10 @@
 # openairmaps 0.6.1
 
-* Fixed issue with polar marker maps (e.g., `polarMap()`) where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford for noticing this issue.
+* Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and "@jenright-git" for noticing this issue.
 
 * Fixed an issue with `networkMap()` where `control = "variable"` would fail to show all pollutants.
+
+* Functions now use Google's "turbo" colour palette rather than "jet" by default. More about this palette and the advantages of using it over "jet" can be read at <https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html>.
 
 # openairmaps 0.6.0 (29/11/2022)
 

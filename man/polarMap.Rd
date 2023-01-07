@@ -15,7 +15,7 @@ polarMap(
   popup = NULL,
   label = NULL,
   provider = "OpenStreetMap",
-  cols = "jet",
+  cols = "turbo",
   alpha = 1,
   key = FALSE,
   draw.legend = TRUE,

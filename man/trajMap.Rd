@@ -33,7 +33,7 @@ different groups which can be selected between using a "layer control"
 menu.}
 
 \item{cols}{Colours to be used for plotting. Options include "default",
-"increment", "heat", "jet" and \code{RColorBrewer} colours — see the
+"increment", "heat", "turbo" and \code{RColorBrewer} colours — see the
 \code{\link[openair:openColours]{openair::openColours()}} function for more details. For user defined the
 user can supply a list of colour names recognised by R (type
 \code{\link[grDevices:colors]{grDevices::colours()}} to see the full list). An example would be \code{cols = c("yellow", "green", "blue")}. If the \code{"colour"} argument was not used, a
