@@ -1,6 +1,6 @@
 # Submission
 
-This is a minor release for openairmaps, with some new features, documentation improvements and updates in step with its upstream package, openair.
+This is patch for openairmaps, fixing some bugs and refining some default arguments.
 
 ## Test environments
 
