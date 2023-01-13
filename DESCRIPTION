@@ -33,7 +33,10 @@ Imports:
     forcats,
     tidyr,
     cli,
-    tidyselect
+    tidyselect,
+    ggmap,
+    ggplot2,
+    ggtext
 Suggests:
     worldmet
 RoxygenNote: 7.2.3
