@@ -42,3 +42,4 @@ Suggests:
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Language: en-GB
+URL: https://davidcarslaw.github.io/openairmaps/
