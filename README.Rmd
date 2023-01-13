@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# openairmaps <img src="man/figures/logo.png" align="right" height="134" />
+# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)

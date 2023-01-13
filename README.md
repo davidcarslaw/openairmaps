@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# openairmaps <img src="man/figures/logo.png" align="right" height="134" />
+# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" />
 
 <!-- badges: start -->
 
