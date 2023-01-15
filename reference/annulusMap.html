@@ -16,7 +16,7 @@ See openair::polarAnnulus() for more information."><meta property="og:image" con
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,7 @@ See <code><a href="https://davidcarslaw.github.io/openair/reference/polarAnnulus
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  provider <span class="op">=</span> <span class="st">"OpenStreetMap"</span>,</span>
 <span>  cols <span class="op">=</span> <span class="st">"turbo"</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  draw.legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  collapse.control <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -145,6 +146,11 @@ can be toggled between using a "layer control" interface.</p></dd>
 
 <dt>cols</dt>
 <dd><p>The colours used for plotting.</p></dd>
+
+
+<dt>alpha</dt>
+<dd><p>The alpha transparency to use for the plotting surface (a value
+between 0 and 1 with zero being fully transparent and 1 fully opaque).</p></dd>
 
 
 <dt>key</dt>
