@@ -40,6 +40,7 @@ windroseMap <- function(data,
                         label = NULL,
                         provider = "OpenStreetMap",
                         cols = "turbo",
+                        alpha = 1,
                         key = FALSE,
                         draw.legend = TRUE,
                         collapse.control = FALSE,
@@ -96,7 +97,7 @@ windroseMap <- function(data,
   }
 
   fun <- function(...) {
-    rlang::exec(openair::windRose, annotate = FALSE, breaks = breaks, ws.int = ws.int, !!!args, ...)
+    rlang::exec(openair::windRose, alpha = alpha, annotate = FALSE, breaks = breaks, ws.int = ws.int, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)

@@ -34,6 +34,7 @@ percentileMap <- function(data,
                           label = NULL,
                           provider = "OpenStreetMap",
                           cols = "turbo",
+                          alpha = 1,
                           key = FALSE,
                           draw.legend = TRUE,
                           collapse.control = FALSE,
@@ -75,7 +76,7 @@ percentileMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::percentileRose, !!!args, percentile = percentile, ...)
+    rlang::exec(openair::percentileRose, alpha = alpha, !!!args, percentile = percentile, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
