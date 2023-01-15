@@ -5,7 +5,7 @@
 #' multiple layers of markers can be added and toggled between using `control`.
 #' See [openair::polarAnnulus()] for more information.
 #'
-#' @family directional analysis maps
+#' @family interactive directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param period This determines the temporal period to consider. Options are

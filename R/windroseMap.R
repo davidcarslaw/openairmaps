@@ -4,7 +4,7 @@
 #' layers of markers can be added and toggled between using `control`. See
 #' [openair::windRose()] for more information.
 #'
-#' @family directional analysis maps
+#' @family interactive directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param data A data frame. The data frame must contain the data to plot a
