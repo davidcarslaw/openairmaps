@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 [![CRAN status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
 <!-- badges: end -->
 
-The goal of `{openairmaps}` is to combine the robust analytical methods found in [openair](https://davidcarslaw.github.io/openair/) with the highly capable `{leaflet}` package. `{openairmaps}` is thoroughly documented in the [openair book](https://bookdown.org/david_carslaw/openair/appendix-openairmaps.html).
+The goal of `{openairmaps}` is to combine the robust analytical methods found in [openair](https://davidcarslaw.github.io/openair/) with the highly capable `{leaflet}` package. `{openairmaps}` is thoroughly documented in the [openair book](https://bookdown.org/david_carslaw/openair/maps-overview.html).
 
 ## Installation
 

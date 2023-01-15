@@ -203,15 +203,16 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control),
+              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars)),
               overlayGroups = provider
-            )
+            ) %>%
+            leaflet::hideGroup(group = provider[-1])
         } else {
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control),
+              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars))
             )
         }
@@ -220,15 +221,16 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control),
+              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars)),
               baseGroups = provider
-            )
+            ) %>%
+            leaflet::hideGroup(group = provider[-1])
         } else {
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control),
+              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars))
             )
         }
@@ -253,9 +255,10 @@ networkMap <-
         map <-
           leaflet::addLayersControl(
             map,
-            options = leaflet::layersControlOptions(collapsed = collapse.control),
+            options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
             baseGroups = provider
-          )
+          ) %>%
+          leaflet::hideGroup(group = provider[-1])
       }
     }
 
@@ -274,7 +277,7 @@ prepNetworkData <- function(source, date) {
   # import metadata
   meta <- openair::importMeta(source = source, all = TRUE) %>%
     dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude)) %>%
-    dplyr::mutate(network = dplyr::if_else(source == "local",
+    dplyr::mutate(network = dplyr::if_else(source %in% c("local", "lmam"),
       "Locally Managed", toupper(source)
     ))
 
@@ -353,13 +356,13 @@ prepNetworkData <- function(source, date) {
     meta <- dplyr::filter(
       meta,
       !.data$variable %in% hc_vars,
-      !.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1")
+      !.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1", "BC")
     )
   }
 
   # network-specific manipulations
   if (!source %in% c("kcl", "europe")) {
-    if (source == "local") {
+    if (source %in% c("local", "lmam")) {
       meta <-
         prepManagedNetwork(
           meta,
