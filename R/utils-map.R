@@ -178,8 +178,8 @@ prepMapData <- function(data, pollutant, control, ..., .to_narrow = TRUE) {
   # check if more than one pollutant & is.null split
   if (length(pollutant) > 1 & !is.null(control)) {
     cli::cli_warn(c(
-      "!" = "Multiple pollutants {.emph and} {.code control} option specified",
-      "i" = "Please only specify multiple pollutants {.emph or} a {.code control} option",
+      "!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",
+      "i" = "Please only specify multiple pollutants {.emph or} a {.code control/facet} option",
       "i" = "Defaulting to splitting by {.code pollutant}"
     ))
   }
