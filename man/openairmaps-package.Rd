@@ -4,7 +4,7 @@
 \name{openairmaps-package}
 \alias{openairmaps}
 \alias{openairmaps-package}
-\title{openairmaps: Create Interactive Web Maps of Air Pollution Data}
+\title{openairmaps: Create Maps of Air Pollution Data}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 

@@ -224,6 +224,7 @@ save_icon_image <-
     id <- paste0(data[[lat]][1], data[[lon]][1])
 
     grDevices::png(
+      type = "cairo", antialias = "none",
       filename = paste0(dir, "/", id, "_", split, ".png"),
       width = fig.width * 300,
       height = fig.height * 300,
