@@ -79,11 +79,11 @@ ggPolarMap <- function(data,
       longitude
     )
 
-  # if no "facet", create a dummy column
-  if (is.null(facet)) {
-    facet <- "default"
-    data$default <- "default"
-  }
+  # # if no "facet", create a dummy column
+  # if (is.null(facet)) {
+  #   facet <- "default"
+  #   data$default <- "default"
+  # }
 
   # identify splitting column (defaulting to pollutant)
   if (length(pollutant) > 1) {
@@ -98,8 +98,10 @@ ggPolarMap <- function(data,
   # create plots
   plots_df <-
     data %>%
+    tidyr::drop_na(.data$conc) %>%
     dplyr::nest_by(.data[[latitude]], .data[[longitude]], .data[[split_col]]) %>%
     dplyr::mutate(plot = list(
+      try(silent = TRUE,
       openair::polarPlot(
         .data$data,
         pollutant = "conc",
@@ -111,6 +113,11 @@ ggPolarMap <- function(data,
         ...,
         par.settings = list(axis.line = list(col = "transparent"))
       )$plot
+    )),
+    plot = dplyr::if_else(
+      inherits(plot, "try-error"),
+      list(ggplot2::ggplot() + ggplot2::theme_minimal()),
+      list(plot)
     ))
 
   dir <- tempdir()
@@ -161,7 +168,7 @@ ggPolarMap <- function(data,
     ggplot2::theme_minimal() +
     ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black"))
 
-  if (length(dplyr::group_vars(plots_df)) > 2) {
+  if (length(pollutant) > 1 | !is.null(facet)) {
     plt <-
       plt + ggplot2::facet_wrap(ggplot2::vars(quickTextHTML(.data[[split_col]]))) +
       ggplot2::theme(strip.text = ggtext::element_markdown())
@@ -174,7 +181,7 @@ ggPolarMap <- function(data,
                           alpha = 0) +
       ggplot2::scale_color_gradientn(limits = theLimits,
                                      colours = openair::openColours(scheme = cols)) +
-      ggplot2::labs(color = openair::quickText(pollutant))
+      ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
   }
 
   return(plt)
