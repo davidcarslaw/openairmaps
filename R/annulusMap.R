@@ -36,6 +36,7 @@ annulusMap <- function(data,
                        label = NULL,
                        provider = "OpenStreetMap",
                        cols = "turbo",
+                       alpha = 1,
                        key = FALSE,
                        draw.legend = TRUE,
                        collapse.control = FALSE,
@@ -84,11 +85,11 @@ annulusMap <- function(data,
   args <- list(...)
   if (is.null(limits)) {
     fun <- function(...) {
-      rlang::exec(openair::polarAnnulus, period = period, !!!args, ...)
+      rlang::exec(openair::polarAnnulus, period = period, alpha = alpha, !!!args, ...)
     }
   } else {
     fun <- function(...) {
-      rlang::exec(openair::polarAnnulus, period = period, limits = theLimits, !!!args, ...)
+      rlang::exec(openair::polarAnnulus, period = period, alpha = alpha, limits = theLimits, !!!args, ...)
     }
   }
 

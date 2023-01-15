@@ -51,6 +51,7 @@ freqMap <- function(data,
                     label = NULL,
                     provider = "OpenStreetMap",
                     cols = "turbo",
+                    alpha = 1,
                     key = FALSE,
                     draw.legend = TRUE,
                     collapse.control = FALSE,
@@ -102,11 +103,11 @@ freqMap <- function(data,
   args <- list(...)
   if (!is.null(breaks)) {
     fun <- function(...) {
-      rlang::exec(openair::polarFreq, statistic = statistic, breaks = breaks, !!!args, ...)
+      rlang::exec(openair::polarFreq, statistic = statistic, alpha = alpha, breaks = breaks, !!!args, ...)
     }
   } else {
     fun <- function(...) {
-      rlang::exec(openair::polarFreq, statistic = statistic, !!!args, ...)
+      rlang::exec(openair::polarFreq, statistic = statistic, alpha = alpha, !!!args, ...)
     }
   }
 

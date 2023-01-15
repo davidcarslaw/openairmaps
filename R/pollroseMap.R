@@ -46,6 +46,7 @@ pollroseMap <- function(data,
                         label = NULL,
                         provider = "OpenStreetMap",
                         cols = "turbo",
+                        alpha = 1,
                         key = FALSE,
                         draw.legend = TRUE,
                         collapse.control = FALSE,
@@ -97,7 +98,7 @@ pollroseMap <- function(data,
   # define plotting function
   args <- list(...)
   fun <- function(...) {
-    rlang::exec(openair::pollutionRose, annotate = FALSE, statistic = statistic, breaks = theBreaks, !!!args, ...)
+    rlang::exec(openair::pollutionRose, alpha = alpha, annotate = FALSE, statistic = statistic, breaks = theBreaks, !!!args, ...)
   }
 
   # identify splitting column (defaulting to pollutant)
