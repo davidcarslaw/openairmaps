@@ -1,3 +1,9 @@
+# openairmaps (development version)
+
+* Added `alpha` back as an argument to all of the directional analysis polar mapping functions now a recent openair update supports it.
+
+* Fixed `alpha` to work on Windows and Mac operating systems.
+
 # openairmaps 0.6.1
 
 * Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and James/"@jenright-git" for noticing this issue.
