@@ -17,6 +17,7 @@ ggPolarMap(
   cols = "turbo",
   alpha = 1,
   key = FALSE,
+  facet.nrow = NULL,
   d.icon = 150,
   d.fig = 3,
   ...
@@ -64,6 +65,8 @@ more information.}
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{facet.nrow}{Passed to the \code{nrow} argument of \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.}
 
 \item{d.icon}{The diameter of the plot on the map. This will affect the size
 of the individual polar markers.}
