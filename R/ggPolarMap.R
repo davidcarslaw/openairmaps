@@ -28,6 +28,7 @@
 #'   import a basemap. The `ggmap` argument allows users to provide their own
 #'   `ggmap` object to override this, which allows for alternative bounding
 #'   boxes, map types and colours.
+#' @param facet.nrow Passed to the `nrow` argument of [ggplot2::facet_wrap()].
 #' @param d.icon The diameter of the plot on the map. This will affect the size
 #'   of the individual polar markers.
 #' @param d.fig The width of the plots to be produced in inches. This will
@@ -52,6 +53,7 @@ ggPolarMap <- function(data,
                        cols = "turbo",
                        alpha = 1,
                        key = FALSE,
+                       facet.nrow = NULL,
                        d.icon = 150,
                        d.fig = 3,
                        ...) {
@@ -129,7 +131,9 @@ ggPolarMap <- function(data,
                    width = d.fig * 300,
                    height = d.fig * 300,
                    res = 300,
-                   bg = "transparent"
+                   bg = "transparent",
+                   type = "cairo",
+                   antialias = "none"
                  )
 
                  plot(..4)
@@ -138,11 +142,11 @@ ggPolarMap <- function(data,
                })
 
   if (is.null(ggmap)) {
-    lat_d <- abs(diff(range(plots_df[[latitude]])) / 5)
+    lat_d <- abs(diff(range(plots_df[[latitude]])) / 2)
     minlat <- min(plots_df[[latitude]]) - lat_d
     maxlat <- max(plots_df[[latitude]]) + lat_d
 
-    lon_d <- abs(diff(range(plots_df[[longitude]])) / 5)
+    lon_d <- abs(diff(range(plots_df[[longitude]])) / 2)
     minlon <- min(plots_df[[longitude]]) - lon_d
     maxlon <- max(plots_df[[longitude]]) + lon_d
 
@@ -170,7 +174,7 @@ ggPolarMap <- function(data,
 
   if (length(pollutant) > 1 | !is.null(facet)) {
     plt <-
-      plt + ggplot2::facet_wrap(ggplot2::vars(quickTextHTML(.data[[split_col]]))) +
+      plt + ggplot2::facet_wrap(ggplot2::vars(quickTextHTML(.data[[split_col]])), nrow = facet.nrow) +
       ggplot2::theme(strip.text = ggtext::element_markdown())
   }
 
