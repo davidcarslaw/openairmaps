@@ -1,6 +1,6 @@
 # openairmaps 0.6.1
 
-* Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and "@jenright-git" for noticing this issue.
+* Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and James/"@jenright-git" for noticing this issue.
 
 * Fixed an issue with `networkMap()` where `control = "variable"` would fail to show all pollutants.
 

@@ -14,7 +14,7 @@ The goal of `{openairmaps}` is to combine the robust analytical methods
 found in [openair](https://davidcarslaw.github.io/openair/) with the
 highly capable `{leaflet}` package. `{openairmaps}` is thoroughly
 documented in the [openair
-book](https://bookdown.org/david_carslaw/openair/appendix-openairmaps.html).
+book](https://bookdown.org/david_carslaw/openair/maps-overview.html).
 
 ## Installation
 
