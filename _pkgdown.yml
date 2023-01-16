@@ -1,22 +1,54 @@
 url: https://davidcarslaw.github.io/openairmaps/
 template:
   bootstrap: 5
+
+navbar:
+  title: worldmet
+  structure:
+    left:  [intro, reference, news, articles, tutorials, book]
+    right: [search, github]
+  components:
+    reference:
+      text: Functions
+      href: reference/index.html
+    news:
+      text: News
+      href: news/index.html
+    book:
+      text: Book (External)
+      href: https://bookdown.org/david_carslaw/openair/maps-overview.html
+
 reference:
 - title: Network Visualisation
   desc: Quickly visualise UK air quality networks.
   contents: networkMap
+
 - title: Directional Analysis
-  desc: Create leaflet maps with polar plot markers.
+- subtitle: Data
+  desc: Example data to use with directional mapping functions.
   contents:
   - polar_data
-  - has_concept("directional analysis maps")
+- subtitle: Interactive
+  desc: Create HTML `leaflet` maps with polar plot markers.
+  contents:
+  - has_concept("interactive directional analysis maps")
   - addPolarMarkers
+- subtitle: Static
+  desc: Create static `ggmap` maps with polar plot markers.
+  contents:
+  - has_concept("static directional analysis maps")
+
 - title: Trajectory Analysis
-  desc: Visualise HYSPLIT trajectories as interactive leaflet maps.
+- subtitle: Data
+  desc: Example data to use witjh trajectory mapping functions.
   contents:
   - traj_data
+- subtitle: Interactive
+  desc: Create HTML `leaflet` maps of HYSPLIT trajectories.
+  contents:
   - has_concept("trajectory maps")
   - addTrajPaths
+
 - title: Utilities
   desc: Tools to assist other openairmaps functions.
   contents:
