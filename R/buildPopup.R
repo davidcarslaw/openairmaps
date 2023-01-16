@@ -105,7 +105,8 @@ buildPopup <-
 
     if (!is.null(control)) {
       out <- dplyr::group_split(data, .data[[control]]) %>%
-        purrr::map_dfr(make_popup)
+        purrr::map(make_popup) %>%
+        purrr::list_rbind()
     } else {
       out <- make_popup(data)
     }

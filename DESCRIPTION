@@ -1,7 +1,7 @@
 Package: openairmaps
 Type: Package
 Title: Create Maps of Air Pollution Data
-Version: 0.6.1
+Version: 0.6.1.9000
 Authors@R: 
   c(person(given = "Jack",
            family = "Davison",
@@ -24,7 +24,7 @@ Imports:
     openair (>= 2.13),
     dplyr,
     leaflet,
-    purrr,
+    purrr (>= 1.0.0),
     magrittr,
     rlang,
     lubridate,

@@ -16,6 +16,7 @@ freqMap(
   label = NULL,
   provider = "OpenStreetMap",
   cols = "turbo",
+  alpha = 1,
   key = FALSE,
   draw.legend = TRUE,
   collapse.control = FALSE,
@@ -83,6 +84,9 @@ can be toggled between using a "layer control" interface.}
 
 \item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
 more information.}
+
+\item{alpha}{The alpha transparency to use for the plotting surface (a value
+between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
