@@ -285,6 +285,7 @@ the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
 Other static directional analysis maps: 
 \code{\link{annulusMapStatic}()},
 \code{\link{freqMapStatic}()},
+\code{\link{percentileMapStatic}()},
 \code{\link{windroseMapStatic}()}
 }
 \concept{static directional analysis maps}

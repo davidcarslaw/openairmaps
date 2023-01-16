@@ -8,10 +8,13 @@
 #' @family static directional analysis maps
 #'
 #' @inheritParams polarMapStatic
-#' @param period This determines the temporal period to consider. Options are
-#'   "hour" (the default, to plot diurnal variations), "season" to plot
-#'   variation throughout the year, "weekday" to plot day of the week variation
-#'   and "trend" to plot the trend by wind direction.
+#' @param ws.int The wind speed interval. Default is 2 m/s but for low met masts
+#'   with low mean wind speeds a value of 1 or 0.5 m/s may be better.
+#' @param breaks Most commonly, the number of break points for wind speed in
+#'   windRose. For windRose and the ws.int default of 2 m/s, the default, 4,
+#'   generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
+#'   specific break points. For example, the argument breaks = c(0, 1, 10, 100)
+#'   breaks the data into segments <1, 1-10, 10-100, >100.
 #' @inheritDotParams openair::polarAnnulus -mydata -pollutant -period -limits
 #'   -type -cols -key -plot
 #'
@@ -23,7 +26,6 @@
 windroseMapStatic <- function(data,
                               ws.int = 2,
                               breaks = 4,
-                              period = "hour",
                               facet = NULL,
                               latitude = NULL,
                               longitude = NULL,
@@ -137,7 +139,7 @@ windroseMapStatic <- function(data,
   intervals <- attr(plots_df$plot[[1]]$data, "intervals")
   intervals <- factor(intervals, intervals)
   pal <- openair::openColours(scheme = cols, n = length(intervals)) %>%
-    setNames(intervals)
+    stats::setNames(intervals)
 
   plt <-
     plt +
