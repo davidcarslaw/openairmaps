@@ -1,6 +1,6 @@
 #' Bivariate polar plots on a static ggmap
 #'
-#' [ggPolarMap()] creates a `ggplot2` map using bivariate polar plots as
+#' [polarMapStatic()] creates a `ggplot2` map using bivariate polar plots as
 #' markers. As this function returns a `ggplot2` object, further customisation
 #' can be achieved using functions like [ggplot2::theme()] and
 #' [ggplot2::guides()]. See [openair::polarPlot()] for more information.
