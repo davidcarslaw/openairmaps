@@ -108,6 +108,7 @@ addPolarMarkers <-
                fig.height,
                ...) {
         grDevices::png(
+          type = "cairo-png",
           filename = paste0(dir, "/", data[[lat]][1], data[[lng]][1], "_", pollutant, ".png"),
           width = fig.width * 300,
           height = fig.height * 300,
