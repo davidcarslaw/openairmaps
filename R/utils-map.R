@@ -224,6 +224,7 @@ save_icon_image <-
     id <- paste0(data[[lat]][1], data[[lon]][1])
 
     grDevices::png(
+      type = "cairo-png",
       filename = paste0(dir, "/", id, "_", split, ".png"),
       width = fig.width * 300,
       height = fig.height * 300,
@@ -378,13 +379,13 @@ makeMap <-
         leaflet::addLayersControl(
           m,
           options = leaflet::layersControlOptions(collapsed = collapse),
-          baseGroups = names(icons) %>% purrr::map_chr(quickTextHTML),
+          baseGroups = names(icons) %>% purrr::map_vec(quickTextHTML),
           overlayGroups = provider
         )
     } else if (length(icons) > 1 & length(provider) == 1) {
       m <- leaflet::addLayersControl(m,
-                                     options = leaflet::layersControlOptions(collapsed = collapse),
-                                     baseGroups = names(icons) %>% purrr::map_chr(quickTextHTML)
+        options = leaflet::layersControlOptions(collapsed = collapse),
+        baseGroups = names(icons) %>% purrr::map_vec(quickTextHTML)
       )
     } else if (length(provider) > 1 & length(icons) == 1) {
       m <- leaflet::addLayersControl(m,
