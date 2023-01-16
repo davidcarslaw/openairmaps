@@ -34,6 +34,9 @@
     <loc>https://davidcarslaw.github.io/openairmaps/reference/freqMap.html</loc>
   </url>
   <url>
+    <loc>https://davidcarslaw.github.io/openairmaps/reference/freqMapStatic.html</loc>
+  </url>
+  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/index.html</loc>
   </url>
   <url>
@@ -44,6 +47,9 @@
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/percentileMap.html</loc>
+  </url>
+  <url>
+    <loc>https://davidcarslaw.github.io/openairmaps/reference/percentileMapStatic.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/pipe.html</loc>
@@ -74,5 +80,8 @@
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/windroseMap.html</loc>
+  </url>
+  <url>
+    <loc>https://davidcarslaw.github.io/openairmaps/reference/windroseMapStatic.html</loc>
   </url>
 </urlset>
