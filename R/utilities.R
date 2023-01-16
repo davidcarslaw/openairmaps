@@ -4,15 +4,17 @@
 #' common pollutant names which may be used in the HTML widgets produced by
 #' `openairmaps`.
 #'
-#' [quickTextHTML()] is routine formatting lookup table. It screens the
-#' supplied character vector `text` and automatically applies formatting
-#' to any recognised character sub-series to properly render in HTML.
+#' [quickTextHTML()] is routine formatting lookup table. It screens the supplied
+#' character vector `text` and automatically applies formatting to any
+#' recognised character sub-series to properly render in HTML.
 #'
 #' @param text A character vector.
 #' @export
-#' @return The function returns an expression for HTML evaluation.
+#' @return The function returns a character vector for HTML evaluation.
 #' @author Jack Davison.
 #' @keywords methods
+#' @seealso The original [openair::quickText()], useful for non-HTML/static maps
+#'   and plots
 #'
 #' @examples
 #' labs <- c("no2", "o3", "so2")
