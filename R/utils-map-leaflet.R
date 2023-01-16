@@ -480,12 +480,3 @@ getBreaks <- function(breaks, ws.int, vec, polrose) {
   breaks <- sort(breaks)
   breaks
 }
-
-#' theme for static maps
-#' @noRd
-theme_static <- function() {
-  ggplot2::`%+replace%`(
-    ggplot2::theme_minimal(),
-    ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black"))
-  )
-}
