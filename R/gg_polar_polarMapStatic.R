@@ -94,104 +94,73 @@ polarMapStatic <- function(data,
     split_col <- "pollutant_name"
   }
 
-  # create plots
+  # define function
+  fun <- function(data) {
+    openair::polarPlot(
+      data,
+      pollutant = "conc",
+      x = x,
+      plot = FALSE,
+      limits = theLimits,
+      cols = cols,
+      alpha = alpha,
+      key = key,
+      ...,
+      par.settings = list(axis.line = list(col = "transparent"))
+    )$plot
+  }
+
+  # create temp directory
+  tempdir <- tempdir()
+
+  # plot and save static markers
   plots_df <-
-    data %>%
-    tidyr::drop_na(.data$conc) %>%
-    dplyr::nest_by(.data[[latitude]], .data[[longitude]], .data[[split_col]]) %>%
-    dplyr::mutate(
-      plot = list(try(
-        silent = TRUE,
-        openair::polarPlot(
-          .data$data,
-          pollutant = "conc",
-          plot = FALSE,
-          limits = theLimits,
-          cols = cols,
-          alpha = alpha,
-          key = key,
-          ...,
-          par.settings = list(axis.line = list(col = "transparent"))
-        )$plot
-      )),
-      plot = dplyr::if_else(
-        inherits(plot, "try-error"),
-        list(ggplot2::ggplot() +
-          ggplot2::theme_minimal()),
-        list(plot)
-      )
+    create_static_markers(
+      fun = fun,
+      data = data,
+      dir = tempdir,
+      latitude = latitude,
+      longitude = longitude,
+      split_col = split_col,
+      d.fig = d.fig
     )
 
-  dir <- tempdir()
+  # load ggmap if not provided
+  ggmap <-
+    estimate_ggmap(
+      ggmap = ggmap,
+      data = plots_df,
+      latitude = latitude,
+      longitude = longitude,
+      zoom = zoom
+    )
 
-  purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-    .f = ~ {
-      grDevices::png(
-        filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
-        width = d.fig * 300,
-        height = d.fig * 300,
-        res = 300,
-        bg = "transparent",
-        type = "cairo",
-        antialias = "none"
-      )
-
-      plot(..4)
-
-      grDevices::dev.off()
-    }
-  )
-
-  if (is.null(ggmap)) {
-    lat_d <- abs(diff(range(plots_df[[latitude]])) / 2)
-    minlat <- min(plots_df[[latitude]]) - lat_d
-    maxlat <- max(plots_df[[latitude]]) + lat_d
-
-    lon_d <- abs(diff(range(plots_df[[longitude]])) / 2)
-    minlon <- min(plots_df[[longitude]]) - lon_d
-    maxlon <- max(plots_df[[longitude]]) + lon_d
-
-    ggmap <-
-      ggmap::get_stamenmap(
-        bbox = c(minlon, minlat, maxlon, maxlat),
-        zoom = zoom
-      )
-  }
-
+  # create static map - deals with basics & facets
   plt <-
-    ggmap::ggmap(ggmap) +
-    ggtext::geom_richtext(
-      data = dplyr::mutate(
-        plots_df,
-        url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], ".png"),
-        url = stringr::str_glue("<img src='{url}' width='{d.icon}'/>")
-      ),
-      ggplot2::aes(.data[[longitude]], .data[[latitude]], label = .data$url),
-      fill = NA,
-      color = NA,
-      alpha = alpha
-    ) +
-    ggplot2::labs(x = NULL, y = NULL) +
-    theme_static()
+    create_static_map(
+      ggmap = ggmap,
+      plots_df = plots_df,
+      dir = tempdir,
+      latitude = latitude,
+      longitude = longitude,
+      split_col = split_col,
+      pollutant = pollutant,
+      facet = facet,
+      facet.row = facet.nrow,
+      d.icon = d.icon
+    )
 
-  if (length(pollutant) > 1 | !is.null(facet)) {
-    plt <-
-      plt + ggplot2::facet_wrap(ggplot2::vars(quickTextHTML(.data[[split_col]])), nrow = facet.nrow) +
-      ggplot2::theme(strip.text = ggtext::element_markdown())
-  }
-
+  # create colorbar if limits specified
   if (!is.null(limits)) {
     plt <-
       plt +
       ggplot2::geom_point(ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-        alpha = 0
-      ) +
-      ggplot2::scale_color_gradientn(
-        limits = theLimits,
-        colours = openair::openColours(scheme = cols)
-      ) +
+                          alpha = 0) +
+      ggplot2::scale_color_gradientn(limits = theLimits,
+                                     colours = openair::openColours(scheme = cols)) +
       ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
   }
 
+  # return plot
   return(plt)
 }

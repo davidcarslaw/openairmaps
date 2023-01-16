@@ -172,19 +172,19 @@ trajMap <-
         if ("POSIXct" %in% class(data[[colour]])) {
           map <-
             leaflet::addLegend(map,
-              title = quickTextHTML(colour),
-              pal = pal,
-              values = as.numeric(data[[colour]], origin = "1964-10-22"),
-              labFormat = leaflet::labelFormat(
-                transform = function(x) as.Date.POSIXct(x, origin = "1964-10-22")
-              )
+                               title = quickTextHTML(colour),
+                               pal = pal,
+                               values = as.numeric(data[[colour]], origin = "1964-10-22"),
+                               labFormat = leaflet::labelFormat(
+                                 transform = function(x) as.Date.POSIXct(x, origin = "1964-10-22")
+                               )
             )
         } else {
           map <-
             leaflet::addLegend(map,
-              title = quickTextHTML(colour),
-              pal = pal,
-              values = data[[colour]]
+                               title = quickTextHTML(colour),
+                               pal = pal,
+                               values = data[[colour]]
             )
         }
       }
