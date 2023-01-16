@@ -5,7 +5,7 @@
 #' argument, and multiple layers of markers can be added and toggled between
 #' using `control`. See [openair::percentileRose()] for more information.
 #'
-#' @family directional analysis maps
+#' @family interactive directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param percentile The percentile value(s) to plot. Must be between 0–100. If

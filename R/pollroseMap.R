@@ -5,7 +5,7 @@
 #' argument, and multiple layers of markers can be added and toggled between
 #' using `control`. See [openair::pollutionRose()] for more information.
 #'
-#' @family directional analysis maps
+#' @family interactive directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param statistic The `statistic` to be applied to each data bin in the

@@ -43,15 +43,13 @@ control" interface.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-"lat"/"latitude" or
-"lon"/"lng"/"long"/"longitude"
-(case-insensitively).}
+"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
 groups which can be selected between using a "layer control" interface.
 Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
-\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{control} cannot be used if multiple
-\code{pollutant} columns have been provided.}
+\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{control} cannot be used if multiple \code{pollutant}
+columns have been provided.}
 
 \item{popup}{Column to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site
@@ -62,11 +60,12 @@ Labels are useful for the same reasons as popups, though are typically
 shorter.}
 
 \item{provider}{The base map(s) to be used. See
-\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-of all base maps that can be used. If multiple base maps are provided, they
+\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
+all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
 
-\item{cols}{The colours used for plotting.}
+\item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
+more information.}
 
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
@@ -87,8 +86,8 @@ Defaults to \code{FALSE}.}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 
-\item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label
-different sites.}
+\item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label different
+sites.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:percentileRose]{openair::percentileRose}}
@@ -149,11 +148,11 @@ percentileMap(polar_data,
 }
 }
 \seealso{
-Other directional analysis maps: 
+Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{freqMap}()},
 \code{\link{polarMap}()},
 \code{\link{pollroseMap}()},
 \code{\link{windroseMap}()}
 }
-\concept{directional analysis maps}
+\concept{interactive directional analysis maps}

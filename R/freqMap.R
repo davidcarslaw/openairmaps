@@ -5,7 +5,7 @@
 #' argument, and multiple layers of markers can be added and toggled between
 #' using `control`. See [openair::polarFreq()] for more information.
 #'
-#' @family directional analysis maps
+#' @family interactive directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param statistic The statistic that should be applied to each wind
