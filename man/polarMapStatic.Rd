@@ -267,7 +267,7 @@ a \code{ggplot2} plot with a \code{ggmap} basemap
 \code{\link[=polarMapStatic]{polarMapStatic()}} creates a \code{ggplot2} map using bivariate polar plots as
 markers. As this function returns a \code{ggplot2} object, further customisation
 can be achieved using functions like \code{\link[ggplot2:theme]{ggplot2::theme()}} and
-\code{\link[ggplot2:guides]{ggplot2::guides()}}. See \code{\link[openair:polarPlot]{openair::polarPlot()}} for more information.
+\code{\link[ggplot2:guides]{ggplot2::guides()}}.
 }
 \details{
 If multiple pollutants are specified, subscripting (e.g., the
@@ -277,10 +277,14 @@ Therefore if you choose to override the plot theme, it is recommended to use
 \code{strip.text} parameter.
 }
 \seealso{
+the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
+
 \code{\link[=polarMap]{polarMap()}} for the interactive \code{leaflet} equivalent of
 \code{\link[=polarMapStatic]{polarMapStatic()}}
 
 Other static directional analysis maps: 
-\code{\link{annulusMapStatic}()}
+\code{\link{annulusMapStatic}()},
+\code{\link{freqMapStatic}()},
+\code{\link{windroseMapStatic}()}
 }
 \concept{static directional analysis maps}

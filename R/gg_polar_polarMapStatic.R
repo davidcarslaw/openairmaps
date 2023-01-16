@@ -3,7 +3,7 @@
 #' [polarMapStatic()] creates a `ggplot2` map using bivariate polar plots as
 #' markers. As this function returns a `ggplot2` object, further customisation
 #' can be achieved using functions like [ggplot2::theme()] and
-#' [ggplot2::guides()]. See [openair::polarPlot()] for more information.
+#' [ggplot2::guides()].
 #'
 #' If multiple pollutants are specified, subscripting (e.g., the
 #' "x" in "NOx") are achieved using the [ggtext][ggtext::ggtext] package.
@@ -36,6 +36,7 @@
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot
 #'
+#' @seealso the original [openair::polarPlot()]
 #' @seealso [polarMap()] for the interactive `leaflet` equivalent of
 #'   [polarMapStatic()]
 #'
