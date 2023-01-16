@@ -58,16 +58,19 @@ polarMapStatic <- function(data,
                            d.fig = 3,
                            ...) {
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
   # deal with limits
   theLimits <- limits
-  if (is.null(limits))
+  if (is.null(limits)) {
     theLimits <- NA
+  }
 
   # prep data
   data <-
@@ -96,42 +99,48 @@ polarMapStatic <- function(data,
     data %>%
     tidyr::drop_na(.data$conc) %>%
     dplyr::nest_by(.data[[latitude]], .data[[longitude]], .data[[split_col]]) %>%
-    dplyr::mutate(plot = list(try(silent = TRUE,
-                                  openair::polarPlot(
-                                    .data$data,
-                                    pollutant = "conc",
-                                    plot = FALSE,
-                                    limits = theLimits,
-                                    cols = cols,
-                                    alpha = alpha,
-                                    key = key,
-                                    ...,
-                                    par.settings = list(axis.line = list(col = "transparent"))
-                                  )$plot)
-    ),
-    plot = dplyr::if_else(
-      inherits(plot, "try-error"),
-      list(ggplot2::ggplot() + ggplot2::theme_minimal()),
-      list(plot)))
+    dplyr::mutate(
+      plot = list(try(
+        silent = TRUE,
+        openair::polarPlot(
+          .data$data,
+          pollutant = "conc",
+          plot = FALSE,
+          limits = theLimits,
+          cols = cols,
+          alpha = alpha,
+          key = key,
+          ...,
+          par.settings = list(axis.line = list(col = "transparent"))
+        )$plot
+      )),
+      plot = dplyr::if_else(
+        inherits(plot, "try-error"),
+        list(ggplot2::ggplot() +
+          ggplot2::theme_minimal()),
+        list(plot)
+      )
+    )
 
   dir <- tempdir()
 
   purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-               .f = ~ {
-                 grDevices::png(
-                   filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
-                   width = d.fig * 300,
-                   height = d.fig * 300,
-                   res = 300,
-                   bg = "transparent",
-                   type = "cairo",
-                   antialias = "none"
-                 )
+    .f = ~ {
+      grDevices::png(
+        filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
+        width = d.fig * 300,
+        height = d.fig * 300,
+        res = 300,
+        bg = "transparent",
+        type = "cairo",
+        antialias = "none"
+      )
 
-                 plot(..4)
+      plot(..4)
 
-                 grDevices::dev.off()
-               })
+      grDevices::dev.off()
+    }
+  )
 
   if (is.null(ggmap)) {
     lat_d <- abs(diff(range(plots_df[[latitude]])) / 2)
@@ -143,8 +152,10 @@ polarMapStatic <- function(data,
     maxlon <- max(plots_df[[longitude]]) + lon_d
 
     ggmap <-
-      ggmap::get_stamenmap(bbox = c(minlon, minlat, maxlon, maxlat),
-                           zoom = zoom)
+      ggmap::get_stamenmap(
+        bbox = c(minlon, minlat, maxlon, maxlat),
+        zoom = zoom
+      )
   }
 
   plt <-
@@ -171,11 +182,14 @@ polarMapStatic <- function(data,
 
   if (!is.null(limits)) {
     plt <-
-      plt  +
+      plt +
       ggplot2::geom_point(ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-                          alpha = 0) +
-      ggplot2::scale_color_gradientn(limits = theLimits,
-                                     colours = openair::openColours(scheme = cols)) +
+        alpha = 0
+      ) +
+      ggplot2::scale_color_gradientn(
+        limits = theLimits,
+        colours = openair::openColours(scheme = cols)
+      ) +
       ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
   }
 

@@ -17,7 +17,7 @@
 #' @examples
 #' labs <- c("no2", "o3", "so2")
 #' quickTextHTML(labs)
-
+#'
 quickTextHTML <- function(text) {
   text <- gsub("NO2|no2|No2", "NO<sub>2</sub>", text)
   text <- gsub("\\bnox\\b|\\bNOx\\b|\\bNox\\b|\\bNOX\\b", "NO<sub>x</sub>", text)
@@ -109,9 +109,9 @@ buildPopup <-
         dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
         dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
         dplyr::summarise(dplyr::across(tidyselect::where(is.character) | tidyselect::where(is.factor), fun.character),
-                         dplyr::across(tidyselect::where(is.numeric), fun.numeric),
-                         dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
-                         .groups = "drop"
+          dplyr::across(tidyselect::where(is.numeric), fun.numeric),
+          dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
+          .groups = "drop"
         )
 
       if (!is.null(names)) {
