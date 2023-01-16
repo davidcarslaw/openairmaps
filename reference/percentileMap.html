@@ -25,10 +25,13 @@ using control. See openair::percentileRose() for more information."><meta proper
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
+  <a class="nav-link" href="../reference/index.html">Functions</a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
+  <a class="nav-link" href="../news/index.html">News</a>
+</li>
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://bookdown.org/david_carslaw/openair/maps-overview.html">Book (External)</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -102,17 +105,15 @@ control" interface.</p></dd>
 <dt>latitude, longitude</dt>
 <dd><p>The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-"lat"/"latitude" or
-"lon"/"lng"/"long"/"longitude"
-(case-insensitively).</p></dd>
+"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
 
 
 <dt>control</dt>
 <dd><p>Column to be used for splitting the input data into different
 groups which can be selected between using a "layer control" interface.
 Appropriate columns could be those added by <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code> or
-<code><a href="https://davidcarslaw.github.io/openair/reference/splitByDate.html" class="external-link">openair::splitByDate()</a></code>. <code>control</code> cannot be used if multiple
-<code>pollutant</code> columns have been provided.</p></dd>
+<code><a href="https://davidcarslaw.github.io/openair/reference/splitByDate.html" class="external-link">openair::splitByDate()</a></code>. <code>control</code> cannot be used if multiple <code>pollutant</code>
+columns have been provided.</p></dd>
 
 
 <dt>popup</dt>
@@ -129,13 +130,14 @@ shorter.</p></dd>
 
 <dt>provider</dt>
 <dd><p>The base map(s) to be used. See
-<a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list
-of all base maps that can be used. If multiple base maps are provided, they
+<a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list of
+all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.</p></dd>
 
 
 <dt>cols</dt>
-<dd><p>The colours used for plotting.</p></dd>
+<dd><p>The colours used for plotting. See <code><a href="https://davidcarslaw.github.io/openair/reference/openColours.html" class="external-link">openair::openColours()</a></code> for
+more information.</p></dd>
 
 
 <dt>alpha</dt>
@@ -174,8 +176,8 @@ Defaults to <code>FALSE</code>.</p></dd>
 
 
 <dt>type</dt>
-<dd><p>Deprecated. Please use <code>label</code> and/or <code>popup</code> to label
-different sites.</p></dd>
+<dd><p>Deprecated. Please use <code>label</code> and/or <code>popup</code> to label different
+sites.</p></dd>
 
 
 <dt>...</dt>
@@ -257,7 +259,7 @@ and <code>"left"</code>.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other directional analysis maps: 
+    <div class="dont-index"><p>Other interactive directional analysis maps: 
 <code><a href="annulusMap.html">annulusMap</a>()</code>,
 <code><a href="freqMap.html">freqMap</a>()</code>,
 <code><a href="polarMap.html">polarMap</a>()</code>,
