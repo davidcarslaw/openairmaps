@@ -8,7 +8,6 @@ windroseMapStatic(
   data,
   ws.int = 2,
   breaks = 4,
-  period = "hour",
   facet = NULL,
   latitude = NULL,
   longitude = NULL,
@@ -30,10 +29,14 @@ direction (\code{wd}), and the column representing the concentration of a
 pollutant. In addition, \code{data} must include a decimal latitude and
 longitude.}
 
-\item{period}{This determines the temporal period to consider. Options are
-"hour" (the default, to plot diurnal variations), "season" to plot
-variation throughout the year, "weekday" to plot day of the week variation
-and "trend" to plot the trend by wind direction.}
+\item{ws.int}{The wind speed interval. Default is 2 m/s but for low met masts
+with low mean wind speeds a value of 1 or 0.5 m/s may be better.}
+
+\item{breaks}{Most commonly, the number of break points for wind speed in
+windRose. For windRose and the ws.int default of 2 m/s, the default, 4,
+generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
+specific break points. For example, the argument breaks = c(0, 1, 10, 100)
+breaks the data into segments <1, 1-10, 10-100, >100.}
 
 \item{facet}{Column to be used for splitting the input data into different
 panels. Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
@@ -204,6 +207,7 @@ achieved using functions like \code{\link[ggplot2:theme]{ggplot2::theme()}} and 
 Other static directional analysis maps: 
 \code{\link{annulusMapStatic}()},
 \code{\link{freqMapStatic}()},
+\code{\link{percentileMapStatic}()},
 \code{\link{polarMapStatic}()}
 }
 \concept{static directional analysis maps}
