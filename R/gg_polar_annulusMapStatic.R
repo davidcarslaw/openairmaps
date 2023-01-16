@@ -143,7 +143,7 @@ annulusMapStatic <- function(data,
       split_col = split_col,
       pollutant = pollutant,
       facet = facet,
-      facet.row = facet.nrow,
+      facet.nrow = facet.nrow,
       d.icon = d.icon
     )
 
