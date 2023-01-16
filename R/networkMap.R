@@ -81,10 +81,11 @@ networkMap <-
 
     # read in data
     meta <-
-      purrr::map_dfr(
+      purrr::map(
         .x = source,
         .f = ~ prepNetworkData(source = .x, date = date)
-      )
+      ) %>%
+      purrr::list_rbind()
 
     meta <-
       meta %>%
