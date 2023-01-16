@@ -84,7 +84,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -383,13 +383,13 @@ makeMap <-
         )
     } else if (length(icons) > 1 & length(provider) == 1) {
       m <- leaflet::addLayersControl(m,
-        options = leaflet::layersControlOptions(collapsed = collapse),
-        baseGroups = names(icons) %>% purrr::map_chr(quickTextHTML)
+                                     options = leaflet::layersControlOptions(collapsed = collapse),
+                                     baseGroups = names(icons) %>% purrr::map_chr(quickTextHTML)
       )
     } else if (length(provider) > 1 & length(icons) == 1) {
       m <- leaflet::addLayersControl(m,
-        options = leaflet::layersControlOptions(collapsed = collapse),
-        baseGroups = provider
+                                     options = leaflet::layersControlOptions(collapsed = collapse),
+                                     baseGroups = provider
       )
     }
 
@@ -421,7 +421,7 @@ assume_latlon <- function(data, latitude, longitude) {
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-        call = NULL
+                     call = NULL
       )
       return(NULL)
     } else if (len == 0) {
@@ -478,4 +478,11 @@ getBreaks <- function(breaks, ws.int, vec, polrose) {
   breaks <- unique(breaks)
   breaks <- sort(breaks)
   breaks
+}
+
+#' theme for static maps
+#' @noRd
+theme_static <- function() {
+  ggplot2::`%+replace%`(ggplot2::theme_minimal(),
+                        ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black")))
 }

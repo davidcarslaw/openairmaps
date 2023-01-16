@@ -5,7 +5,7 @@
 #' can be achieved using functions like [ggplot2::theme()] and
 #' [ggplot2::guides()]. See [openair::polarPlot()] for more information.
 #'
-#' ## Facet Labels If multiple pollutants are specified, subscripting (e.g., the
+#' If multiple pollutants are specified, subscripting (e.g., the
 #' "x" in "NOx") are achieved using the [ggtext][ggtext::ggtext] package.
 #' Therefore if you choose to override the plot theme, it is recommended to use
 #' `[ggplot2::theme()]` and `[ggtext::element_markdown()]` to define the
@@ -37,26 +37,26 @@
 #'   -cols -key -alpha -plot
 #'
 #' @seealso [polarMap()] for the interactive `leaflet` equivalent of
-#'   [ggPolarMap()]
+#'   [polarMapStatic()]
 #'
 #' @return a `ggplot2` plot with a `ggmap` basemap
 #' @export
-ggPolarMap <- function(data,
-                       pollutant = NULL,
-                       x = "ws",
-                       facet = NULL,
-                       limits = NULL,
-                       latitude = NULL,
-                       longitude = NULL,
-                       zoom = 13,
-                       ggmap = NULL,
-                       cols = "turbo",
-                       alpha = 1,
-                       key = FALSE,
-                       facet.nrow = NULL,
-                       d.icon = 150,
-                       d.fig = 3,
-                       ...) {
+polarMapStatic <- function(data,
+                           pollutant = NULL,
+                           x = "ws",
+                           facet = NULL,
+                           limits = NULL,
+                           latitude = NULL,
+                           longitude = NULL,
+                           zoom = 13,
+                           ggmap = NULL,
+                           cols = "turbo",
+                           alpha = 1,
+                           key = FALSE,
+                           facet.nrow = NULL,
+                           d.icon = 150,
+                           d.fig = 3,
+                           ...) {
   # assume lat/lon
   latlon <- assume_latlon(data = data,
                           latitude = latitude,
@@ -81,12 +81,6 @@ ggPolarMap <- function(data,
       longitude
     )
 
-  # # if no "facet", create a dummy column
-  # if (is.null(facet)) {
-  #   facet <- "default"
-  #   data$default <- "default"
-  # }
-
   # identify splitting column (defaulting to pollutant)
   if (length(pollutant) > 1) {
     split_col <- "pollutant_name"
@@ -102,25 +96,23 @@ ggPolarMap <- function(data,
     data %>%
     tidyr::drop_na(.data$conc) %>%
     dplyr::nest_by(.data[[latitude]], .data[[longitude]], .data[[split_col]]) %>%
-    dplyr::mutate(plot = list(
-      try(silent = TRUE,
-      openair::polarPlot(
-        .data$data,
-        pollutant = "conc",
-        plot = FALSE,
-        limits = theLimits,
-        cols = cols,
-        alpha = alpha,
-        key = key,
-        ...,
-        par.settings = list(axis.line = list(col = "transparent"))
-      )$plot
-    )),
+    dplyr::mutate(plot = list(try(silent = TRUE,
+                                  openair::polarPlot(
+                                    .data$data,
+                                    pollutant = "conc",
+                                    plot = FALSE,
+                                    limits = theLimits,
+                                    cols = cols,
+                                    alpha = alpha,
+                                    key = key,
+                                    ...,
+                                    par.settings = list(axis.line = list(col = "transparent"))
+                                  )$plot)
+    ),
     plot = dplyr::if_else(
       inherits(plot, "try-error"),
       list(ggplot2::ggplot() + ggplot2::theme_minimal()),
-      list(plot)
-    ))
+      list(plot)))
 
   dir <- tempdir()
 
@@ -169,8 +161,7 @@ ggPolarMap <- function(data,
       alpha = alpha
     ) +
     ggplot2::labs(x = NULL, y = NULL) +
-    ggplot2::theme_minimal() +
-    ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black"))
+    theme_static()
 
   if (length(pollutant) > 1 | !is.null(facet)) {
     plt <-
