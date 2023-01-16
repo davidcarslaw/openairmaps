@@ -61,7 +61,7 @@ create_static_markers <-
 #' @noRd
 estimate_ggmap <-
   function(ggmap = ggmap,
-           data = plots_df,
+           data,
            latitude = latitude,
            longitude = longitude,
            zoom = zoom) {
@@ -83,7 +83,7 @@ estimate_ggmap <-
   }
 
 #' Create static map
-#' @param ggmap:facet.row inherited from parent
+#' @param ggmap:facet.nrow inherited from parent
 #' @param plots_df `plots_df`
 #' @noRd
 create_static_map <-
@@ -96,7 +96,7 @@ create_static_map <-
            pollutant,
            d.icon,
            facet,
-           facet.row) {
+           facet.nrow) {
     plt <-
       ggmap::ggmap(ggmap) +
       ggtext::geom_richtext(
