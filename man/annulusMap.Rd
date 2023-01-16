@@ -45,21 +45,18 @@ variation throughout the year, "weekday" to plot day of the week variation
 and "trend" to plot the trend by wind direction.}
 
 \item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same
-colour scale. The limits are set in the form \code{c(lower, upper)}, so
-\code{limits = c(0, 100)} would force the plot limits to span 0-100.}
+scale. The \code{limits} argument will force all markers to use the same colour
+scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
-"lat"/"latitude" or
-"lon"/"lng"/"long"/"longitude"
-(case-insensitively).}
+"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{control}{Column to be used for splitting the input data into different
 groups which can be selected between using a "layer control" interface.
 Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
-\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{control} cannot be used if multiple
-\code{pollutant} columns have been provided.}
+\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{control} cannot be used if multiple \code{pollutant}
+columns have been provided.}
 
 \item{popup}{Column to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site
@@ -70,19 +67,20 @@ Labels are useful for the same reasons as popups, though are typically
 shorter.}
 
 \item{provider}{The base map(s) to be used. See
-\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
-of all base maps that can be used. If multiple base maps are provided, they
+\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
+all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
 
-\item{cols}{The colours used for plotting.}
+\item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
+more information.}
 
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
 between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
-\item{draw.legend}{When \code{limits} are specified, should a shared legend
-be created at the side of the map? Default is \code{TRUE}.}
+\item{draw.legend}{When \code{limits} are specified, should a shared legend be
+created at the side of the map? Default is \code{TRUE}.}
 
 \item{collapse.control}{Should the "layer control" interface be collapsed?
 Defaults to \code{FALSE}.}
@@ -95,8 +93,8 @@ Defaults to \code{FALSE}.}
 
 \item{fig.height}{The height of the plots to be produced in inches.}
 
-\item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label
-different sites.}
+\item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label different
+sites.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:polarAnnulus]{openair::polarAnnulus}}
@@ -211,11 +209,11 @@ annulusMap(polar_data,
 }
 }
 \seealso{
-Other directional analysis maps: 
+Other interactive directional analysis maps: 
 \code{\link{freqMap}()},
 \code{\link{percentileMap}()},
 \code{\link{polarMap}()},
 \code{\link{pollroseMap}()},
 \code{\link{windroseMap}()}
 }
-\concept{directional analysis maps}
+\concept{interactive directional analysis maps}
