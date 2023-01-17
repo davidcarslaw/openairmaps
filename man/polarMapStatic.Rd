@@ -286,6 +286,7 @@ Other static directional analysis maps:
 \code{\link{annulusMapStatic}()},
 \code{\link{freqMapStatic}()},
 \code{\link{percentileMapStatic}()},
+\code{\link{pollroseMapStatic}()},
 \code{\link{windroseMapStatic}()}
 }
 \concept{static directional analysis maps}
