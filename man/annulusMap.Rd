@@ -197,7 +197,6 @@ A leaflet object.
 \code{\link[=annulusMap]{annulusMap()}} creates a \code{leaflet} map using polar annulus plots as markers.
 Any number of pollutants can be specified using the \code{pollutant} argument, and
 multiple layers of markers can be added and toggled between using \code{control}.
-See \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}} for more information.
 }
 \examples{
 \dontrun{
@@ -209,6 +208,11 @@ annulusMap(polar_data,
 }
 }
 \seealso{
+the original \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}
+
+\code{\link[=annulusMapStatic]{annulusMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=annulusMap]{annulusMap()}}
+
 Other interactive directional analysis maps: 
 \code{\link{freqMap}()},
 \code{\link{percentileMap}()},

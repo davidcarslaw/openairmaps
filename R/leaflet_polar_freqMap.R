@@ -3,7 +3,6 @@
 #' [freqMap()] creates a `leaflet` map using binned polar plots as markers. Any
 #' number of pollutants can be specified using the `pollutant` argument, and
 #' multiple layers of markers can be added and toggled between using `control`.
-#' See [openair::polarFreq()] for more information.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -31,6 +30,10 @@
 #'   -type -cols -key -plot
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::polarFreq()]
+#' @seealso [freqMapStatic()] for the static `ggmap` equivalent of
+#'   [freqMap()]
 #'
 #' @examples
 #' \dontrun{

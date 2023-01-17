@@ -3,7 +3,7 @@
 #' [percentileMap()] creates a `leaflet` map using percentile roses as
 #' markers. Any number of pollutants can be specified using the `pollutant`
 #' argument, and multiple layers of markers can be added and toggled between
-#' using `control`. See [openair::percentileRose()] for more information.
+#' using `control`.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -16,6 +16,10 @@
 #'   -type -cols -key -plot
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::percentileRose()]
+#' @seealso [percentileMapStatic()] for the static `ggmap` equivalent of
+#'   [percentileMap()]
 #'
 #' @examples
 #' \dontrun{

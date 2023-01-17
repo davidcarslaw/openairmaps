@@ -137,7 +137,7 @@ A leaflet object.
 \code{\link[=percentileMap]{percentileMap()}} creates a \code{leaflet} map using percentile roses as
 markers. Any number of pollutants can be specified using the \code{pollutant}
 argument, and multiple layers of markers can be added and toggled between
-using \code{control}. See \code{\link[openair:percentileRose]{openair::percentileRose()}} for more information.
+using \code{control}.
 }
 \examples{
 \dontrun{
@@ -148,6 +148,11 @@ percentileMap(polar_data,
 }
 }
 \seealso{
+the original \code{\link[openair:percentileRose]{openair::percentileRose()}}
+
+\code{\link[=percentileMapStatic]{percentileMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=percentileMap]{percentileMap()}}
+
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{freqMap}()},

@@ -3,7 +3,7 @@
 #' [pollroseMap()] creates a `leaflet` map using "pollution roses" as
 #' markers. Any number of pollutants can be specified using the `pollutant`
 #' argument, and multiple layers of markers can be added and toggled between
-#' using `control`. See [openair::pollutionRose()] for more information.
+#' using `control`.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -26,6 +26,10 @@
 #' @inheritDotParams openair::pollutionRose -breaks -mydata -pollutant -plot
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::pollutionRose()]
+#' @seealso [pollroseMapStatic()] for the static `ggmap` equivalent of
+#'   [pollroseMap()]
 #'
 #' @examples
 #' \dontrun{

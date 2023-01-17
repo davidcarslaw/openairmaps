@@ -157,7 +157,6 @@ A leaflet object.
 \code{\link[=freqMap]{freqMap()}} creates a \code{leaflet} map using binned polar plots as markers. Any
 number of pollutants can be specified using the \code{pollutant} argument, and
 multiple layers of markers can be added and toggled between using \code{control}.
-See \code{\link[openair:polarFreq]{openair::polarFreq()}} for more information.
 }
 \examples{
 \dontrun{
@@ -169,6 +168,11 @@ freqMap(polar_data,
 }
 }
 \seealso{
+the original \code{\link[openair:polarFreq]{openair::polarFreq()}}
+
+\code{\link[=freqMapStatic]{freqMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=freqMap]{freqMap()}}
+
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{percentileMap}()},

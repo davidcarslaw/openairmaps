@@ -173,8 +173,7 @@ A leaflet object.
 }
 \description{
 \code{\link[=windroseMap]{windroseMap()}} creates a \code{leaflet} map using wind roses as markers. Multiple
-layers of markers can be added and toggled between using \code{control}. See
-\code{\link[openair:windRose]{openair::windRose()}} for more information.
+layers of markers can be added and toggled between using \code{control}.
 }
 \examples{
 \dontrun{
@@ -184,6 +183,11 @@ windroseMap(polar_data,
 }
 }
 \seealso{
+the original \code{\link[openair:windRose]{openair::windRose()}}
+
+\code{\link[=windroseMapStatic]{windroseMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=windroseMap]{windroseMap()}}
+
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{freqMap}()},
