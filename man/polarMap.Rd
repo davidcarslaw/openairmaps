@@ -286,7 +286,6 @@ A leaflet object.
 \code{\link[=polarMap]{polarMap()}} creates a \code{leaflet} map using bivariate polar plots as markers.
 Any number of pollutants can be specified using the \code{pollutant} argument, and
 multiple layers of markers can be added and toggled between using \code{control}.
-See \code{\link[openair:polarPlot]{openair::polarPlot()}} for more information.
 }
 \examples{
 \dontrun{
@@ -298,6 +297,11 @@ polarMap(polar_data,
 }
 }
 \seealso{
+the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
+
+\code{\link[=polarMapStatic]{polarMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=polarMap]{polarMap()}}
+
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{freqMap}()},

@@ -1,8 +1,7 @@
 #' Wind rose plots on interactive leaflet maps
 #'
 #' [windroseMap()] creates a `leaflet` map using wind roses as markers. Multiple
-#' layers of markers can be added and toggled between using `control`. See
-#' [openair::windRose()] for more information.
+#' layers of markers can be added and toggled between using `control`.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -23,6 +22,10 @@
 #'   -pollutant -type -cols -key
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::windRose()]
+#' @seealso [windroseMapStatic()] for the static `ggmap` equivalent of
+#'   [windroseMap()]
 #'
 #' @examples
 #' \dontrun{

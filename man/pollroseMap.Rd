@@ -130,7 +130,7 @@ A leaflet object.
 \code{\link[=pollroseMap]{pollroseMap()}} creates a \code{leaflet} map using "pollution roses" as
 markers. Any number of pollutants can be specified using the \code{pollutant}
 argument, and multiple layers of markers can be added and toggled between
-using \code{control}. See \code{\link[openair:pollutionRose]{openair::pollutionRose()}} for more information.
+using \code{control}.
 }
 \examples{
 \dontrun{
@@ -142,6 +142,11 @@ pollroseMap(polar_data,
 }
 }
 \seealso{
+the original \code{\link[openair:pollutionRose]{openair::pollutionRose()}}
+
+\code{\link[=pollroseMapStatic]{pollroseMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=pollroseMap]{pollroseMap()}}
+
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{freqMap}()},

@@ -3,7 +3,6 @@
 #' [annulusMap()] creates a `leaflet` map using polar annulus plots as markers.
 #' Any number of pollutants can be specified using the `pollutant` argument, and
 #' multiple layers of markers can be added and toggled between using `control`.
-#' See [openair::polarAnnulus()] for more information.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -16,6 +15,10 @@
 #'   -type -cols -key -plot
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::polarAnnulus()]
+#' @seealso [annulusMapStatic()] for the static `ggmap` equivalent of
+#'   [annulusMap()]
 #'
 #' @examples
 #' \dontrun{

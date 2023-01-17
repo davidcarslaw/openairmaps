@@ -3,7 +3,6 @@
 #' [polarMap()] creates a `leaflet` map using bivariate polar plots as markers.
 #' Any number of pollutants can be specified using the `pollutant` argument, and
 #' multiple layers of markers can be added and toggled between using `control`.
-#' See [openair::polarPlot()] for more information.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -57,6 +56,10 @@
 #'   -cols -key -alpha -plot
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::polarPlot()]
+#' @seealso [polarMapStatic()] for the static `ggmap` equivalent of
+#'   [polarMap()]
 #'
 #' @examples
 #' \dontrun{
