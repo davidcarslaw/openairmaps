@@ -1,8 +1,10 @@
 # openairmaps (development version)
 
+* Added "static" equivalents of all of the polar marker maps written in `ggplot2`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
+
 * Added `alpha` back as an argument to all of the directional analysis polar mapping functions now a recent openair update supports it.
 
-* Fixed `alpha` to work on Windows and Mac operating systems.
+* Fixed `alpha` to work on both Windows and MacOS by forcing the use of the "cairo" device to save plots.
 
 # openairmaps 0.6.1
 
