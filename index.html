@@ -76,7 +76,7 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> is to combine the robust analytical methods found in <a href="https://davidcarslaw.github.io/openair/" class="external-link">openair</a> with the highly capable <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> package. <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> is thoroughly documented in the <a href="https://bookdown.org/david_carslaw/openair/maps-overview.html" class="external-link">openair book</a>.</p>
+<p>The main goal of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> is to combine the robust analytical methods found in <a href="https://davidcarslaw.github.io/openair/" class="external-link">openair</a> with the highly capable <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> package. <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> is thoroughly documented in the <a href="https://bookdown.org/david_carslaw/openair/maps-overview.html" class="external-link">openair book</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -91,10 +91,11 @@
 <div class="section level2">
 <h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
 </h2>
-<p>The <code>openairmaps</code> package is thoroughly documented in the <a href="https://bookdown.org/david_carslaw/openair/maps-overview.html" class="external-link">openair book</a>, which goes into great detail about its various functions. Functionality includes visualising UK AQ networks (<code><a href="reference/networkMap.html">networkMap()</a></code>), putting “polar directional markers” on maps (e.g., <code><a href="reference/polarMap.html">polarMap()</a></code>) and overlaying HYSPLIT trajectories on maps (e.g., <code><a href="reference/trajMap.html">trajMap()</a></code>).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a></span><span class="op">)</span></span>
-<span><span class="va">polar_data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a></span><span class="op">)</span></span></code></pre></div>
+<p>The <code>openairmaps</code> package is thoroughly documented in the <a href="https://bookdown.org/david_carslaw/openair/maps-overview.html" class="external-link">openair book</a>, which goes into great detail about its various functions. Functionality includes visualising UK AQ networks (<code><a href="reference/networkMap.html">networkMap()</a></code>), putting “polar directional markers” on maps (e.g., <code><a href="reference/polarMap.html">polarMap()</a></code>) and overlaying HYSPLIT trajectories on maps (e.g., <code><a href="reference/trajMap.html">trajMap()</a></code>), all using the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> package.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">polar_data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">openair</span><span class="fu">::</span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData</a></span><span class="op">(</span><span class="st">"daylight"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/buildPopup.html">buildPopup</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"site_type"</span><span class="op">)</span>,</span>
@@ -102,15 +103,26 @@
 <span>    control <span class="op">=</span> <span class="st">"daylight"</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/polarMap.html">polarMap</a></span><span class="op">(</span></span>
-<span>    control <span class="op">=</span> <span class="st">"daylight"</span>,</span>
 <span>    pollutant <span class="op">=</span> <span class="st">"no2"</span>,</span>
 <span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">180</span><span class="op">)</span>,</span>
-<span>    cols <span class="op">=</span> <span class="st">"turbo"</span>,</span>
+<span>    control <span class="op">=</span> <span class="st">"daylight"</span>,</span>
 <span>    popup <span class="op">=</span> <span class="st">"popup"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="reference/figures/README-examplemap.png" alt=""><p class="caption">An example <code><a href="reference/polarMap.html">polarMap()</a></code> showing NO2 concentrations in central London.</p>
 </div>
+<p>While an interactive map is preferred for exploratory directional analysis, it is limited to the HTML format. Some applications (for example, academic journals) demand “static” formats like .docx and .pdf. For this reason, “static” versions of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> polar marker functions have been provided which are written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. A benefit of being written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> is that additional layers can be added (e.g., <code>geom_label()</code> could be used to label sites) and limited further customisation is available using <code>theme()</code> and <code>guides()</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">polar_data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">openair</span><span class="fu">::</span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData</a></span><span class="op">(</span><span class="st">"daylight"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/polarMapStatic.html">polarMapStatic</a></span><span class="op">(</span></span>
+<span>    pollutant <span class="op">=</span> <span class="st">"no2"</span>,</span>
+<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">180</span><span class="op">)</span>,</span>
+<span>    facet <span class="op">=</span> <span class="st">"daylight"</span>,</span>
+<span>    facet.nrow <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>    alpha <span class="op">=</span> <span class="fl">.9</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-static-1.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

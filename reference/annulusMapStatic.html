@@ -314,15 +314,24 @@ and units properly e.g.  by subscripting the `2' in NO2.</p></dd>
 <p>a <code>ggplot2</code> plot with a <code>ggmap</code> basemap</p>
     </div>
     <div class="section level2">
-    <h2 id="multiple-pollutants">Multiple Pollutants<a class="anchor" aria-label="anchor" href="#multiple-pollutants"></a></h2>
+    <h2 id="further-customisation-using-ggplot-">Further customisation using ggplot2<a class="anchor" aria-label="anchor" href="#further-customisation-using-ggplot-"></a></h2>
     
 
 
-<p>If multiple pollutants are specified, subscripting (e.g., the
-"x" in "NOx") are achieved using the <a href="https://wilkelab.org/ggtext/reference/ggtext.html" class="external-link">ggtext</a> package.
-Therefore if you choose to override the plot theme, it is recommended to use
+<p>As the outputs of the static directional analysis functions are <code>ggplot2</code>
+figures, further customisation is possible using functions such as
+<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">ggplot2::guides()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggplot2::labs()</a></code>.</p>
+<p>If multiple pollutants are specified, subscripting (e.g., the "x" in "NOx")
+is achieved using the <a href="https://wilkelab.org/ggtext/reference/ggtext.html" class="external-link">ggtext</a> package. Therefore if you
+choose to override the plot theme, it is recommended to use
 <code>[ggplot2::theme()]</code> and <code>[ggtext::element_markdown()]</code> to define the
 <code>strip.text</code> parameter.</p>
+<p>When arguments like <code>limits</code>, <code>percentile</code> or <code>breaks</code> are defined, a
+legend is automatically added to the figure. Legends can be removed using
+<code>ggplot2::theme(legend.position = "none")</code>, or further customised using
+<code><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">ggplot2::guides()</a></code> and either <code>color = ggplot2::guide_colourbar()</code> for
+continuous legends or <code>fill = ggplot2::guide_legend()</code> for discrete
+legends.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
