@@ -63,7 +63,10 @@ freqMapStatic <- function(data,
   # allow no pollutant when statistic = "frequency"
   if (statistic == "frequency") {
     data$dummy <- "freq"
-    pollutant <- "frequency"
+    lab <- "frequency"
+    pollutant <- "dummy"
+  } else {
+    lab <- pollutant
   }
 
   # prep data
@@ -160,14 +163,22 @@ freqMapStatic <- function(data,
 
   # create legend
   if (!is.null(breaks)) {
+    intervals <- stringr::str_c(breaks, dplyr::lead(breaks), sep = " - ")
+    intervals <- intervals[!is.na(intervals)]
+    intervals <- factor(intervals, intervals)
+    pal <- openair::openColours(scheme = cols, n = length(intervals)) %>%
+      stats::setNames(intervals)
+
     plt <-
       plt +
-      ggplot2::geom_point(ggplot2::aes(color = 1), size = 0) +
-      ggplot2::scale_color_stepsn(
-        breaks = breaks,
-        limits = range(breaks),
-        colors = openair::openColours(scheme = cols, n = length(breaks)-1)
-      )
+      ggplot2::geom_point(
+        ggplot2::aes(.data[[longitude]], .data[[latitude]],
+                     fill = intervals[1]),
+        size = 0,
+        key_glyph = ggplot2::draw_key_rect
+      ) +
+      ggplot2::scale_fill_manual(values = pal, drop = FALSE) +
+      ggplot2::labs(fill = openair::quickText(paste(lab, collapse = ", ")))
   }
 
   # return plot
