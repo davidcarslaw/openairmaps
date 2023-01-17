@@ -159,6 +159,7 @@ Other static directional analysis maps:
 \code{\link{annulusMapStatic}()},
 \code{\link{freqMapStatic}()},
 \code{\link{polarMapStatic}()},
+\code{\link{pollroseMapStatic}()},
 \code{\link{windroseMapStatic}()}
 }
 \concept{static directional analysis maps}
