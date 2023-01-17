@@ -5,13 +5,24 @@
 #' can be achieved using functions like [ggplot2::theme()] and
 #' [ggplot2::guides()].
 #'
-#' @section Multiple Pollutants:
+#' @section Further customisation using ggplot2:
 #'
-#' If multiple pollutants are specified, subscripting (e.g., the
-#' "x" in "NOx") are achieved using the [ggtext][ggtext::ggtext] package.
-#' Therefore if you choose to override the plot theme, it is recommended to use
-#' `[ggplot2::theme()]` and `[ggtext::element_markdown()]` to define the
-#' `strip.text` parameter.
+#'   As the outputs of the static directional analysis functions are `ggplot2`
+#'   figures, further customisation is possible using functions such as
+#'   [ggplot2::theme()], [ggplot2::guides()] and [ggplot2::labs()].
+#'
+#'   If multiple pollutants are specified, subscripting (e.g., the "x" in "NOx")
+#'   is achieved using the [ggtext][ggtext::ggtext] package. Therefore if you
+#'   choose to override the plot theme, it is recommended to use
+#'   `[ggplot2::theme()]` and `[ggtext::element_markdown()]` to define the
+#'   `strip.text` parameter.
+#'
+#'   When arguments like `limits`, `percentile` or `breaks` are defined, a
+#'   legend is automatically added to the figure. Legends can be removed using
+#'   `ggplot2::theme(legend.position = "none")`, or further customised using
+#'   [ggplot2::guides()] and either `color = ggplot2::guide_colourbar()` for
+#'   continuous legends or `fill = ggplot2::guide_legend()` for discrete
+#'   legends.
 #'
 #' @family static directional analysis maps
 #'

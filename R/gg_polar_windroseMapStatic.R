@@ -5,6 +5,8 @@
 #' achieved using functions like [ggplot2::theme()] and [ggplot2::guides()]. See
 #' [openair::polarPlot()] for more information.
 #'
+#' @inheritSection polarMapStatic Further customisation using ggplot2
+#'
 #' @family static directional analysis maps
 #'
 #' @inheritParams polarMapStatic
@@ -18,6 +20,7 @@
 #' @inheritDotParams openair::polarAnnulus -mydata -pollutant -period -limits
 #'   -type -cols -key -plot
 #'
+#' @seealso the original [openair::windRose()]
 #' @seealso [windroseMap()] for the interactive `leaflet` equivalent of
 #'   [windroseMapStatic()]
 #'
