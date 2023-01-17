@@ -5,6 +5,8 @@
 #' can be achieved using functions like [ggplot2::theme()] and
 #' [ggplot2::guides()].
 #'
+#' @section Multiple Pollutants:
+#'
 #' If multiple pollutants are specified, subscripting (e.g., the
 #' "x" in "NOx") are achieved using the [ggtext][ggtext::ggtext] package.
 #' Therefore if you choose to override the plot theme, it is recommended to use
