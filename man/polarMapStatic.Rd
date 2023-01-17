@@ -269,13 +269,16 @@ markers. As this function returns a \code{ggplot2} object, further customisation
 can be achieved using functions like \code{\link[ggplot2:theme]{ggplot2::theme()}} and
 \code{\link[ggplot2:guides]{ggplot2::guides()}}.
 }
-\details{
+\section{Multiple Pollutants}{
+
+
 If multiple pollutants are specified, subscripting (e.g., the
 "x" in "NOx") are achieved using the \link[ggtext:ggtext]{ggtext} package.
 Therefore if you choose to override the plot theme, it is recommended to use
 \verb{[ggplot2::theme()]} and \verb{[ggtext::element_markdown()]} to define the
 \code{strip.text} parameter.
 }
+
 \seealso{
 the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
 
