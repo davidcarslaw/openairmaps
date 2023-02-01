@@ -46,13 +46,9 @@
 
 * `trajMap()` has gained the `collapse.control` argument.
 
-
-
 # openairmaps 0.5.1
 
 * FIX: fixed an issue causing markers to be duplicated when pollutant information is missing for certain sites.
-
-
 
 # openairmaps 0.5.0
 
@@ -78,8 +74,6 @@
 
 * Updated many error messages and warnings to use `{cli}` and be broadly more descriptive.
 
-
-
 # openairmaps 0.4.3
 
 ## Features
@@ -92,13 +86,9 @@
 
 * `trajMap()` and `trajLevelMap()` now use the argument names "latitude" and "longitude" to match those of the `polarMap()` family.
 
-
-
 # openairmaps 0.4.2
 
 * `trajLevelMap()` now works where `statistic = "frequency"` without a "pollutant".
-
-
 
 # openairmaps 0.4.1
 
