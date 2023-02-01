@@ -58,10 +58,8 @@ freqMap <- function(data,
                     key = FALSE,
                     draw.legend = TRUE,
                     collapse.control = FALSE,
-                    iconWidth = 200,
-                    iconHeight = 200,
-                    fig.width = 3.5,
-                    fig.height = 3.5,
+                    d.icon = 200,
+                    d.fig = 3.5,
                     type = NULL,
                     ...) {
   if (!is.null(type)) {
@@ -101,19 +99,6 @@ freqMap <- function(data,
       label
     )
 
-  # define plotting function
-  # need this strange setup because of how openair is set up
-  args <- list(...)
-  if (!is.null(breaks)) {
-    fun <- function(...) {
-      rlang::exec(openair::polarFreq, statistic = statistic, alpha = alpha, breaks = breaks, !!!args, ...)
-    }
-  } else {
-    fun <- function(...) {
-      rlang::exec(openair::polarFreq, statistic = statistic, alpha = alpha, !!!args, ...)
-    }
-  }
-
   # identify splitting column (defaulting to pollutant)
   if (length(pollutant) > 1) {
     split_col <- "pollutant_name"
@@ -124,34 +109,58 @@ freqMap <- function(data,
     split_col <- "pollutant_name"
   }
 
-  # create icons
-  icons <-
-    data %>%
-    dplyr::group_split(.data[[split_col]]) %>%
-    rlang::set_names(levels(data[[split_col]])) %>%
-    purrr::imap(
-      .f = ~ create_icons(
-        data = .x, fun = fun, pollutant = "conc", split = .y,
-        lat = latitude, lon = longitude, x = x, cols = cols,
-        key = key, fig.width = fig.width, fig.height = fig.height,
-        iconWidth = iconWidth, iconHeight = iconHeight, ...
-      )
-    )
+  # define function
+  fun <- function(data) {
+    if (!is.null(breaks)) {
+      openair::polarFreq(
+        data,
+        pollutant = "conc",
+        breaks = breaks,
+        plot = FALSE,
+        statistic = statistic,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    } else {
+      openair::polarFreq(
+        data,
+        pollutant = "conc",
+        statistic = statistic,
+        plot = FALSE,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    }
+  }
 
-  # plot leaflet
-  map <-
-    makeMap(
+  # create temp directory
+  tempdir <- tempdir()
+
+  # plot and save static markers
+  plots_df <-
+    create_static_markers(
+      fun = fun,
       data = data,
-      icons = icons,
-      provider = provider,
-      longitude = longitude,
+      dir = tempdir,
       latitude = latitude,
-      popup = popup,
-      label = label,
+      longitude = longitude,
       split_col = split_col,
-      collapse = collapse.control
+      d.fig = d.fig,
+      popup = popup,
+      label = label
     )
 
+  # create leaflet map
+  map <-
+    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+
+  # add legends if breaks are set
   if (!is.null(breaks) & draw.legend) {
     if (statistic == "frequency") {
       title <- "Frequency"

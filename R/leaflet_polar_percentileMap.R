@@ -42,10 +42,8 @@ percentileMap <- function(data,
                           key = FALSE,
                           draw.legend = TRUE,
                           collapse.control = FALSE,
-                          iconWidth = 200,
-                          iconHeight = 200,
-                          fig.width = 3.5,
-                          fig.height = 3.5,
+                          d.icon = 200,
+                          d.fig = 3.5,
                           type = NULL,
                           ...) {
   if (!is.null(type)) {
@@ -64,6 +62,7 @@ percentileMap <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
+  # prep data
   data <-
     prepMapData(
       data = data,
@@ -77,12 +76,6 @@ percentileMap <- function(data,
       label
     )
 
-  # define plotting function
-  args <- list(...)
-  fun <- function(...) {
-    rlang::exec(openair::percentileRose, alpha = alpha, !!!args, percentile = percentile, ...)
-  }
-
   # identify splitting column (defaulting to pollutant)
   if (length(pollutant) > 1) {
     split_col <- "pollutant_name"
@@ -93,34 +86,43 @@ percentileMap <- function(data,
     split_col <- "pollutant_name"
   }
 
-  # create icons
-  icons <-
-    data %>%
-    dplyr::group_split(.data[[split_col]]) %>%
-    rlang::set_names(levels(data[[split_col]])) %>%
-    purrr::imap(
-      .f = ~ create_icons(
-        data = .x, fun = fun, pollutant = "conc", split = .y,
-        lat = latitude, lon = longitude, x = x, cols = cols,
-        key = key, fig.width = fig.width, fig.height = fig.height,
-        iconWidth = iconWidth, iconHeight = iconHeight, ...
-      )
-    )
+  # define function
+  fun <- function(data) {
+    openair::percentileRose(
+      data,
+      pollutant = "conc",
+      percentile = percentile,
+      plot = FALSE,
+      cols = cols,
+      alpha = alpha,
+      key = key,
+      ...,
+      par.settings = list(axis.line = list(col = "transparent"))
+    )$plot
+  }
 
-  # plot leaflet
-  map <-
-    makeMap(
+  # create temp directory
+  tempdir <- tempdir()
+
+  # plot and save static markers
+  plots_df <-
+    create_static_markers(
+      fun = fun,
       data = data,
-      icons = icons,
-      provider = provider,
-      longitude = longitude,
+      dir = tempdir,
       latitude = latitude,
-      popup = popup,
-      label = label,
+      longitude = longitude,
       split_col = split_col,
-      collapse = collapse.control
+      d.fig = d.fig,
+      popup = popup,
+      label = label
     )
 
+  # create leaflet map
+  map <-
+    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+
+  # add legend
   if (all(!is.na(percentile)) & draw.legend) {
     percs <- unique(c(0, percentile))
     map <-
@@ -136,5 +138,6 @@ percentileMap <- function(data,
       )
   }
 
-  map
+  # return map
+  return(map)
 }

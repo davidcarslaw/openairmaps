@@ -6,6 +6,8 @@
 
 * Fixed `alpha` to work on both Windows and MacOS by forcing the use of the "cairo" device to save plots.
 
+* Polar marker maps now show a progress bar when creating the markers takes more than a few seconds (most commonly in `polarMap()` and `annulusMap()`).
+
 # openairmaps 0.6.1
 
 * Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and James/"@jenright-git" for noticing this issue.

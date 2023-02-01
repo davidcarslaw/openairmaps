@@ -47,10 +47,8 @@ windroseMap <- function(data,
                         key = FALSE,
                         draw.legend = TRUE,
                         collapse.control = FALSE,
-                        iconWidth = 200,
-                        iconHeight = 200,
-                        fig.width = 3.5,
-                        fig.height = 3.5,
+                        d.icon = 200,
+                        d.fig = 3.5,
                         type = NULL,
                         ...) {
   if (!is.null(type)) {
@@ -61,11 +59,9 @@ windroseMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -73,6 +69,7 @@ windroseMap <- function(data,
   # utilities...
   data$ws_dup <- data$ws
 
+  # prep data
   data <-
     prepMapData(
       data = data,
@@ -92,17 +89,6 @@ windroseMap <- function(data,
   breaks <-
     getBreaks(breaks = breaks, ws.int = ws.int, vec = data$conc, polrose = FALSE)
 
-  # define plotting function
-  args <- list(...)
-  if ("pollutant" %in% names(args)) {
-    args <- args[names(args) != "pollutant"]
-    cli::cli_alert_warning("{.fun windroseMap} does not support the {.code pollutant} argument.")
-  }
-
-  fun <- function(...) {
-    rlang::exec(openair::windRose, alpha = alpha, annotate = FALSE, breaks = breaks, ws.int = ws.int, !!!args, ...)
-  }
-
   # identify splitting column (defaulting to pollutant)
   if (!is.null(control)) {
     data[control] <- as.factor(data[[control]])
@@ -111,34 +97,42 @@ windroseMap <- function(data,
     split_col <- "pollutant_name"
   }
 
-  # create icons
-  icons <-
-    data %>%
-    dplyr::group_split(.data[[split_col]]) %>%
-    rlang::set_names(levels(data[[split_col]])) %>%
-    purrr::imap(
-      .f = ~ create_icons(
-        data = .x, fun = fun, pollutant = "conc", split = .y,
-        lat = latitude, lon = longitude, x = x, cols = cols,
-        key = key, fig.width = fig.width, fig.height = fig.height,
-        iconWidth = iconWidth, iconHeight = iconHeight, ...
-      )
+  # define function
+  fun <- function(data) {
+    openair::windRose(
+      data,
+      plot = FALSE,
+      ws.int = ws.int,
+      breaks = breaks,
+      cols = cols,
+      alpha = alpha,
+      key = key,
+      annotate = FALSE,
+      ...,
+      par.settings = list(axis.line = list(col = "transparent"))
     )
+  }
 
-  # plot leaflet
-  map <-
-    makeMap(
+  # create temp directory
+  tempdir <- tempdir()
+
+  # plot and save static markers
+  plots_df <-
+    create_static_markers(
+      fun = fun,
       data = data,
-      icons = icons,
-      provider = provider,
-      longitude = longitude,
+      dir = tempdir,
       latitude = latitude,
-      popup = popup,
-      label = label,
+      longitude = longitude,
       split_col = split_col,
-      collapse = collapse.control
+      d.fig = d.fig
     )
 
+  # create leaflet map
+  map <-
+    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+
+  # add legend
   if (draw.legend) {
     map <-
       leaflet::addLegend(
@@ -153,5 +147,5 @@ windroseMap <- function(data,
       )
   }
 
-  map
+  return(map)
 }

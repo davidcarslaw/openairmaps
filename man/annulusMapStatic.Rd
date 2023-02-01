@@ -71,11 +71,11 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{facet.nrow}{Passed to the \code{nrow} argument of \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.}
 
-\item{d.icon}{The diameter of the plot on the map. This will affect the size
-of the individual polar markers.}
+\item{d.icon}{The diameter of the plot on the map in pixels. This will affect
+the size of the individual polar markers.}
 
-\item{d.fig}{The width of the plots to be produced in inches. This will
-affect the resolution of the markers on the map.}
+\item{d.fig}{The diameter of the plots to be produced using \code{openair} in
+inches. This will affect the resolution of the markers on the map.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:polarAnnulus]{openair::polarAnnulus}}

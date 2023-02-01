@@ -20,10 +20,8 @@ polarMap(
   key = FALSE,
   draw.legend = TRUE,
   collapse.control = FALSE,
-  iconWidth = 200,
-  iconHeight = 200,
-  fig.width = 3.5,
-  fig.height = 3.5,
+  d.icon = 200,
+  d.fig = 3.5,
   type = NULL,
   ...
 )
@@ -82,13 +80,11 @@ created at the side of the map? Default is \code{TRUE}.}
 \item{collapse.control}{Should the "layer control" interface be collapsed?
 Defaults to \code{FALSE}.}
 
-\item{iconWidth}{The actual width of the plot on the map in pixels.}
+\item{d.icon}{The diameter of the plot on the map in pixels. This will affect
+the size of the individual polar markers.}
 
-\item{iconHeight}{The actual height of the plot on the map in pixels.}
-
-\item{fig.width}{The width of the plots to be produced in inches.}
-
-\item{fig.height}{The height of the plots to be produced in inches.}
+\item{d.fig}{The diameter of the plots to be produced using \code{openair} in
+inches. This will affect the resolution of the markers on the map.}
 
 \item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label different
 sites.}
@@ -299,8 +295,7 @@ polarMap(polar_data,
 \seealso{
 the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
 
-\code{\link[=polarMapStatic]{polarMapStatic()}} for the static \code{ggmap} equivalent of
-\code{\link[=polarMap]{polarMap()}}
+\code{\link[=polarMapStatic]{polarMapStatic()}} for the static \code{ggmap} equivalent of \code{\link[=polarMap]{polarMap()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
