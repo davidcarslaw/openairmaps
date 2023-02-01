@@ -10,7 +10,6 @@ pollroseMapStatic(
   statistic = "prop.count",
   breaks = NULL,
   facet = NULL,
-  limits = NULL,
   latitude = NULL,
   longitude = NULL,
   zoom = 13,
@@ -53,10 +52,6 @@ the data into segments <1, 1-10, 10-100, >100.}
 panels. Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
 \code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{facet} cannot be used if multiple \code{pollutant}
 columns have been provided.}
-
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
