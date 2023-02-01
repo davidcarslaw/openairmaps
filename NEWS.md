@@ -14,7 +14,7 @@
 
 * Functions now use Google's "turbo" colour palette rather than "jet" by default. More about this palette and the advantages of using it over "jet" can be read at <https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html>.
 
-# openairmaps 0.6.0 (29/11/2022)
+# openairmaps 0.6.0
 
 ## Directional Analysis
 
@@ -54,7 +54,7 @@
 
 
 
-# openairmaps 0.5.0 (2022-10-19)
+# openairmaps 0.5.0
 
 ## Directional Analysis
 
@@ -80,7 +80,7 @@
 
 
 
-# openairmaps 0.4.3 (2022-09-12)
+# openairmaps 0.4.3
 
 ## Features
 
@@ -94,13 +94,13 @@
 
 
 
-# openairmaps 0.4.2 (2022-09-12)
+# openairmaps 0.4.2
 
 * `trajLevelMap()` now works where `statistic = "frequency"` without a "pollutant".
 
 
 
-# openairmaps 0.4.1 (2022-09-09)
+# openairmaps 0.4.1
 
 ## Features
 
