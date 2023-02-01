@@ -338,7 +338,6 @@ polarMapStatic <- function(data,
     create_static_map(
       ggmap = ggmap,
       plots_df = plots_df,
-      dir = tempdir,
       latitude = latitude,
       longitude = longitude,
       split_col = split_col,

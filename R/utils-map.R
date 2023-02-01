@@ -452,7 +452,6 @@ estimate_ggmap <-
 create_static_map <-
   function(ggmap,
            plots_df,
-           dir,
            latitude,
            longitude,
            split_col,
