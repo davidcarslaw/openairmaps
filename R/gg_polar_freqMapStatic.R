@@ -5,7 +5,7 @@
 #' can be achieved using functions like [ggplot2::theme()] and
 #' [ggplot2::guides()].
 #'
-#' @inheritSection polarMapStatic Further customisation using ggplot2 
+#' @inheritSection polarMapStatic Further customisation using ggplot2
 #'
 #' @family static directional analysis maps
 #'

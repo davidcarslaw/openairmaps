@@ -42,10 +42,6 @@
 #'   `ggmap` object to override this, which allows for alternative bounding
 #'   boxes, map types and colours.
 #' @param facet.nrow Passed to the `nrow` argument of [ggplot2::facet_wrap()].
-#' @param d.icon The diameter of the plot on the map. This will affect the size
-#'   of the individual polar markers.
-#' @param d.fig The width of the plots to be produced in inches. This will
-#'   affect the resolution of the markers on the map.
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot
 #'
