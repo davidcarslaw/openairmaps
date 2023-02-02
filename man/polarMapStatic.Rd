@@ -69,10 +69,14 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 \item{facet.nrow}{Passed to the \code{nrow} argument of \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.}
 
 \item{d.icon}{The diameter of the plot on the map in pixels. This will affect
-the size of the individual polar markers.}
+the size of the individual polar markers. Alternatively, a vector in the
+form \code{c(width, height)} can be provided if a non-circular marker is
+desired.}
 
 \item{d.fig}{The diameter of the plots to be produced using \code{openair} in
-inches. This will affect the resolution of the markers on the map.}
+inches. This will affect the resolution of the markers on the map.
+Alternatively, a vector in the form \code{c(width, height)} can be provided if a
+non-circular marker is desired.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:polarPlot]{openair::polarPlot}}

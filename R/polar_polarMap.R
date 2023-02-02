@@ -47,9 +47,13 @@
 #' @param collapse.control Should the "layer control" interface be collapsed?
 #'   Defaults to `FALSE`.
 #' @param d.icon The diameter of the plot on the map in pixels. This will affect
-#'   the size of the individual polar markers.
+#'   the size of the individual polar markers. Alternatively, a vector in the
+#'   form `c(width, height)` can be provided if a non-circular marker is
+#'   desired.
 #' @param d.fig The diameter of the plots to be produced using `openair` in
 #'   inches. This will affect the resolution of the markers on the map.
+#'   Alternatively, a vector in the form `c(width, height)` can be provided if a
+#'   non-circular marker is desired.
 #' @param type Deprecated. Please use `label` and/or `popup` to label different
 #'   sites.
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
