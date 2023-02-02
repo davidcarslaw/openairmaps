@@ -1,45 +1,40 @@
-Package: openairmaps
 Type: Package
+Package: openairmaps
 Title: Create Maps of Air Pollution Data
 Version: 0.6.1.9004
-Authors@R: 
-  c(person(given = "Jack",
-           family = "Davison",
-           role = c("cre", "aut"),
-           email = "davison.jack.jd@gmail.com"),
-    person(given = "David", 
-           family = "Carslaw", 
-           role = c("aut"), 
-           email = "david.carslaw@york.ac.uk"))
-Description: Combine the air quality data analysis methods of 'openair' 
-  with the JavaScript 'Leaflet' (<https://leafletjs.com/>) library. 
-  Functionality includes plotting site maps, "directional analysis" 
-  figures such as polar plots, and air mass trajectories.
+Authors@R: c(
+    person("Jack", "Davison", , "davison.jack.jd@gmail.com", role = c("cre", "aut")),
+    person("David", "Carslaw", , "david.carslaw@york.ac.uk", role = "aut")
+  )
+Description: Combine the air quality data analysis methods of 'openair'
+    with the JavaScript 'Leaflet' (<https://leafletjs.com/>) library.
+    Functionality includes plotting site maps, "directional analysis"
+    figures such as polar plots, and air mass trajectories.
 License: GPL (>= 3)
-Encoding: UTF-8
-LazyData: true
+URL: https://davidcarslaw.github.io/openairmaps/
 Depends:
     R (>= 3.2.0)
 Imports:
-    openair (>= 2.13),
-    dplyr,
-    leaflet,
-    purrr (>= 1.0.0),
-    magrittr,
-    rlang,
-    lubridate,
-    tibble,
-    stringr,
-    forcats,
-    tidyr,
     cli,
-    tidyselect,
+    dplyr,
+    forcats,
     ggmap,
     ggplot2,
-    ggtext
+    ggtext,
+    leaflet,
+    lubridate,
+    magrittr,
+    openair (>= 2.13),
+    purrr (>= 1.0.0),
+    rlang,
+    stringr,
+    tibble,
+    tidyr,
+    tidyselect
 Suggests:
     worldmet
-RoxygenNote: 7.2.3
-Roxygen: list(markdown = TRUE)
+Encoding: UTF-8
 Language: en-GB
-URL: https://davidcarslaw.github.io/openairmaps/
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
