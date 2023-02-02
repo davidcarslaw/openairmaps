@@ -376,7 +376,8 @@ create_static_markers <-
            split_col = split_col,
            popup = NULL,
            label = NULL,
-           d.fig) {
+           d.fig,
+           dropcol = "conc") {
     if (is.null(popup)) {
       data$popup <- "NA"
       popup <- "popup"
@@ -389,7 +390,7 @@ create_static_markers <-
     # create plots
     plots_df <-
       data %>%
-      tidyr::drop_na(.data$conc) %>%
+      tidyr::drop_na(.data[[dropcol]]) %>%
       tidyr::nest(data = -dplyr::all_of(c(
         latitude, longitude, split_col, popup, label
       ))) %>%

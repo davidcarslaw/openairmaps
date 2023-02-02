@@ -6,15 +6,9 @@
 #' control over groups and layerIds than in "all-in-one" functions like
 #' [polarMap()].
 #'
-#' @param map a map widget object created from [leaflet::leaflet()].
+#' @inheritParams leaflet::addMarkers
 #' @param lng The decimal longitude.
 #' @param lat The decimal latitude.
-#' @param layerId The layer id.
-#' @param group the name of the group the newly created layers should belong to
-#'   (for [leaflet::clearGroup()] and [leaflet::addLayersControl()] purposes).
-#'   Human-friendly group names are permitted–they need not be short,
-#'   identifier-style names. Any number of layers and even different types of
-#'   layers (e.g. markers and polygons) can share the same group name.
 #' @param popup A column of `data` to be used as a popup.
 #' @param label A column of `data` to be used as a label.
 #' @param data A data frame. The data frame must contain the data to plot your
@@ -29,10 +23,11 @@
 #'   [openair::windRose()].
 #' @param pollutant The name of the pollutant to be plot. Note that, if `fun =
 #'   openair::windRose`, you must set `pollutant = "ws"`.
-#' @param iconWidth The actual width of the plot on the map in pixels.
-#' @param iconHeight The actual height of the plot on the map in pixels.
-#' @param fig.width The width of the plots to be produced in inches.
-#' @param fig.height The height of the plots to be produced in inches.
+#' @param key Should a key for each marker be drawn? Default is `FALSE`.
+#' @param d.icon The diameter of the plot on the map in pixels. This will affect
+#'   the size of the individual polar markers.
+#' @param d.fig The diameter of the plots to be produced using `openair` in
+#'   inches. This will affect the resolution of the markers on the map.
 #' @param ... Other arguments for the plotting function (e.g. `period` for
 #'   [openair::polarAnnulus()]).
 #' @return A leaflet object.
@@ -67,19 +62,18 @@
 #'
 addPolarMarkers <-
   function(map,
+           data,
+           fun = openair::polarPlot,
+           pollutant,
            lng = NULL,
            lat = NULL,
            layerId = NULL,
            group = NULL,
            popup = NULL,
            label = NULL,
-           data,
-           fun = openair::polarPlot,
-           pollutant,
-           iconWidth = 200,
-           iconHeight = 200,
-           fig.width = 3.5,
-           fig.height = 3.5,
+           key = FALSE,
+           d.icon = 200,
+           d.fig = 3.5,
            ...) {
     # guess lat/lon
     latlon <- assume_latlon(
@@ -87,97 +81,69 @@ addPolarMarkers <-
       latitude = lat,
       longitude = lng
     )
-    lat <- latlon$latitude
-    lng <- latlon$longitude
+    latitude <- latlon$latitude
+    longitude <- latlon$longitude
 
     # define plotting function
     args <- list(...)
     thefun <- function(...) {
-      rlang::exec(fun, !!!args, ..., annotate = FALSE)
+      rlang::exec(fun,
+                  !!!args,
+                  ...,
+                  annotate = FALSE,
+                  par.settings = list(axis.line = list(col = "transparent")),
+                  plot = FALSE,
+                  key = key)
     }
 
-    # where to write files
-    icon_dir <- tempdir()
+    # create temp directory
+    tempdir <- tempdir()
 
-    save_icon <-
-      function(data,
-               fun,
-               dir,
-               pollutant,
-               fig.width,
-               fig.height,
-               ...) {
-        grDevices::png(
-          type = "cairo-png",
-          filename = paste0(dir, "/", data[[lat]][1], data[[lng]][1], "_", pollutant, ".png"),
-          width = fig.width * 300,
-          height = fig.height * 300,
-          res = 300,
-          bg = "transparent"
-        )
+    data$dummyvar <- "dummyvar"
+    split_col <- "dummyvar"
 
-        plt <- fun(
-          data,
-          key = FALSE,
-          pollutant = pollutant,
-          par.settings = list(axis.line = list(col = "transparent"))
-        )
-
-        grDevices::dev.off()
-      }
-
-    # go through all sites and make some plot
-    data %>%
-      dplyr::group_split(.data[[lat]], .data[[lng]]) %>%
-      purrr::walk(
-        .f = ~ save_icon(
-          data = .x,
-          fun = thefun,
-          dir = icon_dir,
-          pollutant = pollutant,
-          fig.width = fig.width,
-          fig.height = fig.height
-        )
+    # plot and save static markers
+    plots_df <-
+      create_static_markers(
+        fun = thefun,
+        data = data,
+        dir = tempdir,
+        latitude = latitude,
+        longitude = longitude,
+        split_col = split_col,
+        d.fig = d.fig,
+        popup = popup,
+        label = label,
+        dropcol = pollutant
       )
 
-    # definition of 'icons' aka the openair plots
-    dat2 <- data %>%
-      dplyr::arrange(.data[[lat]], .data[[lng]]) %>%
-      dplyr::mutate(id = paste0(.data[[lat]], .data[[lng]]))
-
-    # definition of 'icons' aka the openair plots
-    leafIcons <-
-      lapply(
-        paste0(
-          icon_dir, "/", unique(dat2$id), "_", pollutant, ".png"
-        ),
-        leaflet::makeIcon,
-        iconWidth = iconWidth,
-        iconHeight = iconHeight
-      )
-
-    names(leafIcons) <- paste0(unique(data[[lat]]), unique(data[[lng]]))
-    class(leafIcons) <- "leaflet_icon_set"
-
-    plot_data <-
-      dplyr::group_by(data, .data[[lat]], .data[[lng]]) %>%
-      dplyr::slice(n = 1) %>%
-      dplyr::arrange(.data[[lat]], .data[[lng]])
-
-    if (!is.null(label)) label <- plot_data[[label]]
-    if (!is.null(popup)) popup <- plot_data[[popup]]
-
-    map <- leaflet::addMarkers(
-      map,
-      data = plot_data,
-      lng = plot_data[[lng]],
-      lat = plot_data[[lat]],
-      icon = leafIcons,
-      popup = popup,
-      label = label,
+    # get marker arguments
+    marker_arg <- list(
+      map = map,
+      lat = plots_df[[latitude]],
+      lng = plots_df[[longitude]],
+      icon = leaflet::makeIcon(
+        iconUrl = plots_df$url,
+        iconHeight = d.icon,
+        iconWidth = d.icon,
+        iconAnchorX = d.icon / 2,
+        iconAnchorY = d.icon / 2
+      ),
       group = group,
       layerId = layerId
     )
 
-    map
+    # deal w/ popups/labels
+    if (!is.null(popup)) {
+      marker_arg <- append(marker_arg, list(popup = plots_df[[popup]]))
+    }
+    if (!is.null(label)) {
+      marker_arg <- append(marker_arg, list(label = plots_df[[label]]))
+    }
+
+    # add markers to map
+    map <- rlang::exec(leaflet::addMarkers,!!!marker_arg)
+
+    # return map
+    return(map)
   }

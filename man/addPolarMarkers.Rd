@@ -6,40 +6,23 @@
 \usage{
 addPolarMarkers(
   map,
+  data,
+  fun = openair::polarPlot,
+  pollutant,
   lng = NULL,
   lat = NULL,
   layerId = NULL,
   group = NULL,
   popup = NULL,
   label = NULL,
-  data,
-  fun = openair::polarPlot,
-  pollutant,
-  iconWidth = 200,
-  iconHeight = 200,
-  fig.width = 3.5,
-  fig.height = 3.5,
+  key = FALSE,
+  d.icon = 200,
+  d.fig = 3.5,
   ...
 )
 }
 \arguments{
-\item{map}{a map widget object created from \code{\link[leaflet:leaflet]{leaflet::leaflet()}}.}
-
-\item{lng}{The decimal longitude.}
-
-\item{lat}{The decimal latitude.}
-
-\item{layerId}{The layer id.}
-
-\item{group}{the name of the group the newly created layers should belong to
-(for \code{\link[leaflet:remove]{leaflet::clearGroup()}} and \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}} purposes).
-Human-friendly group names are permitted–they need not be short,
-identifier-style names. Any number of layers and even different types of
-layers (e.g. markers and polygons) can share the same group name.}
-
-\item{popup}{A column of \code{data} to be used as a popup.}
-
-\item{label}{A column of \code{data} to be used as a label.}
+\item{map}{a map widget object created from \code{\link[leaflet]{leaflet}()}}
 
 \item{data}{A data frame. The data frame must contain the data to plot your
 choice of openair directional analysis plot, which includes wind speed
@@ -55,13 +38,29 @@ functions include \code{\link[openair:polarPlot]{openair::polarPlot()}} (the def
 
 \item{pollutant}{The name of the pollutant to be plot. Note that, if \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
 
-\item{iconWidth}{The actual width of the plot on the map in pixels.}
+\item{lng}{The decimal longitude.}
 
-\item{iconHeight}{The actual height of the plot on the map in pixels.}
+\item{lat}{The decimal latitude.}
 
-\item{fig.width}{The width of the plots to be produced in inches.}
+\item{layerId}{the layer id}
 
-\item{fig.height}{The height of the plots to be produced in inches.}
+\item{group}{the name of the group the newly created layers should belong to
+(for \code{\link[leaflet]{clearGroup}} and \code{\link[leaflet]{addLayersControl}} purposes).
+Human-friendly group names are permitted--they need not be short,
+identifier-style names. Any number of layers and even different types of
+layers (e.g. markers and polygons) can share the same group name.}
+
+\item{popup}{A column of \code{data} to be used as a popup.}
+
+\item{label}{A column of \code{data} to be used as a label.}
+
+\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+
+\item{d.icon}{The diameter of the plot on the map in pixels. This will affect
+the size of the individual polar markers.}
+
+\item{d.fig}{The diameter of the plots to be produced using \code{openair} in
+inches. This will affect the resolution of the markers on the map.}
 
 \item{...}{Other arguments for the plotting function (e.g. \code{period} for
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}).}
