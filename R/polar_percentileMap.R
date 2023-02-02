@@ -178,9 +178,11 @@ percentileMapStatic <- function(data,
                                 d.fig = 3,
                                 ...) {
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -267,7 +269,8 @@ percentileMapStatic <- function(data,
     plt +
     ggplot2::geom_point(
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                   fill = intervals[1]),
+        fill = intervals[1]
+      ),
       size = 0,
       key_glyph = ggplot2::draw_key_rect
     ) +

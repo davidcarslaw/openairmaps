@@ -91,12 +91,13 @@ addPolarMarkers <-
     args <- list(...)
     thefun <- function(...) {
       rlang::exec(fun,
-                  !!!args,
-                  ...,
-                  annotate = FALSE,
-                  par.settings = list(axis.line = list(col = "transparent")),
-                  plot = FALSE,
-                  key = key)
+        !!!args,
+        ...,
+        annotate = FALSE,
+        par.settings = list(axis.line = list(col = "transparent")),
+        plot = FALSE,
+        key = key
+      )
     }
 
     # create dummy split_col
@@ -118,10 +119,10 @@ addPolarMarkers <-
       )
 
     # work out width/height
-    if (length(d.icon) == 1){
+    if (length(d.icon) == 1) {
       width <- height <- d.icon
     }
-    if (length(d.icon) == 2){
+    if (length(d.icon) == 2) {
       width <- d.icon[[1]]
       height <- d.icon[[2]]
     }
@@ -151,7 +152,7 @@ addPolarMarkers <-
     }
 
     # add markers to map
-    map <- rlang::exec(leaflet::addMarkers,!!!marker_arg)
+    map <- rlang::exec(leaflet::addMarkers, !!!marker_arg)
 
     # return map
     return(map)
