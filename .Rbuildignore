@@ -13,3 +13,4 @@ README_cache
 ^LICENSE\.md$
 ^CRAN-SUBMISSION$
 ^pkgdown$
+^CODE_OF_CONDUCT\.md$
