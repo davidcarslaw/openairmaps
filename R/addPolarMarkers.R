@@ -99,9 +99,7 @@ addPolarMarkers <-
                   key = key)
     }
 
-    # create temp directory
-    tempdir <- tempdir()
-
+    # create dummy split_col
     data$dummyvar <- "dummyvar"
     split_col <- "dummyvar"
 
@@ -110,7 +108,6 @@ addPolarMarkers <-
       create_static_markers(
         fun = thefun,
         data = data,
-        dir = tempdir,
         latitude = latitude,
         longitude = longitude,
         split_col = split_col,

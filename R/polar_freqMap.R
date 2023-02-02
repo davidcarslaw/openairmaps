@@ -139,15 +139,11 @@ freqMap <- function(data,
     }
   }
 
-  # create temp directory
-  tempdir <- tempdir()
-
   # plot and save static markers
   plots_df <-
     create_static_markers(
       fun = fun,
       data = data,
-      dir = tempdir,
       latitude = latitude,
       longitude = longitude,
       split_col = split_col,
@@ -305,15 +301,11 @@ freqMapStatic <- function(data,
     }
   }
 
-  # create temp directory
-  tempdir <- tempdir()
-
   # plot and save static markers
   plots_df <-
     create_static_markers(
       fun = fun,
       data = data,
-      dir = tempdir,
       latitude = latitude,
       longitude = longitude,
       split_col = split_col,
