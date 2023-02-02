@@ -99,9 +99,11 @@ polarMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -348,9 +350,12 @@ polarMapStatic <- function(data,
     plt <-
       plt +
       ggplot2::geom_point(ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-                          alpha = 0) +
-      ggplot2::scale_color_gradientn(limits = theLimits,
-                                     colours = openair::openColours(scheme = cols)) +
+        alpha = 0
+      ) +
+      ggplot2::scale_color_gradientn(
+        limits = theLimits,
+        colours = openair::openColours(scheme = cols)
+      ) +
       ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
   }
 
