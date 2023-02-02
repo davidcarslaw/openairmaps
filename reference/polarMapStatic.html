@@ -16,7 +16,7 @@ ggplot2::guides()."><meta property="og:image" content="https://davidcarslaw.gith
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,13 +148,17 @@ between 0 and 1 with zero being fully transparent and 1 fully opaque).</p></dd>
 
 
 <dt>d.icon</dt>
-<dd><p>The diameter of the plot on the map. This will affect the size
-of the individual polar markers.</p></dd>
+<dd><p>The diameter of the plot on the map in pixels. This will affect
+the size of the individual polar markers. Alternatively, a vector in the
+form <code>c(width, height)</code> can be provided if a non-circular marker is
+desired.</p></dd>
 
 
 <dt>d.fig</dt>
-<dd><p>The width of the plots to be produced in inches. This will
-affect the resolution of the markers on the map.</p></dd>
+<dd><p>The diameter of the plots to be produced using <code>openair</code> in
+inches. This will affect the resolution of the markers on the map.
+Alternatively, a vector in the form <code>c(width, height)</code> can be provided if a
+non-circular marker is desired.</p></dd>
 
 
 <dt>...</dt>

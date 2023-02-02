@@ -16,7 +16,7 @@ using control.'><meta property="og:image" content="https://davidcarslaw.github.i
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,10 +73,8 @@ using <code>control</code>.</p>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  draw.legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  collapse.control <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  iconWidth <span class="op">=</span> <span class="fl">200</span>,</span>
-<span>  iconHeight <span class="op">=</span> <span class="fl">200</span>,</span>
-<span>  fig.width <span class="op">=</span> <span class="fl">3.5</span>,</span>
-<span>  fig.height <span class="op">=</span> <span class="fl">3.5</span>,</span>
+<span>  d.icon <span class="op">=</span> <span class="fl">200</span>,</span>
+<span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -174,20 +172,18 @@ be created at the side of the map? Default is <code>TRUE</code>.</p></dd>
 Defaults to <code>FALSE</code>.</p></dd>
 
 
-<dt>iconWidth</dt>
-<dd><p>The actual width of the plot on the map in pixels.</p></dd>
+<dt>d.icon</dt>
+<dd><p>The diameter of the plot on the map in pixels. This will affect
+the size of the individual polar markers. Alternatively, a vector in the
+form <code>c(width, height)</code> can be provided if a non-circular marker is
+desired.</p></dd>
 
 
-<dt>iconHeight</dt>
-<dd><p>The actual height of the plot on the map in pixels.</p></dd>
-
-
-<dt>fig.width</dt>
-<dd><p>The width of the plots to be produced in inches.</p></dd>
-
-
-<dt>fig.height</dt>
-<dd><p>The height of the plots to be produced in inches.</p></dd>
+<dt>d.fig</dt>
+<dd><p>The diameter of the plots to be produced using <code>openair</code> in
+inches. This will affect the resolution of the markers on the map.
+Alternatively, a vector in the form <code>c(width, height)</code> can be provided if a
+non-circular marker is desired.</p></dd>
 
 
 <dt>type</dt>
