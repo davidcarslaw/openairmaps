@@ -1,4 +1,3 @@
-
 ## SCRIPT TO IMPORT "polar_data"
 
 # find meta data
