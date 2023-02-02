@@ -57,10 +57,14 @@ layers (e.g. markers and polygons) can share the same group name.}
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
 \item{d.icon}{The diameter of the plot on the map in pixels. This will affect
-the size of the individual polar markers.}
+the size of the individual polar markers. Alternatively, a vector in the
+form \code{c(width, height)} can be provided if a non-circular marker is
+desired.}
 
 \item{d.fig}{The diameter of the plots to be produced using \code{openair} in
-inches. This will affect the resolution of the markers on the map.}
+inches. This will affect the resolution of the markers on the map.
+Alternatively, a vector in the form \code{c(width, height)} can be provided if a
+non-circular marker is desired.}
 
 \item{...}{Other arguments for the plotting function (e.g. \code{period} for
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}).}
@@ -101,5 +105,4 @@ leaflet() \%>\%
     baseGroups = c("Wind Rose", "Polar Plot")
   )
 }
-
 }

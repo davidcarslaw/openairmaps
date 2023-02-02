@@ -77,10 +77,14 @@ Default is \code{TRUE}.}
 Defaults to \code{FALSE}.}
 
 \item{d.icon}{The diameter of the plot on the map in pixels. This will affect
-the size of the individual polar markers.}
+the size of the individual polar markers. Alternatively, a vector in the
+form \code{c(width, height)} can be provided if a non-circular marker is
+desired.}
 
 \item{d.fig}{The diameter of the plots to be produced using \code{openair} in
-inches. This will affect the resolution of the markers on the map.}
+inches. This will affect the resolution of the markers on the map.
+Alternatively, a vector in the form \code{c(width, height)} can be provided if a
+non-circular marker is desired.}
 
 \item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label different
 sites.}

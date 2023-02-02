@@ -307,6 +307,15 @@ make_leaflet_map <-
       map <- leaflet::addProviderTiles(map, i, group = i)
     }
 
+    # work out width/height
+    if (length(d.icon) == 1){
+      width <- height <- d.icon
+    }
+    if (length(d.icon) == 2){
+      width <- d.icon[[1]]
+      height <- d.icon[[2]]
+    }
+
     # add markers
     marker_arg <- list(
       map = map,
@@ -314,10 +323,10 @@ make_leaflet_map <-
       lng = data[[longitude]],
       icon = leaflet::makeIcon(
         iconUrl = data$url,
-        iconHeight = d.icon,
-        iconWidth = d.icon,
-        iconAnchorX = d.icon / 2,
-        iconAnchorY = d.icon / 2
+        iconHeight = height,
+        iconWidth = width,
+        iconAnchorX = width / 2,
+        iconAnchorY = height / 2
       ),
       group = quickTextHTML(data[[split_col]])
     )
@@ -399,12 +408,21 @@ create_static_markers <-
         url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], ".png")
       )
 
+    # work out w/h
+    if (length(d.fig) == 1){
+      width <- height <- d.fig
+    }
+    if (length(d.fig) == 2){
+      width <- d.fig[[1]]
+      height <- d.fig[[2]]
+    }
+
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
                  .f = ~ {
                    grDevices::png(
                      filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
-                     width = d.fig * 300,
-                     height = d.fig * 300,
+                     width = width * 300,
+                     height = height * 300,
                      res = 300,
                      bg = "transparent",
                      type = "cairo",
@@ -460,12 +478,22 @@ create_static_map <-
            d.icon,
            facet,
            facet.nrow) {
+    # work out width/height
+    if (length(d.icon) == 1){
+      width <- height <- d.icon
+    }
+    if (length(d.icon) == 2){
+      width <- d.icon[[1]]
+      height <- d.icon[[2]]
+    }
+
+    # make plot
     plt <-
       ggmap::ggmap(ggmap) +
       ggtext::geom_richtext(
         data = dplyr::mutate(
           plots_df,
-          url = stringr::str_glue("<img src='{url}' width='{d.icon}'/>")
+          url = stringr::str_glue("<img src='{url}' width='{width}' height='{height}'/>")
         ),
         ggplot2::aes(.data[[longitude]], .data[[latitude]], label = .data$url),
         fill = NA,

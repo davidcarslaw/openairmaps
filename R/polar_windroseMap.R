@@ -87,7 +87,12 @@ windroseMap <- function(data,
   # work out breaks
   # needs to happen before plotting to ensure same scales
   breaks <-
-    getBreaks(breaks = breaks, ws.int = ws.int, vec = data$conc, polrose = FALSE)
+    getBreaks(
+      breaks = breaks,
+      ws.int = ws.int,
+      vec = data$conc,
+      polrose = FALSE
+    )
 
   # identify splitting column (defaulting to pollutant)
   if (!is.null(control)) {
@@ -125,7 +130,9 @@ windroseMap <- function(data,
       latitude = latitude,
       longitude = longitude,
       split_col = split_col,
-      d.fig = d.fig
+      d.fig = d.fig,
+      popup = popup,
+      label = label
     )
 
   # create leaflet map

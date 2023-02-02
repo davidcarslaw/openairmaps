@@ -25,9 +25,13 @@
 #'   openair::windRose`, you must set `pollutant = "ws"`.
 #' @param key Should a key for each marker be drawn? Default is `FALSE`.
 #' @param d.icon The diameter of the plot on the map in pixels. This will affect
-#'   the size of the individual polar markers.
+#'   the size of the individual polar markers. Alternatively, a vector in the
+#'   form `c(width, height)` can be provided if a non-circular marker is
+#'   desired.
 #' @param d.fig The diameter of the plots to be produced using `openair` in
 #'   inches. This will affect the resolution of the markers on the map.
+#'   Alternatively, a vector in the form `c(width, height)` can be provided if a
+#'   non-circular marker is desired.
 #' @param ... Other arguments for the plotting function (e.g. `period` for
 #'   [openair::polarAnnulus()]).
 #' @return A leaflet object.
@@ -59,7 +63,6 @@
 #'     baseGroups = c("Wind Rose", "Polar Plot")
 #'   )
 #' }
-#'
 addPolarMarkers <-
   function(map,
            data,
@@ -117,6 +120,15 @@ addPolarMarkers <-
         dropcol = pollutant
       )
 
+    # work out width/height
+    if (length(d.icon) == 1){
+      width <- height <- d.icon
+    }
+    if (length(d.icon) == 2){
+      width <- d.icon[[1]]
+      height <- d.icon[[2]]
+    }
+
     # get marker arguments
     marker_arg <- list(
       map = map,
@@ -124,10 +136,10 @@ addPolarMarkers <-
       lng = plots_df[[longitude]],
       icon = leaflet::makeIcon(
         iconUrl = plots_df$url,
-        iconHeight = d.icon,
-        iconWidth = d.icon,
-        iconAnchorX = d.icon / 2,
-        iconAnchorY = d.icon / 2
+        iconHeight = height,
+        iconWidth = width,
+        iconAnchorX = width / 2,
+        iconAnchorY = height / 2
       ),
       group = group,
       layerId = layerId
