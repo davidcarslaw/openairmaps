@@ -379,7 +379,6 @@ theme_static <- function() {
 create_static_markers <-
   function(fun,
            data = data,
-           dir = tempdir,
            latitude = latitude,
            longitude = longitude,
            split_col = split_col,
@@ -387,6 +386,11 @@ create_static_markers <-
            label = NULL,
            d.fig,
            dropcol = "conc") {
+
+    # make temp directory
+    dir = tempdir()
+
+    # sort out popups/labels
     if (is.null(popup)) {
       data$popup <- "NA"
       popup <- "popup"
