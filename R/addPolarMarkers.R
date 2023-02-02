@@ -66,8 +66,8 @@
 addPolarMarkers <-
   function(map,
            data,
-           fun = openair::polarPlot,
            pollutant,
+           fun = openair::polarPlot,
            lng = NULL,
            lat = NULL,
            layerId = NULL,

@@ -7,8 +7,8 @@
 addPolarMarkers(
   map,
   data,
-  fun = openair::polarPlot,
   pollutant,
+  fun = openair::polarPlot,
   lng = NULL,
   lat = NULL,
   layerId = NULL,
@@ -30,13 +30,13 @@ choice of openair directional analysis plot, which includes wind speed
 concentration of a pollutant. In addition, \code{data} must include a decimal
 latitude and longitude.}
 
+\item{pollutant}{The name of the pollutant to be plot. Note that, if \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
+
 \item{fun}{An \code{openair} directional analysis plotting function. Supported
 functions include \code{\link[openair:polarPlot]{openair::polarPlot()}} (the default),
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}, \code{\link[openair:polarFreq]{openair::polarFreq()}},
 \code{\link[openair:percentileRose]{openair::percentileRose()}}, \code{\link[openair:pollutionRose]{openair::pollutionRose()}} and
 \code{\link[openair:windRose]{openair::windRose()}}.}
-
-\item{pollutant}{The name of the pollutant to be plot. Note that, if \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
 
 \item{lng}{The decimal longitude.}
 
