@@ -1,4 +1,3 @@
-
 # import trajectories
 traj <- openair::importTraj(site = "london", year = 2010)
 

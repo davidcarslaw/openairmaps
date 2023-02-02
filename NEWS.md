@@ -1,10 +1,22 @@
 # openairmaps (development version)
 
-* Added "static" equivalents of all of the polar marker maps written in `ggplot2`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
+* Added "static" equivalents of all of the polar marker maps written in `{ggplot2}`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
+
+  * The `{ggplot2}` functions can be identified by "Static" being appended to the function name. For example, `polarMap()` is the `{leaflet}` polar plot map, whereas `polarMapStatic()` is the `{ggplot2}` equivalent.
 
 * Added `alpha` back as an argument to all of the directional analysis polar mapping functions now a recent openair update supports it.
 
 * Fixed `alpha` to work on both Windows and MacOS by forcing the use of the "cairo" device to save plots.
+
+* Polar marker maps and `addPolarMarkers()` now show a progress bar when creating the markers takes more than a few seconds (most commonly in `polarMap()` and `annulusMap()`, particularly with multiple pollutants/control groups).
+
+* BREAKING: The `fig.width`, `fig.height`, `iconHeight` and `iconWidth` arguments have been replaced with `d.fig` and `d.icon`. There are two main justifications behind this:
+
+  * This ensures consistency across all of `{openairmaps}`, making it easier to switch between the static and HTML map types.
+  
+  * Polar markers are almost always going to be circular (i.e., width = height) so  having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form `c(width, height)` will provide the same functionality.
+
+* BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data` and `pollutant`.
 
 # openairmaps 0.6.1
 
