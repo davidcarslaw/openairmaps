@@ -214,6 +214,7 @@ the original \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}
 \code{\link[=annulusMap]{annulusMap()}}
 
 Other interactive directional analysis maps: 
+\code{\link{diffMap}()},
 \code{\link{freqMap}()},
 \code{\link{percentileMap}()},
 \code{\link{polarMap}()},

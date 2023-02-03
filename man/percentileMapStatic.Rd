@@ -175,6 +175,7 @@ the original \code{\link[openair:percentileRose]{openair::percentileRose()}}
 
 Other static directional analysis maps: 
 \code{\link{annulusMapStatic}()},
+\code{\link{diffMapStatic}()},
 \code{\link{freqMapStatic}()},
 \code{\link{polarMapStatic}()},
 \code{\link{pollroseMapStatic}()},

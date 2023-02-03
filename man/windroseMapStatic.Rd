@@ -233,6 +233,7 @@ the original \code{\link[openair:windRose]{openair::windRose()}}
 
 Other static directional analysis maps: 
 \code{\link{annulusMapStatic}()},
+\code{\link{diffMapStatic}()},
 \code{\link{freqMapStatic}()},
 \code{\link{percentileMapStatic}()},
 \code{\link{polarMapStatic}()},
