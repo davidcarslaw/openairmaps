@@ -135,7 +135,7 @@ buildPopup <-
         dplyr::mutate(dplyr::across(.cols = dplyr::everything(), .fns = quickTextHTML)) %>%
         dplyr::rowwise() %>%
         dplyr::mutate(
-          popup = paste(dplyr::c_across(), collapse = "<br>"),
+          popup = paste(dplyr::c_across(cols = dplyr::everything()), collapse = "<br>"),
           .keep = "unused"
         )
 
