@@ -287,9 +287,10 @@ analysing data to extract plot components and plotting them in other ways.}
 A leaflet object.
 }
 \description{
-\code{\link[=polarMap]{polarMap()}} creates a \code{leaflet} map using bivariate polar plots as markers.
-Any number of pollutants can be specified using the \code{pollutant} argument, and
-multiple layers of markers can be added and toggled between using \code{control}.
+\code{\link[=diffMap]{diffMap()}} creates a \code{leaflet} map using bivariate polar "difference" plots
+as markers. Any number of pollutants can be specified using the \code{pollutant}
+argument, and multiple layers of markers can be added and toggled between
+using \code{control}.
 }
 \examples{
 \dontrun{
