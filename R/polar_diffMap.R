@@ -238,7 +238,17 @@ diffMapStatic <- function(before,
                           longitude = NULL,
                           zoom = 13,
                           ggmap = NULL,
-                          cols = "turbo",
+                          cols = c(
+                            "#002F70",
+                            "#3167BB",
+                            "#879FDB",
+                            "#C8D2F1",
+                            "#F6F6F6",
+                            "#F4C8C8",
+                            "#DA8A8B",
+                            "#AE4647",
+                            "#5F1415"
+                          ),
                           alpha = 1,
                           key = FALSE,
                           facet.nrow = NULL,
@@ -351,7 +361,8 @@ diffMapStatic <- function(before,
   if (!is.null(limits)) {
     plt <-
       plt +
-      ggplot2::geom_point(ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+      ggplot2::geom_point(data = plots_df,
+                          ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
                           alpha = 0
       ) +
       ggplot2::scale_color_gradientn(
