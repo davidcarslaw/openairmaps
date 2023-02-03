@@ -106,7 +106,7 @@ addPolarMarkers <-
 
     # plot and save static markers
     plots_df <-
-      create_static_markers(
+      create_polar_markers(
         fun = thefun,
         data = data,
         latitude = latitude,

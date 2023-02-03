@@ -7,9 +7,9 @@ checkMapPrep <-
            remove.calm = TRUE,
            remove.neg = TRUE,
            wd = "wd") {
-    ## deal with conditioning variable if present, if user-defined, must exist in data
-    ## pre-defined types
-    ## existing conditioning variables that only depend on date (which is checked)
+    ## deal with conditioning variable if present, if user-defined, must exist
+    ## in data pre-defined types existing conditioning variables that only
+    ## depend on date (which is checked)
     conds <- c(
       "default",
       "year",
@@ -34,11 +34,9 @@ checkMapPrep <-
 
     if (any(!matching)) {
       ## not all variables are present
-      stop(
-        "Can't find the variable(s): ",
-        paste(varNames[!matching], collapse = ", "),
-        "\n"
-      )
+      stop("Can't find the variable(s): ",
+           paste(varNames[!matching], collapse = ", "),
+           "\n")
     }
 
     ## just select data needed
@@ -84,7 +82,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -133,13 +131,9 @@ checkMapPrep <-
       ids <- which(is.na(mydata$date))
       if (length(ids) > 0) {
         mydata <- mydata[-ids, ]
-        warning(
-          paste(
-            "Missing dates detected, removing",
-            length(ids), "lines"
-          ),
-          call. = FALSE
-        )
+        warning(paste("Missing dates detected, removing",
+                      length(ids), "lines"),
+                call. = FALSE)
       }
 
       ## daylight saving time can cause terrible problems - best avoided!!
@@ -155,55 +149,54 @@ checkMapPrep <-
 
 #' Prep data for mapping
 #' @noRd
-prepMapData <- function(data, pollutant, control, ..., .to_narrow = TRUE) {
-  # check pollutant is there
-  if (is.null(pollutant)) {
-    cli::cli_abort(c(
-      "x" = "{.code pollutant} is missing with no default.",
-      "i" = "Please provide a column of {.code data} which represents the pollutant(s) of interest."
-    ))
-  }
-
-  ## extract variables of interest
-  vars <- unique(c(pollutant, control, ...))
-
-  # check and select variables
-  data <- checkMapPrep(data, vars)
-
-  # check to see if variables exist in data
-  if (length(intersect(vars, names(data))) != length(vars)) {
-    stop(paste(vars[which(!vars %in% names(data))], "not found in data"), call. = FALSE)
-  }
-
-  # check if more than one pollutant & is.null split
-  if (length(pollutant) > 1 & !is.null(control)) {
-    cli::cli_warn(c(
-      "!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",
-      "i" = "Please only specify multiple pollutants {.emph or} a {.code control/facet} option",
-      "i" = "Defaulting to splitting by {.code pollutant}"
-    ))
-  }
-
-  if (.to_narrow) {
-    # pollutants to long
-    data <-
-      tidyr::pivot_longer(
-        data = data,
-        cols = dplyr::all_of(pollutant),
-        names_to = "pollutant_name",
-        values_to = "conc"
+prepMapData <-
+  function(data, pollutant, control, ..., .to_narrow = TRUE) {
+    # check pollutant is there
+    if (is.null(pollutant)) {
+      cli::cli_abort(
+        c("x" = "{.code pollutant} is missing with no default.",
+          "i" = "Please provide a column of {.code data} which represents the pollutant(s) of interest.")
       )
+    }
 
-    # make pollutant names factors
-    data <-
-      dplyr::mutate(
-        .data = data,
-        pollutant_name = as.factor(.data$pollutant_name)
+    ## extract variables of interest
+    vars <- unique(c(pollutant, control, ...))
+
+    # check and select variables
+    data <- checkMapPrep(data, vars)
+
+    # check to see if variables exist in data
+    if (length(intersect(vars, names(data))) != length(vars)) {
+      stop(paste(vars[which(!vars %in% names(data))], "not found in data"), call. = FALSE)
+    }
+
+    # check if more than one pollutant & is.null split
+    if (length(pollutant) > 1 & !is.null(control)) {
+      cli::cli_warn(
+        c("!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",
+          "i" = "Please only specify multiple pollutants {.emph or} a {.code control/facet} option",
+          "i" = "Defaulting to splitting by {.code pollutant}")
       )
-  }
+    }
 
-  return(data)
-}
+    if (.to_narrow) {
+      # pollutants to long
+      data <-
+        tidyr::pivot_longer(
+          data = data,
+          cols = dplyr::all_of(pollutant),
+          names_to = "pollutant_name",
+          values_to = "conc"
+        )
+
+      # make pollutant names factors
+      data <-
+        dplyr::mutate(.data = data,
+                      pollutant_name = as.factor(.data$pollutant_name))
+    }
+
+    return(data)
+  }
 
 #' guess latlon
 #' @noRd
@@ -218,19 +211,16 @@ assume_latlon <- function(data, latitude, longitude) {
       str <- c("longitude", "longitud", "lon", "long", "lng")
     }
     str <-
-      c(
-        str,
+      c(str,
         toupper(str),
         tolower(str),
-        stringr::str_to_title(str)
-      )
+        stringr::str_to_title(str))
     id <- x %in% str
     out <- x[id]
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-        call = NULL
-      )
+                     call = NULL)
       return(NULL)
     } else if (len == 0) {
       cli::cli_abort("Cannot identify {name}: No clear match.", call = NULL)
@@ -254,10 +244,8 @@ assume_latlon <- function(data, latitude, longitude) {
     }
   }
 
-  out <- list(
-    latitude = latitude,
-    longitude = longitude
-  )
+  out <- list(latitude = latitude,
+              longitude = longitude)
 }
 
 #' get breaks for the "rose" functions
@@ -268,13 +256,11 @@ assume_latlon <- function(data, latitude, longitude) {
 #' @noRd
 getBreaks <- function(breaks, ws.int, vec, polrose) {
   if (is.numeric(breaks) & length(breaks) == 1 & polrose) {
-    breaks <- unique(pretty(
-      c(
-        min(vec, na.rm = TRUE),
-        stats::quantile(vec, probs = 0.9, na.rm = TRUE)
-      ),
-      breaks
-    ))
+    breaks <- unique(pretty(c(
+      min(vec, na.rm = TRUE),
+      stats::quantile(vec, probs = 0.9, na.rm = TRUE)
+    ),
+    breaks))
   }
   if (length(breaks) == 1) {
     breaks <- 0:(breaks - 1) * ws.int
@@ -343,17 +329,21 @@ make_leaflet_map <-
     # add layer control menu
     flag_provider <- dplyr::n_distinct(provider) > 1
     flag_split <- dplyr::n_distinct(data[[split_col]]) > 1
-    opts <- leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE)
+    opts <-
+      leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE)
 
     if (flag_provider & flag_split) {
       map <-
-        leaflet::addLayersControl(map,
+        leaflet::addLayersControl(
+          map,
           baseGroups = quickTextHTML(unique(data[[split_col]])),
-          overlayGroups = provider, options = opts
+          overlayGroups = provider,
+          options = opts
         ) %>%
         leaflet::hideGroup(group = provider[-1])
     } else if (flag_provider & !flag_split) {
-      map <- leaflet::addLayersControl(map, baseGroups = provider, options = opts) %>%
+      map <-
+        leaflet::addLayersControl(map, baseGroups = provider, options = opts) %>%
         leaflet::hideGroup(group = provider[-1])
     } else if (!flag_provider & flag_split) {
       map <-
@@ -366,10 +356,8 @@ make_leaflet_map <-
 #' theme for static maps
 #' @noRd
 theme_static <- function() {
-  ggplot2::`%+replace%`(
-    ggplot2::theme_minimal(),
-    ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black"))
-  )
+  ggplot2::`%+replace%`(ggplot2::theme_minimal(),
+                        ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black")))
 }
 
 #' Create markers for the static plots
@@ -377,7 +365,7 @@ theme_static <- function() {
 #' @param dir directory (created in function)
 #' @param latitude,longitude,split_col,d.fig inherited from parent
 #' @noRd
-create_static_markers <-
+create_polar_markers <-
   function(fun,
            data = data,
            latitude = latitude,
@@ -400,13 +388,31 @@ create_static_markers <-
       label <- "label"
     }
 
-    # create plots
-    plots_df <-
-      data %>%
-      tidyr::drop_na(.data[[dropcol]]) %>%
+    # drop missing data
+    data <- tidyr::drop_na(data, .data[[dropcol]])
+
+    # get number of rows
+    valid_rows <-
+      nrow(dplyr::distinct(data, .data[[latitude]], .data[[longitude]], .data[[split_col]]))
+
+    # nest data
+    nested_df <- data %>%
       tidyr::nest(data = -dplyr::all_of(c(
         latitude, longitude, split_col, popup, label
-      ))) %>%
+      )))
+
+    # check for popup issues
+    if (nrow(nested_df) > valid_rows) {
+      cli::cli_abort(
+        c("x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
+          "i" = "Have you used a numeric column, e.g., a pollutant concentration?",
+          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker.")
+      )
+    }
+
+    # create plots
+    plots_df <-
+      nested_df %>%
       dplyr::mutate(
         plot = purrr::map(data, fun, .progress = "Creating Polar Markers"),
         url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], ".png")
@@ -422,22 +428,21 @@ create_static_markers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-      .f = ~ {
-        grDevices::png(
-          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
-          width = width * 300,
-          height = height * 300,
-          res = 300,
-          bg = "transparent",
-          type = "cairo",
-          antialias = "none"
-        )
+                 .f = ~ {
+                   grDevices::png(
+                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
+                     width = width * 300,
+                     height = height * 300,
+                     res = 300,
+                     bg = "transparent",
+                     type = "cairo",
+                     antialias = "none"
+                   )
 
-        plot(..4)
+                   plot(..4)
 
-        grDevices::dev.off()
-      }
-    )
+                   grDevices::dev.off()
+                 })
 
     return(plots_df)
   }
@@ -462,10 +467,8 @@ estimate_ggmap <-
       maxlon <- max(data[[longitude]]) + lon_d
 
       ggmap <-
-        ggmap::get_stamenmap(
-          bbox = c(minlon, minlat, maxlon, maxlat),
-          zoom = zoom
-        )
+        ggmap::get_stamenmap(bbox = c(minlon, minlat, maxlon, maxlat),
+                             zoom = zoom)
     }
 
     return(ggmap)
