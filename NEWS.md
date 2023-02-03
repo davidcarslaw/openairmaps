@@ -4,7 +4,9 @@
 
   * The `{ggplot2}` functions can be identified by "Static" being appended to the function name. For example, `polarMap()` is the `{leaflet}` polar plot map, whereas `polarMapStatic()` is the `{ggplot2}` equivalent.
 
-* Added `alpha` back as an argument to all of the directional analysis polar mapping functions now a recent openair update supports it.
+* Added `diffMap()` and `diffMapStatic()` which are to `openair::polarDiff()` what `polarMap()` and `polarMapStatic()` are to `openair::polarPlot()`.
+
+* Added `alpha` as an argument to all of the directional analysis polar mapping functions, not just `polarMap()`.
 
 * Fixed `alpha` to work on both Windows and MacOS by forcing the use of the "cairo" device to save plots.
 
@@ -16,7 +18,7 @@
   
   * Polar markers are almost always going to be circular (i.e., width = height) so  having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form `c(width, height)` will provide the same functionality.
 
-* BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data` and `pollutant`.
+* BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data`, `pollutant` and `fun`.
 
 # openairmaps 0.6.1
 
