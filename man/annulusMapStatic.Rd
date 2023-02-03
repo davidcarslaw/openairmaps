@@ -236,6 +236,7 @@ the original \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}
 \code{\link[=annulusMapStatic]{annulusMapStatic()}}
 
 Other static directional analysis maps: 
+\code{\link{diffMapStatic}()},
 \code{\link{freqMapStatic}()},
 \code{\link{percentileMapStatic}()},
 \code{\link{polarMapStatic}()},

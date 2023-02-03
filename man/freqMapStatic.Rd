@@ -195,6 +195,7 @@ the original \code{\link[openair:polarFreq]{openair::polarFreq()}}
 
 Other static directional analysis maps: 
 \code{\link{annulusMapStatic}()},
+\code{\link{diffMapStatic}()},
 \code{\link{percentileMapStatic}()},
 \code{\link{polarMapStatic}()},
 \code{\link{pollroseMapStatic}()},

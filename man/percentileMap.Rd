@@ -155,6 +155,7 @@ the original \code{\link[openair:percentileRose]{openair::percentileRose()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
+\code{\link{diffMap}()},
 \code{\link{freqMap}()},
 \code{\link{polarMap}()},
 \code{\link{pollroseMap}()},

@@ -1,0 +1,474 @@
+#' Bivariate polar plots on interactive leaflet maps
+#'
+#' [polarMap()] creates a `leaflet` map using bivariate polar plots as markers.
+#' Any number of pollutants can be specified using the `pollutant` argument, and
+#' multiple layers of markers can be added and toggled between using `control`.
+#'
+#' @family interactive directional analysis maps
+#'
+#' @inheritParams openair::polarDiff
+#' @inheritParams polarMap
+#'
+#' @param limits By default, each individual polar marker has its own colour
+#'   scale. The `limits` argument will force all markers to use the same colour
+#'   scale. The limits are set in the form `c(lower, upper)`, so `limits = c(-5,
+#'   5)` would force the plot limits to span -5 to 5. It is recommended to use a
+#'   symmetrical limit scale (along with a "diverging" colour palette) for
+#'   effective visualisation.
+#' @param cols The colours used for plotting. It is recommended to use a
+#'   "diverging" colour palette (along with a symmetrical limit scale) for
+#'   effective visualisation.
+#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
+#'   -cols -key -key.footer -key.header -key.position -units -angle.scale -alpha
+#'   -plot
+#' @return A leaflet object.
+#' @export
+#'
+#' @seealso the original [openair::polarDiff()]
+#' @seealso [diffMapStatic()] for the static `ggmap` equivalent of [diffMap()]
+#'
+#' @examples
+#' \dontrun{
+#' # NB: "after" is some dummy data to demonstrate functionality
+#' polarDiff(
+#'   before = polar_data,
+#'   after = dplyr::mutate(polar_data, nox = jitter(nox, factor = 5)),
+#'   pollutant = "nox",
+#'   provider = "Stamen.Toner"
+#' )
+#' }
+diffMap <- function(before,
+                    after,
+                    pollutant = NULL,
+                    x = "ws",
+                    limits = NULL,
+                    latitude = NULL,
+                    longitude = NULL,
+                    control = NULL,
+                    popup = NULL,
+                    label = NULL,
+                    provider = "OpenStreetMap",
+                    cols = c(
+                      "#002F70",
+                      "#3167BB",
+                      "#879FDB",
+                      "#C8D2F1",
+                      "#F6F6F6",
+                      "#F4C8C8",
+                      "#DA8A8B",
+                      "#AE4647",
+                      "#5F1415"
+                    ),
+                    alpha = 1,
+                    key = FALSE,
+                    draw.legend = TRUE,
+                    collapse.control = FALSE,
+                    d.icon = 200,
+                    d.fig = 3.5,
+                    type = NULL,
+                    ...) {
+  if (!is.null(type)) {
+    cli::cli_warn(c(
+      "!" = "{.code type} is deprecated. Different sites are now automatically identified.",
+      "i" = "Please use {.code label} and/or {.code popup} to label sites."
+    ))
+  }
+
+  # assume lat/lon
+  latlon <- assume_latlon(
+    data = before,
+    latitude = latitude,
+    longitude = longitude
+  )
+  latitude <- latlon$latitude
+  longitude <- latlon$longitude
+
+  # deal with limits
+  theLimits <- limits
+  if (is.null(limits)) {
+    theLimits <- NA
+  }
+
+  # prep data
+  before <-
+    prepMapData(
+      data = before,
+      pollutant = pollutant,
+      control = control,
+      "wd",
+      x,
+      latitude,
+      longitude,
+      popup,
+      label
+    )
+
+  after <-
+    prepMapData(
+      data = after,
+      pollutant = pollutant,
+      control = control,
+      "wd",
+      x,
+      latitude,
+      longitude
+    )
+
+  # identify splitting column (defaulting to pollutant)
+  if (length(pollutant) > 1) {
+    split_col <- "pollutant_name"
+  } else if (!is.null(control)) {
+    before[control] <- as.factor(before[[control]])
+    after[control] <- as.factor(after[[control]])
+    split_col <- control
+  } else {
+    split_col <- "pollutant_name"
+  }
+
+  # define function
+  fun <- function(before, after) {
+    openair::polarDiff(
+      before = before,
+      after = after,
+      pollutant = "conc",
+      x = x,
+      limits = theLimits,
+      cols = cols,
+      alpha = alpha,
+      key = key,
+      plot = FALSE,
+      ...,
+      par.settings = list(axis.line = list(col = "transparent"))
+    )$plot
+  }
+
+  # plot and save static markers
+  plots_df <-
+    create_polar_diffmarkers(
+      fun = fun,
+      before = before,
+      after = after,
+      latitude = latitude,
+      longitude = longitude,
+      split_col = split_col,
+      d.fig = d.fig,
+      popup = popup,
+      label = label
+    )
+
+  # create leaflet map
+  map <-
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
+
+  # add legend if limits are set
+  if (!is.null(limits) & all(!is.na(limits)) & draw.legend) {
+    map <-
+      leaflet::addLegend(
+        map,
+        title = quickTextHTML(paste(pollutant, collapse = ",<br>")),
+        pal = leaflet::colorNumeric(
+          palette = openair::openColours(scheme = cols),
+          domain = theLimits
+        ),
+        values = theLimits
+      )
+  }
+
+  # return map
+  return(map)
+}
+
+#' Bivariate polar plots on a static ggmap
+#'
+#' [polarMapStatic()] creates a `ggplot2` map using bivariate polar plots as
+#' markers. As this function returns a `ggplot2` object, further customisation
+#' can be achieved using functions like [ggplot2::theme()] and
+#' [ggplot2::guides()].
+#'
+#' @section Further customisation using ggplot2:
+#'
+#'   As the outputs of the static directional analysis functions are `ggplot2`
+#'   figures, further customisation is possible using functions such as
+#'   [ggplot2::theme()], [ggplot2::guides()] and [ggplot2::labs()].
+#'
+#'   If multiple pollutants are specified, subscripting (e.g., the "x" in "NOx")
+#'   is achieved using the [ggtext][ggtext::ggtext] package. Therefore if you
+#'   choose to override the plot theme, it is recommended to use
+#'   `[ggplot2::theme()]` and `[ggtext::element_markdown()]` to define the
+#'   `strip.text` parameter.
+#'
+#'   When arguments like `limits`, `percentile` or `breaks` are defined, a
+#'   legend is automatically added to the figure. Legends can be removed using
+#'   `ggplot2::theme(legend.position = "none")`, or further customised using
+#'   [ggplot2::guides()] and either `color = ggplot2::guide_colourbar()` for
+#'   continuous legends or `fill = ggplot2::guide_legend()` for discrete
+#'   legends.
+#'
+#' @family static directional analysis maps
+#'
+#' @inheritParams polarMapStatic
+#' @inheritParams diffMap
+#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
+#'   -cols -key -key.footer -key.header -key.position -units -angle.scale -alpha
+#'   -plot
+#'
+#' @seealso the original [openair::polarDiff()]
+#' @seealso [diffMap()] for the interactive `leaflet` equivalent of
+#'   [diffMapStatic()]
+#'
+#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @export
+diffMapStatic <- function(before,
+                          after,
+                          pollutant = NULL,
+                          x = "ws",
+                          facet = NULL,
+                          limits = NULL,
+                          latitude = NULL,
+                          longitude = NULL,
+                          zoom = 13,
+                          ggmap = NULL,
+                          cols = "turbo",
+                          alpha = 1,
+                          key = FALSE,
+                          facet.nrow = NULL,
+                          d.icon = 150,
+                          d.fig = 3,
+                          ...) {
+  # assume lat/lon
+  latlon <- assume_latlon(
+    data = before,
+    latitude = latitude,
+    longitude = longitude
+  )
+  latitude <- latlon$latitude
+  longitude <- latlon$longitude
+
+  # deal with limits
+  theLimits <- limits
+  if (is.null(limits)) {
+    theLimits <- NA
+  }
+
+  # prep data
+  before <-
+    prepMapData(
+      data = before,
+      pollutant = pollutant,
+      control = facet,
+      "wd",
+      x,
+      latitude,
+      longitude
+    )
+
+  after <-
+    prepMapData(
+      data = after,
+      pollutant = pollutant,
+      control = facet,
+      "wd",
+      x,
+      latitude,
+      longitude
+    )
+
+  # identify splitting column (defaulting to pollutant)
+  if (length(pollutant) > 1) {
+    split_col <- "pollutant_name"
+  } else if (!is.null(facet)) {
+    before[facet] <- as.factor(before[[facet]])
+    after[facet] <- as.factor(after[[facet]])
+    split_col <- facet
+  } else {
+    split_col <- "pollutant_name"
+  }
+
+  # define function
+  fun <- function(before, after) {
+    openair::polarDiff(
+      before = before,
+      after = after,
+      pollutant = "conc",
+      x = x,
+      limits = theLimits,
+      cols = cols,
+      alpha = alpha,
+      key = key,
+      plot = FALSE,
+      ...,
+      par.settings = list(axis.line = list(col = "transparent"))
+    )$plot
+  }
+
+  # plot and save static markers
+  plots_df <-
+    create_polar_diffmarkers(
+      fun = fun,
+      before = before,
+      after = after,
+      latitude = latitude,
+      longitude = longitude,
+      split_col = split_col,
+      d.fig = d.fig
+    )
+
+  # load ggmap if not provided
+  ggmap <-
+    estimate_ggmap(
+      ggmap = ggmap,
+      data = plots_df,
+      latitude = latitude,
+      longitude = longitude,
+      zoom = zoom
+    )
+
+  # create static map - deals with basics & facets
+  plt <-
+    create_static_map(
+      ggmap = ggmap,
+      plots_df = plots_df,
+      latitude = latitude,
+      longitude = longitude,
+      split_col = split_col,
+      pollutant = pollutant,
+      facet = facet,
+      facet.nrow = facet.nrow,
+      d.icon = d.icon
+    )
+
+  # create colorbar if limits specified
+  if (!is.null(limits)) {
+    plt <-
+      plt +
+      ggplot2::geom_point(ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+                          alpha = 0
+      ) +
+      ggplot2::scale_color_gradientn(
+        limits = theLimits,
+        colours = openair::openColours(scheme = cols)
+      ) +
+      ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
+  }
+
+  # return plot
+  return(plt)
+}
+
+#' create diff markers
+#' @noRd
+create_polar_diffmarkers <-
+  function(fun,
+           before = before,
+           after = after,
+           latitude = latitude,
+           longitude = longitude,
+           split_col = split_col,
+           popup = NULL,
+           label = NULL,
+           d.fig,
+           dropcol = "conc") {
+    # make temp directory
+    dir <- tempdir()
+
+    # sort out popups/labels
+    if (is.null(popup)) {
+      before$popup <- "NA"
+      popup <- "popup"
+    }
+    if (is.null(label)) {
+      before$label <- "NA"
+      label <- "label"
+    }
+
+    # drop missing data
+    before <- tidyr::drop_na(before, .data[[dropcol]])
+    after <- tidyr::drop_na(after, .data[[dropcol]])
+
+    # get number of rows
+    valid_rows <-
+      nrow(dplyr::distinct(before, .data[[latitude]], .data[[longitude]], .data[[split_col]]))
+
+    # nest data
+    nested_before <- before %>%
+      tidyr::nest(before = -dplyr::all_of(c(
+        latitude, longitude, split_col, popup, label
+      )))
+    nested_after <- after %>%
+      tidyr::nest(after = -dplyr::all_of(c(
+        latitude, longitude, split_col
+      )))
+
+    # warn if missing
+    if (nrow(nested_before) != nrow(nested_after)){
+      warn_df <-
+        dplyr::bind_rows(
+          dplyr::anti_join(nested_before, nested_after, by = c(latitude, longitude, split_col)),
+          dplyr::anti_join(nested_after, nested_before, by = c(latitude, longitude, split_col))
+        ) %>%
+        tidyr::unite("warning", dplyr::any_of(c(latitude, longitude, split_col)), sep = "/") %>%
+        dplyr::distinct(.data$warning)
+
+      cli::cli_warn(c(
+        "!" = "Not all {.code latitude}/{.code longitude}/{.code control} combinations in {.code before} matched in {.code after}.",
+        "i" = "Not matched: {.field {warn_df$warning}}"
+      ))
+    }
+
+    # check for popup issues
+    if (nrow(nested_before) > valid_rows) {
+      cli::cli_abort(
+        c("x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
+          "i" = "Have you used a numeric column, e.g., a pollutant concentration?",
+          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker.")
+      )
+    }
+
+    # create plots
+    plots_df <-
+      dplyr::inner_join(nested_before,
+                        nested_after,
+                        by = c(latitude, longitude, split_col)) %>%
+      dplyr::mutate(
+        plot = purrr::map2(before, after, fun, .progress = "Creating Polar Markers"),
+        url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], ".png")
+      )
+
+    # work out w/h
+    if (length(d.fig) == 1) {
+      width <- height <- d.fig
+    }
+    if (length(d.fig) == 2) {
+      width <- d.fig[[1]]
+      height <- d.fig[[2]]
+    }
+
+    purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
+                 .f = ~ {
+                   grDevices::png(
+                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
+                     width = width * 300,
+                     height = height * 300,
+                     res = 300,
+                     bg = "transparent",
+                     type = "cairo",
+                     antialias = "none"
+                   )
+
+                   plot(..4)
+
+                   grDevices::dev.off()
+                 })
+
+    return(plots_df)
+  }

@@ -190,6 +190,7 @@ the original \code{\link[openair:windRose]{openair::windRose()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
+\code{\link{diffMap}()},
 \code{\link{freqMap}()},
 \code{\link{percentileMap}()},
 \code{\link{polarMap}()},

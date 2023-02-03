@@ -175,6 +175,7 @@ the original \code{\link[openair:polarFreq]{openair::polarFreq()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
+\code{\link{diffMap}()},
 \code{\link{percentileMap}()},
 \code{\link{polarMap}()},
 \code{\link{pollroseMap}()},

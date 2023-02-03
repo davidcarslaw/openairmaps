@@ -303,6 +303,7 @@ the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
+\code{\link{diffMap}()},
 \code{\link{freqMap}()},
 \code{\link{percentileMap}()},
 \code{\link{pollroseMap}()},

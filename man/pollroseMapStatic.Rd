@@ -146,6 +146,7 @@ the original \code{\link[openair:pollutionRose]{openair::pollutionRose()}}
 
 Other static directional analysis maps: 
 \code{\link{annulusMapStatic}()},
+\code{\link{diffMapStatic}()},
 \code{\link{freqMapStatic}()},
 \code{\link{percentileMapStatic}()},
 \code{\link{polarMapStatic}()},
