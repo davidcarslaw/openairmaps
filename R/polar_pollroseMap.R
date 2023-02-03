@@ -127,7 +127,7 @@ pollroseMap <- function(data,
 
   # plot and save static markers
   plots_df <-
-    create_static_markers(
+    create_polar_markers(
       fun = fun,
       data = data,
       latitude = latitude,
@@ -269,7 +269,7 @@ pollroseMapStatic <- function(data,
 
   # plot and save static markers
   plots_df <-
-    create_static_markers(
+    create_polar_markers(
       fun = fun,
       data = data,
       latitude = latitude,
