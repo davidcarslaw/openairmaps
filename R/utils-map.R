@@ -459,10 +459,12 @@ estimate_ggmap <-
            zoom = zoom) {
     if (is.null(ggmap)) {
       lat_d <- abs(diff(range(data[[latitude]])) / 2)
+      if (lat_d < 0.05) lat_d <- 0.05
       minlat <- min(data[[latitude]]) - lat_d
       maxlat <- max(data[[latitude]]) + lat_d
 
       lon_d <- abs(diff(range(data[[longitude]])) / 2)
+      if (lon_d < 0.05) lon_d <- 0.05
       minlon <- min(data[[longitude]]) - lon_d
       maxlon <- max(data[[longitude]]) + lon_d
 
@@ -490,7 +492,8 @@ create_static_map <-
            facet.nrow) {
     # work out width/height
     if (length(d.icon) == 1) {
-      width <- height <- d.icon
+      width <- d.icon
+      height <- d.icon
     }
     if (length(d.icon) == 2) {
       width <- d.icon[[1]]
