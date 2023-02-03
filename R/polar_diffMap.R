@@ -1,8 +1,9 @@
 #' Bivariate polar plots on interactive leaflet maps
 #'
-#' [polarMap()] creates a `leaflet` map using bivariate polar plots as markers.
-#' Any number of pollutants can be specified using the `pollutant` argument, and
-#' multiple layers of markers can be added and toggled between using `control`.
+#' [diffMap()] creates a `leaflet` map using bivariate polar "difference" plots
+#' as markers. Any number of pollutants can be specified using the `pollutant`
+#' argument, and multiple layers of markers can be added and toggled between
+#' using `control`.
 #'
 #' @family interactive directional analysis maps
 #'
@@ -190,9 +191,9 @@ diffMap <- function(before,
 
 #' Bivariate polar plots on a static ggmap
 #'
-#' [polarMapStatic()] creates a `ggplot2` map using bivariate polar plots as
-#' markers. As this function returns a `ggplot2` object, further customisation
-#' can be achieved using functions like [ggplot2::theme()] and
+#' [diffMapStatic()] creates a `ggplot2` map using bivariate "difference" polar
+#' plots as markers. As this function returns a `ggplot2` object, further
+#' customisation can be achieved using functions like [ggplot2::theme()] and
 #' [ggplot2::guides()].
 #'
 #' @section Further customisation using ggplot2:

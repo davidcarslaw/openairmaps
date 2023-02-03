@@ -257,9 +257,9 @@ analysing data to extract plot components and plotting them in other ways.}
 a \code{ggplot2} plot with a \code{ggmap} basemap
 }
 \description{
-\code{\link[=polarMapStatic]{polarMapStatic()}} creates a \code{ggplot2} map using bivariate polar plots as
-markers. As this function returns a \code{ggplot2} object, further customisation
-can be achieved using functions like \code{\link[ggplot2:theme]{ggplot2::theme()}} and
+\code{\link[=diffMapStatic]{diffMapStatic()}} creates a \code{ggplot2} map using bivariate "difference" polar
+plots as markers. As this function returns a \code{ggplot2} object, further
+customisation can be achieved using functions like \code{\link[ggplot2:theme]{ggplot2::theme()}} and
 \code{\link[ggplot2:guides]{ggplot2::guides()}}.
 }
 \section{Further customisation using ggplot2}{
