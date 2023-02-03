@@ -459,14 +459,15 @@ estimate_ggmap <-
            zoom = zoom) {
     if (is.null(ggmap)) {
       lat_d <- abs(diff(range(data[[latitude]])) / 2)
-      if (lat_d < 0.05) lat_d <- 0.05
-      minlat <- min(data[[latitude]]) - lat_d
-      maxlat <- max(data[[latitude]]) + lat_d
-
       lon_d <- abs(diff(range(data[[longitude]])) / 2)
-      if (lon_d < 0.05) lon_d <- 0.05
-      minlon <- min(data[[longitude]]) - lon_d
-      maxlon <- max(data[[longitude]]) + lon_d
+      d <- max(lon_d, lat_d)
+      if (d == 0) d <- 0.05
+
+      minlat <- min(data[[latitude]]) - d
+      maxlat <- max(data[[latitude]]) + d
+
+      minlon <- min(data[[longitude]]) - d
+      maxlon <- max(data[[longitude]]) + d
 
       ggmap <-
         ggmap::get_stamenmap(bbox = c(minlon, minlat, maxlon, maxlat),
