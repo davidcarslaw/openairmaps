@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,8 @@
 <p>Added “static” equivalents of all of the polar marker maps written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.</p>
 <ul><li>The <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> functions can be identified by “Static” being appended to the function name. For example, <code><a href="../reference/polarMap.html">polarMap()</a></code> is the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> polar plot map, whereas <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> is the <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> equivalent.</li>
 </ul></li>
-<li><p>Added <code>alpha</code> back as an argument to all of the directional analysis polar mapping functions now a recent openair update supports it.</p></li>
+<li><p>Added <code><a href="../reference/diffMap.html">diffMap()</a></code> and <code><a href="../reference/diffMapStatic.html">diffMapStatic()</a></code> which are to <code><a href="https://davidcarslaw.github.io/openair/reference/polarDiff.html" class="external-link">openair::polarDiff()</a></code> what <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> are to <code><a href="https://davidcarslaw.github.io/openair/reference/polarPlot.html" class="external-link">openair::polarPlot()</a></code>.</p></li>
+<li><p>Added <code>alpha</code> as an argument to all of the directional analysis polar mapping functions, not just <code><a href="../reference/polarMap.html">polarMap()</a></code>.</p></li>
 <li><p>Fixed <code>alpha</code> to work on both Windows and MacOS by forcing the use of the “cairo” device to save plots.</p></li>
 <li><p>Polar marker maps and <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> now show a progress bar when creating the markers takes more than a few seconds (most commonly in <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/annulusMap.html">annulusMap()</a></code>, particularly with multiple pollutants/control groups).</p></li>
 <li>
@@ -55,7 +56,7 @@
 <ul><li><p>This ensures consistency across all of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a>, making it easier to switch between the static and HTML map types.</p></li>
 <li><p>Polar markers are almost always going to be circular (i.e., width = height) so having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form <code>c(width, height)</code> will provide the same functionality.</p></li>
 </ul></li>
-<li><p>BREAKING: The arguments in <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> have been put in a more sensible order, leading with <code>data</code> and <code>pollutant</code>.</p></li>
+<li><p>BREAKING: The arguments in <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> have been put in a more sensible order, leading with <code>data</code>, <code>pollutant</code> and <code>fun</code>.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="openairmaps-061">openairmaps 0.6.1<a class="anchor" aria-label="anchor" href="#openairmaps-061"></a></h2><p class="text-muted">CRAN release: 2023-01-09</p>
