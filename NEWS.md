@@ -12,6 +12,8 @@
 
 * Polar marker maps and `addPolarMarkers()` now show a progress bar when creating the markers takes more than a few seconds (most commonly in `polarMap()` and `annulusMap()`, particularly with multiple pollutants/control groups).
 
+* `networkMap()` can now pass the new `year` option to `importMeta()`.
+
 * BREAKING: The `fig.width`, `fig.height`, `iconHeight` and `iconWidth` arguments have been replaced with `d.fig` and `d.icon`. There are two main justifications behind this:
 
   * This ensures consistency across all of `{openairmaps}`, making it easier to switch between the static and HTML map types.
@@ -19,6 +21,8 @@
   * Polar markers are almost always going to be circular (i.e., width = height) so  having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form `c(width, height)` will provide the same functionality.
 
 * BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data`, `pollutant` and `fun`.
+
+* BREAKING: The `date` argument from `networkMap()` has been replaced by `year`.
 
 # openairmaps 0.6.1
 
