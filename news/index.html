@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,12 +51,14 @@
 <li><p>Added <code>alpha</code> as an argument to all of the directional analysis polar mapping functions, not just <code><a href="../reference/polarMap.html">polarMap()</a></code>.</p></li>
 <li><p>Fixed <code>alpha</code> to work on both Windows and MacOS by forcing the use of the “cairo” device to save plots.</p></li>
 <li><p>Polar marker maps and <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> now show a progress bar when creating the markers takes more than a few seconds (most commonly in <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/annulusMap.html">annulusMap()</a></code>, particularly with multiple pollutants/control groups).</p></li>
+<li><p><code><a href="../reference/networkMap.html">networkMap()</a></code> can now pass the new <code>year</code> option to <code><a href="https://davidcarslaw.github.io/openair/reference/importMeta.html" class="external-link">importMeta()</a></code>.</p></li>
 <li>
 <p>BREAKING: The <code>fig.width</code>, <code>fig.height</code>, <code>iconHeight</code> and <code>iconWidth</code> arguments have been replaced with <code>d.fig</code> and <code>d.icon</code>. There are two main justifications behind this:</p>
 <ul><li><p>This ensures consistency across all of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a>, making it easier to switch between the static and HTML map types.</p></li>
 <li><p>Polar markers are almost always going to be circular (i.e., width = height) so having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form <code>c(width, height)</code> will provide the same functionality.</p></li>
 </ul></li>
 <li><p>BREAKING: The arguments in <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> have been put in a more sensible order, leading with <code>data</code>, <code>pollutant</code> and <code>fun</code>.</p></li>
+<li><p>BREAKING: The <code>date</code> argument from <code><a href="../reference/networkMap.html">networkMap()</a></code> has been replaced by <code>year</code>.</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.1" id="openairmaps-061">openairmaps 0.6.1<a class="anchor" aria-label="anchor" href="#openairmaps-061"></a></h2><p class="text-muted">CRAN release: 2023-01-09</p>
