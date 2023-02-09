@@ -7,30 +7,27 @@
 networkMap(
   source = "aurn",
   control = NULL,
-  date = Sys.Date(),
+  year = NULL,
   cluster = TRUE,
   provider = c("OpenStreetMap", "Esri.WorldImagery"),
   collapse.control = FALSE
 )
 }
 \arguments{
-\item{source}{One or more sources of meta data. Can be \code{aurn}, \code{saqn} (or
-\code{saqd}), \code{aqe}, \code{waqn}, \code{ni}, \code{local} (or \code{lmam}), \code{kcl} or \code{europe}; upper
-or lower case. See the "details" section for further information about
-selecting multiple sites.}
+\item{source}{One or more sources of meta data. Can be \code{"aurn"}, \code{"saqn"} (or
+\code{"saqd"}), \code{"aqe"}, \code{"waqn"}, \code{"ni"}, \code{"local"} (or \code{"lmam"}), \code{"kcl"} or
+\code{"europe"}; upper or lower case. See the "details" section for further
+information about selecting multiple networks.}
 
 \item{control}{Option to add a "layer control" menu to allow readers to
 select between different site types. Can choose between effectively any
-column in the \code{\link[openair:importMeta]{openair::importMeta()}} output, such as "variable",
-"site_type", or "agglomeration", as well as "network" when more than one
-\code{source} was specified.}
+column in the \code{\link[openair:importMeta]{openair::importMeta()}} output, such as \code{"variable"},
+\code{"site_type"}, or \code{"agglomeration"}, as well as \code{"network"} when more than
+one \code{source} was specified.}
 
-\item{date}{By default, \code{\link[=networkMap]{networkMap()}} visualises sites and pollutants which
-are currently operational. Specifying \code{date} will visualise sites which
-were operational at the chosen date. Dates should be provided in the
-"YYYY-MM-DD" format. Alternatively, a single year can be provided ("YYYY")
-and \code{\link[=networkMap]{networkMap()}} will visualise sites which were operational at the \emph{end}
-of that year (December 31st).}
+\item{year}{By default, \code{\link[=networkMap]{networkMap()}} visualises sites which are currently
+operational. \code{year} allows users to show sites open in a specific year, or
+over a range of years. See \code{\link[openair:importMeta]{openair::importMeta()}} for more information.}
 
 \item{cluster}{When \code{cluster = TRUE}, markers are clustered together. This
 may be useful for sources like "kcl" where there are many markers very
