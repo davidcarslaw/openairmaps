@@ -2,6 +2,7 @@
 % Please edit documentation in R/addPolarMarkers.R
 \name{addPolarMarkers}
 \alias{addPolarMarkers}
+\alias{addPolarDiffMarkers}
 \title{Add polar markers to leaflet map}
 \usage{
 addPolarMarkers(
@@ -9,6 +10,23 @@ addPolarMarkers(
   data,
   pollutant,
   fun = openair::polarPlot,
+  lng = NULL,
+  lat = NULL,
+  layerId = NULL,
+  group = NULL,
+  popup = NULL,
+  label = NULL,
+  key = FALSE,
+  d.icon = 200,
+  d.fig = 3.5,
+  ...
+)
+
+addPolarDiffMarkers(
+  map,
+  before,
+  after,
+  pollutant,
   lng = NULL,
   lat = NULL,
   layerId = NULL,
@@ -36,7 +54,8 @@ latitude and longitude.}
 functions include \code{\link[openair:polarPlot]{openair::polarPlot()}} (the default),
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}, \code{\link[openair:polarFreq]{openair::polarFreq()}},
 \code{\link[openair:percentileRose]{openair::percentileRose()}}, \code{\link[openair:pollutionRose]{openair::pollutionRose()}} and
-\code{\link[openair:windRose]{openair::windRose()}}.}
+\code{\link[openair:windRose]{openair::windRose()}}. For \code{\link[openair:polarDiff]{openair::polarDiff()}}, use
+\code{\link[=addPolarDiffMarkers]{addPolarDiffMarkers()}}.}
 
 \item{lng}{The decimal longitude.}
 
@@ -68,6 +87,12 @@ non-circular marker is desired.}
 
 \item{...}{Other arguments for the plotting function (e.g. \code{period} for
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}).}
+
+\item{before}{A data frame that represents the "before" case. See
+\code{\link[openair:polarPlot]{polarPlot()}} for details of different input requirements.}
+
+\item{after}{A data frame that represents the "after" case. See \code{\link[openair:polarPlot]{polarPlot()}}
+for details of different input requirements.}
 }
 \value{
 A leaflet object.
@@ -79,30 +104,45 @@ to add \code{openair} directional analysis plots to any leaflet map and have mor
 control over groups and layerIds than in "all-in-one" functions like
 \code{\link[=polarMap]{polarMap()}}.
 }
+\section{Functions}{
+\itemize{
+\item \code{addPolarMarkers()}: Add any one-table polar marker (e.g.,
+\code{\link[openair:polarPlot]{openair::polarPlot()}})
+
+\item \code{addPolarDiffMarkers()}: Add the two-table \code{\link[openair:polarDiff]{openair::polarDiff()}} marker.
+
+}}
 \examples{
 \dontrun{
 library(leaflet)
 library(openair)
 
+# different types of polar plot on one map
 leaflet() \%>\%
   addTiles() \%>\%
   addPolarMarkers(
     data = polar_data,
-    lat = "latitude",
-    lng = "longitude",
     pollutant = "ws",
     fun = windRose,
     group = "Wind Rose"
   ) \%>\%
   addPolarMarkers(
     data = polar_data,
-    lat = "latitude",
-    lng = "longitude",
     pollutant = "nox",
+    fun = polarPlot,
     group = "Polar Plot"
   ) \%>\%
   addLayersControl(
     baseGroups = c("Wind Rose", "Polar Plot")
+  )
+
+# use of polar diff
+leaflet() \%>\%
+  addTiles() \%>\%
+  addPolarDiffMarkers(
+    before = polar_data,
+    after = dplyr::mutate(polar_data, nox = jitter(nox, 5)),
+    pollutant = "nox"
   )
 }
 }

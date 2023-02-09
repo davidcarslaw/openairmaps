@@ -4,7 +4,7 @@
 
   * The `{ggplot2}` functions can be identified by "Static" being appended to the function name. For example, `polarMap()` is the `{leaflet}` polar plot map, whereas `polarMapStatic()` is the `{ggplot2}` equivalent.
 
-* Added `diffMap()` and `diffMapStatic()` which are to `openair::polarDiff()` what `polarMap()` and `polarMapStatic()` are to `openair::polarPlot()`.
+* Added `diffMap()` and `diffMapStatic()` which are to `openair::polarDiff()` what `polarMap()` and `polarMapStatic()` are to `openair::polarPlot()`. Also added `addPolarDiffMarkers()`, which is the equivalent of `addPolarMarkers()`.
 
 * Added `alpha` as an argument to all of the directional analysis polar mapping functions, not just `polarMap()`.
 
