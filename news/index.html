@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,10 +42,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="openairmaps-development-version">openairmaps (development version)<a class="anchor" aria-label="anchor" href="#openairmaps-development-version"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.7.0" id="openairmaps-070">openairmaps 0.7.0<a class="anchor" aria-label="anchor" href="#openairmaps-070"></a></h2>
 <ul><li>
 <p>Added “static” equivalents of all of the polar marker maps written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.</p>
-<ul><li>The <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> functions can be identified by “Static” being appended to the function name. For example, <code><a href="../reference/polarMap.html">polarMap()</a></code> is the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> polar plot map, whereas <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> is the <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> equivalent.</li>
+<ul><li><p>The <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> functions can be identified by “Static” being appended to the function name. For example, <code><a href="../reference/polarMap.html">polarMap()</a></code> is the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> polar plot map, whereas <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> is the <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> equivalent.</p></li>
+<li><p>Currently, “static” versions of the trajectory maps are served by <code><a href="https://davidcarslaw.github.io/openair/reference/trajPlot.html" class="external-link">openair::trajPlot()</a></code> and <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code>, but there may be space in future to have <code>ggmap</code> equivalents of these in <code>openairmaps</code>.</p></li>
 </ul></li>
 <li><p>Added <code><a href="../reference/diffMap.html">diffMap()</a></code> and <code><a href="../reference/diffMapStatic.html">diffMapStatic()</a></code> which are to <code><a href="https://davidcarslaw.github.io/openair/reference/polarDiff.html" class="external-link">openair::polarDiff()</a></code> what <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> are to <code><a href="https://davidcarslaw.github.io/openair/reference/polarPlot.html" class="external-link">openair::polarPlot()</a></code>. Also added <code><a href="../reference/addPolarMarkers.html">addPolarDiffMarkers()</a></code>, which is the equivalent of <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code>.</p></li>
 <li><p>Added <code>alpha</code> as an argument to all of the directional analysis polar mapping functions, not just <code><a href="../reference/polarMap.html">polarMap()</a></code>.</p></li>
