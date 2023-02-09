@@ -85,9 +85,7 @@ can be toggled between using a "layer control" interface.}
 effective visualisation.}
 
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
-between 0 and 1 with zero being fully transparent and 1 fully opaque).
-Setting a value below 1 can be useful when plotting surfaces on a map using
-the package \code{openairmapss}.}
+between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 

@@ -21,21 +21,18 @@
 #' "aurn")` and the "AURN" layer control group when `source = c("aurn",
 #' "saqn")`.
 #'
-#' @param source One or more sources of meta data. Can be `aurn`, `saqn` (or
-#'   `saqd`), `aqe`, `waqn`, `ni`, `local` (or `lmam`), `kcl` or `europe`; upper
-#'   or lower case. See the "details" section for further information about
-#'   selecting multiple sites.
+#' @param source One or more sources of meta data. Can be `"aurn"`, `"saqn"` (or
+#'   `"saqd"`), `"aqe"`, `"waqn"`, `"ni"`, `"local"` (or `"lmam"`), `"kcl"` or
+#'   `"europe"`; upper or lower case. See the "details" section for further
+#'   information about selecting multiple networks.
 #' @param control Option to add a "layer control" menu to allow readers to
 #'   select between different site types. Can choose between effectively any
-#'   column in the [openair::importMeta()] output, such as "variable",
-#'   "site_type", or "agglomeration", as well as "network" when more than one
-#'   `source` was specified.
-#' @param date By default, [networkMap()] visualises sites and pollutants which
-#'   are currently operational. Specifying `date` will visualise sites which
-#'   were operational at the chosen date. Dates should be provided in the
-#'   "YYYY-MM-DD" format. Alternatively, a single year can be provided ("YYYY")
-#'   and [networkMap()] will visualise sites which were operational at the *end*
-#'   of that year (December 31st).
+#'   column in the [openair::importMeta()] output, such as `"variable"`,
+#'   `"site_type"`, or `"agglomeration"`, as well as `"network"` when more than
+#'   one `source` was specified.
+#' @param year By default, [networkMap()] visualises sites which are currently
+#'   operational. `year` allows users to show sites open in a specific year, or
+#'   over a range of years. See [openair::importMeta()] for more information.
 #' @param cluster When `cluster = TRUE`, markers are clustered together. This
 #'   may be useful for sources like "kcl" where there are many markers very
 #'   close together. Defaults to `TRUE`, and is forced to be `TRUE` when `source
@@ -62,28 +59,25 @@
 networkMap <-
   function(source = "aurn",
            control = NULL,
-           date = Sys.Date(),
+           year = NULL,
            cluster = TRUE,
            provider = c("OpenStreetMap", "Esri.WorldImagery"),
            collapse.control = FALSE) {
-    provider <- unique(provider)
-
-    # sort out date
-    # detect year
-    if (grepl(pattern = "^[1-9]\\d{3}$", x = date)) {
-      date <- paste0(date, "/12/31") %>% lubridate::ymd(tz = "GMT")
-      cli::cli_alert_info("{.code date} provided as a year; showing sites operational on {.code {date}}.")
-    } else {
-      # parse other year types
-      date <- as.character(date)
-      date <- lubridate::ymd(date, tz = "GMT")
+    # if year isn't provided, use current year
+    if (is.null(year)) {
+      year <- lubridate::year(Sys.Date())
+      cli::cli_inform(
+        c("i" = "{.code year} not specified. Showing sites open in {.field {year}}.")
+      )
     }
+
+    provider <- unique(provider)
 
     # read in data
     meta <-
       purrr::map(
         .x = source,
-        .f = ~ prepNetworkData(source = .x, date = date)
+        .f = ~ prepNetworkData(source = .x, year = year)
       ) %>%
       purrr::list_rbind()
 
@@ -268,15 +262,11 @@ networkMap <-
 
 #' Function to prep network data
 #' @param source source (from parent)
-#' @param date date (from parent)
+#' @param year year (from parent)
 #' @noRd
-prepNetworkData <- function(source, date) {
-  if (source == "europe") {
-    date <- lubridate::force_tz(date, "UTC")
-  }
-
+prepNetworkData <- function(source, year) {
   # import metadata
-  meta <- openair::importMeta(source = source, all = TRUE) %>%
+  meta <- openair::importMeta(source = source, all = TRUE, year = year) %>%
     dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude)) %>%
     dplyr::mutate(network = dplyr::if_else(source %in% c("local", "lmam"),
       "Locally Managed", toupper(source)
@@ -286,36 +276,6 @@ prepNetworkData <- function(source, date) {
     "start_date"
   names(meta)[names(meta) %in% c("date_end", "ClosingDate")] <-
     "end_date"
-
-  # check dates
-  if (is.na(date)) {
-    cli::cli_abort(
-      c(
-        "x" = "{.code date} failed to parse",
-        "i" = "Please provide a date in the 'YYYY-MM-DD' format."
-      )
-    )
-  }
-
-  if (date < min(meta$start_date, na.rm = TRUE)) {
-    cli::cli_abort(
-      c(
-        "i" = "Your chosen network, {.code {source}}, started operating on {.code {min(meta$start_date, na.rm = TRUE)}}.",
-        "i" = "You have specified the following date: {.code {date}}",
-        "x" = "Please specify a date after {.code {min(meta$start_date, na.rm = TRUE)}}"
-      )
-    )
-  }
-  suppressWarnings(if (date > Sys.Date()) {
-    today <- as.character(Sys.Date())
-    cli::cli_abort(
-      c(
-        "i" = "The current date is {.code {today}}.",
-        "i" = "You  have specified the following date: {.code {date}}",
-        "x" = "Please specify a date in the past."
-      )
-    )
-  })
 
   # drop HC vars
   if ("variable" %in% names(meta)) {
@@ -377,8 +337,7 @@ prepNetworkData <- function(source, date) {
             "zone",
             "agglomeration",
             "provider"
-          ),
-          date = date
+          )
         ) %>%
         dplyr::mutate(
           lab = stringr::str_glue(
@@ -410,8 +369,7 @@ prepNetworkData <- function(source, date) {
             "zone",
             "agglomeration",
             "local_authority"
-          ),
-          date = date
+          )
         ) %>%
         dplyr::mutate(
           lab = stringr::str_glue(
@@ -433,24 +391,6 @@ prepNetworkData <- function(source, date) {
   }
 
   if (source == "kcl") {
-    # format and filter dates
-    meta <- dplyr::mutate(
-      meta,
-      end_date2 = dplyr::if_else(
-        is.na(.data$end_date),
-        Sys.Date(),
-        lubridate::as_date(.data$end_date)
-      ),
-      start_date = lubridate::with_tz(.data$start_date, tz = "GMT"),
-      end_date2 = lubridate::with_tz(.data$end_date2, tz = "GMT")
-    ) %>%
-      dplyr::filter(
-        date >= .data$start_date,
-        date <= .data$end_date2,
-        .data$`os_grid_x` != 0,
-        .data$`os_grid_y` != 0
-      )
-
     # create labels
     meta <-
       dplyr::mutate(
@@ -475,25 +415,6 @@ prepNetworkData <- function(source, date) {
   }
 
   if (source == "europe") {
-    # format and filter dates
-    meta <- dplyr::mutate(
-      meta,
-      start_date2 = dplyr::if_else(
-        is.na(.data$start_date),
-        lubridate::as_date("1900-01-01"),
-        lubridate::as_date(.data$start_date)
-      ),
-      end_date2 = dplyr::if_else(
-        is.na(.data$end_date),
-        Sys.Date(),
-        lubridate::as_date(.data$end_date)
-      )
-    ) %>%
-      dplyr::filter(
-        date >= .data$start_date2,
-        date <= .data$end_date2
-      )
-
     # create labels
     meta <-
       dplyr::mutate(
@@ -532,7 +453,7 @@ prepNetworkData <- function(source, date) {
 #' @param vec char vector of columns - used for grouping/joining
 #' @param date from parent func
 #' @noRd
-prepManagedNetwork <- function(data, vec, date) {
+prepManagedNetwork <- function(data, vec) {
   # get variable names
   vars <- unique(data$variable)
   vars[vars == "NO"] <- "NOx"
@@ -555,20 +476,20 @@ prepManagedNetwork <- function(data, vec, date) {
     )
 
   # format and filter dates
-  data <- dplyr::mutate(
-    data,
-    end_date2 = dplyr::if_else(
-      .data$end_date == "ongoing" | is.na(.data$end_date),
-      as.character(Sys.Date()),
-      .data$end_date
-    ),
-    end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
-    start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
-  ) %>%
-    dplyr::filter(
-      date >= .data$start_date,
-      date <= .data$end_date2
-    )
+  # data <- dplyr::mutate(
+  #   data,
+  #   end_date2 = dplyr::if_else(
+  #     .data$end_date == "ongoing" | is.na(.data$end_date),
+  #     as.character(Sys.Date()),
+  #     .data$end_date
+  #   ),
+  #   end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
+  #   start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
+  # ) %>%
+  #   dplyr::filter(
+  #     date >= .data$start_date,
+  #     date <= .data$end_date2
+  #   )
 
   return(data)
 }
