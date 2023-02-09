@@ -74,7 +74,8 @@ polar_data %>%
     pollutant = "no2",
     limits = c(0, 180),
     facet = "daylight",
-    facet.nrow = 2,
-    alpha = .9
+    alpha = .75, 
+    d.icon = 100,
+    d.fig = 2.5
   )
 ```
