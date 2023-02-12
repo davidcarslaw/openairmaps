@@ -66,7 +66,6 @@
 #'   )
 #'
 #' # use of polar diff
-
 #' leaflet() %>%
 #'   addTiles() %>%
 #'   addPolarDiffMarkers(
@@ -100,15 +99,16 @@ addPolarMarkers <-
     longitude <- latlon$longitude
 
     # define plotting function
-    args <- list(...)
-    thefun <- function(...) {
-      rlang::exec(fun,
-        !!!args,
-        ...,
-        annotate = FALSE,
-        par.settings = list(axis.line = list(col = "transparent")),
+    theargs <- list(...)
+    thefun <- function(data, args = theargs) {
+      rlang::exec(
+        .fn = fun,
+        mydata = data,
+        pollutant = pollutant,
+        key = key,
         plot = FALSE,
-        key = key
+        !!!args,
+        par.settings = list(axis.line = list(col = "transparent"))
       )
     }
 
@@ -164,10 +164,10 @@ addPolarMarkers <-
     }
 
     # add markers to map
-    map <- rlang::exec(leaflet::addMarkers, !!!marker_arg)
+    out_map <- rlang::exec(leaflet::addMarkers, !!!marker_arg)
 
     # return map
-    return(map)
+    return(out_map)
   }
 
 #' @inheritParams diffMap
@@ -199,16 +199,17 @@ addPolarDiffMarkers <-
     longitude <- latlon$longitude
 
     # define plotting function
-    args <- list(...)
-    thefun <- function(...) {
+    theargs <- list(...)
+    thefun <- function(before, after, args = theargs) {
       plt <- rlang::exec(
         openair::polarDiff,
-        !!!args,
-        ...,
-        annotate = FALSE,
-        par.settings = list(axis.line = list(col = "transparent")),
+        before = before,
+        after = after,
+        pollutant = pollutant,
+        key = key,
         plot = FALSE,
-        key = key
+        !!!args,
+        par.settings = list(axis.line = list(col = "transparent"))
       )
       plt$plot
     }
