@@ -378,6 +378,9 @@ create_polar_markers <-
     # make temp directory
     dir <- tempdir()
 
+    # unique id
+    id <- gsub(" |:|-", "", as.character(Sys.time()))
+
     # sort out popups/labels
     if (is.null(popup)) {
       data$popup <- "NA"
@@ -415,7 +418,7 @@ create_polar_markers <-
       nested_df %>%
       dplyr::mutate(
         plot = purrr::map(data, fun, .progress = "Creating Polar Markers"),
-        url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], ".png")
+        url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], "_", id, ".png")
       )
 
     # work out w/h
@@ -430,7 +433,7 @@ create_polar_markers <-
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
                  .f = ~ {
                    grDevices::png(
-                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, ".png"),
+                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
                      width = width * 300,
                      height = height * 300,
                      res = 300,
