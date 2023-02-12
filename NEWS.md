@@ -1,3 +1,9 @@
+# openairmaps (development version)
+
+* Fixed issues where multiple `addPolarMarkers()` chained together would all show the same plot.
+
+* Fixed issue where `...` and `pollutant` weren't being passed to `addPolarMarkers()`.
+
 # openairmaps 0.7.0
 
 * Added "static" equivalents of all of the polar marker maps written in `{ggplot2}`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
