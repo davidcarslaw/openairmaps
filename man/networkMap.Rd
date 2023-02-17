@@ -10,14 +10,14 @@ networkMap(
   year = NULL,
   cluster = TRUE,
   provider = c("OpenStreetMap", "Esri.WorldImagery"),
+  draw.legend = TRUE,
   collapse.control = FALSE
 )
 }
 \arguments{
-\item{source}{One or more sources of meta data. Can be \code{"aurn"}, \code{"saqn"} (or
-\code{"saqd"}), \code{"aqe"}, \code{"waqn"}, \code{"ni"}, \code{"local"} (or \code{"lmam"}), \code{"kcl"} or
-\code{"europe"}; upper or lower case. See the "details" section for further
-information about selecting multiple networks.}
+\item{source}{One or more sources of meta data. Can be \code{aurn}, \code{saqn} (or
+\code{saqd}), \code{aqe}, \code{waqn}, \code{ni}, \code{local} (or \code{lmam}), \code{kcl} or \code{europe}; upper
+or lower case.}
 
 \item{control}{Option to add a "layer control" menu to allow readers to
 select between different site types. Can choose between effectively any
@@ -37,6 +37,9 @@ close together. Defaults to \code{TRUE}, and is forced to be \code{TRUE} when \c
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
 all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.}
+
+\item{draw.legend}{When multiple \code{source}s are specified, should a legend be
+created at the side of the map? Default is \code{TRUE}.}
 
 \item{collapse.control}{Should the "layer control" interface be collapsed?
 Defaults to \code{FALSE}.}

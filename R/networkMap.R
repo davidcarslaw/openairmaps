@@ -21,10 +21,8 @@
 #' "aurn")` and the "AURN" layer control group when `source = c("aurn",
 #' "saqn")`.
 #'
-#' @param source One or more sources of meta data. Can be `"aurn"`, `"saqn"` (or
-#'   `"saqd"`), `"aqe"`, `"waqn"`, `"ni"`, `"local"` (or `"lmam"`), `"kcl"` or
-#'   `"europe"`; upper or lower case. See the "details" section for further
-#'   information about selecting multiple networks.
+#' @inheritParams openair::importMeta
+#'
 #' @param control Option to add a "layer control" menu to allow readers to
 #'   select between different site types. Can choose between effectively any
 #'   column in the [openair::importMeta()] output, such as `"variable"`,
@@ -41,6 +39,8 @@
 #'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
 #'   all base maps that can be used. If multiple base maps are provided, they
 #'   can be toggled between using a "layer control" interface.
+#' @param draw.legend When multiple `source`s are specified, should a legend be
+#'   created at the side of the map? Default is `TRUE`.
 #' @param collapse.control Should the "layer control" interface be collapsed?
 #'   Defaults to `FALSE`.
 #'
@@ -62,24 +62,51 @@ networkMap <-
            year = NULL,
            cluster = TRUE,
            provider = c("OpenStreetMap", "Esri.WorldImagery"),
+           draw.legend = TRUE,
            collapse.control = FALSE) {
     # if year isn't provided, use current year
     if (is.null(year)) {
       year <- lubridate::year(Sys.Date())
-      cli::cli_inform(
-        c("i" = "{.code year} not specified. Showing sites open in {.field {year}}.")
-      )
+      cli::cli_inform(c("i" = "{.code year} not specified. Showing sites open in {.field {year}}."))
     }
 
     provider <- unique(provider)
+    source <- unique(source)
+
+    cols <-
+      dplyr::tibble(
+        network = c(
+          "AURN",
+          "SAQN",
+          "AQE",
+          "WAQN",
+          "NI",
+          "Locally Managed",
+          "KCL",
+          "Europe"
+        ),
+        colour = c(
+          "red",
+          "orange",
+          "blue",
+          "green",
+          "purple",
+          "lightgray",
+          "black",
+          "pink"
+        )
+      ) %>%
+      dplyr::mutate(colour2 = ifelse(.data$colour == "white", "gray", "white"))
 
     # read in data
     meta <-
-      purrr::map(
-        .x = source,
-        .f = ~ prepNetworkData(source = .x, year = year)
-      ) %>%
-      purrr::list_rbind()
+      purrr::map(.x = source,
+                 .f = ~ prepNetworkData(source = .x, year = year)) %>%
+      purrr::list_rbind() %>%
+      dplyr::left_join(cols, by = "network")
+
+    # prep for legend
+    cols <- dplyr::filter(cols, .data$network %in% meta$network)
 
     meta <-
       meta %>%
@@ -98,7 +125,12 @@ networkMap <-
     # get unique pollutants if control = pollutant
     if (!is.null(control)) {
       if (control %in% c("Parameter_name", "variable")) {
-        meta <- dplyr::group_by(meta, .data$site, .data$latitude, .data$longitude, .data$variable)
+        meta <-
+          dplyr::group_by(meta,
+                          .data$site,
+                          .data$latitude,
+                          .data$longitude,
+                          .data$variable)
       }
     }
 
@@ -126,35 +158,33 @@ networkMap <-
     if (!is.null(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-          c(
-            "code",
-            "site",
-            "latitude",
-            "longitude",
-            "country_iso_code",
-            "elevation",
-            "ratified_to",
-            "Address",
-            "la_id",
-            "eu_code",
-            "eoi_code",
-            "data_source",
-            "os_grid_x",
-            "os_grid_y",
-            "start_date",
-            "end_date",
-            "observation_count",
-            "start_date2",
-            "end_date2",
-            "lab",
-            "pcode"
-          )]
+                                 c(
+                                   "code",
+                                   "site",
+                                   "latitude",
+                                   "longitude",
+                                   "country_iso_code",
+                                   "elevation",
+                                   "ratified_to",
+                                   "Address",
+                                   "la_id",
+                                   "eu_code",
+                                   "eoi_code",
+                                   "data_source",
+                                   "os_grid_x",
+                                   "os_grid_y",
+                                   "start_date",
+                                   "end_date",
+                                   "observation_count",
+                                   "start_date2",
+                                   "end_date2",
+                                   "lab",
+                                   "pcode"
+                                 )]
 
         cli::cli_abort(
-          c(
-            "x" = "'{control}' is not an appropriate {.coed control} option.",
-            "i" = "Suggested control options: {.emph {trycols}}"
-          )
+          c("x" = "'{control}' is not an appropriate {.coed control} option.",
+            "i" = "Suggested control options: {.emph {trycols}}")
         )
       }
 
@@ -182,14 +212,19 @@ networkMap <-
         dat <- dplyr::filter(meta, .data[[control]] == control_vars[[i]])
 
         map <- map %>%
-          leaflet::addMarkers(
+          leaflet::addAwesomeMarkers(
             data = dat,
             lat = dat[["latitude"]],
             lng = dat[["longitude"]],
             group = quickTextHTML(control_vars[[i]]),
             popup = dat[["lab"]],
             label = dat[["site"]],
-            clusterOptions = clusteropts
+            clusterOptions = clusteropts,
+            icon = leaflet::makeAwesomeIcon(
+              markerColor = dat$colour,
+              iconColor = dat$colour2,
+              icon = "info-sign"
+            )
           )
       }
 
@@ -237,14 +272,20 @@ networkMap <-
       dat <- dplyr::distinct(meta, .data$site, .keep_all = TRUE)
 
       map <- map %>%
-        leaflet::addMarkers(
+        leaflet::addAwesomeMarkers(
           data = dat,
           lat = dat[["latitude"]],
           lng = dat[["longitude"]],
           popup = dat[["lab"]],
           label = dat[["site"]],
-          clusterOptions = clusteropts
+          clusterOptions = clusteropts,
+          icon = leaflet::makeAwesomeIcon(
+            markerColor = dat$colour,
+            iconColor = dat$colour2,
+            icon = "info-sign"
+          )
         )
+
 
       if (length(provider) > 1) {
         map <-
@@ -257,6 +298,19 @@ networkMap <-
       }
     }
 
+    # multiple sources - add legend
+    if (length(source) > 1 & draw.legend) {
+      map <-
+        leaflet::addLegend(
+          map,
+          title = "Network",
+          colors = cols$colour,
+          labels = cols$network
+        )
+    }
+
+
+
     map
   }
 
@@ -265,12 +319,21 @@ networkMap <-
 #' @param year year (from parent)
 #' @noRd
 prepNetworkData <- function(source, year) {
+  if (source == "saqd")
+    source <- "saqn"
   # import metadata
-  meta <- openair::importMeta(source = source, all = TRUE, year = year) %>%
-    dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude)) %>%
-    dplyr::mutate(network = dplyr::if_else(source %in% c("local", "lmam"),
-      "Locally Managed", toupper(source)
-    ))
+  meta <-
+    openair::importMeta(source = source,
+                        all = TRUE,
+                        year = year) %>%
+    dplyr::filter(!is.na(.data$latitude),!is.na(.data$longitude)) %>%
+    dplyr::mutate(
+      network = dplyr::case_when(
+        source %in% c("local", "lmam") ~ "Locally Managed",
+        source == "europe" ~ "Europe",
+        TRUE ~ toupper(source)
+      )
+    )
 
   names(meta)[names(meta) %in% c("date_start", "OpeningDate")] <-
     "start_date"
@@ -315,9 +378,17 @@ prepNetworkData <- function(source, year) {
     )
 
     meta <- dplyr::filter(
-      meta,
-      !.data$variable %in% hc_vars,
-      !.data$variable %in% c("ws", "wd", "temp", "NV10", "V10", "NV2.5", "V2.5", "PM1", "BC")
+      meta,!.data$variable %in% hc_vars,!.data$variable %in% c(
+        "ws",
+        "wd",
+        "temp",
+        "NV10",
+        "V10",
+        "NV2.5",
+        "V2.5",
+        "PM1",
+        "BC"
+      )
     )
   }
 
@@ -467,13 +538,10 @@ prepManagedNetwork <- function(data, vec) {
       )
     ) %>%
     dplyr::group_by(dplyr::across(dplyr::all_of(vec))) %>%
-    dplyr::summarise(
-      lab = paste(.data$lab, collapse = "<br>"),
-      .groups = "drop"
-    ) %>%
+    dplyr::summarise(lab = paste(.data$lab, collapse = "<br>"),
+                     .groups = "drop") %>%
     dplyr::right_join(data,
-      by = vec
-    )
+                      by = vec)
 
   # format and filter dates
   # data <- dplyr::mutate(
