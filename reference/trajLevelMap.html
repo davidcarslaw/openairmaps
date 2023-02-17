@@ -71,7 +71,12 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>latitude, longitude</dt>
+    <dl><dt>data</dt>
+<dd><p>Data frame, the result of importing a trajectory file using
+<code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
+
+
+<dt>latitude, longitude</dt>
 <dd><p>The decimal latitude/longitude.</p></dd>
 
 
@@ -81,10 +86,9 @@ used.</p></dd>
 
 
 <dt>control</dt>
-<dd><p>Column to be used for splitting the input data into different
-groups which can be selected between using a "layer control" interface.
-Passed to the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code> (see
-<code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code> for more information).</p></dd>
+<dd><p>Used for splitting the trajectories into different groups
+which can be selected between using a "layer control" menu. Passed to
+<code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></dd>
 
 
 <dt>statistic</dt>
@@ -150,10 +154,9 @@ user can supply a list of colour names recognised by R (type
 
 
 <dt>provider</dt>
-<dd><p>The base map(s) to be used. See
+<dd><p>The base map to be used. See
 <a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list of
-all base maps that can be used. If multiple base maps are provided, they
-can be toggled between using a "layer control" interface.</p></dd>
+all base maps that can be used.</p></dd>
 
 </dl></div>
     <div class="section level2">
