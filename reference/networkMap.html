@@ -18,7 +18,7 @@ using the provider and control parameters."><meta property="og:image" content="h
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,6 +66,7 @@ using the <code>provider</code> and <code>control</code> parameters.</p>
 <span>  year <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cluster <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  provider <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OpenStreetMap"</span>, <span class="st">"Esri.WorldImagery"</span><span class="op">)</span>,</span>
+<span>  draw.legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  collapse.control <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -73,10 +74,9 @@ using the <code>provider</code> and <code>control</code> parameters.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>source</dt>
-<dd><p>One or more sources of meta data. Can be <code>"aurn"</code>, <code>"saqn"</code> (or
-<code>"saqd"</code>), <code>"aqe"</code>, <code>"waqn"</code>, <code>"ni"</code>, <code>"local"</code> (or <code>"lmam"</code>), <code>"kcl"</code> or
-<code>"europe"</code>; upper or lower case. See the "details" section for further
-information about selecting multiple networks.</p></dd>
+<dd><p>One or more sources of meta data. Can be <code>aurn</code>, <code>saqn</code> (or
+<code>saqd</code>), <code>aqe</code>, <code>waqn</code>, <code>ni</code>, <code>local</code> (or <code>lmam</code>), <code>kcl</code> or <code>europe</code>; upper
+or lower case.</p></dd>
 
 
 <dt>control</dt>
@@ -104,6 +104,11 @@ close together. Defaults to <code>TRUE</code>, and is forced to be <code>TRUE</c
 <a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list of
 all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface.</p></dd>
+
+
+<dt>draw.legend</dt>
+<dd><p>When multiple <code>source</code>s are specified, should a legend be
+created at the side of the map? Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>collapse.control</dt>
