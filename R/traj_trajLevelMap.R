@@ -4,12 +4,8 @@
 #' requires that data are imported using the [openair::importTraj()] function.
 #'
 #' @family trajectory maps
+#' @inheritParams trajMap
 #' @inheritParams openair::trajLevel
-#' @param control Column to be used for splitting the input data into different
-#'   groups which can be selected between using a "layer control" interface.
-#'   Passed to the `type` argument of [openair::trajLevel()] (see
-#'   [openair::cutData()] for more information).
-#' @param latitude,longitude The decimal latitude/longitude.
 #' @param cols Colours to be used for plotting. Options include "default",
 #'   "increment", "heat", "turbo" and `RColorBrewer` colours — see the
 #'   [openair::openColours()] function for more details. For user defined the
@@ -19,10 +15,6 @@
 #' @param alpha Opacity of the tiles. Must be between `0` and `1`.
 #' @param tile.border Colour to use for the border of binned tiles. Defaults to
 #'   `NA`, which draws no border.
-#' @param provider The base map(s) to be used. See
-#'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
-#'   all base maps that can be used. If multiple base maps are provided, they
-#'   can be toggled between using a "layer control" interface.
 #'
 #' @return A leaflet object.
 #' @export
