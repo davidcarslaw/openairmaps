@@ -344,9 +344,10 @@ diffMapStatic <- function(before,
   if (!is.null(limits)) {
     plt <-
       plt +
-      ggplot2::geom_point(data = plots_df,
-                          ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-                          alpha = 0
+      ggplot2::geom_point(
+        data = plots_df,
+        ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+        alpha = 0
       ) +
       ggplot2::scale_color_gradientn(
         limits = theLimits,
@@ -407,7 +408,7 @@ create_polar_diffmarkers <-
       )))
 
     # warn if missing
-    if (nrow(nested_before) != nrow(nested_after)){
+    if (nrow(nested_before) != nrow(nested_after)) {
       warn_df <-
         dplyr::bind_rows(
           dplyr::anti_join(nested_before, nested_after, by = c(latitude, longitude, split_col)),
@@ -425,17 +426,20 @@ create_polar_diffmarkers <-
     # check for popup issues
     if (nrow(nested_before) > valid_rows) {
       cli::cli_abort(
-        c("x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
+        c(
+          "x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
           "i" = "Have you used a numeric column, e.g., a pollutant concentration?",
-          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker.")
+          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker."
+        )
       )
     }
 
     # create plots
     plots_df <-
       dplyr::inner_join(nested_before,
-                        nested_after,
-                        by = c(latitude, longitude, split_col)) %>%
+        nested_after,
+        by = c(latitude, longitude, split_col)
+      ) %>%
       dplyr::mutate(
         plot = purrr::map2(before, after, fun, .progress = "Creating Polar Markers"),
         url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], "_", id, ".png")
@@ -451,21 +455,22 @@ create_polar_diffmarkers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-                 .f = ~ {
-                   grDevices::png(
-                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-                     width = width * 300,
-                     height = height * 300,
-                     res = 300,
-                     bg = "transparent",
-                     type = "cairo",
-                     antialias = "none"
-                   )
+      .f = ~ {
+        grDevices::png(
+          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+          width = width * 300,
+          height = height * 300,
+          res = 300,
+          bg = "transparent",
+          type = "cairo",
+          antialias = "none"
+        )
 
-                   plot(..4)
+        plot(..4)
 
-                   grDevices::dev.off()
-                 })
+        grDevices::dev.off()
+      }
+    )
 
     return(plots_df)
   }
