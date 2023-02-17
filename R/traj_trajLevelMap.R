@@ -4,33 +4,12 @@
 #' requires that data are imported using the [openair::importTraj()] function.
 #'
 #' @family trajectory maps
-#'
-#' @param data Data frame, the result of importing a trajectory file using
-#'   [openair::importTraj()].
+#' @inheritParams openair::trajLevel
+#' @param control Column to be used for splitting the input data into different
+#'   groups which can be selected between using a "layer control" interface.
+#'   Passed to the `type` argument of [openair::trajLevel()] (see
+#'   [openair::cutData()] for more information).
 #' @param latitude,longitude The decimal latitude/longitude.
-#' @param pollutant Pollutant to be plotted.
-#' @param statistic By default the function will plot the trajectory
-#'   frequencies. There are also various ways of plotting concentrations.
-#'
-#'   It is also possible to set `statistic = "difference"`. In this case
-#'   trajectories where the associated concentration is greater than
-#'   `percentile` are compared with the the full set of trajectories to
-#'   understand the differences in frequencies of the origin of air masses. The
-#'   comparison is made by comparing the percentage change in gridded
-#'   frequencies. For example, such a plot could show that the top 10\% of
-#'   concentrations of PM10 tend to originate from air-mass origins to the east.
-#'
-#'   If `statistic = "pscf"` then a Potential Source Contribution Function map
-#'   is produced. If `statistic = "cwt"` then the Concentration Weighted
-#'   Trajectory approach is used. If `statistic = "saqn"` then Simplified
-#'   Quantitative Transport Bias Analysis is used. See "details" of
-#'   [openair::trajLevel()] for more information.
-#' @param percentile For [openair::trajLevel()]. The percentile concentration of
-#'   `pollutant` against which the all trajectories are compared.
-#' @param lon.inc The longitude-interval to be used for binning data.
-#' @param lat.inc The latitude-interval to be used for binning data.
-#' @param min.bin The minimum number of unique points in a grid cell. Counts
-#'   below `min.bin` are set as missing.
 #' @param cols Colours to be used for plotting. Options include "default",
 #'   "increment", "heat", "turbo" and `RColorBrewer` colours — see the
 #'   [openair::openColours()] function for more details. For user defined the
@@ -58,6 +37,7 @@ trajLevelMap <-
            longitude = "lon",
            latitude = "lat",
            pollutant,
+           control = "default",
            statistic = "frequency",
            percentile = 90,
            lon.inc = 1,
@@ -100,9 +80,6 @@ trajLevelMap <-
         group = unique(provider)[[i]]
       )
     }
-    if (length(unique(provider)) > 1) {
-      map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
-    }
 
     # run openair::trajLevel()
     data <- openair::trajLevel(
@@ -115,6 +92,7 @@ trajLevelMap <-
       lat.inc = lat.inc,
       lon.inc = lon.inc,
       min.bin = min.bin,
+      type = control,
       plot = FALSE
     )$data
 
@@ -168,8 +146,9 @@ trajLevelMap <-
 
     # make map
 
-    map %>%
+    map <-
       leaflet::addRectangles(
+        map = map,
         data = data,
         lng1 = data[["xgrid"]] - (lon.inc / 2),
         lng2 = data[["xgrid"]] + (lon.inc / 2),
@@ -180,11 +159,24 @@ trajLevelMap <-
         fillOpacity = alpha,
         fillColor = pal(data[[pollutant]]),
         popup = data[["lab"]],
-        label = data[["coord"]]
+        label = data[["coord"]],
+        group = data[[control]]
       ) %>%
       leaflet::addLegend(
         title = title,
         pal = pal, values = data[[pollutant]],
         labFormat = style
       )
+
+    # control menu
+    if (length(unique(provider)) > 1 & control == "default") {
+      map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
+    } else if (length(unique(provider)) == 1 & control != "default") {
+      map <- leaflet::addLayersControl(map, baseGroups = unique(data[[control]]))
+    } else if (length(unique(provider)) > 1 & control != "default") {
+      map <- leaflet::addLayersControl(map, overlayGroups = unique(provider), baseGroups = unique(data[[control]]))
+    }
+
+    # return map
+    return(map)
   }

@@ -9,6 +9,7 @@ trajLevelMap(
   longitude = "lon",
   latitude = "lat",
   pollutant,
+  control = "default",
   statistic = "frequency",
   percentile = 90,
   lon.inc = 1,
@@ -21,15 +22,27 @@ trajLevelMap(
 )
 }
 \arguments{
-\item{data}{Data frame, the result of importing a trajectory file using
-\code{\link[openair:importTraj]{openair::importTraj()}}.}
-
 \item{latitude, longitude}{The decimal latitude/longitude.}
 
-\item{pollutant}{Pollutant to be plotted.}
+\item{pollutant}{Pollutant to be plotted. By default the trajectory height is
+used.}
 
-\item{statistic}{By default the function will plot the trajectory
-frequencies. There are also various ways of plotting concentrations.
+\item{control}{Column to be used for splitting the input data into different
+groups which can be selected between using a "layer control" interface.
+Passed to the \code{type} argument of \code{\link[openair:trajLevel]{openair::trajLevel()}} (see
+\code{\link[openair:cutData]{openair::cutData()}} for more information).}
+
+\item{statistic}{For \code{trajLevel}. By default the function will plot the
+trajectory frequencies.
+
+For \code{trajLevel}, the argument \code{method = "hexbin"} can be used. In
+this case hexagonal binning of the trajectory \emph{points} (i.e. a point
+every three hours along each back trajectory). The plot then shows the
+trajectory frequencies uses hexagonal binning. This is an alternative way
+of viewing trajectory frequencies compared with \code{statistic =
+  "frequency"}.
+
+There are also various ways of plotting concentrations.
 
 It is also possible to set \code{statistic = "difference"}. In this case
 trajectories where the associated concentration is greater than
@@ -39,21 +52,25 @@ comparison is made by comparing the percentage change in gridded
 frequencies. For example, such a plot could show that the top 10\\% of
 concentrations of PM10 tend to originate from air-mass origins to the east.
 
-If \code{statistic = "pscf"} then a Potential Source Contribution Function map
-is produced. If \code{statistic = "cwt"} then the Concentration Weighted
-Trajectory approach is used. If \code{statistic = "saqn"} then Simplified
-Quantitative Transport Bias Analysis is used. See "details" of
-\code{\link[openair:trajLevel]{openair::trajLevel()}} for more information.}
+If \code{statistic = "pscf"} then a Potential Source Contribution Function
+map is produced. If \code{statistic = "cwt"} then concentration weighted
+trajectories are plotted.
 
-\item{percentile}{For \code{\link[openair:trajLevel]{openair::trajLevel()}}. The percentile concentration of
+If \code{statistic = "cwt"} then the Concentration Weighted Trajectory
+approach is used. See details.}
+
+\item{percentile}{For \code{trajLevel}. The percentile concentration of
 \code{pollutant} against which the all trajectories are compared.}
 
-\item{lon.inc}{The longitude-interval to be used for binning data.}
+\item{lon.inc}{The longitude-interval to be used for binning data for
+\code{trajLevel}.}
 
-\item{lat.inc}{The latitude-interval to be used for binning data.}
+\item{lat.inc}{The latitude-interval to be used for binning data when
+\code{trajLevel}.}
 
-\item{min.bin}{The minimum number of unique points in a grid cell. Counts
-below \code{min.bin} are set as missing.}
+\item{min.bin}{For \code{trajLevel} the minimum number of unique points in a
+grid cell. Counts below \code{min.bin} are set as missing. For
+\code{trajLevel} gridded outputs.}
 
 \item{cols}{Colours to be used for plotting. Options include "default",
 "increment", "heat", "turbo" and \code{RColorBrewer} colours — see the
