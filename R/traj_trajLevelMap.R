@@ -76,8 +76,8 @@ trajLevelMap <-
     # set provider tiles
     for (i in seq(length(unique(provider)))) {
       map <- leaflet::addProviderTiles(map,
-        provider = unique(provider)[[i]],
-        group = unique(provider)[[i]]
+                                       provider = unique(provider)[[i]],
+                                       group = unique(provider)[[i]]
       )
     }
 

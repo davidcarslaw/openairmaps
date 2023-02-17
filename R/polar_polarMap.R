@@ -22,11 +22,10 @@
 #' @param latitude,longitude The decimal latitude/longitude. If not provided,
 #'   will be automatically inferred from data by looking for a column named
 #'   "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
-#' @param control Column to be used for splitting the input data into different
-#'   groups which can be selected between using a "layer control" interface.
-#'   Appropriate columns could be those added by [openair::cutData()] or
-#'   [openair::splitByDate()]. `control` cannot be used if multiple `pollutant`
-#'   columns have been provided.
+#' @param control Used for splitting the input data into different groups which
+#'   can be selected between using a "layer control" interface, passed to the
+#'   `type` argument of [openair::cutData()]. `control` cannot be used if
+#'   multiple `pollutant` columns have been provided.
 #' @param popup Column to be used as the HTML content for marker popups. Popups
 #'   may be useful to show information about the individual sites (e.g., site
 #'   names, codes, types, etc.).
@@ -219,10 +218,9 @@ polarMap <- function(data,
 #' @inheritParams polarMap
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they will each form part of a separate panel.
-#' @param facet Column to be used for splitting the input data into different
-#'   panels. Appropriate columns could be those added by [openair::cutData()] or
-#'   [openair::splitByDate()]. `facet` cannot be used if multiple `pollutant`
-#'   columns have been provided.
+#' @param facet Used for splitting the input data into different panels, passed
+#'   to the `type` argument of [openair::cutData()]. `facet` cannot be used if
+#'   multiple `pollutant` columns have been provided.
 #' @param zoom The zoom level to use for the basemap, passed to
 #'   [ggmap::get_stamenmap()]. Alternatively, the `ggmap` argument can be used
 #'   for more precise control of the basemap.
