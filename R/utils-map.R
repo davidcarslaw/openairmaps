@@ -34,9 +34,11 @@ checkMapPrep <-
 
     if (any(!matching)) {
       ## not all variables are present
-      stop("Can't find the variable(s): ",
-           paste(varNames[!matching], collapse = ", "),
-           "\n")
+      stop(
+        "Can't find the variable(s): ",
+        paste(varNames[!matching], collapse = ", "),
+        "\n"
+      )
     }
 
     ## just select data needed
@@ -82,7 +84,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -131,9 +133,13 @@ checkMapPrep <-
       ids <- which(is.na(mydata$date))
       if (length(ids) > 0) {
         mydata <- mydata[-ids, ]
-        warning(paste("Missing dates detected, removing",
-                      length(ids), "lines"),
-                call. = FALSE)
+        warning(
+          paste(
+            "Missing dates detected, removing",
+            length(ids), "lines"
+          ),
+          call. = FALSE
+        )
       }
 
       ## daylight saving time can cause terrible problems - best avoided!!
@@ -154,8 +160,10 @@ prepMapData <-
     # check pollutant is there
     if (is.null(pollutant)) {
       cli::cli_abort(
-        c("x" = "{.code pollutant} is missing with no default.",
-          "i" = "Please provide a column of {.code data} which represents the pollutant(s) of interest.")
+        c(
+          "x" = "{.code pollutant} is missing with no default.",
+          "i" = "Please provide a column of {.code data} which represents the pollutant(s) of interest."
+        )
       )
     }
 
@@ -173,9 +181,11 @@ prepMapData <-
     # check if more than one pollutant & is.null split
     if (length(pollutant) > 1 & !is.null(control)) {
       cli::cli_warn(
-        c("!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",
+        c(
+          "!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",
           "i" = "Please only specify multiple pollutants {.emph or} a {.code control/facet} option",
-          "i" = "Defaulting to splitting by {.code pollutant}")
+          "i" = "Defaulting to splitting by {.code pollutant}"
+        )
       )
     }
 
@@ -191,8 +201,10 @@ prepMapData <-
 
       # make pollutant names factors
       data <-
-        dplyr::mutate(.data = data,
-                      pollutant_name = as.factor(.data$pollutant_name))
+        dplyr::mutate(
+          .data = data,
+          pollutant_name = as.factor(.data$pollutant_name)
+        )
     }
 
     return(data)
@@ -211,16 +223,19 @@ assume_latlon <- function(data, latitude, longitude) {
       str <- c("longitude", "longitud", "lon", "long", "lng")
     }
     str <-
-      c(str,
+      c(
+        str,
         toupper(str),
         tolower(str),
-        stringr::str_to_title(str))
+        stringr::str_to_title(str)
+      )
     id <- x %in% str
     out <- x[id]
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-                     call = NULL)
+        call = NULL
+      )
       return(NULL)
     } else if (len == 0) {
       cli::cli_abort("Cannot identify {name}: No clear match.", call = NULL)
@@ -244,8 +259,10 @@ assume_latlon <- function(data, latitude, longitude) {
     }
   }
 
-  out <- list(latitude = latitude,
-              longitude = longitude)
+  out <- list(
+    latitude = latitude,
+    longitude = longitude
+  )
 }
 
 #' get breaks for the "rose" functions
@@ -256,11 +273,13 @@ assume_latlon <- function(data, latitude, longitude) {
 #' @noRd
 getBreaks <- function(breaks, ws.int, vec, polrose) {
   if (is.numeric(breaks) & length(breaks) == 1 & polrose) {
-    breaks <- unique(pretty(c(
-      min(vec, na.rm = TRUE),
-      stats::quantile(vec, probs = 0.9, na.rm = TRUE)
-    ),
-    breaks))
+    breaks <- unique(pretty(
+      c(
+        min(vec, na.rm = TRUE),
+        stats::quantile(vec, probs = 0.9, na.rm = TRUE)
+      ),
+      breaks
+    ))
   }
   if (length(breaks) == 1) {
     breaks <- 0:(breaks - 1) * ws.int
@@ -356,8 +375,10 @@ make_leaflet_map <-
 #' theme for static maps
 #' @noRd
 theme_static <- function() {
-  ggplot2::`%+replace%`(ggplot2::theme_minimal(),
-                        ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black")))
+  ggplot2::`%+replace%`(
+    ggplot2::theme_minimal(),
+    ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black"))
+  )
 }
 
 #' Create markers for the static plots
@@ -407,9 +428,11 @@ create_polar_markers <-
     # check for popup issues
     if (nrow(nested_df) > valid_rows) {
       cli::cli_abort(
-        c("x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
+        c(
+          "x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
           "i" = "Have you used a numeric column, e.g., a pollutant concentration?",
-          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker.")
+          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker."
+        )
       )
     }
 
@@ -431,21 +454,22 @@ create_polar_markers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-                 .f = ~ {
-                   grDevices::png(
-                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-                     width = width * 300,
-                     height = height * 300,
-                     res = 300,
-                     bg = "transparent",
-                     type = "cairo",
-                     antialias = "none"
-                   )
+      .f = ~ {
+        grDevices::png(
+          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+          width = width * 300,
+          height = height * 300,
+          res = 300,
+          bg = "transparent",
+          type = "cairo",
+          antialias = "none"
+        )
 
-                   plot(..4)
+        plot(..4)
 
-                   grDevices::dev.off()
-                 })
+        grDevices::dev.off()
+      }
+    )
 
     return(plots_df)
   }
@@ -473,8 +497,10 @@ estimate_ggmap <-
       maxlon <- max(data[[longitude]]) + d
 
       ggmap <-
-        ggmap::get_stamenmap(bbox = c(minlon, minlat, maxlon, maxlat),
-                             zoom = zoom)
+        ggmap::get_stamenmap(
+          bbox = c(minlon, minlat, maxlon, maxlat),
+          zoom = zoom
+        )
     }
 
     return(ggmap)
