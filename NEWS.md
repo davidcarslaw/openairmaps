@@ -1,5 +1,7 @@
 # openairmaps (development version)
 
+* The `control` and `facet` arguments of all polar marker mapping functions (static and interactive) and trajectory mapping functions are now passed to `openair::cutData()`.
+
 * `trajLevelMap()` now has the `control` argument, which maps directly onto the `type` argument of `openair::trajLevel()`.
 
 * `networkMap()` now uses different coloured markers for different networks. If more than one network is specified, and `draw.legend` is set to `TRUE`, a legend will also be drawn for quick identification of different data sources.

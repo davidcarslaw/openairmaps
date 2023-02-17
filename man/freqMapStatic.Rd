@@ -52,10 +52,9 @@ contribution to the total concentration. Note that for options other than
 "frequency", it is necessary to also provide the name of a pollutant. See
 function \code{\link[openair:cutData]{openair::cutData()}} for further details.}
 
-\item{facet}{Column to be used for splitting the input data into different
-panels. Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
-\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{facet} cannot be used if multiple \code{pollutant}
-columns have been provided.}
+\item{facet}{Used for splitting the input data into different panels, passed
+to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{limits}{By default, each individual polar marker has its own colour
 scale. The \code{limits} argument will force all markers to use the same colour

@@ -15,9 +15,9 @@
 #'   may be numeric, character or factor. This will commonly be a pollutant
 #'   concentration which has been joined (e.g., by [dplyr::left_join()]) to the
 #'   trajectory data by "date".
-#' @param control Column to be used for splitting the trajectories into
-#'   different groups which can be selected between using a "layer control"
-#'   menu.
+#' @param control Used for splitting the trajectories into different groups
+#'   which can be selected between using a "layer control" menu. Passed to
+#'   [openair::cutData()].
 #' @param cols Colours to be used for plotting. Options include "default",
 #'   "increment", "heat", "turbo" and `RColorBrewer` colours — see the
 #'   [openair::openColours()] function for more details. For user defined the
@@ -68,7 +68,7 @@ trajMap <-
     data$datef <- factor(data$date)
 
     # if no "control", get a fake column
-    if (control == "default") data$default <- "default"
+    data <- openair::cutData(data, control)
 
     # initialise map
     map <- leaflet::leaflet() %>%
@@ -77,7 +77,7 @@ trajMap <-
     # if "colour", create colour palette
     if (!missing(colour)) {
       if (colour %in% names(data)) {
-        data$datef <- forcats::fct_reorder(data$datef, data[[colour]], .desc = F, na.rm = T)
+        data$datef <- forcats::fct_reorder(data$datef, data[[colour]], .desc = F, na.rm = T, .na_rm = TRUE)
         data <- dplyr::arrange(data, .data$datef)
 
         if ("factor" %in% class(data[[colour]]) | "character" %in% class(data[[colour]])) {

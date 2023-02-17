@@ -47,11 +47,10 @@ scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = 
 will be automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
-\item{control}{Column to be used for splitting the input data into different
-groups which can be selected between using a "layer control" interface.
-Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
-\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{control} cannot be used if multiple \code{pollutant}
-columns have been provided.}
+\item{control}{Used for splitting the input data into different groups which
+can be selected between using a "layer control" interface, passed to the
+\code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{control} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{popup}{Column to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site

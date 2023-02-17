@@ -36,10 +36,9 @@ pollutants are specified, they will each form part of a separate panel.}
 \item{percentile}{The percentile value(s) to plot. Must be between 0–100. If
 \code{percentile = NA} then only a mean line will be shown.}
 
-\item{facet}{Column to be used for splitting the input data into different
-panels. Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
-\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{facet} cannot be used if multiple \code{pollutant}
-columns have been provided.}
+\item{facet}{Used for splitting the input data into different panels, passed
+to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{limits}{By default, each individual polar marker has its own colour
 scale. The \code{limits} argument will force all markers to use the same colour

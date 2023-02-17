@@ -28,9 +28,9 @@ may be numeric, character or factor. This will commonly be a pollutant
 concentration which has been joined (e.g., by \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the
 trajectory data by "date".}
 
-\item{control}{Column to be used for splitting the trajectories into
-different groups which can be selected between using a "layer control"
-menu.}
+\item{control}{Used for splitting the trajectories into different groups
+which can be selected between using a "layer control" menu. Passed to
+\code{\link[openair:cutData]{openair::cutData()}}.}
 
 \item{cols}{Colours to be used for plotting. Options include "default",
 "increment", "heat", "turbo" and \code{RColorBrewer} colours — see the

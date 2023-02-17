@@ -84,7 +84,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -167,6 +167,11 @@ prepMapData <-
       )
     }
 
+    # run cutData
+    type <- control
+    if (is.null(type)) type <- "default"
+    data <- openair::cutData(data, type = type)
+
     ## extract variables of interest
     vars <- unique(c(pollutant, control, ...))
 
@@ -234,7 +239,7 @@ assume_latlon <- function(data, latitude, longitude) {
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-        call = NULL
+                     call = NULL
       )
       return(NULL)
     } else if (len == 0) {
@@ -454,21 +459,21 @@ create_polar_markers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-      .f = ~ {
-        grDevices::png(
-          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-          width = width * 300,
-          height = height * 300,
-          res = 300,
-          bg = "transparent",
-          type = "cairo",
-          antialias = "none"
-        )
+                 .f = ~ {
+                   grDevices::png(
+                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+                     width = width * 300,
+                     height = height * 300,
+                     res = 300,
+                     bg = "transparent",
+                     type = "cairo",
+                     antialias = "none"
+                   )
 
-        plot(..4)
+                   plot(..4)
 
-        grDevices::dev.off()
-      }
+                   grDevices::dev.off()
+                 }
     )
 
     return(plots_df)

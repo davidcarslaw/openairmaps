@@ -38,10 +38,9 @@ generates the break points 2, 4, 6, 8 m/s. Breaks can also be used to set
 specific break points. For example, the argument breaks = c(0, 1, 10, 100)
 breaks the data into segments <1, 1-10, 10-100, >100.}
 
-\item{facet}{Column to be used for splitting the input data into different
-panels. Appropriate columns could be those added by \code{\link[openair:cutData]{openair::cutData()}} or
-\code{\link[openair:splitByDate]{openair::splitByDate()}}. \code{facet} cannot be used if multiple \code{pollutant}
-columns have been provided.}
+\item{facet}{Used for splitting the input data into different panels, passed
+to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
