@@ -22,15 +22,17 @@ trajLevelMap(
 )
 }
 \arguments{
+\item{data}{Data frame, the result of importing a trajectory file using
+\code{\link[openair:importTraj]{openair::importTraj()}}.}
+
 \item{latitude, longitude}{The decimal latitude/longitude.}
 
 \item{pollutant}{Pollutant to be plotted. By default the trajectory height is
 used.}
 
-\item{control}{Column to be used for splitting the input data into different
-groups which can be selected between using a "layer control" interface.
-Passed to the \code{type} argument of \code{\link[openair:trajLevel]{openair::trajLevel()}} (see
-\code{\link[openair:cutData]{openair::cutData()}} for more information).}
+\item{control}{Used for splitting the trajectories into different groups
+which can be selected between using a "layer control" menu. Passed to
+\code{\link[openair:cutData]{openair::cutData()}}.}
 
 \item{statistic}{For \code{trajLevel}. By default the function will plot the
 trajectory frequencies.
@@ -83,10 +85,9 @@ user can supply a list of colour names recognised by R (type
 \item{tile.border}{Colour to use for the border of binned tiles. Defaults to
 \code{NA}, which draws no border.}
 
-\item{provider}{The base map(s) to be used. See
+\item{provider}{The base map to be used. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
-all base maps that can be used. If multiple base maps are provided, they
-can be toggled between using a "layer control" interface.}
+all base maps that can be used.}
 }
 \value{
 A leaflet object.
