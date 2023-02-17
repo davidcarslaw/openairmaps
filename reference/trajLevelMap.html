@@ -12,7 +12,7 @@ requires that data are imported using the openair::importTraj() function."><meta
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,7 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 <span>  longitude <span class="op">=</span> <span class="st">"lon"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>  <span class="va">pollutant</span>,</span>
+<span>  control <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="st">"frequency"</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fl">90</span>,</span>
 <span>  lon.inc <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -70,22 +71,32 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>data</dt>
-<dd><p>Data frame, the result of importing a trajectory file using
-<code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
-
-
-<dt>latitude, longitude</dt>
+    <dl><dt>latitude, longitude</dt>
 <dd><p>The decimal latitude/longitude.</p></dd>
 
 
 <dt>pollutant</dt>
-<dd><p>Pollutant to be plotted.</p></dd>
+<dd><p>Pollutant to be plotted. By default the trajectory height is
+used.</p></dd>
+
+
+<dt>control</dt>
+<dd><p>Column to be used for splitting the input data into different
+groups which can be selected between using a "layer control" interface.
+Passed to the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code> (see
+<code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code> for more information).</p></dd>
 
 
 <dt>statistic</dt>
-<dd><p>By default the function will plot the trajectory
-frequencies. There are also various ways of plotting concentrations.</p>
+<dd><p>For <code>trajLevel</code>. By default the function will plot the
+trajectory frequencies.</p>
+<p>For <code>trajLevel</code>, the argument <code>method = "hexbin"</code> can be used. In
+this case hexagonal binning of the trajectory <em>points</em> (i.e. a point
+every three hours along each back trajectory). The plot then shows the
+trajectory frequencies uses hexagonal binning. This is an alternative way
+of viewing trajectory frequencies compared with <code>statistic =
+  "frequency"</code>.</p>
+<p>There are also various ways of plotting concentrations.</p>
 <p>It is also possible to set <code>statistic = "difference"</code>. In this case
 trajectories where the associated concentration is greater than
 <code>percentile</code> are compared with the the full set of trajectories to
@@ -93,29 +104,32 @@ understand the differences in frequencies of the origin of air masses. The
 comparison is made by comparing the percentage change in gridded
 frequencies. For example, such a plot could show that the top 10\<!-- % of -->
 concentrations of PM10 tend to originate from air-mass origins to the east.</p>
-<p>If <code>statistic = "pscf"</code> then a Potential Source Contribution Function map
-is produced. If <code>statistic = "cwt"</code> then the Concentration Weighted
-Trajectory approach is used. If <code>statistic = "saqn"</code> then Simplified
-Quantitative Transport Bias Analysis is used. See "details" of
-<code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code> for more information.</p></dd>
+<p>If <code>statistic = "pscf"</code> then a Potential Source Contribution Function
+map is produced. If <code>statistic = "cwt"</code> then concentration weighted
+trajectories are plotted.</p>
+<p>If <code>statistic = "cwt"</code> then the Concentration Weighted Trajectory
+approach is used. See details.</p></dd>
 
 
 <dt>percentile</dt>
-<dd><p>For <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code>. The percentile concentration of
+<dd><p>For <code>trajLevel</code>. The percentile concentration of
 <code>pollutant</code> against which the all trajectories are compared.</p></dd>
 
 
 <dt>lon.inc</dt>
-<dd><p>The longitude-interval to be used for binning data.</p></dd>
+<dd><p>The longitude-interval to be used for binning data for
+<code>trajLevel</code>.</p></dd>
 
 
 <dt>lat.inc</dt>
-<dd><p>The latitude-interval to be used for binning data.</p></dd>
+<dd><p>The latitude-interval to be used for binning data when
+<code>trajLevel</code>.</p></dd>
 
 
 <dt>min.bin</dt>
-<dd><p>The minimum number of unique points in a grid cell. Counts
-below <code>min.bin</code> are set as missing.</p></dd>
+<dd><p>For <code>trajLevel</code> the minimum number of unique points in a
+grid cell. Counts below <code>min.bin</code> are set as missing. For
+<code>trajLevel</code> gridded outputs.</p></dd>
 
 
 <dt>cols</dt>

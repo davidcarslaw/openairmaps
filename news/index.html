@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="openairmaps-development-version">openairmaps (development version)<a class="anchor" aria-label="anchor" href="#openairmaps-development-version"></a></h2>
-<ul><li><p><code><a href="../reference/networkMap.html">networkMap()</a></code> now uses different coloured markers for different networks. If more than one network is specified, and <code>draw.legend</code> is set to <code>TRUE</code>, a legend will also be drawn for quick identification of different data sources.</p></li>
+<ul><li><p><code><a href="../reference/trajLevelMap.html">trajLevelMap()</a></code> now has the <code>control</code> argument, which maps directly onto the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code>.</p></li>
+<li><p><code><a href="../reference/networkMap.html">networkMap()</a></code> now uses different coloured markers for different networks. If more than one network is specified, and <code>draw.legend</code> is set to <code>TRUE</code>, a legend will also be drawn for quick identification of different data sources.</p></li>
 <li><p>Fixed issues where multiple <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> chained together would all show the same plot.</p></li>
 <li><p>Fixed issue where <code>...</code> and <code>pollutant</code> weren’t being passed to <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code>.</p></li>
 </ul></div>
