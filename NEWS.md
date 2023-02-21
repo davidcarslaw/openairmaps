@@ -10,6 +10,8 @@
 
 * Fixed issue where `...` and `pollutant` weren't being passed to `addPolarMarkers()`.
 
+* Fixed issue in `trajMap()` caused by recent updates to `{dplyr}` and `{forcats}`.
+
 # openairmaps 0.7.0
 
 * Added "static" equivalents of all of the polar marker maps written in `{ggplot2}`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
