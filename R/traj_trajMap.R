@@ -77,7 +77,6 @@ trajMap <-
     # if "colour", create colour palette
     if (!missing(colour)) {
       if (colour %in% names(data)) {
-        data$datef <- forcats::fct_reorder(data$datef, data[[colour]], .desc = F, na.rm = T, .na_rm = TRUE)
         data <- dplyr::arrange(data, .data$datef)
 
         if ("factor" %in% class(data[[colour]]) | "character" %in% class(data[[colour]])) {
