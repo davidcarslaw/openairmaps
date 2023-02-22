@@ -1,5 +1,9 @@
 # openairmaps (development version)
 
+This is a minor release adding a range of quality of life features and fixing a few bugs.
+
+## New features
+
 * The `control` and `facet` arguments of all polar marker mapping functions (static and interactive) and trajectory mapping functions are now passed to `openair::cutData()`.
 
 * The `popup` argument of all interactive polar marker mapping functions can now take a vector of colum names. If more than one column is provided, it is automatically passed to `buildPopup()` using its default values.
@@ -8,13 +12,33 @@
 
 * `networkMap()` now uses different coloured markers for different networks. If more than one network is specified, and `draw.legend` is set to `TRUE`, a legend will also be drawn for quick identification of different data sources.
 
+## Bug fixes
+
 * Fixed issues where multiple `addPolarMarkers()` chained together would all show the same plot.
 
 * Fixed issue where `...` and `pollutant` weren't being passed to `addPolarMarkers()`.
 
 * Fixed issue in `trajMap()` caused by recent updates to `{dplyr}` and `{forcats}`.
 
+
+
 # openairmaps 0.7.0
+
+This is a minor release containing several important new features that expand the scope of the package. This also comes with several minor breaking changes to improve consistency within `{openairmaps}` and with `{openair}`.
+
+## Breaking changes
+
+* BREAKING: The `fig.width`, `fig.height`, `iconHeight` and `iconWidth` arguments have been replaced with `d.fig` and `d.icon`. There are two main justifications behind this:
+
+  * This ensures consistency across all of `{openairmaps}`, making it easier to switch between the static and HTML map types.
+  
+  * Polar markers are almost always going to be circular (i.e., width = height) so  having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form `c(width, height)` will provide the same functionality.
+
+* BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data`, `pollutant` and `fun`.
+
+* BREAKING: The `date` argument from `networkMap()` has been replaced by `year`.
+
+## New features
 
 * Added "static" equivalents of all of the polar marker maps written in `{ggplot2}`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
 
@@ -32,27 +56,29 @@
 
 * `networkMap()` can now pass the new `year` option to `importMeta()`.
 
-* BREAKING: The `fig.width`, `fig.height`, `iconHeight` and `iconWidth` arguments have been replaced with `d.fig` and `d.icon`. There are two main justifications behind this:
 
-  * This ensures consistency across all of `{openairmaps}`, making it easier to switch between the static and HTML map types.
-  
-  * Polar markers are almost always going to be circular (i.e., width = height) so  having one argument will streamline things. If users wish to have non-circular markers, a vector of length two in the form `c(width, height)` will provide the same functionality.
-
-* BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data`, `pollutant` and `fun`.
-
-* BREAKING: The `date` argument from `networkMap()` has been replaced by `year`.
 
 # openairmaps 0.6.1
+
+This is a patch release primarily to fix a few bugs in `{openairmaps}`, and implement a new default colour scheme after a recent `{openair}` update.
+
+## New features
+
+* Functions now use Google's "turbo" colour palette rather than "jet" by default. More about this palette and the advantages of using it over "jet" can be read at <https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html>.
+
+## Bug fixes
 
 * Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and James/"@jenright-git" for noticing this issue.
 
 * Fixed an issue with `networkMap()` where `control = "variable"` would fail to show all pollutants.
 
-* Functions now use Google's "turbo" colour palette rather than "jet" by default. More about this palette and the advantages of using it over "jet" can be read at <https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html>.
+
 
 # openairmaps 0.6.0
 
-## Directional Analysis
+This is a minor release, mainly focusing on enhancing the ability for polar markers to have shared colour scales, but also incorporating new features for network visualisation.
+
+## New features
 
 * All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc., depending on function). This was always possible through `...`, but it is now explicitly listed as an option.
 
@@ -60,15 +86,7 @@
 
 * Added the `buildPopup()` function, which allows users to easily construct HTML popups for use with the "popup" argument of directional analysis maps (or `leaflet` maps more widely).
 
-* All directional analysis maps now possess the `collapse.control` argument, which controls whether the control menu starts collapsed or not. It defaults to `FALSE`, which means the control menu is not collapsed.
-
 * The default options for fig.width and fig.height are now `3.5` rather than `4`. This appears to remove some visual artefacts and makes the axis labels more legible.
-
-* The "alpha" option has been removed for all directional analysis functions except `polarMap()` as it only ever worked for `polarMap()`.
-
-* All documentation has been improved; function parameters are more consistent between functions and arguments passed to `openair` via `...` are now explicitly listed.
-
-## Network Visualisation
 
 * `networkMap()` now supports multiple sources. For example, using `source = c("aurn", "saqn")` will show both the AURN and SAQN on one map. This may be useful if users are interested in air quality in a specific region of the UK (e.g., users may wish to locate AURN, AQE *and* locally managed sites near to a given urban centre).
 
@@ -76,19 +94,37 @@
 
 * Multiple basemap providers can now be used with `networkMap()`.
 
-* `networkMap()` has gained the `collapse.control` argument.
+* `networkMap()`, `trajMap()` and all polar directional analysis maps have gained the `collapse.control` argument, which controls whether the control menu starts collapsed or not. It defaults to `FALSE`, which means the control menu is not collapsed.
 
-## Trajectory Analysis
+* All documentation has been improved; function parameters are more consistent between functions and arguments passed to `openair` via `...` are now explicitly listed.
 
-* `trajMap()` has gained the `collapse.control` argument.
+## Bug fixes
+
+* The "alpha" option has been removed for all directional analysis functions except `polarMap()` as it only ever worked for `polarMap()`.
+
+
 
 # openairmaps 0.5.1
 
-* FIX: fixed an issue causing markers to be duplicated when pollutant information is missing for certain sites.
+This is a patch release designed to fix a major bug in v0.5.0.
+
+## Bug fixes
+
+* Fixed an issue causing markers to be duplicated when pollutant information is missing for certain sites.
+
+
 
 # openairmaps 0.5.0
 
-## Directional Analysis
+This is a minor release centred around the addition of the `control` argument, which allows for arbitrary columns to be used in "layer control" menus.
+
+## Breaking changes
+
+* All functions now use latitude and longitude to distinguish between site types. Therefore, "type" is now deprecated. Maps using the old system will still render, but popups will not be displayed. For most users, to restore previous site labels simply rewrite `type = "site"` as `popup = "site"`.
+
+* The default values for "pollutant" have all been removed. Any users relying on this default should update their code to explicitly state `pollutant = "nox"`.
+
+## New features
 
 * All functions now possess the "control" argument, which allows users to create a "layer control" menu with any arbitrary column. Appropriate columns may be those produced using `openair::cutData()`, `openair::splitByDate()`, or a user-defined `dplyr::case_when()`/`dplyr::if_else()` column transformation.
 
@@ -96,37 +132,45 @@
 
 * All functions now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
 
-* BREAKING: All functions now use latitude and longitude to distinguish between site types. Therefore, "type" is now deprecated. Maps using the old system will still render, but popups will not be displayed. For most users, to restore previous site labels simply rewrite `type = "site"` as `popup = "site"`.
-
-* BREAKING: The default values for "pollutant" have all been removed. Any users relying on this default should update their code to explicitly state `pollutant = "nox"`.
-
-## Trajectory Analysis
-
-* Allowed `trajMap()` to be coloured by date.
-
-* FIX: Fixed issue with `trajMap()` that would cause user-defined colours not to work.
-
-## Other
-
 * Updated many error messages and warnings to use `{cli}` and be broadly more descriptive.
+
+## Bug fixes
+
+* `trajMap()` can now be coloured by date.
+
+* Fixed issue with `trajMap()` that would cause user-defined colours not to work.
+
+
 
 # openairmaps 0.4.3
 
-## Features
+This is a patch release adding a small number of refinements.
 
-* `trajLevelMap()` now contains the `lat.inc` and `lon.inc` arguments.
-
-## Breaking Changes
+## Breaking changes
 
 * `polar_data` column names changed from "latitude" to "longitude" to "lat" and "lon" to reflect the defaults of the `polarMap()` family.
 
 * `trajMap()` and `trajLevelMap()` now use the argument names "latitude" and "longitude" to match those of the `polarMap()` family.
 
+## New features
+
+* `trajLevelMap()` now contains the `lat.inc` and `lon.inc` arguments.
+
+
+
 # openairmaps 0.4.2
+
+This is a patch release to fix a bug with `trajLevelMap()`.
+
+## Bug fixes
 
 * `trajLevelMap()` now works where `statistic = "frequency"` without a "pollutant".
 
+
+
 # openairmaps 0.4.1
+
+This is the first CRAN release of `{openairmaps}`.
 
 ## Features
 
@@ -143,9 +187,3 @@
   * `*Map()` functions are easy-to-use functions which create leaflet maps from the ground-up. These are the most similar to `openair` functions.
   
   * `add*()` functions are more flexible and allow users to add layers to existing leaflet maps. These are designed to be similar to the `leaflet` "add" functions like `addMarkers()`.
-
-## Package Management
-
-* First submission to CRAN.
-
-* Added a `NEWS.md` file to track changes to the package.
