@@ -183,7 +183,9 @@ networkMap <-
             "start_date2",
             "end_date2",
             "lab",
-            "pcode"
+            "pcode",
+            "colour",
+            "colour2"
           )]
 
         cli::cli_abort(
