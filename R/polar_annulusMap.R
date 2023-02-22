@@ -67,6 +67,22 @@ annulusMap <- function(data,
   theLimits <- limits
   if (is.null(limits)) theLimits <- NA
 
+  # cut data
+  data <- quick_cutdata(data = data, type = control)
+
+  # deal with popups
+  if (length(popup) > 1) {
+    data <-
+      quick_popup(
+        data = data,
+        popup = popup,
+        latitude = latitude,
+        longitude = longitude,
+        control = control
+      )
+    popup <- "popup"
+  }
+
   # prepare data for mapping
   data <-
     prepMapData(
@@ -212,6 +228,9 @@ annulusMapStatic <- function(data,
   if (is.null(limits)) {
     theLimits <- NA
   }
+
+  # cut data
+  data <- quick_cutdata(data = data, type = facet)
 
   # prep data
   data <-

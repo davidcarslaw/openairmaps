@@ -74,6 +74,22 @@ pollroseMap <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
+  # cut data
+  data <- quick_cutdata(data = data, type = control)
+
+  # deal with popups
+  if (length(popup) > 1) {
+    data <-
+      quick_popup(
+        data = data,
+        popup = popup,
+        latitude = latitude,
+        longitude = longitude,
+        control = control
+      )
+    popup <- "popup"
+  }
+
   # prep data
   data <-
     prepMapData(
@@ -218,6 +234,9 @@ pollroseMapStatic <- function(data,
   )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
+
+  # cut data
+  data <- quick_cutdata(data = data, type = facet)
 
   # prep data
   data <-

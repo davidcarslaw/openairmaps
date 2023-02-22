@@ -31,7 +31,7 @@
 #' @examples
 #' \dontrun{
 #' # NB: "after" is some dummy data to demonstrate functionality
-#' polarDiff(
+#' diffMap(
 #'   before = polar_data,
 #'   after = dplyr::mutate(polar_data, nox = jitter(nox, factor = 5)),
 #'   pollutant = "nox",
@@ -89,6 +89,23 @@ diffMap <- function(before,
   if (is.null(limits)) {
     theLimits <- NA
   }
+
+  # deal with popups
+  if (length(popup) > 1) {
+    data <-
+      quick_popup(
+        data = before,
+        popup = popup,
+        latitude = latitude,
+        longitude = longitude,
+        control = control
+      )
+    popup <- "popup"
+  }
+
+  # cut data
+  before <- quick_cutdata(data = before, type = control)
+  after <- quick_cutdata(data = after, type = control)
 
   # prep data
   before <-
@@ -252,6 +269,10 @@ diffMapStatic <- function(before,
   if (is.null(limits)) {
     theLimits <- NA
   }
+
+  # cut data
+  before <- quick_cutdata(data = before, type = facet)
+  after <- quick_cutdata(data = after, type = facet)
 
   # prep data
   before <-

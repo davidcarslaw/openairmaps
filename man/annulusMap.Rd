@@ -55,9 +55,10 @@ can be selected between using a "layer control" interface, passed to the
 \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{control} cannot be used if
 multiple \code{pollutant} columns have been provided.}
 
-\item{popup}{Column to be used as the HTML content for marker popups. Popups
+\item{popup}{Columns to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site
-names, codes, types, etc.).}
+names, codes, types, etc.). If a vector of column names are provided they
+are passed to \code{\link[=buildPopup]{buildPopup()}} using its default values.}
 
 \item{label}{Column to be used as the HTML content for hover-over labels.
 Labels are useful for the same reasons as popups, though are typically

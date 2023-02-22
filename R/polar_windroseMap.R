@@ -71,6 +71,22 @@ windroseMap <- function(data,
   # utilities...
   data$ws_dup <- data$ws
 
+  # cut data
+  data <- quick_cutdata(data = data, type = control)
+
+  # deal with popups
+  if (length(popup) > 1) {
+    data <-
+      quick_popup(
+        data = data,
+        popup = popup,
+        latitude = latitude,
+        longitude = longitude,
+        control = control
+      )
+    popup <- "popup"
+  }
+
   # prep data
   data <-
     prepMapData(
@@ -210,6 +226,9 @@ windroseMapStatic <- function(data,
   # need to put ws in a separate column to work with the rest of openairmaps
   # utilities...
   data$ws_dup <- data$ws
+
+  # cut data
+  data <- quick_cutdata(data = data, type = facet)
 
   # prep data
   data <-

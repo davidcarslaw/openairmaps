@@ -66,9 +66,10 @@ can be selected between using a "layer control" interface, passed to the
 \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{control} cannot be used if
 multiple \code{pollutant} columns have been provided.}
 
-\item{popup}{Column to be used as the HTML content for marker popups. Popups
+\item{popup}{Columns to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site
-names, codes, types, etc.).}
+names, codes, types, etc.). If a vector of column names are provided they
+are passed to \code{\link[=buildPopup]{buildPopup()}} using its default values.}
 
 \item{label}{Column to be used as the HTML content for hover-over labels.
 Labels are useful for the same reasons as popups, though are typically
@@ -84,9 +85,7 @@ can be toggled between using a "layer control" interface.}
 effective visualisation.}
 
 \item{alpha}{The alpha transparency to use for the plotting surface (a value
-between 0 and 1 with zero being fully transparent and 1 fully opaque).
-Setting a value below 1 can be useful when plotting surfaces on a map using
-the package \code{openairmapss}.}
+between 0 and 1 with zero being fully transparent and 1 fully opaque).}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
@@ -294,7 +293,7 @@ using \code{control}.
 \examples{
 \dontrun{
 # NB: "after" is some dummy data to demonstrate functionality
-polarDiff(
+diffMap(
   before = polar_data,
   after = dplyr::mutate(polar_data, nox = jitter(nox, factor = 5)),
   pollutant = "nox",
