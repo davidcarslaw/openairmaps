@@ -26,9 +26,10 @@
 #'   can be selected between using a "layer control" interface, passed to the
 #'   `type` argument of [openair::cutData()]. `control` cannot be used if
 #'   multiple `pollutant` columns have been provided.
-#' @param popup Column to be used as the HTML content for marker popups. Popups
+#' @param popup Columns to be used as the HTML content for marker popups. Popups
 #'   may be useful to show information about the individual sites (e.g., site
-#'   names, codes, types, etc.).
+#'   names, codes, types, etc.). If a vector of column names are provided they
+#'   are passed to [buildPopup()] using its default values.
 #' @param label Column to be used as the HTML content for hover-over labels.
 #'   Labels are useful for the same reasons as popups, though are typically
 #'   shorter.
@@ -110,6 +111,22 @@ polarMap <- function(data,
   theLimits <- limits
   if (is.null(limits)) {
     theLimits <- NA
+  }
+
+  # cut data
+  data <- quick_cutdata(data = data, type = control)
+
+  # deal with popups
+  if (length(popup) > 1) {
+    data <-
+      quick_popup(
+        data = data,
+        popup = popup,
+        latitude = latitude,
+        longitude = longitude,
+        control = control
+      )
+    popup <- "popup"
   }
 
   # prep data
@@ -269,6 +286,9 @@ polarMapStatic <- function(data,
   if (is.null(limits)) {
     theLimits <- NA
   }
+
+  # cut data
+  data <- quick_cutdata(data = data, type = facet)
 
   # prep data
   data <-

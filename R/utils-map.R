@@ -167,11 +167,6 @@ prepMapData <-
       )
     }
 
-    # run cutData
-    type <- control
-    if (is.null(type)) type <- "default"
-    data <- openair::cutData(data, type = type)
-
     ## extract variables of interest
     vars <- unique(c(pollutant, control, ...))
 
@@ -558,3 +553,31 @@ create_static_map <-
 
     return(plt)
   }
+
+#' function to quickly combine multiple popups together
+#' @param data,popup,latitude,longitude,control inherited from parent
+#' @noRd
+quick_popup <- function(data, popup, latitude, longitude, control) {
+  nice_popup <-
+    stringr::str_replace_all(popup, "\\_|\\.|\\-", " ") %>%
+    stringr::str_to_title()
+
+  names <- stats::setNames(popup, nice_popup)
+
+  buildPopup(
+    data,
+    cols = popup,
+    latitude = latitude,
+    longitude = longitude,
+    names = names,
+    control = control
+  )
+}
+
+#' does 'cutdata'
+#' @param data,type inherited from parent function
+#' @noRd
+quick_cutdata <- function(data, type){
+  if (is.null(type)) type <- "default"
+  openair::cutData(data, type = type)
+}

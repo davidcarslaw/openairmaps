@@ -84,6 +84,22 @@ freqMap <- function(data,
     pollutant <- "dummy"
   }
 
+  # cut data
+  data <- quick_cutdata(data = data, type = control)
+
+  # deal with popups
+  if (length(popup) > 1) {
+    data <-
+      quick_popup(
+        data = data,
+        popup = popup,
+        latitude = latitude,
+        longitude = longitude,
+        control = control
+      )
+    popup <- "popup"
+  }
+
   # prep data
   data <-
     prepMapData(
@@ -250,6 +266,9 @@ freqMapStatic <- function(data,
   } else {
     lab <- pollutant
   }
+
+  # cut data
+  data <- quick_cutdata(data = data, type = facet)
 
   # prep data
   data <-
