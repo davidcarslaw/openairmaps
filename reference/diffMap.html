@@ -16,7 +16,7 @@ using control.'><meta property="og:image" content="https://davidcarslaw.github.i
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -136,9 +136,10 @@ multiple <code>pollutant</code> columns have been provided.</p></dd>
 
 
 <dt>popup</dt>
-<dd><p>Column to be used as the HTML content for marker popups. Popups
+<dd><p>Columns to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site
-names, codes, types, etc.).</p></dd>
+names, codes, types, etc.). If a vector of column names are provided they
+are passed to <code><a href="buildPopup.html">buildPopup()</a></code> using its default values.</p></dd>
 
 
 <dt>label</dt>
@@ -162,9 +163,7 @@ effective visualisation.</p></dd>
 
 <dt>alpha</dt>
 <dd><p>The alpha transparency to use for the plotting surface (a value
-between 0 and 1 with zero being fully transparent and 1 fully opaque).
-Setting a value below 1 can be useful when plotting surfaces on a map using
-the package <code>openairmapss</code>.</p></dd>
+between 0 and 1 with zero being fully transparent and 1 fully opaque).</p></dd>
 
 
 <dt>key</dt>
@@ -428,7 +427,7 @@ analysing data to extract plot components and plotting them in other ways.</p></
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># NB: "after" is some dummy data to demonstrate functionality</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/polarDiff.html" class="external-link">polarDiff</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="fu">diffMap</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  before <span class="op">=</span> <span class="va">polar_data</span>,</span></span>
 <span class="r-in"><span>  after <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">polar_data</span>, nox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html" class="external-link">jitter</a></span><span class="op">(</span><span class="va">nox</span>, factor <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  pollutant <span class="op">=</span> <span class="st">"nox"</span>,</span></span>

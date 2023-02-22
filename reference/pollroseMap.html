@@ -16,7 +16,7 @@ using control.'><meta property="og:image" content="https://davidcarslaw.github.i
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,9 +129,10 @@ multiple <code>pollutant</code> columns have been provided.</p></dd>
 
 
 <dt>popup</dt>
-<dd><p>Column to be used as the HTML content for marker popups. Popups
+<dd><p>Columns to be used as the HTML content for marker popups. Popups
 may be useful to show information about the individual sites (e.g., site
-names, codes, types, etc.).</p></dd>
+names, codes, types, etc.). If a vector of column names are provided they
+are passed to <code><a href="buildPopup.html">buildPopup()</a></code> using its default values.</p></dd>
 
 
 <dt>label</dt>
