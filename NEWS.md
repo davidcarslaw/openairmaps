@@ -20,7 +20,7 @@ This is a minor release adding a range of quality of life features and fixing a 
 
 * Fixed issue in `trajMap()` caused by recent updates to `{dplyr}` and `{forcats}`.
 
-
+* Fixed issue where `polarMapStatic()` and others would turn factor facet levels into characters. This meant that, for example, months of the year would be in alphabetical order. Now factor levels, including those resulting from a pass to `cutData()`, will now be honoured by the `facet` argument (thanks @Jair-89, #31).
 
 # openairmaps 0.7.0
 
