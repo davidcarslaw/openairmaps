@@ -530,6 +530,11 @@ create_static_map <-
       height <- d.icon[[2]]
     }
 
+    # don't turn facet levels into chr, keep as fct
+    if (length(pollutant) > 1 | !is.null(facet)) {
+      levels(plots_df[[split_col]]) <- quickTextHTML(levels(plots_df[[split_col]]))
+    }
+
     # make plot
     plt <-
       ggmap::ggmap(ggmap) +
@@ -547,7 +552,7 @@ create_static_map <-
 
     if (length(pollutant) > 1 | !is.null(facet)) {
       plt <-
-        plt + ggplot2::facet_wrap(ggplot2::vars(quickTextHTML(.data[[split_col]])), nrow = facet.nrow) +
+        plt + ggplot2::facet_wrap(ggplot2::vars(.data[[split_col]]), nrow = facet.nrow) +
         ggplot2::theme(strip.text = ggtext::element_markdown())
     }
 
