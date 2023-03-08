@@ -24,7 +24,7 @@ diffMap(
   collapse.control = FALSE,
   d.icon = 200,
   d.fig = 3.5,
-  type = NULL,
+  type = deprecated(),
   ...
 )
 }
@@ -105,8 +105,9 @@ inches. This will affect the resolution of the markers on the map.
 Alternatively, a vector in the form \code{c(width, height)} can be provided if a
 non-circular marker is desired.}
 
-\item{type}{Deprecated. Please use \code{label} and/or \code{popup} to label different
-sites.}
+\item{type}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Different sites are now
+automatically detected based on latitude and longitude. Please use \code{label}
+and/or \code{popup} to label different sites.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:polarPlot]{openair::polarPlot}}

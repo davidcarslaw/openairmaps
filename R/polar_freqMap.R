@@ -60,13 +60,15 @@ freqMap <- function(data,
                     collapse.control = FALSE,
                     d.icon = 200,
                     d.fig = 3.5,
-                    type = NULL,
+                    type = deprecated(),
                     ...) {
-  if (!is.null(type)) {
-    cli::cli_warn(c(
-      "!" = "{.code type} is deprecated. Different sites are now automatically identified.",
-      "i" = "Please use {.code label} and/or {.code popup} to label sites."
-    ))
+  if (lifecycle::is_present(type)) {
+    lifecycle::deprecate_soft(
+      when = "0.5.0",
+      what = "openairmaps::freqMap(type)",
+      details = c("Different sites are now automatically detected based on latitude and longitude",
+                  "Please use the `popup` argument to create popups.")
+    )
   }
 
   # assume lat/lon
@@ -104,7 +106,6 @@ freqMap <- function(data,
   data <-
     prepMapData(
       data = data,
-      type = type,
       pollutant = pollutant,
       control = control,
       "wd",
