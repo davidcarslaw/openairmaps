@@ -12,6 +12,8 @@ This is a minor release adding a range of quality of life features and fixing a 
 
 * `networkMap()` now uses different coloured markers for different networks. If more than one network is specified, and `draw.legend` is set to `TRUE`, a legend will also be drawn for quick identification of different data sources.
 
+* Deprecations are now managed by the `{lifecycle}` package. This currently only applies to the `type` argument.
+
 ## Bug fixes
 
 * Fixed issues where multiple `addPolarMarkers()` chained together would all show the same plot.
