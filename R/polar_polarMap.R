@@ -97,7 +97,7 @@ polarMap <- function(data,
       when = "0.5.0",
       what = "openairmaps::polarMap(type)",
       details = c("Different sites are now automatically detected based on latitude and longitude",
-      "Please use the `popup` argument to create popups.")
+                  "Please use the `popup` argument to create popups.")
     )
   }
 

@@ -33,9 +33,12 @@ Imports:
     tidyr,
     tidyselect
 Suggests:
+    covr,
+    testthat (>= 3.0.0),
     worldmet
 Encoding: UTF-8
 Language: en-GB
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3
