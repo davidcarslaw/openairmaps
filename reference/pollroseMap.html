@@ -16,7 +16,7 @@ using control.'><meta property="og:image" content="https://davidcarslaw.github.i
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@ using <code>control</code>.</p>
 <span>  collapse.control <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  d.icon <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
-<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu">deprecated</span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -187,8 +187,9 @@ non-circular marker is desired.</p></dd>
 
 
 <dt>type</dt>
-<dd><p>Deprecated. Please use <code>label</code> and/or <code>popup</code> to label different
-sites.</p></dd>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a>. Different sites are now
+automatically detected based on latitude and longitude. Please use <code>label</code>
+and/or <code>popup</code> to label different sites.</p></dd>
 
 
 <dt>...</dt>

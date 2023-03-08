@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,6 +50,7 @@
 <li><p>The <code>popup</code> argument of all interactive polar marker mapping functions can now take a vector of colum names. If more than one column is provided, it is automatically passed to <code><a href="../reference/buildPopup.html">buildPopup()</a></code> using its default values.</p></li>
 <li><p><code><a href="../reference/trajLevelMap.html">trajLevelMap()</a></code> now has the <code>control</code> argument, which maps directly onto the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code>. Like other <code>control</code> arguments elsewhere in <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a>, this creates a “layer control” menu.</p></li>
 <li><p><code><a href="../reference/networkMap.html">networkMap()</a></code> now uses different coloured markers for different networks. If more than one network is specified, and <code>draw.legend</code> is set to <code>TRUE</code>, a legend will also be drawn for quick identification of different data sources.</p></li>
+<li><p>Deprecations are now managed by the <a href="https://lifecycle.r-lib.org/" class="external-link">lifecycle</a> package. This currently only applies to the <code>type</code> argument.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
