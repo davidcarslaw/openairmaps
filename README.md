@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
+[![Codecov test
+coverage](https://codecov.io/gh/davidcarslaw/openairmaps/branch/master/graph/badge.svg)](https://app.codecov.io/gh/davidcarslaw/openairmaps?branch=master)
 <!-- badges: end -->
 
 The main goal of `{openairmaps}` is to combine the robust analytical

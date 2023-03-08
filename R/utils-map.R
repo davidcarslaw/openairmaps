@@ -413,7 +413,7 @@ create_polar_markers <-
     }
 
     # drop missing data
-    data <- tidyr::drop_na(data, .data[[dropcol]])
+    data <- tidyr::drop_na(data, dplyr::all_of(dropcol))
 
     # get number of rows
     valid_rows <-

@@ -14,3 +14,4 @@ README_cache
 ^CRAN-SUBMISSION$
 ^pkgdown$
 ^CODE_OF_CONDUCT\.md$
+^codecov\.yml$

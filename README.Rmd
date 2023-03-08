@@ -20,6 +20,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
+[![Codecov test coverage](https://codecov.io/gh/davidcarslaw/openairmaps/branch/master/graph/badge.svg)](https://app.codecov.io/gh/davidcarslaw/openairmaps?branch=master)
 <!-- badges: end -->
 
 The main goal of `{openairmaps}` is to combine the robust analytical methods found in [openair](https://davidcarslaw.github.io/openair/) with the highly capable `{leaflet}` package. `{openairmaps}` is thoroughly documented in the [openair book](https://bookdown.org/david_carslaw/openair/maps-overview.html).

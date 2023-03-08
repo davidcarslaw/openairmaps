@@ -162,31 +162,31 @@ networkMap <-
     if (!is.null(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-          c(
-            "code",
-            "site",
-            "latitude",
-            "longitude",
-            "country_iso_code",
-            "elevation",
-            "ratified_to",
-            "Address",
-            "la_id",
-            "eu_code",
-            "eoi_code",
-            "data_source",
-            "os_grid_x",
-            "os_grid_y",
-            "start_date",
-            "end_date",
-            "observation_count",
-            "start_date2",
-            "end_date2",
-            "lab",
-            "pcode",
-            "colour",
-            "colour2"
-          )]
+                                 c(
+                                   "code",
+                                   "site",
+                                   "latitude",
+                                   "longitude",
+                                   "country_iso_code",
+                                   "elevation",
+                                   "ratified_to",
+                                   "Address",
+                                   "la_id",
+                                   "eu_code",
+                                   "eoi_code",
+                                   "data_source",
+                                   "os_grid_x",
+                                   "os_grid_y",
+                                   "start_date",
+                                   "end_date",
+                                   "observation_count",
+                                   "start_date2",
+                                   "end_date2",
+                                   "lab",
+                                   "pcode",
+                                   "colour",
+                                   "colour2"
+                                 )]
 
         cli::cli_abort(
           c(
@@ -554,7 +554,7 @@ prepManagedNetwork <- function(data, vec) {
       .groups = "drop"
     ) %>%
     dplyr::right_join(data,
-      by = vec
+                      by = vec
     )
 
   # format and filter dates
