@@ -413,8 +413,8 @@ create_polar_diffmarkers <-
     }
 
     # drop missing data
-    before <- tidyr::drop_na(before, .data[[dropcol]])
-    after <- tidyr::drop_na(after, .data[[dropcol]])
+    before <- tidyr::drop_na(before, dplyr::all_of(dropcol))
+    after <- tidyr::drop_na(after, dplyr::all_of(dropcol))
 
     # get number of rows
     valid_rows <-
@@ -460,8 +460,8 @@ create_polar_diffmarkers <-
     # create plots
     plots_df <-
       dplyr::inner_join(nested_before,
-        nested_after,
-        by = c(latitude, longitude, split_col)
+                        nested_after,
+                        by = c(latitude, longitude, split_col)
       ) %>%
       dplyr::mutate(
         plot = purrr::map2(before, after, fun, .progress = "Creating Polar Markers"),
@@ -478,21 +478,21 @@ create_polar_diffmarkers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-      .f = ~ {
-        grDevices::png(
-          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-          width = width * 300,
-          height = height * 300,
-          res = 300,
-          bg = "transparent",
-          type = "cairo",
-          antialias = "none"
-        )
+                 .f = ~ {
+                   grDevices::png(
+                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+                     width = width * 300,
+                     height = height * 300,
+                     res = 300,
+                     bg = "transparent",
+                     type = "cairo",
+                     antialias = "none"
+                   )
 
-        plot(..4)
+                   plot(..4)
 
-        grDevices::dev.off()
-      }
+                   grDevices::dev.off()
+                 }
     )
 
     return(plots_df)

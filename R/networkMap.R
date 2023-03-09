@@ -557,21 +557,5 @@ prepManagedNetwork <- function(data, vec) {
                       by = vec
     )
 
-  # format and filter dates
-  # data <- dplyr::mutate(
-  #   data,
-  #   end_date2 = dplyr::if_else(
-  #     .data$end_date == "ongoing" | is.na(.data$end_date),
-  #     as.character(Sys.Date()),
-  #     .data$end_date
-  #   ),
-  #   end_date2 = lubridate::ymd(.data$end_date2, tz = "GMT"),
-  #   start_date = lubridate::with_tz(.data$start_date, tz = "GMT")
-  # ) %>%
-  #   dplyr::filter(
-  #     date >= .data$start_date,
-  #     date <= .data$end_date2
-  #   )
-
   return(data)
 }
