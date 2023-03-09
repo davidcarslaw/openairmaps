@@ -2,7 +2,7 @@
 % Please edit documentation in R/traj_trajMap.R
 \name{trajMap}
 \alias{trajMap}
-\title{Trajectory line plots in leaflet}
+\title{Trajectory line plots in \code{leaflet}}
 \usage{
 trajMap(
   data,
@@ -72,7 +72,11 @@ trajMap(traj_data, colour = "nox")
 
 }
 \seealso{
-Other trajectory maps: 
+the original \code{\link[openair:trajPlot]{openair::trajPlot()}}
+
+\code{\link[=trajMapStatic]{trajMapStatic()}} for the static \code{ggplot2} equivalent of \code{\link[=trajMap]{trajMap()}}
+
+Other interactive trajectory maps: 
 \code{\link{trajLevelMap}()}
 }
-\concept{trajectory maps}
+\concept{interactive trajectory maps}

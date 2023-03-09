@@ -4,6 +4,10 @@ This is a minor release adding a range of quality of life features and fixing a 
 
 ## New features
 
+* `trajMapStatic()` and `trajLevelMapStatic()` have been added as two new *experimental* functions to provide `{ggplot2}` equivalents of `openair::trajPlot()` and `openair::trajLevel()`. 
+
+  * These are experimental as the long term place for these functions is uncertain; there will definitely be need for a `{ggplot2}` incarnation of the trajectory plotting functions, but whether they will sit in `{openair}`, `{ggopenair}` or `{openairmaps}` and what they will be named is not clear.
+
 * The `control` and `facet` arguments of all polar marker mapping functions (static and interactive) and trajectory mapping functions are now passed to `openair::cutData()`.
 
 * The `popup` argument of all interactive polar marker mapping functions can now take a vector of colum names. If more than one column is provided, it is automatically passed to `buildPopup()` using its default values.

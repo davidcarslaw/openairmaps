@@ -1,4 +1,4 @@
-#' Trajectory line plots in leaflet
+#' Trajectory line plots in `leaflet`
 #'
 #' This function plots back trajectories on a `leaflet` map. This function
 #' requires that data are imported using the [openair::importTraj()] function.
@@ -6,7 +6,7 @@
 #' pollutant concentrations) or create "layer control" menus to show/hide
 #' different layers.
 #'
-#' @family trajectory maps
+#' @family interactive trajectory maps
 #'
 #' @param data Data frame, the result of importing a trajectory file using
 #'   [openair::importTraj()].
@@ -40,6 +40,9 @@
 #'
 #' @return A leaflet object.
 #' @export
+#'
+#' @seealso the original [openair::trajPlot()]
+#' @seealso [trajMapStatic()] for the static `ggplot2` equivalent of [trajMap()]
 #'
 #' @examples
 #' \dontrun{
@@ -200,4 +203,152 @@ trajMap <-
     }
 
     map
+  }
+
+#' Trajectory line plots in `ggplot2`
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' This function plots back trajectories using `ggplot2`. The function requires
+#' that data are imported using [openair::importTraj()]. It is a `ggplot2`
+#' implementation of [openair::trajPlot()] with many of the same arguments,
+#' which should be more flexible for post-hoc changes.
+#'
+#' @family static trajectory maps
+#'
+#' @inheritParams trajMap
+#' @param facet Used for splitting the trajectories into different panels.
+#'   Passed to [openair::cutData()].
+#' @param group By default, trajectory paths are distinguished using the arrival
+#'   date. `group` allows for additional columns to be used (e.g.,
+#'   `"receptor"`).
+#' @param xlim,ylim The x- and y-limits of the plot. If `NULL`, limits will be
+#'   estimated based on the lat/lon ranges of the input data.
+#' @param crs The coordinate reference system (CRS) into which all data should
+#'   be projected before plotting. Defaults to the Lambert projection
+#'   (`sf::st_crs(3812)`).
+#' @param map Should a base map be drawn? Defaults to `TRUE`.
+#' @param map.fill Colour to use to fill the polygons of the base map (see
+#'   `colors()`).
+#' @param map.colour Colour to use for the polygon borders of the base map (see
+#'   `colors()`).
+#' @param map.alpha Transparency of the base map polygons. Must be between `0`
+#'   (fully transparent) and `1` (fully opaque).
+#' @param map.lwd Line width of the base map polygon borders.
+#' @param map.lty Line type of the base map polygon borders. See
+#'   [ggplot2::scale_linetype()] for common examples.
+#' @param origin Should the receptor point be marked with a circle? Defaults to
+#'   `TRUE`.
+#'
+#' @inheritDotParams ggplot2::coord_sf -xlim -ylim -crs -default_crs
+#'
+#' @return a `ggplot2` plot
+#' @export
+#'
+#' @seealso the original [openair::trajPlot()]
+#' @seealso [trajMap()] for the interactive `leaflet` equivalent of [trajMapStatic()]
+#'
+#' @examples
+#' \dontrun{
+#' # colour by height
+#' trajMapStatic(traj_data) +
+#'   ggplot2::scale_color_gradientn(colors = openair::openColours())
+#'
+#' # colour by PM10, log transform scale
+#' trajMapStatic(traj_data, colour = "pm10") +
+#'   ggplot2::scale_color_viridis_c(trans = "log10") +
+#'   ggplot2::labs(color = openair::quickText("PM10"))
+#'
+#' # color by PM2.5, lat/lon projection
+#' trajMapStatic(traj_data, colour = "pm2.5", crs = sf::st_crs(4326)) +
+#'   ggplot2::scale_color_viridis_c(option = "turbo") +
+#'   ggplot2::labs(color = openair::quickText("PM2.5"))
+#' }
+trajMapStatic <-
+  function(data,
+           colour = "height",
+           facet = NULL,
+           group = NULL,
+           longitude = "lon",
+           latitude = "lat",
+           npoints = 12,
+           xlim = NULL,
+           ylim = NULL,
+           crs = sf::st_crs(3812),
+           origin = TRUE,
+           map = TRUE,
+           map.fill = "grey85",
+           map.colour = "grey75",
+           map.alpha = 0.8,
+           map.lwd = 0.5,
+           map.lty = 1,
+           ...) {
+    plt <-
+      ggplot2::ggplot(data, ggplot2::aes(x = .data[[longitude]], y = .data[[latitude]]))
+
+    if (map) {
+      world <- ggplot2::map_data("world")
+
+      plt <- plt +
+        ggplot2::geom_polygon(
+          data = world,
+          fill = map.fill,
+          colour = map.colour,
+          alpha = map.alpha,
+          linewidth = map.lwd,
+          lty = map.lty,
+          ggplot2::aes(.data$long, .data$lat, group = group)
+        )
+    }
+
+    if (is.null(xlim)) {
+      d_lon <- diff(range(c(min(data[[longitude]]), max(data[[longitude]])))) * 0.1
+      xlim <- c(min(data[[longitude]]) - d_lon, max(data[[longitude]]) + d_lon)
+    }
+    if (is.null(ylim)) {
+      d_lat <- diff(range(c(min(data[[latitude]]), max(data[[latitude]])))) * 0.1
+      ylim <- c(min(data[[latitude]]) - d_lat, max(data[[latitude]]) + d_lat)
+    }
+
+    points_df <- dplyr::filter(data, .data$hour.inc %% npoints == 0)
+
+    if (!is.null(group)) {
+      plt_aes <-
+        ggplot2::aes(group = interaction(.data$date, .data[[group]]), color = .data[[colour]])
+    } else {
+      plt_aes <- ggplot2::aes(group = .data$date, color = .data[[colour]])
+    }
+
+    plt <- plt +
+      ggplot2::geom_path(mapping = plt_aes) +
+      ggplot2::geom_point(data = points_df, mapping = plt_aes) +
+      ggplot2::coord_sf(
+        xlim = xlim,
+        ylim = ylim,
+        default_crs = sf::st_crs(4326),
+        crs = crs,
+        ...
+      ) +
+      theme_static()
+
+    if (!is.null(facet)) {
+      plt <-
+        plt + ggplot2::facet_wrap(ggplot2::vars(.data[[facet]]))
+    }
+
+    if (origin) {
+      plt <-
+        plt + ggplot2::geom_point(
+          data = dplyr::filter(data, .data$hour.inc == 0) %>%
+            dplyr::distinct(.data[[latitude]], .data[[longitude]]),
+          size = 5,
+          stroke = 1.5,
+          shape = 21,
+          color = "white",
+          fill = "black"
+        )
+    }
+
+    return(plt)
   }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/traj_trajLevelMap.R
 \name{trajLevelMap}
 \alias{trajLevelMap}
-\title{Trajectory level plots in leaflet}
+\title{Trajectory level plots in \code{leaflet}}
 \usage{
 trajLevelMap(
   data,
@@ -103,7 +103,11 @@ trajLevelMap(traj_data, pollutant = "pm2.5", statistic = "pscf", min.bin = 10)
 
 }
 \seealso{
-Other trajectory maps: 
+the original \code{\link[openair:trajLevel]{openair::trajLevel()}}
+
+\code{\link[=trajLevelMapStatic]{trajLevelMapStatic()}} for the static \code{ggplot2} equivalent of \code{\link[=trajLevelMap]{trajLevelMap()}}
+
+Other interactive trajectory maps: 
 \code{\link{trajMap}()}
 }
-\concept{trajectory maps}
+\concept{interactive trajectory maps}
