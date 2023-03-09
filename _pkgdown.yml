@@ -46,8 +46,12 @@ reference:
 - subtitle: Interactive
   desc: Create HTML `leaflet` maps of HYSPLIT trajectories.
   contents:
-  - has_concept("trajectory maps")
+  - has_concept("interactive trajectory maps")
   - addTrajPaths
+- subtitle: Static
+  desc: Create static `ggplot2` maps of HYSPLIT trajectories.
+  contents:
+  - has_concept("static trajectory maps")
 
 - title: Utilities
   desc: Tools to assist other openairmaps functions.
