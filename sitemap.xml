@@ -88,7 +88,13 @@
     <loc>https://davidcarslaw.github.io/openairmaps/reference/trajLevelMap.html</loc>
   </url>
   <url>
+    <loc>https://davidcarslaw.github.io/openairmaps/reference/trajLevelMapStatic.html</loc>
+  </url>
+  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/trajMap.html</loc>
+  </url>
+  <url>
+    <loc>https://davidcarslaw.github.io/openairmaps/reference/trajMapStatic.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/traj_data.html</loc>
