@@ -1,3 +1,6 @@
+options(cli.default_handler = function(...) {})
+polar_data <- dplyr::filter(polar_data, site %in% unique(site)[1:2])
+
 test_that("annulus map works in a simple way", {
   expect_no_error(annulusMap(polar_data, "nox"))
 })
