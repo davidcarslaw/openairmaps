@@ -369,7 +369,9 @@ freqMapStatic <- function(data,
     plt <-
       plt +
       ggplot2::geom_point(
-        ggplot2::aes(.data[[longitude]], .data[[latitude]],
+        data = plots_df,
+        ggplot2::aes(
+          .data[[longitude]], .data[[latitude]],
           fill = intervals[1]
         ),
         size = 0,

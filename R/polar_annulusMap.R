@@ -324,7 +324,9 @@ annulusMapStatic <- function(data,
   if (!is.null(limits)) {
     plt <-
       plt +
-      ggplot2::geom_point(ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+      ggplot2::geom_point(
+        data = plots_df,
+        ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
         alpha = 0
       ) +
       ggplot2::scale_color_gradientn(
