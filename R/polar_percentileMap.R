@@ -288,6 +288,7 @@ percentileMapStatic <- function(data,
   plt <-
     plt +
     ggplot2::geom_point(
+      data = plots_df,
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
                    fill = intervals[1]
       ),

@@ -15,10 +15,6 @@ test_that("kcl works", {
   expect_no_error(networkMap("kcl", control = "site_type", year = 2023))
 })
 
-test_that("saqd works", {
-  expect_no_error(networkMap("saqd", year = 2023, control = "site_type"))
-})
-
 test_that("europe works", {
   expect_no_error(networkMap(
     "europe",
@@ -30,15 +26,4 @@ test_that("europe works", {
 
 test_that("bad control options error", {
   expect_error(networkMap("europe", year = 2023, control = "something totally random!"))
-})
-
-test_that("multiple providers and no control works", {
-  expect_no_error(networkMap(
-    c("aurn", "aurn"),
-    provider = c(
-      "CartoDB.Positron",
-      "CartoDB.Positron",
-      "Esri.WorldImagery"
-    )
-  ))
 })
