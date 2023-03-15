@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,11 @@
 <ul><li><p>Fixed issues where multiple <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> chained together would all show the same plot.</p></li>
 <li><p>Fixed issue where <code>...</code> and <code>pollutant</code> weren’t being passed to <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code>.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/trajMap.html">trajMap()</a></code> caused by recent updates to <a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a> and <a href="https://forcats.tidyverse.org/" class="external-link">forcats</a>.</p></li>
-<li><p>Fixed issue where <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> and others would turn factor facet levels into characters. This meant that, for example, months of the year would be in alphabetical order. Now factor levels, including those resulting from a pass to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData()</a></code>, will now be honoured by the <code>facet</code> argument (thanks @Jair-89, #31).</p></li>
+<li>
+<p>Fixed issue where <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> and others would turn factor facet levels into characters.</p>
+<ul><li>Specifically, this meant that, for example, months of the year would be in alphabetical order. Now factor levels, including those resulting from a pass to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData()</a></code>, will now be honoured by the <code>facet</code> argument (thanks @Jair-89, #31).</li>
+</ul></li>
+<li><p>Fixed issue where <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> and others would error when trying to draw a legend.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
