@@ -16,7 +16,7 @@ The main goal of `{openairmaps}` is to combine the robust analytical
 methods found in [openair](https://davidcarslaw.github.io/openair/) with
 the highly capable `{leaflet}` package. `{openairmaps}` is thoroughly
 documented in the [openair
-book](https://bookdown.org/david_carslaw/openair/maps-overview.html).
+book](https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html).
 
 ## Installation
 
@@ -41,7 +41,7 @@ library(openairmaps)
 ```
 
 The `openairmaps` package is thoroughly documented in the [openair
-book](https://bookdown.org/david_carslaw/openair/maps-overview.html),
+book](https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html),
 which goes into great detail about its various functions. Functionality
 includes visualising UK AQ networks (`networkMap()`), putting “polar
 directional markers” on maps (e.g., `polarMap()`) and overlaying HYSPLIT
