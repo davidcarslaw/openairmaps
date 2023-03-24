@@ -14,7 +14,7 @@ air pollutant concentrations, location and meteorological data."><meta property=
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,16 +102,15 @@ example dataset for use with documented examples.</p>
 <span class="r-in"><span><span class="co"># basic structure</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">polar_data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 13</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   date                  nox   no2 pm2.5  pm10 site      lat    lon site_…¹    wd</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2009-01-01 <span style="color: #949494;">00:00:00</span>   113    46    42    46 London…  51.5 -<span style="color: #BB0000;">0.126</span> Urban …  58.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2009-01-01 <span style="color: #949494;">01:00:00</span>    40    32    45    49 London…  51.5 -<span style="color: #BB0000;">0.126</span> Urban …  74.5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2009-01-01 <span style="color: #949494;">02:00:00</span>    48    36    43    46 London…  51.5 -<span style="color: #BB0000;">0.126</span> Urban …  30  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2009-01-01 <span style="color: #949494;">03:00:00</span>    36    29    37    <span style="color: #BB0000;">NA</span> London…  51.5 -<span style="color: #BB0000;">0.126</span> Urban …  45  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2009-01-01 <span style="color: #949494;">04:00:00</span>    40    32    36    38 London…  51.5 -<span style="color: #BB0000;">0.126</span> Urban …  70  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2009-01-01 <span style="color: #949494;">05:00:00</span>    50    36    33    32 London…  51.5 -<span style="color: #BB0000;">0.126</span> Urban …  46.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 3 more variables: ws &lt;dbl&gt;, visibility &lt;dbl&gt;, air_temp &lt;dbl&gt;, and</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   abbreviated variable name ¹​site_type</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   date                  nox   no2 pm2.5  pm10 site    lat    lon site_type    wd</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 2009-01-01 <span style="color: #949494;">00:00:00</span>   113    46    42    46 Lond…  51.5 -<span style="color: #BB0000;">0.126</span> Urban Ba…  58.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2009-01-01 <span style="color: #949494;">01:00:00</span>    40    32    45    49 Lond…  51.5 -<span style="color: #BB0000;">0.126</span> Urban Ba…  74.5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> 2009-01-01 <span style="color: #949494;">02:00:00</span>    48    36    43    46 Lond…  51.5 -<span style="color: #BB0000;">0.126</span> Urban Ba…  30  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> 2009-01-01 <span style="color: #949494;">03:00:00</span>    36    29    37    <span style="color: #BB0000;">NA</span> Lond…  51.5 -<span style="color: #BB0000;">0.126</span> Urban Ba…  45  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> 2009-01-01 <span style="color: #949494;">04:00:00</span>    40    32    36    38 Lond…  51.5 -<span style="color: #BB0000;">0.126</span> Urban Ba…  70  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> 2009-01-01 <span style="color: #949494;">05:00:00</span>    50    36    33    32 Lond…  51.5 -<span style="color: #BB0000;">0.126</span> Urban Ba…  46.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 3 more variables: ws &lt;dbl&gt;, visibility &lt;dbl&gt;, air_temp &lt;dbl&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
