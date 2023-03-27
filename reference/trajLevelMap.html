@@ -12,7 +12,7 @@ requires that data are imported using the openair::importTraj() function."><meta
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,7 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 <span>  latitude <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>  <span class="va">pollutant</span>,</span>
 <span>  control <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  smooth <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="st">"frequency"</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fl">90</span>,</span>
 <span>  lon.inc <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -89,6 +90,11 @@ used.</p></dd>
 <dd><p>Used for splitting the trajectories into different groups
 which can be selected between using a "layer control" menu. Passed to
 <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></dd>
+
+
+<dt>smooth</dt>
+<dd><p>Should the trajectory surface be smoothed? Defaults to <code>FALSE</code>.
+Note that, when <code>smooth = TRUE</code>, no popup information will be available.</p></dd>
 
 
 <dt>statistic</dt>
