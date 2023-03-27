@@ -15,6 +15,8 @@
 #' @param alpha Opacity of the tiles. Must be between `0` and `1`.
 #' @param tile.border Colour to use for the border of binned tiles. Defaults to
 #'   `NA`, which draws no border.
+#' @param smooth Should the trajectory surface be smoothed? Defaults to `FALSE`.
+#'   Note that, when `smooth = TRUE`, no popup information will be available.
 #'
 #' @return A leaflet object.
 #' @export
@@ -33,6 +35,7 @@ trajLevelMap <-
            latitude = "lat",
            pollutant,
            control = "default",
+           smooth = FALSE,
            statistic = "frequency",
            percentile = 90,
            lon.inc = 1,
@@ -98,6 +101,21 @@ trajLevelMap <-
       plot = FALSE
     )$data
 
+    # smooth
+    if (smooth) {
+      data <- smooth_trajgrid(data, pollutant)
+
+      xtest <- dplyr::filter(data, .data$ygrid == .data$ygrid[[1]]) %>%
+        dplyr::arrange(.data$xgrid)
+      xtest <- xtest$xgrid - dplyr::lag(xtest$xgrid)
+      lon.inc <- unique(xtest[!is.na(xtest)])[[1]]
+
+      ytest <- dplyr::filter(data, .data$xgrid == .data$xgrid[[1]]) %>%
+        dplyr::arrange(.data$ygrid)
+      ytest <- ytest$ygrid - dplyr::lag(ytest$ygrid)
+      lat.inc <- unique(ytest[!is.na(ytest)])[[1]]
+    }
+
     names(data)[names(data) == "height"] <- pollutant
 
     if (statistic == "frequency") {
@@ -130,21 +148,33 @@ trajLevelMap <-
     }
 
     # create label
-    data <- dplyr::mutate(
-      data,
-      lab = stringr::str_glue(
-        "<b>Lat:</b> {ygrid} | <b>Lon:</b> {xgrid}<br>
+    if (!smooth) {
+      data <- dplyr::mutate(
+        data,
+        lab = stringr::str_glue(
+          "<b>Lat:</b> {ygrid} | <b>Lon:</b> {xgrid}<br>
        <b>Count:</b> {gridcount}<br>
        <b>Value:</b> {signif(val, 3)}"
-      ),
-      coord = stringr::str_glue("({ygrid}, {xgrid})")
-    )
+        ),
+       coord = stringr::str_glue("({ygrid}, {xgrid})")
+      )
 
+      if (statistic %in% c("difference", "frequency"))
+        data$lab <- paste0(data$lab, "%")
+    }
+
+    # make hover label & popups
+    data$label <- signif(data$val, 3)
     if (statistic %in% c("difference", "frequency"))
-      data$lab <- paste0(data$lab, "%")
+      data$label <- paste0(data$label, "%")
+
+    if (smooth) {
+      popup <- NA
+    } else {
+      popup <- data[["lab"]]
+    }
 
     # make map
-
     map <-
       leaflet::addRectangles(
         map = map,
@@ -157,8 +187,8 @@ trajLevelMap <-
         weight = 1,
         fillOpacity = alpha,
         fillColor = pal(data[[pollutant]]),
-        popup = data[["lab"]],
-        label = data[["coord"]],
+        popup = popup,
+        label = data[["label"]],
         group = data[[control]]
       ) %>%
       leaflet::addLegend(
@@ -191,10 +221,10 @@ trajLevelMap <-
 #'
 #' @description `r lifecycle::badge("experimental")`
 #'
-#' This function plots back trajectories on a `ggplot2` map. This function
-#' requires that data are imported using the [openair::importTraj()] function.
-#' It is a `ggplot2` implementation of [openair::trajLevel()] with many of the
-#' same arguments, which should be more flexible for post-hoc changes.
+#'   This function plots back trajectories on a `ggplot2` map. This function
+#'   requires that data are imported using the [openair::importTraj()] function.
+#'   It is a `ggplot2` implementation of [openair::trajLevel()] with many of the
+#'   same arguments, which should be more flexible for post-hoc changes.
 #'
 #' @family static trajectory maps
 #' @inheritParams trajLevelMap
@@ -202,6 +232,9 @@ trajLevelMap <-
 #' @param crs The coordinate reference system (CRS) into which all data should
 #'   be projected before plotting. Defaults to latitude/longitude
 #'   (`sf::st_crs(4326)`).
+#' @param smooth Should the trajectory surface be smoothed? Defaults to `FALSE`.
+#'   Note that smoothing may cause the plot to render slower, so consider
+#'   setting `crs` to `sf::st_crs(4326)` or `NULL`.
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim -crs -default_crs
 #'
 #' @return A `ggplot2` plot
@@ -216,6 +249,7 @@ trajLevelMapStatic <-
            latitude = "lat",
            pollutant,
            facet = "default",
+           smooth = FALSE,
            statistic = "frequency",
            percentile = 90,
            lon.inc = 1,
@@ -279,6 +313,11 @@ trajLevelMapStatic <-
     # fix names
     names(data)[names(data) == "height"] <- pollutant
 
+    # smooth
+    if (smooth) {
+      data <- smooth_trajgrid(data, pollutant)
+    }
+
     # start plot
     plt <-
       ggplot2::ggplot(data, ggplot2::aes(x = .data$xgrid,
@@ -314,18 +353,31 @@ trajLevelMapStatic <-
         c(min(data$ygrid) - d_lat, max(data$ygrid) + d_lat)
     }
 
+    # create coordinate system
+    if (!is.null(crs)) {
+      coords <-
+        ggplot2::coord_sf(
+          xlim = xlim,
+          ylim = ylim,
+          default_crs = sf::st_crs(4326),
+          crs = crs,
+          ...
+        )
+    } else {
+      coords <-
+        ggplot2::coord_sf(
+          xlim = xlim,
+          ylim = ylim,
+          ...
+        )
+    }
+
     # add to plot
     plt <- plt +
       ggplot2::geom_tile(alpha = alpha, color = tile.border) +
-      ggplot2::coord_sf(
-        xlim = xlim,
-        ylim = ylim,
-        default_crs = sf::st_crs(4326),
-        crs = crs,
-        ...
-      ) +
       theme_static() +
-      ggplot2::labs(x = "longitude", y = "latitude", fill = title)
+      ggplot2::labs(x = "longitude", y = "latitude", fill = title) +
+      coords
 
     # deal with facets
     if (facet != "default") {
@@ -336,3 +388,51 @@ trajLevelMapStatic <-
     # return plot
     return(plt)
   }
+
+
+#' Smooth grid for trajectories
+#' @noRd
+smooth_trajgrid <- function(mydata, z, k = 50, dist = 0.05) {
+  myform <-
+    stats::formula(stringr::str_glue("{z}^0.5 ~ s(xgrid, ygrid, k = {k})"))
+
+  res <- 101
+  Mgam <- mgcv::gam(myform, data = mydata)
+
+  new.data <- expand.grid(
+    xgrid = seq(min(mydata$xgrid),
+                max(mydata$xgrid),
+                length = res),
+    ygrid = seq(min(mydata$ygrid),
+                max(mydata$ygrid),
+                length = res)
+  )
+
+  pred <- mgcv::predict.gam(Mgam, newdata = new.data)
+  pred <- as.vector(pred) ^ 2
+
+  new.data[, z] <- pred
+
+  ## exlcude too far
+  ## exclude predictions too far from data (from mgcv)
+  x <- seq(min(mydata$xgrid), max(mydata$xgrid), length = res)
+  y <- seq(min(mydata$ygrid), max(mydata$ygrid), length = res)
+
+  wsp <- rep(x, res)
+  wdp <- rep(y, rep(res, res))
+
+  ## data with gaps caused by min.bin
+  all.data <-
+    stats::na.omit(data.frame(xgrid = mydata$xgrid, ygrid = mydata$ygrid, z))
+
+  ind <- with(all.data,
+              mgcv::exclude.too.far(wsp, wdp, mydata$xgrid,
+                                    mydata$ygrid,
+                                    dist = dist))
+
+  new.data[ind, z] <- NA
+
+  new.data <- tidyr::drop_na(new.data)
+
+  dplyr::tibble(new.data)
+}

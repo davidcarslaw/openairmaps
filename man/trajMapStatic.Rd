@@ -54,7 +54,9 @@ estimated based on the lat/lon ranges of the input data.}
 
 \item{crs}{The coordinate reference system (CRS) into which all data should
 be projected before plotting. Defaults to the Lambert projection
-(\code{sf::st_crs(3812)}).}
+(\code{sf::st_crs(3812)}). Alternatively, can be set to \code{NULL}, which will
+typically render the map quicker but may cause countries far from the
+equator or large areas to appear distorted.}
 
 \item{origin}{Should the receptor point be marked with a circle? Defaults to
 \code{TRUE}.}
@@ -144,10 +146,10 @@ a \code{ggplot2} plot
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 
-This function plots back trajectories using \code{ggplot2}. The function requires
-that data are imported using \code{\link[openair:importTraj]{openair::importTraj()}}. It is a \code{ggplot2}
-implementation of \code{\link[openair:trajPlot]{openair::trajPlot()}} with many of the same arguments,
-which should be more flexible for post-hoc changes.
+This function plots back trajectories using \code{ggplot2}. The function
+requires that data are imported using \code{\link[openair:importTraj]{openair::importTraj()}}. It is a
+\code{ggplot2} implementation of \code{\link[openair:trajPlot]{openair::trajPlot()}} with many of the same
+arguments, which should be more flexible for post-hoc changes.
 }
 \examples{
 \dontrun{
@@ -169,7 +171,8 @@ trajMapStatic(traj_data, colour = "pm2.5", crs = sf::st_crs(4326)) +
 \seealso{
 the original \code{\link[openair:trajPlot]{openair::trajPlot()}}
 
-\code{\link[=trajMap]{trajMap()}} for the interactive \code{leaflet} equivalent of \code{\link[=trajMapStatic]{trajMapStatic()}}
+\code{\link[=trajMap]{trajMap()}} for the interactive \code{leaflet} equivalent of
+\code{\link[=trajMapStatic]{trajMapStatic()}}
 
 Other static trajectory maps: 
 \code{\link{trajLevelMapStatic}()}

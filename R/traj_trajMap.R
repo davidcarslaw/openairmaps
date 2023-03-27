@@ -207,13 +207,12 @@ trajMap <-
 
 #' Trajectory line plots in `ggplot2`
 #'
-#' @description
-#' `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("experimental")`
 #'
-#' This function plots back trajectories using `ggplot2`. The function requires
-#' that data are imported using [openair::importTraj()]. It is a `ggplot2`
-#' implementation of [openair::trajPlot()] with many of the same arguments,
-#' which should be more flexible for post-hoc changes.
+#'   This function plots back trajectories using `ggplot2`. The function
+#'   requires that data are imported using [openair::importTraj()]. It is a
+#'   `ggplot2` implementation of [openair::trajPlot()] with many of the same
+#'   arguments, which should be more flexible for post-hoc changes.
 #'
 #' @family static trajectory maps
 #'
@@ -227,7 +226,9 @@ trajMap <-
 #'   estimated based on the lat/lon ranges of the input data.
 #' @param crs The coordinate reference system (CRS) into which all data should
 #'   be projected before plotting. Defaults to the Lambert projection
-#'   (`sf::st_crs(3812)`).
+#'   (`sf::st_crs(3812)`). Alternatively, can be set to `NULL`, which will
+#'   typically render the map quicker but may cause countries far from the
+#'   equator or large areas to appear distorted.
 #' @param map Should a base map be drawn? Defaults to `TRUE`.
 #' @param map.fill Colour to use to fill the polygons of the base map (see
 #'   `colors()`).
@@ -247,7 +248,8 @@ trajMap <-
 #' @export
 #'
 #' @seealso the original [openair::trajPlot()]
-#' @seealso [trajMap()] for the interactive `leaflet` equivalent of [trajMapStatic()]
+#' @seealso [trajMap()] for the interactive `leaflet` equivalent of
+#'   [trajMapStatic()]
 #'
 #' @examples
 #' \dontrun{
@@ -320,17 +322,30 @@ trajMapStatic <-
       plt_aes <- ggplot2::aes(group = .data$date, color = .data[[colour]])
     }
 
+    # create coordinate system
+    if (!is.null(crs)) {
+      coords <-
+        ggplot2::coord_sf(
+          xlim = xlim,
+          ylim = ylim,
+          default_crs = sf::st_crs(4326),
+          crs = crs,
+          ...
+        )
+    } else {
+      coords <-
+        ggplot2::coord_sf(
+          xlim = xlim,
+          ylim = ylim,
+          ...
+        )
+    }
+
     plt <- plt +
       ggplot2::geom_path(mapping = plt_aes) +
       ggplot2::geom_point(data = points_df, mapping = plt_aes) +
-      ggplot2::coord_sf(
-        xlim = xlim,
-        ylim = ylim,
-        default_crs = sf::st_crs(4326),
-        crs = crs,
-        ...
-      ) +
-      theme_static()
+      theme_static() +
+      coords
 
     if (!is.null(facet)) {
       plt <-

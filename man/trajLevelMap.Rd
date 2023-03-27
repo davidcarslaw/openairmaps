@@ -10,6 +10,7 @@ trajLevelMap(
   latitude = "lat",
   pollutant,
   control = "default",
+  smooth = FALSE,
   statistic = "frequency",
   percentile = 90,
   lon.inc = 1,
@@ -33,6 +34,9 @@ used.}
 \item{control}{Used for splitting the trajectories into different groups
 which can be selected between using a "layer control" menu. Passed to
 \code{\link[openair:cutData]{openair::cutData()}}.}
+
+\item{smooth}{Should the trajectory surface be smoothed? Defaults to \code{FALSE}.
+Note that, when \code{smooth = TRUE}, no popup information will be available.}
 
 \item{statistic}{For \code{trajLevel}. By default the function will plot the
 trajectory frequencies.
