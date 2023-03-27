@@ -10,6 +10,7 @@ trajLevelMapStatic(
   latitude = "lat",
   pollutant,
   facet = "default",
+  smooth = FALSE,
   statistic = "frequency",
   percentile = 90,
   lon.inc = 1,
@@ -40,6 +41,10 @@ used.}
 
 \item{facet}{Used for splitting the trajectories into different panels.
 Passed to \code{\link[openair:cutData]{openair::cutData()}}.}
+
+\item{smooth}{Should the trajectory surface be smoothed? Defaults to \code{FALSE}.
+Note that smoothing may cause the plot to render slower, so consider
+setting \code{crs} to \code{sf::st_crs(4326)} or \code{NULL}.}
 
 \item{statistic}{For \code{trajLevel}. By default the function will plot the
 trajectory frequencies.
