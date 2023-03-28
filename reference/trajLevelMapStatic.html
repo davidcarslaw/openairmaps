@@ -72,6 +72,8 @@ same arguments, which should be more flexible for post-hoc changes.</p>
 <span>  lon.inc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  lat.inc <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  min.bin <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  .combine <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>  sigma <span class="op">=</span> <span class="fl">1.5</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  tile.border <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  xlim <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -115,48 +117,41 @@ setting <code>crs</code> to <code>sf::st_crs(4326)</code> or <code>NULL</code>.<
 
 
 <dt>statistic</dt>
-<dd><p>For <code>trajLevel</code>. By default the function will plot the
-trajectory frequencies.</p>
-<p>For <code>trajLevel</code>, the argument <code>method = "hexbin"</code> can be used. In
-this case hexagonal binning of the trajectory <em>points</em> (i.e. a point
-every three hours along each back trajectory). The plot then shows the
-trajectory frequencies uses hexagonal binning. This is an alternative way
-of viewing trajectory frequencies compared with <code>statistic =
-  "frequency"</code>.</p>
+<dd><p>Statistic to use for <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">trajLevel()</a></code>. By default, the function
+will plot the trajectory frequencies (<code>statistic = "frequency"</code>). As an
+alternative way of viewing trajectory frequencies, the argument <code>method = "hexbin"</code> can be used. In this case hexagonal binning of the trajectory
+<em>points</em> (i.e., a point every three hours along each back trajectory).
+The plot then shows the trajectory frequencies uses hexagonal binning.</p>
 <p>There are also various ways of plotting concentrations.</p>
-<p>It is also possible to set <code>statistic = "difference"</code>. In this case
-trajectories where the associated concentration is greater than
-<code>percentile</code> are compared with the the full set of trajectories to
-understand the differences in frequencies of the origin of air masses. The
-comparison is made by comparing the percentage change in gridded
-frequencies. For example, such a plot could show that the top 10\<!-- % of -->
-concentrations of PM10 tend to originate from air-mass origins to the east.</p>
-<p>If <code>statistic = "pscf"</code> then a Potential Source Contribution Function
-map is produced. If <code>statistic = "cwt"</code> then concentration weighted
-trajectories are plotted.</p>
-<p>If <code>statistic = "cwt"</code> then the Concentration Weighted Trajectory
-approach is used. See details.</p></dd>
+<p>It is possible to set <code>statistic = "difference"</code>. In this case trajectories
+where the associated concentration is greater than <code>percentile</code> are
+compared with the the full set of trajectories to understand the
+differences in frequencies of the origin of air masses. The comparison is
+made by comparing the percentage change in gridded frequencies. For
+example, such a plot could show that the top 10\<!-- % of concentrations of PM10 -->
+tend to originate from air-mass origins to the east.</p>
+<p>If <code>statistic = "pscf"</code> then a Potential Source Contribution Function map
+is produced. This statistic method interacts with <code>percentile</code>.</p>
+<p>If <code>statistic = "cwt"</code> then concentration weighted trajectories are
+plotted.</p>
+<p>If <code>statistic = "sqtba"</code> then Simplified Quantitative Transport Bias
+Analysis is undertaken. This statistic method interacts with <code>.combine</code> and
+<code>sigma</code>.</p></dd>
 
 
 <dt>percentile</dt>
-<dd><p>For <code>trajLevel</code>. The percentile concentration of
-<code>pollutant</code> against which the all trajectories are compared.</p></dd>
+<dd><p>The percentile concentration of <code>pollutant</code> against which
+the all trajectories are compared.</p></dd>
 
 
-<dt>lon.inc</dt>
-<dd><p>The longitude-interval to be used for binning data for
-<code>trajLevel</code>.</p></dd>
-
-
-<dt>lat.inc</dt>
-<dd><p>The latitude-interval to be used for binning data when
-<code>trajLevel</code>.</p></dd>
+<dt>lon.inc, lat.inc</dt>
+<dd><p>The longitude and latitude intervals to be used for
+binning data.</p></dd>
 
 
 <dt>min.bin</dt>
-<dd><p>For <code>trajLevel</code> the minimum number of unique points in a
-grid cell. Counts below <code>min.bin</code> are set as missing. For
-<code>trajLevel</code> gridded outputs.</p></dd>
+<dd><p>The minimum number of unique points in a grid cell. Counts
+below <code>min.bin</code> are set as missing.</p></dd>
 
 
 <dt>alpha</dt>
