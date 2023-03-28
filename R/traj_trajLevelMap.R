@@ -255,6 +255,8 @@ trajLevelMapStatic <-
            lon.inc = 1,
            lat.inc = 1,
            min.bin = 1,
+           .combine = NA,
+           sigma = 1.5,
            alpha = .5,
            tile.border = NA,
            xlim = NULL,
@@ -307,6 +309,8 @@ trajLevelMapStatic <-
       lon.inc = lon.inc,
       min.bin = min.bin,
       type = facet,
+      .combine = .combine,
+      sigma = sigma,
       plot = FALSE
     )$data
 
