@@ -16,6 +16,8 @@ trajLevelMap(
   lon.inc = 1,
   lat.inc = 1,
   min.bin = 1,
+  .combine = NA,
+  sigma = 1.5,
   cols = "default",
   alpha = 0.5,
   tile.border = NA,
@@ -72,6 +74,18 @@ binning data.}
 
 \item{min.bin}{The minimum number of unique points in a grid cell. Counts
 below \code{min.bin} are set as missing.}
+
+\item{.combine}{When statistic is "SQTBA" it is possible to combine lots of
+receptor locations to derive a single map. \code{.combine} identifies the column
+that differentiates different sites (commonly a column named \code{"site"}).
+Note that individual site maps are normalised first by dividing by their
+mean value.}
+
+\item{sigma}{For the SQTBA approach \code{sigma} determines the amount of back
+trajectory spread based on the Gaussian plume equation. Values in the
+literature suggest 5.4 km after one hour. However, testing suggests lower
+values reveal source regions more effectively while not introducing too
+much noise.}
 
 \item{cols}{Colours to be used for plotting. Options include "default",
 "increment", "heat", "turbo" and \code{RColorBrewer} colours — see the

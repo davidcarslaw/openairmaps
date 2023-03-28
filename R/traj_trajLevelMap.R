@@ -41,6 +41,8 @@ trajLevelMap <-
            lon.inc = 1,
            lat.inc = 1,
            min.bin = 1,
+           .combine = NA,
+           sigma = 1.5,
            cols = "default",
            alpha = .5,
            tile.border = NA,
@@ -97,6 +99,8 @@ trajLevelMap <-
       lat.inc = lat.inc,
       lon.inc = lon.inc,
       min.bin = min.bin,
+      .combine = .combine,
+      sigma = sigma,
       type = control,
       plot = FALSE
     )$data
@@ -145,6 +149,8 @@ trajLevelMap <-
       names(data)[names(data) == "count"] <- "gridcount"
     } else if ("n" %in% names(data)) {
       names(data)[names(data) == "n"] <- "gridcount"
+    } else if (tolower(statistic) == "sqtba" & !is.na(.combine)) {
+      data$gridcount <- NA
     }
 
     # create label

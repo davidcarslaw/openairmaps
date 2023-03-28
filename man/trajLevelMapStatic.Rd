@@ -83,6 +83,18 @@ binning data.}
 \item{min.bin}{The minimum number of unique points in a grid cell. Counts
 below \code{min.bin} are set as missing.}
 
+\item{.combine}{When statistic is "SQTBA" it is possible to combine lots of
+receptor locations to derive a single map. \code{.combine} identifies the column
+that differentiates different sites (commonly a column named \code{"site"}).
+Note that individual site maps are normalised first by dividing by their
+mean value.}
+
+\item{sigma}{For the SQTBA approach \code{sigma} determines the amount of back
+trajectory spread based on the Gaussian plume equation. Values in the
+literature suggest 5.4 km after one hour. However, testing suggests lower
+values reveal source regions more effectively while not introducing too
+much noise.}
+
 \item{alpha}{Opacity of the tiles. Must be between \code{0} and \code{1}.}
 
 \item{tile.border}{Colour to use for the border of binned tiles. Defaults to
