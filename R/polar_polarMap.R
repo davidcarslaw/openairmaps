@@ -110,6 +110,33 @@ polarMap <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
+  # auto limits
+  if ("auto" %in% limits) {
+    if (length(pollutant) == 1) {
+      data <-
+        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+
+      if (is.null(control)) {
+        control <- "default"
+      }
+
+      testplots <-
+        openair::polarPlot(
+          data,
+          pollutant = pollutant,
+          x = x,
+          type = c("latlng", control),
+          plot = FALSE,
+          ...
+        )$data
+
+      limits <- range(testplots$z, na.rm = TRUE)
+      limits[1] <- 0
+    } else {
+      cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
+    }
+  }
+
   # deal with limits
   theLimits <- limits
   if (is.null(limits)) {
