@@ -19,11 +19,17 @@
 #'   scale. The `limits` argument will force all markers to use the same colour
 #'   scale. The limits are set in the form `c(lower, upper)`, so `limits = c(0,
 #'   100)` would force the plot limits to span 0-100.
-#' @param upper The default `"fixed"`, ensures that all of polar markers use the
-#'   same radial axis scale. Alternatively, `"free"` allows each marker to use
-#'   its own scale. Can also be used in a similar way to the `upper` argument in
-#'   [openair::polarPlot()], where a numeric value to use as the upper limit can
-#'   be specified.
+#' @param limits One of:
+#' - `"fixed"` which ensures all of the markers use the same colour scale.
+#' - `"free"` (the default) which allows all of the markers to use different
+#' colour scales.
+#' - A numeric vector in the form `c(lower, upper)` used to define the colour
+#' scale. For example, `limits = c(0, 100)` would force the plot limits to
+#' span 0-100.
+#' @param upper One of:
+#' - `"fixed"` (the default) which ensures all of the markers use the same radial axis scale.
+#' - `"free"` which allows all of the markers to use different radial axis scales.
+#' - A numeric value, used as the upper limit for the radial axis scale.
 #' @param latitude,longitude The decimal latitude/longitude. If not provided,
 #'   will be automatically inferred from data by looking for a column named
 #'   "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
@@ -81,7 +87,7 @@
 polarMap <- function(data,
                      pollutant = NULL,
                      x = "ws",
-                     limits = NULL,
+                     limits = "free",
                      upper = "fixed",
                      latitude = NULL,
                      longitude = NULL,
@@ -117,7 +123,7 @@ polarMap <- function(data,
   longitude <- latlon$longitude
 
   # auto limits
-  if ("auto" %in% limits) {
+  if ("fixed" %in% limits) {
     if (length(pollutant) == 1) {
       data <-
         dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
@@ -141,13 +147,12 @@ polarMap <- function(data,
     } else {
       cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
     }
+  } else if ("free" %in% limits) {
+    limits <- NA
   }
 
   # deal with limits
   theLimits <- limits
-  if (is.null(limits)) {
-    theLimits <- NA
-  }
 
   # cut data
   data <- quick_cutdata(data = data, type = control)
