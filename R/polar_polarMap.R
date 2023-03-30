@@ -128,8 +128,9 @@ polarMap <- function(data,
       data <-
         dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
+      type <- control
       if (is.null(control)) {
-        control <- "default"
+        type <- "default"
       }
 
       testplots <-
@@ -137,22 +138,26 @@ polarMap <- function(data,
           data,
           pollutant = pollutant,
           x = x,
-          type = c("latlng", control),
+          type = c("latlng", type),
           plot = FALSE,
           ...
         )$data
 
-      limits <- range(testplots$z, na.rm = TRUE)
-      limits[1] <- 0
+      theLimits <- range(testplots$z, na.rm = TRUE)
+      theLimits[1] <- 0
     } else {
       cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
     }
   } else if ("free" %in% limits) {
-    limits <- NA
+    theLimits <- NA
+  } else if (is.numeric(limits)){
+    theLimits <- limits
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+    )
   }
-
-  # deal with limits
-  theLimits <- limits
 
   # cut data
   data <- quick_cutdata(data = data, type = control)
@@ -249,7 +254,7 @@ polarMap <- function(data,
     make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
 
   # add legend if limits are set
-  if (!is.null(limits) & all(!is.na(limits)) & draw.legend) {
+  if (!all(is.na(theLimits)) & draw.legend) {
     map <-
       leaflet::addLegend(
         map,
