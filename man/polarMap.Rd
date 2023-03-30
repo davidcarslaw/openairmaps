@@ -40,15 +40,22 @@ control" interface.}
 
 \item{x}{The radial axis variable to plot.}
 
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
+\item{limits}{One of:
+\itemize{
+\item \code{"fixed"} which ensures all of the markers use the same colour scale.
+\item \code{"free"} (the default) which allows all of the markers to use different
+colour scales.
+\item A numeric vector in the form \code{c(lower, upper)} used to define the colour
+scale. For example, so \code{limits = c(0, 100)} would force the plot limits to
+span 0-100.
+}}
 
-\item{upper}{The default \code{"fixed"}, ensures that all of polar markers use the
-same radial axis scale. Alternatively, \code{"free"} allows each marker to use
-its own scale. Can also be used in a similar way to the \code{upper} argument in
-\code{\link[openair:polarPlot]{openair::polarPlot()}}, where a numeric value to use as the upper limit can
-be specified.}
+\item{upper}{One of:
+\itemize{
+\item \code{"fixed"} (the default) which ensures all of the markers use the same radial axis scale.
+\item \code{"free"} which allows all of the markers to use different radial axis scales.
+\item A numeric value, used as the upper limit for the radial axis scale.
+}}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
