@@ -8,7 +8,7 @@ polarMap(
   data,
   pollutant = NULL,
   x = "ws",
-  limits = NULL,
+  limits = "free",
   upper = "fixed",
   latitude = NULL,
   longitude = NULL,
@@ -46,7 +46,7 @@ control" interface.}
 \item \code{"free"} (the default) which allows all of the markers to use different
 colour scales.
 \item A numeric vector in the form \code{c(lower, upper)} used to define the colour
-scale. For example, so \code{limits = c(0, 100)} would force the plot limits to
+scale. For example, \code{limits = c(0, 100)} would force the plot limits to
 span 0-100.
 }}
 
