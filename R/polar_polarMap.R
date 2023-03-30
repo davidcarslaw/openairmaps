@@ -144,7 +144,6 @@ polarMap <- function(data,
         )$data
 
       theLimits <- range(testplots$z, na.rm = TRUE)
-      theLimits[1] <- 0
     } else {
       cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
     }
@@ -371,7 +370,6 @@ polarMapStatic <- function(data,
         )$data
 
       theLimits <- range(testplots$z, na.rm = TRUE)
-      theLimits[1] <- 0
     } else {
       cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
     }
