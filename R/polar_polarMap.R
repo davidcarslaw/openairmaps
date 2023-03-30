@@ -19,6 +19,11 @@
 #'   scale. The `limits` argument will force all markers to use the same colour
 #'   scale. The limits are set in the form `c(lower, upper)`, so `limits = c(0,
 #'   100)` would force the plot limits to span 0-100.
+#' @param upper The default `"fixed"`, ensures that all of polar markers use the
+#'   same radial axis scale. Alternatively, `"free"` allows each marker to use
+#'   its own scale. Can also be used in a similar way to the `upper` argument in
+#'   [openair::polarPlot()], where a numeric value to use as the upper limit can
+#'   be specified.
 #' @param latitude,longitude The decimal latitude/longitude. If not provided,
 #'   will be automatically inferred from data by looking for a column named
 #'   "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
@@ -77,6 +82,7 @@ polarMap <- function(data,
                      pollutant = NULL,
                      x = "ws",
                      limits = NULL,
+                     upper = "fixed",
                      latitude = NULL,
                      longitude = NULL,
                      control = NULL,
@@ -146,6 +152,11 @@ polarMap <- function(data,
   # cut data
   data <- quick_cutdata(data = data, type = control)
 
+  # deal with upper
+  if (upper == "fixed") {
+    upper <- max(data[[x]], na.rm = TRUE)
+  }
+
   # deal with popups
   if (length(popup) > 1) {
     data <-
@@ -185,18 +196,34 @@ polarMap <- function(data,
 
   # define function
   fun <- function(data) {
-    openair::polarPlot(
-      data,
-      pollutant = "conc",
-      x = x,
-      plot = FALSE,
-      limits = theLimits,
-      cols = cols,
-      alpha = alpha,
-      key = key,
-      ...,
-      par.settings = list(axis.line = list(col = "transparent"))
-    )$plot
+    if (upper == "free") {
+      openair::polarPlot(
+        data,
+        pollutant = "conc",
+        x = x,
+        plot = FALSE,
+        limits = theLimits,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    } else {
+      openair::polarPlot(
+        data,
+        pollutant = "conc",
+        x = x,
+        plot = FALSE,
+        limits = theLimits,
+        upper = upper,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    }
   }
 
   # plot and save static markers

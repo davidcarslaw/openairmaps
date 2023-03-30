@@ -9,6 +9,7 @@ polarMap(
   pollutant = NULL,
   x = "ws",
   limits = NULL,
+  upper = "fixed",
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -42,6 +43,12 @@ control" interface.}
 \item{limits}{By default, each individual polar marker has its own colour
 scale. The \code{limits} argument will force all markers to use the same colour
 scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
+
+\item{upper}{The default \code{"fixed"}, ensures that all of polar markers use the
+same radial axis scale. Alternatively, \code{"free"} allows each marker to use
+its own scale. Can also be used in a similar way to the \code{upper} argument in
+\code{\link[openair:polarPlot]{openair::polarPlot()}}, where a numeric value to use as the upper limit can
+be specified.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
@@ -214,9 +221,6 @@ circumstances.}
 are removed on the plots. This is done by shading the missing data in
 \code{mis.col}. To not highlight missing data when \code{min.bin} > 1
 choose \code{mis.col = "transparent"}.}
-    \item{\code{upper}}{This sets the upper limit wind speed to be used. Often there are
-only a relatively few data points at very high wind speeds and plotting all
-of them can reduce the useful information in the plot.}
     \item{\code{angle.scale}}{Sometimes the placement of the scale may interfere with an
 interesting feature. The user can therefore set \code{angle.scale} to any
 value between 0 and 360 degrees to mitigate such problems. For example
