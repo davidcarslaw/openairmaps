@@ -9,7 +9,7 @@ diffMap(
   after,
   pollutant = NULL,
   x = "ws",
-  limits = NULL,
+  limits = "free",
   latitude = NULL,
   longitude = NULL,
   control = NULL,

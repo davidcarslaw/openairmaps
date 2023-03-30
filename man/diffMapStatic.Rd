@@ -8,11 +8,11 @@ diffMapStatic(
   before,
   after,
   pollutant = NULL,
+  limits = "free",
   x = "ws",
-  facet = NULL,
-  limits = NULL,
   latitude = NULL,
   longitude = NULL,
+  facet = NULL,
   zoom = 13,
   ggmap = NULL,
   cols = c("#002F70", "#3167BB", "#879FDB", "#C8D2F1", "#F6F6F6", "#F4C8C8", "#DA8A8B",
@@ -35,19 +35,25 @@ for details of different input requirements.}
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
 
+\item{limits}{One of:
+\itemize{
+\item \code{"fixed"} which ensures all of the markers use the same colour scale.
+\item \code{"free"} (the default) which allows all of the markers to use different
+colour scales.
+\item A numeric vector in the form \code{c(lower, upper)} used to define the colour
+scale. For example, \code{limits = c(0, 100)} would force the plot limits to
+span 0-100.
+}}
+
 \item{x}{The radial axis variable to plot.}
-
-\item{facet}{Used for splitting the input data into different panels, passed
-to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
-multiple \code{pollutant} columns have been provided.}
-
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{facet}{Used for splitting the input data into different panels, passed
+to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{zoom}{The zoom level to use for the basemap, passed to
 \code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}}. Alternatively, the \code{ggmap} argument can be used
