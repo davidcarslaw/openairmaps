@@ -7,12 +7,11 @@
 freqMapStatic(
   data,
   pollutant = NULL,
-  breaks = NULL,
   statistic = "mean",
-  facet = NULL,
-  limits = NULL,
+  breaks = NULL,
   latitude = NULL,
   longitude = NULL,
+  facet = NULL,
   zoom = 13,
   ggmap = NULL,
   cols = "turbo",
@@ -34,11 +33,6 @@ longitude.}
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
 
-\item{breaks}{The user can provide their own scale. breaks expects a sequence
-of numbers that define the range of the scale. The sequence could represent
-one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale from
-0-10 in intervals of 10, or a more flexible sequence, e.g., \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.}
-
 \item{statistic}{The statistic that should be applied to each wind
 speed/direction bin. Can be "frequency", "mean", "median", "max" (maximum),
 "stdev" (standard deviation) or "weighted.mean". The option "frequency" is
@@ -52,17 +46,18 @@ contribution to the total concentration. Note that for options other than
 "frequency", it is necessary to also provide the name of a pollutant. See
 function \code{\link[openair:cutData]{openair::cutData()}} for further details.}
 
-\item{facet}{Used for splitting the input data into different panels, passed
-to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
-multiple \code{pollutant} columns have been provided.}
-
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
+\item{breaks}{The user can provide their own scale. breaks expects a sequence
+of numbers that define the range of the scale. The sequence could represent
+one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale from
+0-10 in intervals of 10, or a more flexible sequence, e.g., \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{facet}{Used for splitting the input data into different panels, passed
+to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{zoom}{The zoom level to use for the basemap, passed to
 \code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}}. Alternatively, the \code{ggmap} argument can be used
