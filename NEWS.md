@@ -1,5 +1,14 @@
 # openairmaps (development version)
 
+## New features
+
+* Several "limit" arguments can now take one of three options: "fixed" (which forces all markers to share scales), "free" (which allows them to use different scales), or a numeric vector to define the scales. These arguments and their defaults include:
+
+  * `polarMap()`: `upper` (fixed); `limits` (free)
+  * `annulusMap()`: `limits` (free)
+
+# openairmaps 0.8.0
+
 This is a minor release adding a range of quality of life features and fixing a few bugs.
 
 ## New features
