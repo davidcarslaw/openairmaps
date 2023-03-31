@@ -40,49 +40,54 @@ which can be selected between using a "layer control" menu. Passed to
 \item{smooth}{Should the trajectory surface be smoothed? Defaults to \code{FALSE}.
 Note that, when \code{smooth = TRUE}, no popup information will be available.}
 
-\item{statistic}{Statistic to use for \code{\link[openair:trajLevel]{trajLevel()}}. By default, the function
-will plot the trajectory frequencies (\code{statistic = "frequency"}). As an
-alternative way of viewing trajectory frequencies, the argument \code{method = "hexbin"} can be used. In this case hexagonal binning of the trajectory
-\emph{points} (i.e., a point every three hours along each back trajectory).
-The plot then shows the trajectory frequencies uses hexagonal binning.
+\item{statistic}{For \code{trajLevel}. By default the function will plot the
+trajectory frequencies.
+
+For \code{trajLevel}, the argument \code{method = "hexbin"} can be used. In
+this case hexagonal binning of the trajectory \emph{points} (i.e. a point
+every three hours along each back trajectory). The plot then shows the
+trajectory frequencies uses hexagonal binning. This is an alternative way
+of viewing trajectory frequencies compared with \code{statistic =
+  "frequency"}.
 
 There are also various ways of plotting concentrations.
 
-It is possible to set \code{statistic = "difference"}. In this case trajectories
-where the associated concentration is greater than \code{percentile} are
-compared with the the full set of trajectories to understand the
-differences in frequencies of the origin of air masses. The comparison is
-made by comparing the percentage change in gridded frequencies. For
-example, such a plot could show that the top 10\\% of concentrations of PM10
-tend to originate from air-mass origins to the east.
+It is also possible to set \code{statistic = "difference"}. In this case
+trajectories where the associated concentration is greater than
+\code{percentile} are compared with the the full set of trajectories to
+understand the differences in frequencies of the origin of air masses. The
+comparison is made by comparing the percentage change in gridded
+frequencies. For example, such a plot could show that the top 10\\% of
+concentrations of PM10 tend to originate from air-mass origins to the east.
 
-If \code{statistic = "pscf"} then a Potential Source Contribution Function map
-is produced. This statistic method interacts with \code{percentile}.
+If \code{statistic = "pscf"} then a Potential Source Contribution Function
+map is produced. If \code{statistic = "cwt"} then concentration weighted
+trajectories are plotted.
 
-If \code{statistic = "cwt"} then concentration weighted trajectories are
-plotted.
+If \code{statistic = "cwt"} then the Concentration Weighted Trajectory
+approach is used. See details.}
 
-If \code{statistic = "sqtba"} then Simplified Quantitative Transport Bias
-Analysis is undertaken. This statistic method interacts with \code{.combine} and
-\code{sigma}.}
+\item{percentile}{For \code{trajLevel}. The percentile concentration of
+\code{pollutant} against which the all trajectories are compared.}
 
-\item{percentile}{The percentile concentration of \code{pollutant} against which
-the all trajectories are compared.}
+\item{lon.inc}{The longitude-interval to be used for binning data for
+\code{trajLevel}.}
 
-\item{lon.inc, lat.inc}{The longitude and latitude intervals to be used for
-binning data.}
+\item{lat.inc}{The latitude-interval to be used for binning data when
+\code{trajLevel}.}
 
-\item{min.bin}{The minimum number of unique points in a grid cell. Counts
-below \code{min.bin} are set as missing.}
+\item{min.bin}{For \code{trajLevel} the minimum number of unique points in a
+grid cell. Counts below \code{min.bin} are set as missing. For
+\code{trajLevel} gridded outputs.}
 
 \item{.combine}{When statistic is "SQTBA" it is possible to combine lots of
-receptor locations to derive a single map. \code{.combine} identifies the column
-that differentiates different sites (commonly a column named \code{"site"}).
-Note that individual site maps are normalised first by dividing by their
-mean value.}
+receptor locations to derive a single map. \code{.combine} identifies the
+column that differentiates different sites (commonly a column named
+\code{site}). Note that individual site maps are normalised first by
+dividing by their mean value.}
 
-\item{sigma}{For the SQTBA approach \code{sigma} determines the amount of back
-trajectory spread based on the Gaussian plume equation. Values in the
+\item{sigma}{For the SQTBA approach \code{sigma} determines the amount of
+back trajectory spread based on the Gaussian plume equation. Values in the
 literature suggest 5.4 km after one hour. However, testing suggests lower
 values reveal source regions more effectively while not introducing too
 much noise.}
