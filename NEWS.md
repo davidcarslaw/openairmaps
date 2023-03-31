@@ -1,6 +1,6 @@
-# openairmaps (development version)
+# openairmaps 0.8.0
 
-This is a minor release adding a range of quality of life features and fixing a few bugs.
+This is a minor release adding a range of quality of life features, adding two new experimental functions, and fixing a few bugs.
 
 ## New features
 
@@ -10,7 +10,7 @@ This is a minor release adding a range of quality of life features and fixing a 
 
 * The `control` and `facet` arguments of all polar marker mapping functions (static and interactive) and trajectory mapping functions are now passed to `openair::cutData()`.
 
-* The `popup` argument of all interactive polar marker mapping functions can now take a vector of colum names. If more than one column is provided, it is automatically passed to `buildPopup()` using its default values.
+* The `popup` argument of all interactive polar marker mapping functions can now take a vector of column names. If more than one column is provided, it is automatically passed to `buildPopup()` using its default values.
 
 * `trajLevelMap()` now has the `control` argument, which maps directly onto the `type` argument of `openair::trajLevel()`. Like other `control` arguments elsewhere in `{openairmaps}`, this creates a "layer control" menu.
 
