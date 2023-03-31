@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.0.9012</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,22 +42,22 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="openairmaps-development-version">openairmaps (development version)<a class="anchor" aria-label="anchor" href="#openairmaps-development-version"></a></h2>
-<p>This is a minor release adding a range of quality of life features and fixing a few bugs.</p>
+<h2 class="pkg-version" data-toc-text="0.8.0" id="openairmaps-080">openairmaps 0.8.0<a class="anchor" aria-label="anchor" href="#openairmaps-080"></a></h2>
+<p>This is a minor release adding a range of quality of life features, adding two new experimental functions, and fixing a few bugs.</p>
 <div class="section level3">
-<h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
+<h3 id="new-features-0-8-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-8-0"></a></h3>
 <ul><li>
 <p><code><a href="../reference/trajMapStatic.html">trajMapStatic()</a></code> and <code><a href="../reference/trajLevelMapStatic.html">trajLevelMapStatic()</a></code> have been added as two new <em>experimental</em> functions to provide <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> equivalents of <code><a href="https://davidcarslaw.github.io/openair/reference/trajPlot.html" class="external-link">openair::trajPlot()</a></code> and <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code>.</p>
 <ul><li>These are experimental as the long term place for these functions is uncertain; there will definitely be need for a <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> incarnation of the trajectory plotting functions, but whether they will sit in <a href="https://davidcarslaw.github.io/openair/" class="external-link">openair</a>, <code>{ggopenair}</code> or <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> and what they will be named is not clear.</li>
 </ul></li>
 <li><p>The <code>control</code> and <code>facet</code> arguments of all polar marker mapping functions (static and interactive) and trajectory mapping functions are now passed to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></li>
-<li><p>The <code>popup</code> argument of all interactive polar marker mapping functions can now take a vector of colum names. If more than one column is provided, it is automatically passed to <code><a href="../reference/buildPopup.html">buildPopup()</a></code> using its default values.</p></li>
+<li><p>The <code>popup</code> argument of all interactive polar marker mapping functions can now take a vector of column names. If more than one column is provided, it is automatically passed to <code><a href="../reference/buildPopup.html">buildPopup()</a></code> using its default values.</p></li>
 <li><p><code><a href="../reference/trajLevelMap.html">trajLevelMap()</a></code> now has the <code>control</code> argument, which maps directly onto the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code>. Like other <code>control</code> arguments elsewhere in <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a>, this creates a “layer control” menu.</p></li>
 <li><p><code><a href="../reference/networkMap.html">networkMap()</a></code> now uses different coloured markers for different networks. If more than one network is specified, and <code>draw.legend</code> is set to <code>TRUE</code>, a legend will also be drawn for quick identification of different data sources.</p></li>
 <li><p>Deprecations are now managed by the <a href="https://lifecycle.r-lib.org/" class="external-link">lifecycle</a> package. This currently only applies to the <code>type</code> argument.</p></li>
 </ul></div>
 <div class="section level3">
-<h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
+<h3 id="bug-fixes-0-8-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-8-0"></a></h3>
 <ul><li><p>Fixed issues where multiple <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> chained together would all show the same plot.</p></li>
 <li><p>Fixed issue where <code>...</code> and <code>pollutant</code> weren’t being passed to <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code>.</p></li>
 <li><p>Fixed issue in <code><a href="../reference/trajMap.html">trajMap()</a></code> caused by recent updates to <a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a> and <a href="https://forcats.tidyverse.org/" class="external-link">forcats</a>.</p></li>
