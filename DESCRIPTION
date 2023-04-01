@@ -3,7 +3,7 @@ Package: openairmaps
 Title: Create Maps of Air Pollution Data
 Version: 0.8.0
 Authors@R: c(
-    person("Jack", "Davison", , "davison.jack.jd@gmail.com", role = c("cre", "aut")),
+    person("Jack", "Davison", , "jack.davison@ricardo.com", role = c("cre", "aut")),
     person("David", "Carslaw", , "david.carslaw@york.ac.uk", role = "aut")
   )
 Description: Combine the air quality data analysis methods of 'openair'
