@@ -69,17 +69,17 @@ freqMap <- function(data,
     lifecycle::deprecate_soft(
       when = "0.5.0",
       what = "openairmaps::freqMap(type)",
-      details = c("Different sites are now automatically detected based on latitude and longitude",
-                  "Please use the `popup` argument to create popups.")
+      details = c(
+        "Different sites are now automatically detected based on latitude and longitude",
+        "Please use the `popup` argument to create popups."
+      )
     )
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -90,32 +90,29 @@ freqMap <- function(data,
   }
 
   # auto limits
+  breaks <- check_multipoll(breaks, pollutant)
+
   if ("fixed" %in% breaks) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- control
-      if (is.null(control)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::polarFreq(
-          data,
-          pollutant = pollutant,
-          statistic = statistic,
-          trans = FALSE,
-          type = c("latlng", type),
-          plot = FALSE,
-          ...
-        )$data
-
-      theBreaks <- pretty(testplots$weights, n = 10)
-    } else {
-      cli::cli_warn("{.code breaks == 'fixed'} only works with a single given {.field pollutant}")
-      theBreaks <- NA
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::polarFreq(
+        data,
+        pollutant = pollutant,
+        statistic = statistic,
+        trans = FALSE,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theBreaks <- pretty(testplots$weights, n = 10)
   } else if ("free" %in% breaks) {
     theBreaks <- NA
   } else if (is.numeric(breaks)) {
@@ -212,7 +209,17 @@ freqMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legends if breaks are set
   if (!all(is.na(theBreaks)) & draw.legend) {
@@ -226,7 +233,8 @@ freqMap <- function(data,
         map,
         pal = leaflet::colorBin(
           palette = openair::openColours(scheme = cols),
-          domain = theBreaks, bins = theBreaks
+          domain = theBreaks,
+          bins = theBreaks
         ),
         values = theBreaks,
         title = title
@@ -287,11 +295,9 @@ freqMapStatic <- function(data,
                           d.fig = 3,
                           ...) {
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -305,32 +311,29 @@ freqMapStatic <- function(data,
   }
 
   # auto limits
+  breaks <- check_multipoll(breaks, pollutant)
+
   if ("fixed" %in% breaks) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- control
-      if (is.null(control)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::polarFreq(
-          data,
-          pollutant = pollutant,
-          statistic = statistic,
-          trans = FALSE,
-          type = c("latlng", type),
-          plot = FALSE,
-          ...
-        )$data
-
-      theBreaks <- pretty(testplots$weights, n = 10)
-    } else {
-      cli::cli_warn("{.code breaks == 'fixed'} only works with a single given {.field pollutant}")
-      theBreaks <- NA
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::polarFreq(
+        data,
+        pollutant = pollutant,
+        statistic = statistic,
+        trans = FALSE,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theBreaks <- pretty(testplots$weights, n = 10)
   } else if ("free" %in% breaks) {
     theBreaks <- NA
   } else if (is.numeric(breaks)) {
@@ -434,20 +437,20 @@ freqMapStatic <- function(data,
 
   # create legend
   if (!all(is.na(theBreaks))) {
-    intervals <- stringr::str_c(theBreaks, dplyr::lead(theBreaks), sep = " - ")
+    intervals <-
+      stringr::str_c(theBreaks, dplyr::lead(theBreaks), sep = " - ")
     intervals <- intervals[!is.na(intervals)]
     intervals <- factor(intervals, intervals)
-    pal <- openair::openColours(scheme = cols, n = length(intervals)) %>%
+    pal <-
+      openair::openColours(scheme = cols, n = length(intervals)) %>%
       stats::setNames(intervals)
 
     plt <-
       plt +
       ggplot2::geom_point(
         data = plots_df,
-        ggplot2::aes(
-          .data[[longitude]], .data[[latitude]],
-          fill = intervals[1]
-        ),
+        ggplot2::aes(.data[[longitude]], .data[[latitude]],
+                     fill = intervals[1]),
         size = 0,
         key_glyph = ggplot2::draw_key_rect
       ) +

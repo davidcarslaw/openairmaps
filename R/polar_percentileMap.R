@@ -54,44 +54,41 @@ percentileMap <- function(data,
     lifecycle::deprecate_soft(
       when = "0.5.0",
       what = "openairmaps::percentileMap(type)",
-      details = c("Different sites are now automatically detected based on latitude and longitude",
-                  "Please use the `popup` argument to create popups.")
+      details = c(
+        "Different sites are now automatically detected based on latitude and longitude",
+        "Please use the `popup` argument to create popups."
+      )
     )
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
   # auto limits
+  intervals <- check_multipoll(intervals, pollutant)
+
   if ("fixed" %in% intervals) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- control
-      if (is.null(control)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::percentileRose(
-          data,
-          pollutant = pollutant,
-          type = c("latlng", type),
-          plot = FALSE
-        )$data
-
-      theIntervals <- pretty(testplots[[pollutant]])
-    } else {
-      cli::cli_warn("{.code intervals == 'fixed'} only works with a single given {.field pollutant}")
-      theIntervals <- NA
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::percentileRose(
+        data,
+        pollutant = pollutant,
+        type = c("latlng", type),
+        plot = FALSE
+      )$data
+
+    theIntervals <- pretty(testplots[[pollutant]])
   } else if ("free" %in% intervals) {
     theIntervals <- NA
   } else if (is.numeric(intervals)) {
@@ -187,7 +184,17 @@ percentileMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legend
   if (all(!is.na(percentile)) & draw.legend) {
@@ -250,38 +257,34 @@ percentileMapStatic <- function(data,
                                 d.fig = 3,
                                 ...) {
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
   # auto limits
+  intervals <- check_multipoll(intervals, pollutant)
+
   if ("fixed" %in% intervals) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- control
-      if (is.null(control)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::percentileRose(
-          data,
-          pollutant = pollutant,
-          type = c("latlng", type),
-          plot = FALSE
-        )$data
-
-      theIntervals <- pretty(testplots[[pollutant]])
-    } else {
-      cli::cli_warn("{.code intervals == 'fixed'} only works with a single given {.field pollutant}")
-      theIntervals <- NA
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::percentileRose(
+        data,
+        pollutant = pollutant,
+        type = c("latlng", type),
+        plot = FALSE
+      )$data
+
+    theIntervals <- pretty(testplots[[pollutant]])
+
   } else if ("free" %in% intervals) {
     theIntervals <- NA
   } else if (is.numeric(intervals)) {
@@ -384,10 +387,12 @@ percentileMapStatic <- function(data,
 
   # create legend
   percs <- unique(c(0, percentile))
-  intervals <- stringr::str_c(percs, dplyr::lead(percs), sep = " - ")
+  intervals <-
+    stringr::str_c(percs, dplyr::lead(percs), sep = " - ")
   intervals <- intervals[!is.na(intervals)]
   intervals <- factor(intervals, intervals)
-  pal <- openair::openColours(scheme = cols, n = length(intervals)) %>%
+  pal <-
+    openair::openColours(scheme = cols, n = length(intervals)) %>%
     stats::setNames(intervals)
 
   plt <-
@@ -395,8 +400,7 @@ percentileMapStatic <- function(data,
     ggplot2::geom_point(
       data = plots_df,
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                   fill = intervals[1]
-      ),
+                   fill = intervals[1]),
       size = 0,
       key_glyph = ggplot2::draw_key_rect
     ) +
