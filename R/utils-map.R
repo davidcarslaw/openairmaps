@@ -586,3 +586,14 @@ quick_cutdata <- function(data, type){
   if (is.null(type)) type <- "default"
   openair::cutData(data, type = type)
 }
+
+#' checks if multiple pollutants have been provided with a "fixed" scale
+#' @noRd
+check_multipoll <- function(vec, pollutant){
+  if ("fixed" %in% vec & length(pollutant) > 1) {
+    cli::cli_warn("{.code 'fixed'} limits only work with a single given {.field pollutant}")
+    "free"
+  } else {
+    vec
+  }
+}

@@ -51,49 +51,46 @@ annulusMap <- function(data,
     lifecycle::deprecate_soft(
       when = "0.5.0",
       what = "openairmaps::annulusMap(type)",
-      details = c("Different sites are now automatically detected based on latitude and longitude",
-                  "Please use the `popup` argument to create popups.")
+      details = c(
+        "Different sites are now automatically detected based on latitude and longitude",
+        "Please use the `popup` argument to create popups."
+      )
     )
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
   # auto limits
+  limits <- check_multipoll(limits, pollutant)
+
   if ("fixed" %in% limits) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- control
-      if (is.null(control)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::polarAnnulus(
-          data,
-          pollutant = pollutant,
-          period = period,
-          type = c("latlng", type),
-          plot = FALSE,
-          ...
-        )$data
-
-      theLimits <- range(testplots$z, na.rm = TRUE)
-    } else {
-      cli::cli_warn("{.code limits == 'fixed'} only works with a single given {.field pollutant}")
-      theLimits <- NA
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::polarAnnulus(
+        data,
+        pollutant = pollutant,
+        period = period,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
@@ -187,7 +184,17 @@ annulusMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legend if limits are set
   if (!all(is.na(theLimits)) & draw.legend) {
@@ -249,43 +256,38 @@ annulusMapStatic <- function(data,
                              d.fig = 3,
                              ...) {
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
   # auto limits
+  limits <- check_multipoll(limits, pollutant)
+
   if ("fixed" %in% limits) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- facet
-      if (is.null(facet)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::polarAnnulus(
-          data,
-          pollutant = pollutant,
-          period = period,
-          type = c("latlng", type),
-          plot = FALSE,
-          ...
-        )$data
-
-      theLimits <- range(testplots$z, na.rm = TRUE)
-    } else {
-      cli::cli_warn("{.code limits == 'fixed'} only works with a single given {.field pollutant}")
-      theLimits <- NA
+    type <- facet
+    if (is.null(facet)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::polarAnnulus(
+        data,
+        pollutant = pollutant,
+        period = period,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
@@ -388,15 +390,11 @@ annulusMapStatic <- function(data,
   if (!all(is.na(theLimits))) {
     plt <-
       plt +
-      ggplot2::geom_point(
-        data = plots_df,
-        ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-        alpha = 0
-      ) +
-      ggplot2::scale_color_gradientn(
-        limits = theLimits,
-        colours = openair::openColours(scheme = cols)
-      ) +
+      ggplot2::geom_point(data = plots_df,
+                          ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+                          alpha = 0) +
+      ggplot2::scale_color_gradientn(limits = theLimits,
+                                     colours = openair::openColours(scheme = cols)) +
       ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
   }
 

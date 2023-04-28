@@ -123,31 +123,28 @@ polarMap <- function(data,
   longitude <- latlon$longitude
 
   # auto limits
+  limits <- check_multipoll(limits, pollutant)
+
   if ("fixed" %in% limits) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- control
-      if (is.null(control)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::polarPlot(
-          data,
-          pollutant = pollutant,
-          x = x,
-          type = c("latlng", type),
-          plot = FALSE,
-          ...
-        )$data
-
-      theLimits <- range(testplots$z, na.rm = TRUE)
-    } else {
-      cli::cli_warn("{.code limits == 'fixed'} only works with a single given {.field pollutant}")
-      theLimits <- NA
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::polarPlot(
+        data,
+        pollutant = pollutant,
+        x = x,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
   } else if (is.numeric(limits)){
@@ -350,31 +347,28 @@ polarMapStatic <- function(data,
   longitude <- latlon$longitude
 
   # auto limits
+  limits <- check_multipoll(limits, pollutant)
+
   if ("fixed" %in% limits) {
-    if (length(pollutant) == 1) {
-      data <-
-        dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-      type <- facet
-      if (is.null(facet)) {
-        type <- "default"
-      }
-
-      testplots <-
-        openair::polarPlot(
-          data,
-          pollutant = pollutant,
-          x = x,
-          type = c("latlng", type),
-          plot = FALSE,
-          ...
-        )$data
-
-      theLimits <- range(testplots$z, na.rm = TRUE)
-    } else {
-      cli::cli_warn("{.code limits == 'fixed'} only works with a single given {.field pollutant}")
-      theLimits <- NA
+    type <- facet
+    if (is.null(facet)) {
+      type <- "default"
     }
+
+    testplots <-
+      openair::polarPlot(
+        data,
+        pollutant = pollutant,
+        x = x,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
   } else if (is.numeric(limits)){
