@@ -8,6 +8,7 @@ percentileMapStatic(
   data,
   pollutant = NULL,
   percentile = c(25, 50, 75, 90, 95),
+  intervals = "fixed",
   latitude = NULL,
   longitude = NULL,
   facet = NULL,
@@ -34,6 +35,13 @@ pollutants are specified, they will each form part of a separate panel.}
 
 \item{percentile}{The percentile value(s) to plot. Must be between 0–100. If
 \code{percentile = NA} then only a mean line will be shown.}
+
+\item{intervals}{One of:
+\itemize{
+\item \code{"fixed"} (the default) which ensures all of the markers use the same radial axis scale.
+\item \code{"free"} which allows all of the markers to use different radial axis scales.
+\item A numeric vector defining a sequence of numbers to use as the intervals, e.g., \code{intervals = c(0, 10, 30, 50)}.
+}}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
@@ -110,8 +118,6 @@ number of samples in the same wind sector (see Ashbaugh et al., 1985).}
     \item{\code{mean.col}}{Line colour for mean line.}
     \item{\code{fill}}{Should the percentile intervals be filled (default) or should
 lines be drawn (\code{fill = FALSE}).}
-    \item{\code{intervals}}{User-supplied intervals for the scale e.g. \code{intervals =
-c(0, 10, 30, 50)}}
     \item{\code{angle.scale}}{Sometimes the placement of the scale may interfere with an
 interesting feature. The user can therefore set \code{angle.scale} to any
 value between 0 and 360 degrees to mitigate such problems. For example
