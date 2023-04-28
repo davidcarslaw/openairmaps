@@ -16,7 +16,7 @@
 #' @param draw.legend Should a shared legend be created at the side of the map?
 #'   Default is `TRUE`.
 #' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
-#'   -type -cols -key -plot
+#'   -type -cols -key -plot -intervals
 #' @return A leaflet object.
 #' @export
 #'
@@ -232,7 +232,7 @@ percentileMap <- function(data,
 #' @param percentile The percentile value(s) to plot. Must be between 0–100. If
 #'   `percentile = NA` then only a mean line will be shown.
 #' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
-#'   -type -cols -key -plot
+#'   -type -cols -key -plot -intervals
 #'
 #' @seealso the original [openair::percentileRose()]
 #' @seealso [percentileMap()] for the interactive `leaflet` equivalent of
@@ -270,8 +270,8 @@ percentileMapStatic <- function(data,
     data <-
       dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-    type <- control
-    if (is.null(control)) {
+    type <- facet
+    if (is.null(facet)) {
       type <- "default"
     }
 
@@ -398,7 +398,6 @@ percentileMapStatic <- function(data,
   plt <-
     plt +
     ggplot2::geom_point(
-      data = plots_df,
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
                    fill = intervals[1]),
       size = 0,

@@ -323,7 +323,7 @@ annulusMapStatic <- function(data,
 
   # define function
   fun <- function(data) {
-    if (limits != "free") {
+    if (!"free" %in% limits) {
       openair::polarAnnulus(
         data,
         pollutant = "conc",

@@ -6,6 +6,8 @@
 
   * `polarMap()`: `upper` (fixed); `limits` (free)
   * `annulusMap()`: `limits` (free)
+  * `freqMap()`: `breaks` (free)
+  * `percentileMap()`: `intervals` (fixed)
 
 # openairmaps 0.8.0
 
