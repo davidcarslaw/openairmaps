@@ -317,8 +317,8 @@ freqMapStatic <- function(data,
     data <-
       dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
-    type <- control
-    if (is.null(control)) {
+    type <- facet
+    if (is.null(facet)) {
       type <- "default"
     }
 
