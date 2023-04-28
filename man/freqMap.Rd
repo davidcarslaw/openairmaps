@@ -8,7 +8,7 @@ freqMap(
   data,
   pollutant = NULL,
   statistic = "mean",
-  breaks = NULL,
+  breaks = "free",
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -50,10 +50,16 @@ contribution to the total concentration. Note that for options other than
 "frequency", it is necessary to also provide the name of a pollutant. See
 function \code{\link[openair:cutData]{openair::cutData()}} for further details.}
 
-\item{breaks}{The user can provide their own scale. breaks expects a sequence
-of numbers that define the range of the scale. The sequence could represent
-one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale from
-0-10 in intervals of 10, or a more flexible sequence, e.g., \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some situations.}
+\item{breaks}{One of:
+\itemize{
+\item \code{"fixed"} which ensures all of the markers use the same colour scale.
+\item \code{"free"} (the default) which allows all of the markers to use different
+colour scales.
+\item A numeric vector defining a sequence of numbers to use as the breaks. The
+sequence could represent one with equal spacing, e.g., \code{breaks = seq(0, 100, 10)} - a scale from 0-10 in intervals of 10, or a more flexible
+sequence, e.g., \code{breaks = c(0, 1, 5, 7, 10)}, which may be useful for some
+situations.
+}}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
@@ -171,8 +177,7 @@ freqMap(polar_data,
 \seealso{
 the original \code{\link[openair:polarFreq]{openair::polarFreq()}}
 
-\code{\link[=freqMapStatic]{freqMapStatic()}} for the static \code{ggmap} equivalent of
-\code{\link[=freqMap]{freqMap()}}
+\code{\link[=freqMapStatic]{freqMapStatic()}} for the static \code{ggmap} equivalent of \code{\link[=freqMap]{freqMap()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
