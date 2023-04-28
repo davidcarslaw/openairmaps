@@ -88,7 +88,8 @@ annulusMap <- function(data,
 
       theLimits <- range(testplots$z, na.rm = TRUE)
     } else {
-      cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
+      cli::cli_warn("{.code limits == 'fixed'} only works with a single given {.field pollutant}")
+      theLimits <- NA
     }
   } else if ("free" %in% limits) {
     theLimits <- NA
@@ -279,7 +280,8 @@ annulusMapStatic <- function(data,
 
       theLimits <- range(testplots$z, na.rm = TRUE)
     } else {
-      cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
+      cli::cli_warn("{.code limits == 'fixed'} only works with a single given {.field pollutant}")
+      theLimits <- NA
     }
   } else if ("free" %in% limits) {
     theLimits <- NA
