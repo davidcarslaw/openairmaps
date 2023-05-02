@@ -95,7 +95,7 @@ percentileMap <- function(data,
     theIntervals <- intervals
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field intervals} value of {.code {breaks}}",
+      c("!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
         "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
     )
   }
@@ -291,7 +291,7 @@ percentileMapStatic <- function(data,
     theIntervals <- intervals
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field intervals} value of {.code {breaks}}",
+      c("!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
         "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
     )
   }
