@@ -162,31 +162,31 @@ networkMap <-
     if (!is.null(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-                                 c(
-                                   "code",
-                                   "site",
-                                   "latitude",
-                                   "longitude",
-                                   "country_iso_code",
-                                   "elevation",
-                                   "ratified_to",
-                                   "Address",
-                                   "la_id",
-                                   "eu_code",
-                                   "eoi_code",
-                                   "data_source",
-                                   "os_grid_x",
-                                   "os_grid_y",
-                                   "start_date",
-                                   "end_date",
-                                   "observation_count",
-                                   "start_date2",
-                                   "end_date2",
-                                   "lab",
-                                   "pcode",
-                                   "colour",
-                                   "colour2"
-                                 )]
+          c(
+            "code",
+            "site",
+            "latitude",
+            "longitude",
+            "country_iso_code",
+            "elevation",
+            "ratified_to",
+            "Address",
+            "la_id",
+            "eu_code",
+            "eoi_code",
+            "data_source",
+            "os_grid_x",
+            "os_grid_y",
+            "start_date",
+            "end_date",
+            "observation_count",
+            "start_date2",
+            "end_date2",
+            "lab",
+            "pcode",
+            "colour",
+            "colour2"
+          )]
 
         cli::cli_abort(
           c(
@@ -294,7 +294,6 @@ networkMap <-
           )
         )
 
-
       if (length(provider) > 1) {
         map <-
           leaflet::addLayersControl(
@@ -316,8 +315,6 @@ networkMap <-
           labels = cols$network
         )
     }
-
-
 
     map
   }
@@ -438,6 +435,15 @@ prepNetworkData <- function(source, year) {
           lab = stringr::str_remove_all(.data$lab, "<b>Site Type:</b> unknown unknown<br>")
         )
     } else {
+      domain <- switch(source,
+        "aurn" = "https://uk-air.defra.gov.uk/networks/site-info?site_id=",
+        "saqn" = "https://www.scottishairquality.scot/latest/site-info/",
+        "saqd" = "https://www.scottishairquality.scot/latest/site-info/",
+        "waqn" = "https://airquality.gov.wales/air-pollution/site/",
+        "ni" = "https://www.airqualityni.co.uk/site/",
+        "aqe" = "https://www.airqualityengland.co.uk/site/latest?site_id="
+      )
+
       meta <-
         prepManagedNetwork(
           meta,
@@ -455,7 +461,7 @@ prepNetworkData <- function(source, year) {
         ) %>%
         dplyr::mutate(
           lab = stringr::str_glue(
-            "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
+            "<u><a href='{domain}{code}'><b>{toupper(stringr::str_to_title(site))}</b> ({code})</a></u><br>
       <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
       <b>Network:</b> {network}<br>
       <b>Site Type:</b> {site_type}<br>
@@ -554,7 +560,7 @@ prepManagedNetwork <- function(data, vec) {
       .groups = "drop"
     ) %>%
     dplyr::right_join(data,
-                      by = vec
+      by = vec
     )
 
   return(data)
