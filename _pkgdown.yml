@@ -16,7 +16,7 @@ navbar:
       href: news/index.html
     book:
       text: Book (External)
-      href: https://bookdown.org/david_carslaw/openair/maps-overview.html
+      href: https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html
 
 reference:
 - title: Network Visualisation
