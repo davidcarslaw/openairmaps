@@ -6,6 +6,8 @@ These are items associated with the development version of `{openairmaps}`.
 
 * `networkMap()` popups now contain links to the associated network websites. For example, the popup for London Marylebone Road in `networkMap("aurn")` now contains a link to <https://uk-air.defra.gov.uk/networks/site-info?site_id=MY1>.
 
+* `addPolarMarkers()` and `addPolarDiffMarkers()` now have all of the "options" arguments of `leaflet::addMarkers()`. This means that, for example, polar markers can be clustered (<https://leafletjs.com/reference.html#marker>).
+
 # openairmaps 0.8.0
 
 This is a minor release adding a range of quality of life features, adding two new experimental functions, and fixing a few bugs.
