@@ -18,7 +18,7 @@ polarMap().'><meta property="og:image" content="https://davidcarslaw.github.io/o
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,12 @@ control over groups and layerIds than in "all-in-one" functions like
 <span>  layerId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  popup <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  popupOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  labelOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu">markerOptions</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  clusterOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  clusterId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  d.icon <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
@@ -87,7 +92,12 @@ control over groups and layerIds than in "all-in-one" functions like
 <span>  layerId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  popup <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  popupOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  labelOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu">markerOptions</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  clusterOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  clusterId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  d.icon <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
@@ -146,8 +156,33 @@ layers (e.g. markers and polygons) can share the same group name.</p></dd>
 <dd><p>A column of <code>data</code> to be used as a popup.</p></dd>
 
 
+<dt>popupOptions</dt>
+<dd><p>A Vector of <code><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">popupOptions</a></code> to provide popups</p></dd>
+
+
 <dt>label</dt>
 <dd><p>A column of <code>data</code> to be used as a label.</p></dd>
+
+
+<dt>labelOptions</dt>
+<dd><p>A Vector of <code><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">labelOptions</a></code> to provide label
+options for each label. Default <code>NULL</code></p></dd>
+
+
+<dt>options</dt>
+<dd><p>a list of extra options for tile layers, popups, paths
+(circles, rectangles, polygons, ...), or other map elements</p></dd>
+
+
+<dt>clusterOptions</dt>
+<dd><p>if not <code>NULL</code>, markers will be clustered using
+<a href="https://github.com/Leaflet/Leaflet.markercluster" class="external-link">Leaflet.markercluster</a>;
+ you can use <code><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">markerClusterOptions</a>()</code> to specify marker cluster
+options</p></dd>
+
+
+<dt>clusterId</dt>
+<dd><p>the id for the marker cluster layer</p></dd>
 
 
 <dt>key</dt>
