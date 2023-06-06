@@ -8,6 +8,8 @@ These are items associated with the development version of `{openairmaps}`.
 
 * `addPolarMarkers()` and `addPolarDiffMarkers()` now have all of the "options" arguments of `leaflet::addMarkers()`. This means that, for example, polar markers can be clustered (<https://leafletjs.com/reference.html#marker>).
 
+* The `polarMap()` family and `networkMap()` `provider` argument can now take a named vector. The names will be used in the layer control menu, if `length(provider) > 1`.
+
 # openairmaps 0.8.0
 
 This is a minor release adding a range of quality of life features, adding two new experimental functions, and fixing a few bugs.
