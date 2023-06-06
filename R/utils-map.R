@@ -308,8 +308,13 @@ make_leaflet_map <-
     map <- leaflet::leaflet(data)
 
     # add provider tiles
-    for (i in unique(provider)) {
-      map <- leaflet::addProviderTiles(map, i, group = i)
+    if (is.null(names(provider)) | "" %in% names(provider)) {
+      names(provider) <- provider
+    }
+    for (i in seq_along(provider)) {
+      map <- leaflet::addProviderTiles(map,
+                                       provider[[i]],
+                                       group = names(provider)[[i]])
     }
 
     # work out width/height
@@ -356,14 +361,14 @@ make_leaflet_map <-
         leaflet::addLayersControl(
           map,
           baseGroups = quickTextHTML(unique(data[[split_col]])),
-          overlayGroups = provider,
+          overlayGroups = names(provider),
           options = opts
         ) %>%
-        leaflet::hideGroup(group = provider[-1])
+        leaflet::hideGroup(group = names(provider)[-1])
     } else if (flag_provider & !flag_split) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = provider, options = opts) %>%
-        leaflet::hideGroup(group = provider[-1])
+        leaflet::addLayersControl(map, baseGroups = names(provider), options = opts) %>%
+        leaflet::hideGroup(group = names(provider)[-1])
     } else if (!flag_provider & flag_split) {
       map <-
         leaflet::addLayersControl(map, baseGroups = quickTextHTML(unique(data[[split_col]])), options = opts)

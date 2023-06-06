@@ -84,7 +84,12 @@ addPolarMarkers <-
            layerId = NULL,
            group = NULL,
            popup = NULL,
+           popupOptions = NULL,
            label = NULL,
+           labelOptions = NULL,
+           options = leaflet::markerOptions(),
+           clusterOptions = NULL,
+           clusterId = NULL,
            key = FALSE,
            d.icon = 200,
            d.fig = 3.5,
@@ -152,7 +157,12 @@ addPolarMarkers <-
         iconAnchorY = height / 2
       ),
       group = group,
-      layerId = layerId
+      layerId = layerId,
+      popupOptions = popupOptions,
+      labelOptions = labelOptions,
+      options = options,
+      clusterOptions = clusterOptions,
+      clusterId = clusterId
     )
 
     # deal w/ popups/labels
@@ -184,7 +194,12 @@ addPolarDiffMarkers <-
            layerId = NULL,
            group = NULL,
            popup = NULL,
+           popupOptions = NULL,
            label = NULL,
+           labelOptions = NULL,
+           options = leaflet::markerOptions(),
+           clusterOptions = NULL,
+           clusterId = NULL,
            key = FALSE,
            d.icon = 200,
            d.fig = 3.5,
@@ -256,7 +271,12 @@ addPolarDiffMarkers <-
         iconAnchorY = height / 2
       ),
       group = group,
-      layerId = layerId
+      layerId = layerId,
+      popupOptions = popupOptions,
+      labelOptions = labelOptions,
+      options = options,
+      clusterOptions = clusterOptions,
+      clusterId = clusterId
     )
 
     # deal w/ popups/labels

@@ -36,7 +36,10 @@
 #' @param provider The base map(s) to be used. See
 #'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
 #'   all base maps that can be used. If multiple base maps are provided, they
-#'   can be toggled between using a "layer control" interface.
+#'   can be toggled between using a "layer control" interface. By default, the
+#'   interface will use the provider names as labels, but users can define their
+#'   own using a named vector (e.g., `c("Default" = "OpenStreetMap", "Satellite"
+#'   = "Esri.WorldImagery")`)
 #' @param cols The colours used for plotting. See [openair::openColours()] for
 #'   more information.
 #' @param alpha The alpha transparency to use for the plotting surface (a value
