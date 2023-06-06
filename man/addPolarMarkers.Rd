@@ -15,7 +15,12 @@ addPolarMarkers(
   layerId = NULL,
   group = NULL,
   popup = NULL,
+  popupOptions = NULL,
   label = NULL,
+  labelOptions = NULL,
+  options = leaflet::markerOptions(),
+  clusterOptions = NULL,
+  clusterId = NULL,
   key = FALSE,
   d.icon = 200,
   d.fig = 3.5,
@@ -32,7 +37,12 @@ addPolarDiffMarkers(
   layerId = NULL,
   group = NULL,
   popup = NULL,
+  popupOptions = NULL,
   label = NULL,
+  labelOptions = NULL,
+  options = leaflet::markerOptions(),
+  clusterOptions = NULL,
+  clusterId = NULL,
   key = FALSE,
   d.icon = 200,
   d.fig = 3.5,
@@ -71,7 +81,22 @@ layers (e.g. markers and polygons) can share the same group name.}
 
 \item{popup}{A column of \code{data} to be used as a popup.}
 
+\item{popupOptions}{A Vector of \code{\link[leaflet]{popupOptions}} to provide popups}
+
 \item{label}{A column of \code{data} to be used as a label.}
+
+\item{labelOptions}{A Vector of \code{\link[leaflet]{labelOptions}} to provide label
+options for each label. Default \code{NULL}}
+
+\item{options}{a list of extra options for tile layers, popups, paths
+(circles, rectangles, polygons, ...), or other map elements}
+
+\item{clusterOptions}{if not \code{NULL}, markers will be clustered using
+\href{https://github.com/Leaflet/Leaflet.markercluster}{Leaflet.markercluster};
+ you can use \code{\link[leaflet]{markerClusterOptions}()} to specify marker cluster
+options}
+
+\item{clusterId}{the id for the marker cluster layer}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 

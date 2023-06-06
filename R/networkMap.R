@@ -61,7 +61,8 @@ networkMap <-
            control = NULL,
            year = NULL,
            cluster = TRUE,
-           provider = c("OpenStreetMap", "Esri.WorldImagery"),
+           provider = c("Default" = "OpenStreetMap",
+                        "Satellite" = "Esri.WorldImagery"),
            draw.legend = TRUE,
            collapse.control = FALSE) {
     # if year isn't provided, use current year
@@ -69,8 +70,6 @@ networkMap <-
       year <- lubridate::year(Sys.Date())
       cli::cli_inform(c("i" = "{.code year} not specified. Showing sites open in {.field {year}}."))
     }
-
-    provider <- unique(provider)
     source <- unique(source)
 
     cols <-
@@ -100,10 +99,8 @@ networkMap <-
 
     # read in data
     meta <-
-      purrr::map(
-        .x = source,
-        .f = ~ prepNetworkData(source = .x, year = year)
-      ) %>%
+      purrr::map(.x = source,
+                 .f = ~ prepNetworkData(source = .x, year = year)) %>%
       purrr::list_rbind() %>%
       dplyr::left_join(cols, by = "network")
 
@@ -128,13 +125,11 @@ networkMap <-
     if (!is.null(control)) {
       if (control %in% c("Parameter_name", "variable")) {
         meta <-
-          dplyr::group_by(
-            meta,
-            .data$site,
-            .data$latitude,
-            .data$longitude,
-            .data$variable
-          )
+          dplyr::group_by(meta,
+                          .data$site,
+                          .data$latitude,
+                          .data$longitude,
+                          .data$variable)
       }
     }
 
@@ -146,9 +141,12 @@ networkMap <-
     map <- leaflet::leaflet()
 
     # add provider tiles
-    for (i in seq(length(provider))) {
+    if (is.null(names(provider)) | "" %in% names(provider)) {
+      names(provider) <- provider
+    }
+    for (i in seq_along(provider)) {
       map <-
-        leaflet::addProviderTiles(map, provider = provider[i], group = provider[i])
+        leaflet::addProviderTiles(map, provider = provider[[i]], group = names(provider)[[i]])
     }
 
     # cluster options
@@ -189,10 +187,8 @@ networkMap <-
                                  )]
 
         cli::cli_abort(
-          c(
-            "x" = "'{control}' is not an appropriate {.coed control} option.",
-            "i" = "Suggested control options: {.emph {trycols}}"
-          )
+          c("x" = "'{control}' is not an appropriate {.coed control} option.",
+            "i" = "Suggested control options: {.emph {trycols}}")
         )
       }
 
@@ -243,9 +239,9 @@ networkMap <-
               map,
               options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars)),
-              overlayGroups = provider
+              overlayGroups = names(provider)
             ) %>%
-            leaflet::hideGroup(group = provider[-1])
+            leaflet::hideGroup(group = names(provider)[[-1]])
         } else {
           map <-
             leaflet::addLayersControl(
@@ -261,9 +257,9 @@ networkMap <-
               map,
               options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars)),
-              baseGroups = provider
+              baseGroups = names(provider)
             ) %>%
-            leaflet::hideGroup(group = provider[-1])
+            leaflet::hideGroup(group = names(provider)[[-1]])
         } else {
           map <-
             leaflet::addLayersControl(
@@ -294,15 +290,14 @@ networkMap <-
           )
         )
 
-
       if (length(provider) > 1) {
         map <-
           leaflet::addLayersControl(
             map,
             options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
-            baseGroups = provider
+            baseGroups = names(provider)
           ) %>%
-          leaflet::hideGroup(group = provider[-1])
+          leaflet::hideGroup(group = names(provider)[[-1]])
       }
     }
 
@@ -317,8 +312,6 @@ networkMap <-
         )
     }
 
-
-
     map
   }
 
@@ -332,11 +325,9 @@ prepNetworkData <- function(source, year) {
   }
   # import metadata
   meta <-
-    openair::importMeta(
-      source = source,
-      all = TRUE,
-      year = year
-    ) %>%
+    openair::importMeta(source = source,
+                        all = TRUE,
+                        year = year) %>%
     dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude)) %>%
     dplyr::mutate(
       network = dplyr::case_when(
@@ -389,7 +380,7 @@ prepNetworkData <- function(source, year) {
     )
 
     meta <- dplyr::filter(
-      meta, !.data$variable %in% hc_vars, !.data$variable %in% c(
+      meta,!.data$variable %in% hc_vars,!.data$variable %in% c(
         "ws",
         "wd",
         "temp",
@@ -422,15 +413,26 @@ prepNetworkData <- function(source, year) {
           )
         ) %>%
         dplyr::mutate(
+          provider = stringr::str_trim(.data$provider),
+          pcode = dplyr::case_when(
+            .data$provider == "Norfolk Air Quality" ~ "norfolk",
+            .data$provider == "Nottingham Air Quality" ~ "notts",
+            .data$provider == "Wolverhampton Air Quality" ~ "wolverhampton",
+            .data$provider == "Liverpool Air Quality" ~ "liverpool",
+            .data$provider == "Heathrow Airwatch" ~ "heathrow",
+            .data$provider == "Hertfordshire and Bedfordshire Air Quality Network" ~ "hertsbeds",
+            .data$provider == "Wiltshire Air Quality" ~ "wiltshire",
+            .default = .data$pcode
+          ),
           lab = stringr::str_glue(
-            "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
-      <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
-      <b>Network:</b> {network}<br>
-      <b>Site Type:</b> {site_type}<br>
-      <b>Zone:</b> {zone}<br>
-      <b>Agglomeration:</b> {agglomeration}<br>
-      <b>Provider:</b> {provider}<br>
-      <hr>{lab}"
+            "<u><a href='https://uk-air.defra.gov.uk/networks/site-info?uka_id={code}&provider={pcode}'><b>{toupper(stringr::str_to_title(site))}</b> ({code})</a></u><br>
+            <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
+            <b>Network:</b> {network}<br>
+            <b>Site Type:</b> {site_type}<br>
+            <b>Zone:</b> {zone}<br>
+            <b>Agglomeration:</b> {agglomeration}<br>
+            <b>Provider:</b> {provider}<br>
+            <hr>{lab}"
           )
         ) %>%
         dplyr::mutate(
@@ -438,6 +440,16 @@ prepNetworkData <- function(source, year) {
           lab = stringr::str_remove_all(.data$lab, "<b>Site Type:</b> unknown unknown<br>")
         )
     } else {
+      domain <- switch(
+        source,
+        "aurn" = "https://uk-air.defra.gov.uk/networks/site-info?site_id=",
+        "saqn" = "https://www.scottishairquality.scot/latest/site-info/",
+        "saqd" = "https://www.scottishairquality.scot/latest/site-info/",
+        "waqn" = "https://airquality.gov.wales/air-pollution/site/",
+        "ni" = "https://www.airqualityni.co.uk/site/",
+        "aqe" = "https://www.airqualityengland.co.uk/site/latest?site_id="
+      )
+
       meta <-
         prepManagedNetwork(
           meta,
@@ -455,7 +467,7 @@ prepNetworkData <- function(source, year) {
         ) %>%
         dplyr::mutate(
           lab = stringr::str_glue(
-            "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
+            "<u><a href='{domain}{code}'><b>{toupper(stringr::str_to_title(site))}</b> ({code})</a></u><br>
       <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
       <b>Network:</b> {network}<br>
       <b>Site Type:</b> {site_type}<br>
@@ -477,6 +489,7 @@ prepNetworkData <- function(source, year) {
     meta <-
       dplyr::mutate(
         meta,
+        url = paste0("https://www.londonair.org.uk/london/asp/publicdetails.asp?site=", .data$code),
         start_date = lubridate::as_date(.data$start_date),
         end_date = lubridate::as_date(.data$end_date),
         end_date = dplyr::if_else(
@@ -485,7 +498,7 @@ prepNetworkData <- function(source, year) {
           as.character(.data$end_date)
         ),
         lab = stringr::str_glue(
-          "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
+          "<u><a href='{url}'><b>{toupper(stringr::str_to_title(site))}</b> ({code})</a></u><br>
           <b>Lat:</b> {round(latitude, 6)} | <b>Lon:</b> {round(longitude, 6)}<br>
           <b>Network:</b> {network}<br>
           <b>Address:</b> {Address}<br>
@@ -549,13 +562,10 @@ prepManagedNetwork <- function(data, vec) {
       )
     ) %>%
     dplyr::group_by(dplyr::across(dplyr::all_of(vec))) %>%
-    dplyr::summarise(
-      lab = paste(.data$lab, collapse = "<br>"),
-      .groups = "drop"
-    ) %>%
+    dplyr::summarise(lab = paste(.data$lab, collapse = "<br>"),
+                     .groups = "drop") %>%
     dplyr::right_join(data,
-                      by = vec
-    )
+                      by = vec)
 
   return(data)
 }
