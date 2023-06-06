@@ -489,6 +489,7 @@ prepNetworkData <- function(source, year) {
     meta <-
       dplyr::mutate(
         meta,
+        url = paste0("https://www.londonair.org.uk/london/asp/publicdetails.asp?site=", .data$code),
         start_date = lubridate::as_date(.data$start_date),
         end_date = lubridate::as_date(.data$end_date),
         end_date = dplyr::if_else(
@@ -497,7 +498,7 @@ prepNetworkData <- function(source, year) {
           as.character(.data$end_date)
         ),
         lab = stringr::str_glue(
-          "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
+          "<u><a href='{url}'><b>{toupper(stringr::str_to_title(site))}</b> ({code})</a></u><br>
           <b>Lat:</b> {round(latitude, 6)} | <b>Lon:</b> {round(longitude, 6)}<br>
           <b>Network:</b> {network}<br>
           <b>Address:</b> {Address}<br>
