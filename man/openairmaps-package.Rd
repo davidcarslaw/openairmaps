@@ -51,7 +51,7 @@ The \href{https://bookdown.org/david_carslaw/openair/}{openair book} for
 more in-depth documentation of \code{openair} and \code{openairmaps}.
 }
 \author{
-\strong{Maintainer}: Jack Davison \email{davison.jack.jd@gmail.com}
+\strong{Maintainer}: Jack Davison \email{jack.davison@ricardo.com}
 
 Authors:
 \itemize{
