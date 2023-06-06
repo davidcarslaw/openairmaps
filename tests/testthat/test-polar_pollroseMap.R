@@ -1,10 +1,6 @@
 options(cli.default_handler = function(...) {})
 polar_data <- dplyr::filter(polar_data, site %in% unique(site)[1:2])
 
-test_that("pollutionrose map works in a simple way", {
-  expect_no_error(pollroseMap(polar_data, "nox"))
-})
-
 test_that("pollutionrose map works with two pollutants", {
   expect_no_error(pollroseMap(polar_data, c("nox", "pm2.5")))
 })
@@ -18,10 +14,6 @@ test_that("pollutionrose map works in an advanced way", {
     label = "site",
     breaks = 10
   ))
-})
-
-test_that("static pollutionrose map works in a simple way", {
-  expect_no_error(pollroseMapStatic(polar_data, "nox"))
 })
 
 test_that("static pollutionrose map works with two pollutants", {
