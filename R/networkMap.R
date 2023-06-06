@@ -61,7 +61,8 @@ networkMap <-
            control = NULL,
            year = NULL,
            cluster = TRUE,
-           provider = c("OpenStreetMap", "Esri.WorldImagery"),
+           provider = c("Default" = "OpenStreetMap",
+                        "Satellite" = "Esri.WorldImagery"),
            draw.legend = TRUE,
            collapse.control = FALSE) {
     # if year isn't provided, use current year
@@ -69,8 +70,6 @@ networkMap <-
       year <- lubridate::year(Sys.Date())
       cli::cli_inform(c("i" = "{.code year} not specified. Showing sites open in {.field {year}}."))
     }
-
-    provider <- unique(provider)
     source <- unique(source)
 
     cols <-
@@ -146,9 +145,12 @@ networkMap <-
     map <- leaflet::leaflet()
 
     # add provider tiles
-    for (i in seq(length(provider))) {
+    if (is.null(names(provider)) | "" %in% names(provider)) {
+      names(provider) <- provider
+    }
+    for (i in seq_along(provider)) {
       map <-
-        leaflet::addProviderTiles(map, provider = provider[i], group = provider[i])
+        leaflet::addProviderTiles(map, provider = provider[[i]], group = names(provider)[[i]])
     }
 
     # cluster options
@@ -243,9 +245,9 @@ networkMap <-
               map,
               options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars)),
-              overlayGroups = provider
+              overlayGroups = names(provider)
             ) %>%
-            leaflet::hideGroup(group = provider[-1])
+            leaflet::hideGroup(group = names(provider)[[-1]])
         } else {
           map <-
             leaflet::addLayersControl(
@@ -261,9 +263,9 @@ networkMap <-
               map,
               options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars)),
-              baseGroups = provider
+              baseGroups = names(provider)
             ) %>%
-            leaflet::hideGroup(group = provider[-1])
+            leaflet::hideGroup(group = names(provider)[[-1]])
         } else {
           map <-
             leaflet::addLayersControl(
@@ -299,9 +301,9 @@ networkMap <-
           leaflet::addLayersControl(
             map,
             options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
-            baseGroups = provider
+            baseGroups = names(provider)
           ) %>%
-          leaflet::hideGroup(group = provider[-1])
+          leaflet::hideGroup(group = names(provider)[[-1]])
       }
     }
 
