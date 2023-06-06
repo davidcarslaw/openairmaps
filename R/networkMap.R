@@ -99,10 +99,8 @@ networkMap <-
 
     # read in data
     meta <-
-      purrr::map(
-        .x = source,
-        .f = ~ prepNetworkData(source = .x, year = year)
-      ) %>%
+      purrr::map(.x = source,
+                 .f = ~ prepNetworkData(source = .x, year = year)) %>%
       purrr::list_rbind() %>%
       dplyr::left_join(cols, by = "network")
 
@@ -127,13 +125,11 @@ networkMap <-
     if (!is.null(control)) {
       if (control %in% c("Parameter_name", "variable")) {
         meta <-
-          dplyr::group_by(
-            meta,
-            .data$site,
-            .data$latitude,
-            .data$longitude,
-            .data$variable
-          )
+          dplyr::group_by(meta,
+                          .data$site,
+                          .data$latitude,
+                          .data$longitude,
+                          .data$variable)
       }
     }
 
@@ -164,37 +160,35 @@ networkMap <-
     if (!is.null(control)) {
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
-          c(
-            "code",
-            "site",
-            "latitude",
-            "longitude",
-            "country_iso_code",
-            "elevation",
-            "ratified_to",
-            "Address",
-            "la_id",
-            "eu_code",
-            "eoi_code",
-            "data_source",
-            "os_grid_x",
-            "os_grid_y",
-            "start_date",
-            "end_date",
-            "observation_count",
-            "start_date2",
-            "end_date2",
-            "lab",
-            "pcode",
-            "colour",
-            "colour2"
-          )]
+                                 c(
+                                   "code",
+                                   "site",
+                                   "latitude",
+                                   "longitude",
+                                   "country_iso_code",
+                                   "elevation",
+                                   "ratified_to",
+                                   "Address",
+                                   "la_id",
+                                   "eu_code",
+                                   "eoi_code",
+                                   "data_source",
+                                   "os_grid_x",
+                                   "os_grid_y",
+                                   "start_date",
+                                   "end_date",
+                                   "observation_count",
+                                   "start_date2",
+                                   "end_date2",
+                                   "lab",
+                                   "pcode",
+                                   "colour",
+                                   "colour2"
+                                 )]
 
         cli::cli_abort(
-          c(
-            "x" = "'{control}' is not an appropriate {.coed control} option.",
-            "i" = "Suggested control options: {.emph {trycols}}"
-          )
+          c("x" = "'{control}' is not an appropriate {.coed control} option.",
+            "i" = "Suggested control options: {.emph {trycols}}")
         )
       }
 
@@ -331,11 +325,9 @@ prepNetworkData <- function(source, year) {
   }
   # import metadata
   meta <-
-    openair::importMeta(
-      source = source,
-      all = TRUE,
-      year = year
-    ) %>%
+    openair::importMeta(source = source,
+                        all = TRUE,
+                        year = year) %>%
     dplyr::filter(!is.na(.data$latitude), !is.na(.data$longitude)) %>%
     dplyr::mutate(
       network = dplyr::case_when(
@@ -388,7 +380,7 @@ prepNetworkData <- function(source, year) {
     )
 
     meta <- dplyr::filter(
-      meta, !.data$variable %in% hc_vars, !.data$variable %in% c(
+      meta,!.data$variable %in% hc_vars,!.data$variable %in% c(
         "ws",
         "wd",
         "temp",
@@ -421,15 +413,26 @@ prepNetworkData <- function(source, year) {
           )
         ) %>%
         dplyr::mutate(
+          provider = stringr::str_trim(.data$provider),
+          pcode = dplyr::case_when(
+            .data$provider == "Norfolk Air Quality" ~ "norfolk",
+            .data$provider == "Nottingham Air Quality" ~ "notts",
+            .data$provider == "Wolverhampton Air Quality" ~ "wolverhampton",
+            .data$provider == "Liverpool Air Quality" ~ "liverpool",
+            .data$provider == "Heathrow Airwatch" ~ "heathrow",
+            .data$provider == "Hertfordshire and Bedfordshire Air Quality Network" ~ "hertsbeds",
+            .data$provider == "Wiltshire Air Quality" ~ "wiltshire",
+            .default = .data$pcode
+          ),
           lab = stringr::str_glue(
-            "<u><b>{toupper(stringr::str_to_title(site))}</b> ({code})</u><br>
-      <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
-      <b>Network:</b> {network}<br>
-      <b>Site Type:</b> {site_type}<br>
-      <b>Zone:</b> {zone}<br>
-      <b>Agglomeration:</b> {agglomeration}<br>
-      <b>Provider:</b> {provider}<br>
-      <hr>{lab}"
+            "<u><a href='https://uk-air.defra.gov.uk/networks/site-info?uka_id={code}&provider={pcode}'><b>{toupper(stringr::str_to_title(site))}</b> ({code})</a></u><br>
+            <b>Lat:</b> {latitude} | <b>Lon:</b> {longitude}<br>
+            <b>Network:</b> {network}<br>
+            <b>Site Type:</b> {site_type}<br>
+            <b>Zone:</b> {zone}<br>
+            <b>Agglomeration:</b> {agglomeration}<br>
+            <b>Provider:</b> {provider}<br>
+            <hr>{lab}"
           )
         ) %>%
         dplyr::mutate(
@@ -437,7 +440,8 @@ prepNetworkData <- function(source, year) {
           lab = stringr::str_remove_all(.data$lab, "<b>Site Type:</b> unknown unknown<br>")
         )
     } else {
-      domain <- switch(source,
+      domain <- switch(
+        source,
         "aurn" = "https://uk-air.defra.gov.uk/networks/site-info?site_id=",
         "saqn" = "https://www.scottishairquality.scot/latest/site-info/",
         "saqd" = "https://www.scottishairquality.scot/latest/site-info/",
@@ -557,13 +561,10 @@ prepManagedNetwork <- function(data, vec) {
       )
     ) %>%
     dplyr::group_by(dplyr::across(dplyr::all_of(vec))) %>%
-    dplyr::summarise(
-      lab = paste(.data$lab, collapse = "<br>"),
-      .groups = "drop"
-    ) %>%
+    dplyr::summarise(lab = paste(.data$lab, collapse = "<br>"),
+                     .groups = "drop") %>%
     dplyr::right_join(data,
-      by = vec
-    )
+                      by = vec)
 
   return(data)
 }
