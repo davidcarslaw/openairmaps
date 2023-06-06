@@ -25,5 +25,5 @@ test_that("europe works", {
 })
 
 test_that("bad control options error", {
-  expect_error(networkMap("europe", year = 2023, control = "something totally random!"))
+  expect_error(networkMap("aurn", year = 2023, control = "something totally random!"))
 })
