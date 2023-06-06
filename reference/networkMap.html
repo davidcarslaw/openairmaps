@@ -74,19 +74,9 @@ using the <code>provider</code> and <code>control</code> parameters.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>source</dt>
-<dd><p>One or more air quality networks for which data is available
-through openair. Available networks include:</p><ul><li><p><code>"aurn"</code>,  The UK Automatic Urban and Rural Network.</p></li>
-<li><p><code>"aqe"</code>,  The Air Quality England Network.</p></li>
-<li><p><code>"saqn"</code>,  The Scottish Air Quality Network.</p></li>
-<li><p><code>"waqn"</code>,  The Welsh Air Quality Network.</p></li>
-<li><p><code>"ni"</code>,  The Northern Ireland Air Quality Network.</p></li>
-<li><p><code>"local"</code>,  Locally managed air quality networks in England.</p></li>
-<li><p><code>"kcl"</code>, King's College London networks.</p></li>
-<li><p><code>"europe"</code>, European AirBase/e-reporting data.
-There are two additional options provided for convenience:</p></li>
-<li><p><code>"ukaq"</code> will return metadata for all networks for which data is imported by <code>importUKAQ()</code> (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).</p></li>
-<li><p><code>"all"</code> will import all available metadata (i.e., <code>"ukaq"</code> plus <code>"kcl"</code> and <code>"europe"</code>).</p></li>
-</ul></dd>
+<dd><p>One or more sources of meta data. Can be <code>aurn</code>, <code>saqn</code> (or
+<code>saqd</code>), <code>aqe</code>, <code>waqn</code>, <code>ni</code>, <code>local</code> (or <code>lmam</code>), <code>kcl</code> or <code>europe</code>; upper
+or lower case.</p></dd>
 
 
 <dt>control</dt>
