@@ -12,7 +12,8 @@
 #'   choice of openair directional analysis plot, which includes wind speed
 #'   (`ws`), wind direction (`wd`), and the column representing the
 #'   concentration of a pollutant. In addition, `data` must include a decimal
-#'   latitude and longitude.
+#'   latitude and longitude. By default, it is the data object provided to
+#'   [leaflet::leaflet()] initially, but can be overridden.
 #' @param pollutant The name of the pollutant to be plot. Note that, if `fun =
 #'   openair::windRose`, you must set `pollutant = "ws"`.
 #' @param fun An `openair` directional analysis plotting function. Supported
@@ -47,36 +48,30 @@
 #' library(openair)
 #'
 #' # different types of polar plot on one map
-#' leaflet() %>%
+#' leaflet(data = polar_data) %>%
 #'   addTiles() %>%
-#'   addPolarMarkers(
-#'     data = polar_data,
-#'     pollutant = "ws",
-#'     fun = windRose,
+#'   addPolarMarkers("ws",
+#'     fun = openair::windRose,
 #'     group = "Wind Rose"
 #'   ) %>%
-#'   addPolarMarkers(
-#'     data = polar_data,
-#'     pollutant = "nox",
-#'     fun = polarPlot,
+#'   addPolarMarkers("nox",
+#'     fun = openair::polarPlot,
 #'     group = "Polar Plot"
 #'   ) %>%
 #'   addLayersControl(
 #'     baseGroups = c("Wind Rose", "Polar Plot")
 #'   )
 #'
-#' # use of polar diff
-#' leaflet() %>%
+#' # use of polar diff (NB: both 'before' and 'after' inherit from `leaflet()`,
+#' # so at least one should be overridden - in this case 'after')
+#' leaflet(data = polar_data) %>%
 #'   addTiles() %>%
-#'   addPolarDiffMarkers(
-#'     before = polar_data,
-#'     after = dplyr::mutate(polar_data, nox = jitter(nox, 5)),
-#'     pollutant = "nox"
+#'   addPolarDiffMarkers("nox",
+#'     after = dplyr::mutate(polar_data, nox = jitter(nox, 5))
 #'   )
 #' }
 addPolarMarkers <-
   function(map,
-           data,
            pollutant,
            fun = openair::polarPlot,
            lng = NULL,
@@ -93,6 +88,7 @@ addPolarMarkers <-
            key = FALSE,
            d.icon = 200,
            d.fig = 3.5,
+           data = leaflet::getMapData(map),
            ...) {
     # guess lat/lon
     latlon <- assume_latlon(
@@ -181,14 +177,18 @@ addPolarMarkers <-
   }
 
 #' @inheritParams diffMap
+#' @param before,after A data frame that represents the before/after case. See
+#'   [openair::polarPlot()] for details of different input requirements. By
+#'   default, both `before` and `after` are the data object provided to
+#'   [leaflet::leaflet()] initially, but at least one should be overridden.
 #' @describeIn addPolarMarkers Add the two-table [openair::polarDiff()] marker.
 #' @order 2
 #' @export
 addPolarDiffMarkers <-
   function(map,
-           before,
-           after,
            pollutant,
+           before = leaflet::getMapData(map),
+           after = leaflet::getMapData(map),
            lng = NULL,
            lat = NULL,
            layerId = NULL,
