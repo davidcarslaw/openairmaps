@@ -10,7 +10,7 @@ addTrajPaths(
   lat = "lat",
   layerId = NULL,
   group = NULL,
-  data,
+  data = leaflet::getMapData(map),
   npoints = 12,
   ...
 )
@@ -31,7 +31,8 @@ identifier-style names. Any number of layers and even different types of
 layers (e.g. markers and polygons) can share the same group name.}
 
 \item{data}{Data frame, the result of importing a trajectory file using
-\code{\link[openair:importTraj]{openair::importTraj()}}.}
+\code{\link[openair:importTraj]{openair::importTraj()}}. By default, it is the data object provided to
+\code{\link[leaflet:leaflet]{leaflet::leaflet()}} initially, but can be overridden.}
 
 \item{npoints}{A dot is placed every \code{npoints} along each full trajectory.
 For hourly back trajectories points are plotted every \code{npoints} hours. This
