@@ -31,7 +31,8 @@
 #'   identifier-style names. Any number of layers and even different types of
 #'   layers (e.g. markers and polygons) can share the same group name.
 #' @param data Data frame, the result of importing a trajectory file using
-#'   [openair::importTraj()].
+#'   [openair::importTraj()]. By default, it is the data object provided to
+#'   [leaflet::leaflet()] initially, but can be overridden.
 #' @param npoints A dot is placed every `npoints` along each full trajectory.
 #'   For hourly back trajectories points are plotted every `npoints` hours. This
 #'   helps to understand where the air masses were at particular times and get a
@@ -74,7 +75,7 @@ addTrajPaths <-
            lat = "lat",
            layerId = NULL,
            group = NULL,
-           data,
+           data = leaflet::getMapData(map),
            npoints = 12,
            ...) {
     # check opts
