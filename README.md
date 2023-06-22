@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" />
+# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" alt="the openairmaps logo. It shows a stylised pollution rose overlaid with a typical teardrop shaped map marker." />
 
 <!-- badges: start -->
 
@@ -30,8 +30,8 @@ You can install the development version of `{openairmaps}` from GitHub
 with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("davidcarslaw/openairmaps")
+# install.packages("pak")
+pak::pak("davidcarslaw/openairmaps")
 ```
 
 ## Overview
@@ -64,8 +64,14 @@ polar_data %>%
   )
 ```
 
-![An example `polarMap()` showing NO2 concentrations in central
-London.](man/figures/README-examplemap.png)
+<div class="figure">
+
+<img src="man/figures/README-examplemap.png" alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations." width="100%" />
+<p class="caption">
+An example `polarMap()` showing NO2 concentrations in central London.
+</p>
+
+</div>
 
 While an interactive map is preferred for exploratory directional
 analysis, it is limited to the HTML format. Some applications (for
@@ -89,4 +95,11 @@ polar_data %>%
   )
 ```
 
-<img src="man/figures/README-static-1.png" width="100%" />
+<div class="figure">
+
+<img src="man/figures/README-static-1.png" alt="A natively static polar plot map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The map is split into two, with one panel for daylight observations and the other for nighttime." width="100%" />
+<p class="caption">
+A demonstration of `polarMapStatic()`.
+</p>
+
+</div>
