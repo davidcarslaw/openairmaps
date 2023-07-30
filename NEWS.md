@@ -8,6 +8,10 @@ These are items associated with the development version of `{openairmaps}`.
 
 ## New features
 
+* Added `searchNetwork()`, which allows users to find local air quality monitoring sites by specifying a target latitude and longitude. Function arguments allow the site metadata to be subset (for example, by site type, pollutants measured, or distance from the target).
+
+* Added `convertPostcode()`, which converts a valid UK postcode to a latitude/longitude pair. This is intended to be used with `searchNetwork()`.
+
 * The "data" argument of `addPolarMarkers()` and `addTrajPaths()` and both the "before" and "after" arguments of `addPolarDiffMarkers()` now default to `leaflet::getMapData(map)`. This makes their use less verbose when creating multiple polar plots with the same underlying data, which will likely be a common use-case. (#45)
 
 * `networkMap()` popups now contain links to the associated network websites. For example, the popup for London Marylebone Road in `networkMap("aurn")` now contains a link to <https://uk-air.defra.gov.uk/networks/site-info?site_id=MY1>. All networks are supported with the exception of "europe". (#39)
