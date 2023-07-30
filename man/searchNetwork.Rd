@@ -68,7 +68,7 @@ palace <- convertPostcode("SW1A1AA")
 searchNetwork(lat = palace$lat, lng = palace$lng, max_dist = 20, year = 2020)
 }
 \seealso{
-Other Network mapping functions: 
+Other uk air quality network mapping functions: 
 \code{\link{networkMap}()}
 }
-\concept{Network mapping functions}
+\concept{uk air quality network mapping functions}

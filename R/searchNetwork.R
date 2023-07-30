@@ -25,9 +25,11 @@
 #' @param map If `TRUE`, the default, [searchNetwork()] will return a `leaflet`
 #'   map. If `FALSE`, it will instead return a [tibble][tibble::tibble-package].
 #'
+#' @order 2
+#'
 #' @return Either a [tibble][tibble::tibble-package] or `leaflet` map.
 #' @export
-#' @family Network mapping functions
+#' @family uk air quality network mapping functions
 #'
 #' @examples
 #' # get all AURN sites open in 2020 within 20 km of Buckingham Palace
