@@ -62,3 +62,13 @@ Data subsetting progresses in the order in which the arguments are given;
 first \code{source} and \code{year}, then \code{site_type} and \code{variable}, then \code{max_dist},
 and finally \code{n}.
 }
+\examples{
+# get all AURN sites open in 2020 within 20 km of Buckingham Palace
+palace <- convertPostcode("SW1A1AA")
+searchNetwork(lat = palace$lat, lng = palace$lng, max_dist = 20, year = 2020)
+}
+\seealso{
+Other Network mapping functions: 
+\code{\link{networkMap}()}
+}
+\concept{Network mapping functions}

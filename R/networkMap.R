@@ -46,6 +46,7 @@
 #'
 #' @return A leaflet object.
 #' @export
+#' @family Network mapping functions
 #'
 #' @examples
 #' \dontrun{

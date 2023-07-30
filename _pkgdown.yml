@@ -21,7 +21,9 @@ navbar:
 reference:
 - title: Network Visualisation
   desc: Quickly visualise UK air quality networks.
-  contents: networkMap
+  contents:
+  - networkMap
+  - searchNetwork
 
 - title: Directional Analysis
 - subtitle: Data
@@ -58,4 +60,5 @@ reference:
   contents:
   - buildPopup
   - quickTextHTML
+  - convertPostcode
 

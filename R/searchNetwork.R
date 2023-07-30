@@ -27,6 +27,12 @@
 #'
 #' @return Either a [tibble][tibble::tibble-package] or `leaflet` map.
 #' @export
+#' @family Network mapping functions
+#'
+#' @examples
+#' # get all AURN sites open in 2020 within 20 km of Buckingham Palace
+#' palace <- convertPostcode("SW1A1AA")
+#' searchNetwork(lat = palace$lat, lng = palace$lng, max_dist = 20, year = 2020)
 searchNetwork <-
   function(lat,
            lng,
