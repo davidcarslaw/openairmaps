@@ -78,3 +78,8 @@ networkMap(source = c("aurn", "waqn", "saqn"), control = "network")
 }
 
 }
+\seealso{
+Other Network mapping functions: 
+\code{\link{searchNetwork}()}
+}
+\concept{Network mapping functions}
