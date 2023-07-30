@@ -111,9 +111,9 @@ buildPopup <-
         dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
         dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
         dplyr::summarise(dplyr::across(tidyselect::where(is.character) | tidyselect::where(is.factor), fun.character),
-                         dplyr::across(tidyselect::where(is.numeric), fun.numeric),
-                         dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
-                         .groups = "drop"
+          dplyr::across(tidyselect::where(is.numeric), fun.numeric),
+          dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
+          .groups = "drop"
         )
 
       if (!is.null(names)) {
