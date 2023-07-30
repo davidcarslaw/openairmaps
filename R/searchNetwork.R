@@ -51,36 +51,34 @@ searchNetwork <-
     }
     # import chosen metadata
     meta <-
-      openair::importMeta(source = source,
-                          all = TRUE,
-                          year = year) %>%
-      sf::st_as_sf(coords = c("longitude", "latitude"),
-                   crs = 4326, remove = FALSE)
+      openair::importMeta(
+        source = source,
+        all = TRUE,
+        year = year
+      ) %>%
+      sf::st_as_sf(
+        coords = c("longitude", "latitude"),
+        crs = 4326, remove = FALSE
+      )
 
     # get target SF object
     target <-
       dplyr::tibble(latitude = lat, longitude = lng) %>%
-      sf::st_as_sf(coords = c("longitude", "latitude"),
-                   crs = 4326)
+      sf::st_as_sf(
+        coords = c("longitude", "latitude"),
+        crs = 4326
+      )
 
     # filter for site_type
     if (!is.null(site_type)) {
       meta <-
-        dplyr::filter(meta, tolower(site_type) %in% tolower({
-          {
-            site_type
-          }
-        }))
+        dplyr::filter(meta, tolower(site_type) %in% tolower({{ site_type }}))
     }
 
     # filter for variable
     if (!is.null(variable)) {
       meta <-
-        dplyr::filter(meta, tolower(variable) %in% tolower({
-          {
-            variable
-          }
-        }))
+        dplyr::filter(meta, tolower(variable) %in% tolower({{ variable }}))
     }
 
     # drop repeats from multiple variables
@@ -119,8 +117,9 @@ searchNetwork <-
 
     pal <-
       leaflet::colorNumeric("viridis",
-                            reverse = TRUE,
-                            c(0, meta$dist))
+        reverse = TRUE,
+        c(0, meta$dist)
+      )
 
     leafmap <-
       leaflet::leaflet() %>%
@@ -166,11 +165,15 @@ searchNetwork <-
         label = "Target",
         popup = stringr::str_glue("<b><u>TARGET</u></b><br> <b>Latitude:</b> {lat}<br> <b>Longitude:</b> {lng}")
       ) %>%
-      leaflet::addControl(position = "topright",
-                          html = html) %>%
-      leaflet::addLegend(pal = pal,
-                         values = c(0, meta$dist),
-                         title = "Distance<br>from marker<br>(km)") %>%
+      leaflet::addControl(
+        position = "topright",
+        html = html
+      ) %>%
+      leaflet::addLegend(
+        pal = pal,
+        values = c(0, meta$dist),
+        title = "Distance<br>from marker<br>(km)"
+      ) %>%
       leaflet::addScaleBar(position = "bottomleft")
 
     if (map) {

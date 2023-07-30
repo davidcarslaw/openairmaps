@@ -59,24 +59,30 @@ trajLevelMap <-
     if (statistic == "difference") {
       lastnum <- stringr::str_sub(percentile, 2, 2)
       suff <- "th"
-      if (lastnum == "1")
+      if (lastnum == "1") {
         suff <- "st"
-      if (lastnum == "2")
+      }
+      if (lastnum == "2") {
         suff <- "nd"
-      if (lastnum == "3")
+      }
+      if (lastnum == "3") {
         suff <- "rd"
+      }
       title <-
         stringr::str_glue("gridded<br>differences<br>({percentile}{suff} percentile)")
       style <- leaflet::labelFormat(between = " to ", suffix = "%")
     }
 
-    if (statistic == "pscf")
+    if (statistic == "pscf") {
       title <- "PSCF<br>probability"
-    if (statistic == "cwt")
+    }
+    if (statistic == "cwt") {
       title <- ""
-    if (statistic == "sqtba")
+    }
+    if (statistic == "sqtba") {
       title <-
         stringr::str_glue("SQTBA<br>{quickTextHTML(pollutant)}")
+    }
 
     # start map
     map <- leaflet::leaflet()
@@ -84,8 +90,9 @@ trajLevelMap <-
     # set provider tiles
     for (i in seq(length(unique(provider)))) {
       map <- leaflet::addProviderTiles(map,
-                                       provider = unique(provider)[[i]],
-                                       group = unique(provider)[[i]])
+        provider = unique(provider)[[i]],
+        group = unique(provider)[[i]]
+      )
     }
 
     # run openair::trajLevel()
@@ -132,13 +139,17 @@ trajLevelMap <-
       pal <- leaflet::colorBin(
         palette = openair::openColours(scheme = cols),
         domain = data[[pollutant]],
-        bins = c(floor(min(data[[pollutant]])), -10, -5, -1, 1, 5, 10,
-                 ceiling(max(data[[pollutant]])))
+        bins = c(
+          floor(min(data[[pollutant]])), -10, -5, -1, 1, 5, 10,
+          ceiling(max(data[[pollutant]]))
+        )
       )
     } else {
       pal <-
-        leaflet::colorNumeric(palette = openair::openColours(scheme = cols),
-                              domain = data[[pollutant]])
+        leaflet::colorNumeric(
+          palette = openair::openColours(scheme = cols),
+          domain = data[[pollutant]]
+        )
     }
 
     # each statistic outputs a different name for "count"
@@ -162,17 +173,19 @@ trajLevelMap <-
        <b>Count:</b> {gridcount}<br>
        <b>Value:</b> {signif(val, 3)}"
         ),
-       coord = stringr::str_glue("({ygrid}, {xgrid})")
+        coord = stringr::str_glue("({ygrid}, {xgrid})")
       )
 
-      if (statistic %in% c("difference", "frequency"))
+      if (statistic %in% c("difference", "frequency")) {
         data$lab <- paste0(data$lab, "%")
+      }
     }
 
     # make hover label & popups
     data$label <- signif(data$val, 3)
-    if (statistic %in% c("difference", "frequency"))
+    if (statistic %in% c("difference", "frequency")) {
       data$label <- paste0(data$label, "%")
+    }
 
     if (smooth) {
       popup <- NA
@@ -208,15 +221,16 @@ trajLevelMap <-
     if (length(unique(provider)) > 1 & control == "default") {
       map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
     } else if (length(unique(provider)) == 1 &
-               control != "default") {
+      control != "default") {
       map <-
         leaflet::addLayersControl(map, baseGroups = sort(unique(data[[control]])))
     } else if (length(unique(provider)) > 1 &
-               control != "default") {
+      control != "default") {
       map <-
         leaflet::addLayersControl(map,
-                                  overlayGroups = unique(provider),
-                                  baseGroups = sort(unique(data[[control]])))
+          overlayGroups = unique(provider),
+          baseGroups = sort(unique(data[[control]]))
+        )
     }
 
     # return map
@@ -285,23 +299,29 @@ trajLevelMapStatic <-
     if (statistic == "difference") {
       lastnum <- stringr::str_sub(percentile, 2, 2)
       suff <- "th"
-      if (lastnum == "1")
+      if (lastnum == "1") {
         suff <- "st"
-      if (lastnum == "2")
+      }
+      if (lastnum == "2") {
         suff <- "nd"
-      if (lastnum == "3")
+      }
+      if (lastnum == "3") {
         suff <- "rd"
+      }
       title <-
         stringr::str_glue("gridded\ndifferences\n({percentile}{suff} percentile)")
     }
 
-    if (statistic == "pscf")
+    if (statistic == "pscf") {
       title <- "PSCF\nprobability"
-    if (statistic == "cwt")
+    }
+    if (statistic == "cwt") {
       title <- ""
-    if (statistic == "sqtba")
+    }
+    if (statistic == "sqtba") {
       title <-
         openair::quickText(stringr::str_glue("SQTBA\n({pollutant})"))
+    }
 
     # run openair::trajLevel()
     data <- openair::trajLevel(
@@ -330,9 +350,11 @@ trajLevelMapStatic <-
 
     # start plot
     plt <-
-      ggplot2::ggplot(data, ggplot2::aes(x = .data$xgrid,
-                                         y = .data$ygrid,
-                                         fill = .data[[pollutant]]))
+      ggplot2::ggplot(data, ggplot2::aes(
+        x = .data$xgrid,
+        y = .data$ygrid,
+        fill = .data[[pollutant]]
+      ))
 
     if (map) {
       world <- ggplot2::map_data("world")
@@ -411,15 +433,17 @@ smooth_trajgrid <- function(mydata, z, k = 50, dist = 0.05) {
 
   new.data <- expand.grid(
     xgrid = seq(min(mydata$xgrid),
-                max(mydata$xgrid),
-                length = res),
+      max(mydata$xgrid),
+      length = res
+    ),
     ygrid = seq(min(mydata$ygrid),
-                max(mydata$ygrid),
-                length = res)
+      max(mydata$ygrid),
+      length = res
+    )
   )
 
   pred <- mgcv::predict.gam(Mgam, newdata = new.data)
-  pred <- as.vector(pred) ^ 2
+  pred <- as.vector(pred)^2
 
   new.data[, z] <- pred
 
@@ -435,10 +459,13 @@ smooth_trajgrid <- function(mydata, z, k = 50, dist = 0.05) {
   all.data <-
     stats::na.omit(data.frame(xgrid = mydata$xgrid, ygrid = mydata$ygrid, z))
 
-  ind <- with(all.data,
-              mgcv::exclude.too.far(wsp, wdp, mydata$xgrid,
-                                    mydata$ygrid,
-                                    dist = dist))
+  ind <- with(
+    all.data,
+    mgcv::exclude.too.far(wsp, wdp, mydata$xgrid,
+      mydata$ygrid,
+      dist = dist
+    )
+  )
 
   new.data[ind, z] <- NA
 
