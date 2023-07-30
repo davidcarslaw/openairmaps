@@ -158,3 +158,44 @@ buildPopup <-
 
     out
   }
+
+#' Convert a UK postcode to a latitude/longitude pair
+#'
+#' This is a much simpler implementation of the tools found in the
+#' `PostcodesioR` R package, intended for use with the [searchNetwork()]
+#' function.
+#'
+#' @param postcode A valid UK postcode, e.g., `"SW1A 1AA"`.
+#'
+#' @return A list containing the latitude, longitude, and input postcode.
+#' @export
+#' @examples
+#' # convert a UK postcode
+#' convertPostcode("SW1A1AA")
+#'
+#' \dontrun{
+#' # use with `searchNetwork()`
+#' palace <- convertPostcode("SW1A1AA")
+#' searchNetwork(lat = palace$lat, lng = palace$lng, max_dist = 10)
+#' }
+#'
+#' @seealso The `PostcodesioR` package at
+#'   <https://github.com/ropensci/PostcodesioR/>
+#' @source <https://postcodes.io/>
+convertPostcode <- function(postcode) {
+  postcode <- stringr::str_remove_all(postcode, " ")
+  api <- stringr::str_glue("api.postcodes.io/postcodes/{postcode}")
+  get <- httr::GET(api)
+  out <- rawToChar(get$content) %>%
+    jsonlite::parse_json()
+
+  if (out$status == 404L) {
+    cli::cli_abort("'{postcode}' is not a valid UK postcode.")
+  }
+
+  list(
+    lat = out$result$latitude,
+    lng = out$result$longitude,
+    postcode = out$result$postcode
+  )
+}
