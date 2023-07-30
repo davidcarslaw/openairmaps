@@ -46,7 +46,9 @@
 #'
 #' @return A leaflet object.
 #' @export
-#' @family Network mapping functions
+#' @family uk air quality network mapping functions
+#'
+#' @order 1
 #'
 #' @examples
 #' \dontrun{

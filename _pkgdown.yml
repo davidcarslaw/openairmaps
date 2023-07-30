@@ -22,8 +22,7 @@ reference:
 - title: Network Visualisation
   desc: Quickly visualise UK air quality networks.
   contents:
-  - networkMap
-  - searchNetwork
+  - has_concept("uk air quality network mapping functions")
 
 - title: Directional Analysis
 - subtitle: Data
