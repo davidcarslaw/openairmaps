@@ -7,7 +7,6 @@
 \usage{
 addPolarMarkers(
   map,
-  data,
   pollutant,
   fun = openair::polarPlot,
   lng = NULL,
@@ -15,24 +14,35 @@ addPolarMarkers(
   layerId = NULL,
   group = NULL,
   popup = NULL,
+  popupOptions = NULL,
   label = NULL,
+  labelOptions = NULL,
+  options = leaflet::markerOptions(),
+  clusterOptions = NULL,
+  clusterId = NULL,
   key = FALSE,
   d.icon = 200,
   d.fig = 3.5,
+  data = leaflet::getMapData(map),
   ...
 )
 
 addPolarDiffMarkers(
   map,
-  before,
-  after,
   pollutant,
+  before = leaflet::getMapData(map),
+  after = leaflet::getMapData(map),
   lng = NULL,
   lat = NULL,
   layerId = NULL,
   group = NULL,
   popup = NULL,
+  popupOptions = NULL,
   label = NULL,
+  labelOptions = NULL,
+  options = leaflet::markerOptions(),
+  clusterOptions = NULL,
+  clusterId = NULL,
   key = FALSE,
   d.icon = 200,
   d.fig = 3.5,
@@ -41,12 +51,6 @@ addPolarDiffMarkers(
 }
 \arguments{
 \item{map}{a map widget object created from \code{\link[leaflet]{leaflet}()}}
-
-\item{data}{A data frame. The data frame must contain the data to plot your
-choice of openair directional analysis plot, which includes wind speed
-(\code{ws}), wind direction (\code{wd}), and the column representing the
-concentration of a pollutant. In addition, \code{data} must include a decimal
-latitude and longitude.}
 
 \item{pollutant}{The name of the pollutant to be plot. Note that, if \code{fun = openair::windRose}, you must set \code{pollutant = "ws"}.}
 
@@ -71,7 +75,22 @@ layers (e.g. markers and polygons) can share the same group name.}
 
 \item{popup}{A column of \code{data} to be used as a popup.}
 
+\item{popupOptions}{A Vector of \code{\link[leaflet]{popupOptions}} to provide popups}
+
 \item{label}{A column of \code{data} to be used as a label.}
+
+\item{labelOptions}{A Vector of \code{\link[leaflet]{labelOptions}} to provide label
+options for each label. Default \code{NULL}}
+
+\item{options}{a list of extra options for tile layers, popups, paths
+(circles, rectangles, polygons, ...), or other map elements}
+
+\item{clusterOptions}{if not \code{NULL}, markers will be clustered using
+\href{https://github.com/Leaflet/Leaflet.markercluster}{Leaflet.markercluster};
+ you can use \code{\link[leaflet]{markerClusterOptions}()} to specify marker cluster
+options}
+
+\item{clusterId}{the id for the marker cluster layer}
 
 \item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
 
@@ -85,14 +104,20 @@ inches. This will affect the resolution of the markers on the map.
 Alternatively, a vector in the form \code{c(width, height)} can be provided if a
 non-circular marker is desired.}
 
+\item{data}{A data frame. The data frame must contain the data to plot your
+choice of openair directional analysis plot, which includes wind speed
+(\code{ws}), wind direction (\code{wd}), and the column representing the
+concentration of a pollutant. In addition, \code{data} must include a decimal
+latitude and longitude. By default, it is the data object provided to
+\code{\link[leaflet:leaflet]{leaflet::leaflet()}} initially, but can be overridden.}
+
 \item{...}{Other arguments for the plotting function (e.g. \code{period} for
 \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}).}
 
-\item{before}{A data frame that represents the "before" case. See
-\code{\link[openair:polarPlot]{polarPlot()}} for details of different input requirements.}
-
-\item{after}{A data frame that represents the "after" case. See \code{\link[openair:polarPlot]{polarPlot()}}
-for details of different input requirements.}
+\item{before, after}{A data frame that represents the before/after case. See
+\code{\link[openair:polarPlot]{openair::polarPlot()}} for details of different input requirements. By
+default, both \code{before} and \code{after} are the data object provided to
+\code{\link[leaflet:leaflet]{leaflet::leaflet()}} initially, but at least one should be overridden.}
 }
 \value{
 A leaflet object.
@@ -118,31 +143,26 @@ library(leaflet)
 library(openair)
 
 # different types of polar plot on one map
-leaflet() \%>\%
+leaflet(data = polar_data) \%>\%
   addTiles() \%>\%
-  addPolarMarkers(
-    data = polar_data,
-    pollutant = "ws",
-    fun = windRose,
+  addPolarMarkers("ws",
+    fun = openair::windRose,
     group = "Wind Rose"
   ) \%>\%
-  addPolarMarkers(
-    data = polar_data,
-    pollutant = "nox",
-    fun = polarPlot,
+  addPolarMarkers("nox",
+    fun = openair::polarPlot,
     group = "Polar Plot"
   ) \%>\%
   addLayersControl(
     baseGroups = c("Wind Rose", "Polar Plot")
   )
 
-# use of polar diff
-leaflet() \%>\%
+# use of polar diff (NB: both 'before' and 'after' inherit from `leaflet()`,
+# so at least one should be overridden - in this case 'after')
+leaflet(data = polar_data) \%>\%
   addTiles() \%>\%
-  addPolarDiffMarkers(
-    before = polar_data,
-    after = dplyr::mutate(polar_data, nox = jitter(nox, 5)),
-    pollutant = "nox"
+  addPolarDiffMarkers("nox",
+    after = dplyr::mutate(polar_data, nox = jitter(nox, 5))
   )
 }
 }
