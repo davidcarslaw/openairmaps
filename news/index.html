@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,11 +46,23 @@
 <p>These are items associated with the development version of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a>.</p>
 <div class="section level3">
 <h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
-<ul><li>BREAKING: The arguments of <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> have been rejigged to move “data” after “pollutant”, owing to the new use of <code><a href="https://rdrr.io/pkg/leaflet/man/getMapData.html" class="external-link">leaflet::getMapData()</a></code>. (#45)</li>
+<ul><li><p>BREAKING: The arguments of <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> have been rejigged to move “data” after “pollutant”, owing to the new use of <code><a href="https://rdrr.io/pkg/leaflet/man/getMapData.html" class="external-link">leaflet::getMapData()</a></code>. (#45)</p></li>
+<li><p>BREAKING: The default arguments of some <code><a href="../reference/polarMap.html">polarMap()</a></code>-family functions have changed from, e.g., <code>NULL</code> to <code>"free"</code> or <code>"fixed"</code>. (#34)</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>Added <code><a href="../reference/searchNetwork.html">searchNetwork()</a></code>, which allows users to find local air quality monitoring sites by specifying a target latitude and longitude. Function arguments allow the site metadata to be subset (for example, by site type, pollutants measured, or distance from the target).</p></li>
+<ul><li>
+<p>Several “limit” arguments can now take one of three options: “fixed” (which forces all markers to share scales), “free” (which allows them to use different scales), or a numeric vector to define the scales. (#34) These arguments and their defaults include:</p>
+<ul><li>
+<code><a href="../reference/polarMap.html">polarMap()</a></code>: <code>upper</code> (fixed); <code>limits</code> (free)</li>
+<li>
+<code><a href="../reference/annulusMap.html">annulusMap()</a></code>: <code>limits</code> (free)</li>
+<li>
+<code><a href="../reference/freqMap.html">freqMap()</a></code>: <code>breaks</code> (free)</li>
+<li>
+<code><a href="../reference/percentileMap.html">percentileMap()</a></code>: <code>intervals</code> (fixed)</li>
+</ul></li>
+<li><p>Added <code><a href="../reference/searchNetwork.html">searchNetwork()</a></code>, which allows users to find local air quality monitoring sites by specifying a target latitude and longitude. Function arguments allow the site metadata to be subset (for example, by site type, pollutants measured, or distance from the target).</p></li>
 <li><p>Added <code><a href="../reference/convertPostcode.html">convertPostcode()</a></code>, which converts a valid UK postcode to a latitude/longitude pair. This is intended to be used with <code><a href="../reference/searchNetwork.html">searchNetwork()</a></code>.</p></li>
 <li><p>The “data” argument of <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> and <code><a href="../reference/addTrajPaths.html">addTrajPaths()</a></code> and both the “before” and “after” arguments of <code><a href="../reference/addPolarMarkers.html">addPolarDiffMarkers()</a></code> now default to <code>leaflet::getMapData(map)</code>. This makes their use less verbose when creating multiple polar plots with the same underlying data, which will likely be a common use-case. (#45)</p></li>
 <li><p><code><a href="../reference/networkMap.html">networkMap()</a></code> popups now contain links to the associated network websites. For example, the popup for London Marylebone Road in <code>networkMap("aurn")</code> now contains a link to <a href="https://uk-air.defra.gov.uk/networks/site-info?site_id=MY1" class="external-link uri">https://uk-air.defra.gov.uk/networks/site-info?site_id=MY1</a>. All networks are supported with the exception of “europe”. (#39)</p></li>

@@ -16,7 +16,7 @@ ggplot2::guides()."><meta property="og:image" content="https://davidcarslaw.gith
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,12 +60,11 @@ can be achieved using functions like <code><a href="https://ggplot2.tidyverse.or
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">freqMapStatic</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  pollutant <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  breaks <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="st">"mean"</span>,</span>
-<span>  facet <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  breaks <span class="op">=</span> <span class="st">"free"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  facet <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  zoom <span class="op">=</span> <span class="fl">13</span>,</span>
 <span>  ggmap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cols <span class="op">=</span> <span class="st">"turbo"</span>,</span>
@@ -93,13 +92,6 @@ longitude.</p></dd>
 pollutants are specified, they will each form part of a separate panel.</p></dd>
 
 
-<dt>breaks</dt>
-<dd><p>The user can provide their own scale. breaks expects a sequence
-of numbers that define the range of the scale. The sequence could represent
-one with equal spacing, e.g., <code>breaks = seq(0, 100, 10)</code> - a scale from
-0-10 in intervals of 10, or a more flexible sequence, e.g., <code>breaks = c(0, 1, 5, 7, 10)</code>, which may be useful for some situations.</p></dd>
-
-
 <dt>statistic</dt>
 <dd><p>The statistic that should be applied to each wind
 speed/direction bin. Can be "frequency", "mean", "median", "max" (maximum),
@@ -115,22 +107,27 @@ contribution to the total concentration. Note that for options other than
 function <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code> for further details.</p></dd>
 
 
-<dt>facet</dt>
-<dd><p>Used for splitting the input data into different panels, passed
-to the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>. <code>facet</code> cannot be used if
-multiple <code>pollutant</code> columns have been provided.</p></dd>
-
-
-<dt>limits</dt>
-<dd><p>By default, each individual polar marker has its own colour
-scale. The <code>limits</code> argument will force all markers to use the same colour
-scale. The limits are set in the form <code>c(lower, upper)</code>, so <code>limits = c(0, 100)</code> would force the plot limits to span 0-100.</p></dd>
+<dt>breaks</dt>
+<dd><p>One of:</p><ul><li><p><code>"fixed"</code> which ensures all of the markers use the same colour scale.</p></li>
+<li><p><code>"free"</code> (the default) which allows all of the markers to use different
+colour scales.</p></li>
+<li><p>A numeric vector defining a sequence of numbers to use as the breaks. The
+sequence could represent one with equal spacing, e.g., <code>breaks = seq(0, 100, 10)</code> - a scale from 0-10 in intervals of 10, or a more flexible
+sequence, e.g., <code>breaks = c(0, 1, 5, 7, 10)</code>, which may be useful for some
+situations.</p></li>
+</ul></dd>
 
 
 <dt>latitude, longitude</dt>
 <dd><p>The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
+
+
+<dt>facet</dt>
+<dd><p>Used for splitting the input data into different panels, passed
+to the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>. <code>facet</code> cannot be used if
+multiple <code>pollutant</code> columns have been provided.</p></dd>
 
 
 <dt>zoom</dt>

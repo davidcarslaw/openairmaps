@@ -14,7 +14,7 @@ multiple layers of markers can be added and toggled between using control."><met
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@ multiple layers of markers can be added and toggled between using <code>control<
 <span>  <span class="va">data</span>,</span>
 <span>  pollutant <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  period <span class="op">=</span> <span class="st">"hour"</span>,</span>
-<span>  limits <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limits <span class="op">=</span> <span class="st">"free"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  control <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -101,9 +101,13 @@ and "trend" to plot the trend by wind direction.</p></dd>
 
 
 <dt>limits</dt>
-<dd><p>By default, each individual polar marker has its own colour
-scale. The <code>limits</code> argument will force all markers to use the same colour
-scale. The limits are set in the form <code>c(lower, upper)</code>, so <code>limits = c(0, 100)</code> would force the plot limits to span 0-100.</p></dd>
+<dd><p>One of:</p><ul><li><p><code>"fixed"</code> which ensures all of the markers use the same colour scale.</p></li>
+<li><p><code>"free"</code> (the default) which allows all of the markers to use different
+colour scales.</p></li>
+<li><p>A numeric vector in the form <code>c(lower, upper)</code> used to define the colour
+scale. For example, <code>limits = c(0, 100)</code> would force the plot limits to
+span 0-100.</p></li>
+</ul></dd>
 
 
 <dt>latitude, longitude</dt>
