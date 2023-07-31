@@ -136,11 +136,37 @@ searchNetwork <-
         )
     }
 
-    html <- stringr::str_glue("Showing {nrow(meta)} sites.")
-    if (!is.null(n)) {
-      html <-
-        stringr::str_glue("Showing {nrow(meta)} sites,<br>with an upper<br>limit of {n}.")
+    # construct html tooltip
+    html <- stringr::str_glue("Showing <b>{nrow(meta)}</b> sites.<details><summary>View Constraints</summary><ul>")
+    vars <- stringr::str_c(source, collapse = ", ")
+    html <- stringr::str_glue("{html}<li><b>Source(s):</b> {vars}</li>")
+
+    if (all(!is.na(year))) {
+      vars <- stringr::str_glue("{min(year)} - {max(year)}")
+      html <- stringr::str_glue("{html}<li><b>Year(s):</b> {vars}</li>")
     }
+
+    if (!is.null(variable)) {
+      vars <- stringr::str_c(variable, collapse = ", ") %>% quickTextHTML()
+      html <- stringr::str_glue("{html}<li><b>Variables:</b> {vars}</li>")
+    }
+
+    if (!is.null(site_type)) {
+      vars <- stringr::str_c(site_type, collapse = ", ") %>% quickTextHTML()
+      html <- stringr::str_glue("{html}<li><b>Site Type(s):</b> {vars}</li>")
+    }
+
+    if (!is.null(max_dist)) {
+      html <- stringr::str_glue("{html}<li><b>Maximum Dist:</b> {as.character(max_dist)} km</li>")
+    }
+
+    if (!is.null(n)) {
+      html <- stringr::str_glue("{html}<li><b>Max Sites:</b> {n}</li>")
+    }
+
+    html <- stringr::str_glue("{html}</ul></details>")
+
+    html <- stringr::str_wrap(html, 20)
 
     leafmap <-
       leafmap %>%
@@ -166,7 +192,7 @@ searchNetwork <-
         popup = stringr::str_glue("<b><u>TARGET</u></b><br> <b>Latitude:</b> {lat}<br> <b>Longitude:</b> {lng}")
       ) %>%
       leaflet::addControl(
-        position = "topright",
+        position = "bottomright",
         html = html
       ) %>%
       leaflet::addLegend(
