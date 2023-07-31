@@ -9,7 +9,7 @@ networkMap(
   control = NULL,
   year = NULL,
   cluster = TRUE,
-  provider = c("OpenStreetMap", "Esri.WorldImagery"),
+  provider = c(Default = "OpenStreetMap", Satellite = "Esri.WorldImagery"),
   draw.legend = TRUE,
   collapse.control = FALSE
 )
@@ -78,3 +78,8 @@ networkMap(source = c("aurn", "waqn", "saqn"), control = "network")
 }
 
 }
+\seealso{
+Other uk air quality network mapping functions: 
+\code{\link{searchNetwork}()}
+}
+\concept{uk air quality network mapping functions}

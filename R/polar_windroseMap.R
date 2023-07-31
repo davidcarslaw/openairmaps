@@ -55,8 +55,10 @@ windroseMap <- function(data,
     lifecycle::deprecate_soft(
       when = "0.5.0",
       what = "openairmaps::windroseMap(type)",
-      details = c("Different sites are now automatically detected based on latitude and longitude",
-                  "Please use the `popup` argument to create popups.")
+      details = c(
+        "Different sites are now automatically detected based on latitude and longitude",
+        "Please use the `popup` argument to create popups."
+      )
     )
   }
 
@@ -323,7 +325,7 @@ windroseMapStatic <- function(data,
     ggplot2::geom_point(
       data = plots_df,
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                   fill = intervals[1]
+        fill = intervals[1]
       ),
       size = 0,
       key_glyph = ggplot2::draw_key_rect

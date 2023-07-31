@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" />
+# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" alt="the openairmaps logo. It shows a stylised pollution rose overlaid with a typical teardrop shaped map marker." />
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
@@ -36,8 +36,8 @@ install.packages("openairmaps")
 You can install the development version of `{openairmaps}` from GitHub with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("davidcarslaw/openairmaps")
+# install.packages("pak")
+pak::pak("davidcarslaw/openairmaps")
 ```
 
 ## Overview
@@ -64,11 +64,13 @@ polar_data %>%
   )
 ```
 
-![An example `polarMap()` showing NO2 concentrations in central London.](man/figures/README-examplemap.png)
+```{r egreal, echo = FALSE, fig.cap="An example `polarMap()` showing NO2 concentrations in central London.", fig.alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations."}
+knitr::include_graphics("man/figures/README-examplemap.png")
+```
 
 While an interactive map is preferred for exploratory directional analysis, it is limited to the HTML format. Some applications (for example, academic journals) demand "static" formats like .docx and .pdf. For this reason, "static" versions of `{openairmaps}` polar marker functions have been provided which are written in `{ggplot2}`. A benefit of being written in `{ggplot2}` is that additional layers can be added (e.g., `geom_label()` could be used to label sites) and limited further customisation is available using `theme()` and `guides()`.
 
-```{r static, fig.width = 9, fig.height = 5, message = FALSE, warning = FALSE}
+```{r static, fig.width = 9, fig.height = 5, message = FALSE, warning = FALSE, fig.cap="A demonstration of `polarMapStatic()`.", fig.alt="A natively static polar plot map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The map is split into two, with one panel for daylight observations and the other for nighttime."}
 polar_data %>%
   openair::cutData("daylight") %>%
   polarMapStatic(

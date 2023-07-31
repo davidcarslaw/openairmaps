@@ -84,7 +84,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -234,7 +234,7 @@ assume_latlon <- function(data, latitude, longitude) {
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-                     call = NULL
+        call = NULL
       )
       return(NULL)
     } else if (len == 0) {
@@ -308,8 +308,14 @@ make_leaflet_map <-
     map <- leaflet::leaflet(data)
 
     # add provider tiles
-    for (i in unique(provider)) {
-      map <- leaflet::addProviderTiles(map, i, group = i)
+    if (is.null(names(provider)) | "" %in% names(provider)) {
+      names(provider) <- provider
+    }
+    for (i in seq_along(provider)) {
+      map <- leaflet::addProviderTiles(map,
+        provider[[i]],
+        group = names(provider)[[i]]
+      )
     }
 
     # work out width/height
@@ -356,14 +362,14 @@ make_leaflet_map <-
         leaflet::addLayersControl(
           map,
           baseGroups = quickTextHTML(unique(data[[split_col]])),
-          overlayGroups = provider,
+          overlayGroups = names(provider),
           options = opts
         ) %>%
-        leaflet::hideGroup(group = provider[-1])
+        leaflet::hideGroup(group = names(provider)[-1])
     } else if (flag_provider & !flag_split) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = provider, options = opts) %>%
-        leaflet::hideGroup(group = provider[-1])
+        leaflet::addLayersControl(map, baseGroups = names(provider), options = opts) %>%
+        leaflet::hideGroup(group = names(provider)[-1])
     } else if (!flag_provider & flag_split) {
       map <-
         leaflet::addLayersControl(map, baseGroups = quickTextHTML(unique(data[[split_col]])), options = opts)
@@ -454,21 +460,21 @@ create_polar_markers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-                 .f = ~ {
-                   grDevices::png(
-                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-                     width = width * 300,
-                     height = height * 300,
-                     res = 300,
-                     bg = "transparent",
-                     type = "cairo",
-                     antialias = "none"
-                   )
+      .f = ~ {
+        grDevices::png(
+          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+          width = width * 300,
+          height = height * 300,
+          res = 300,
+          bg = "transparent",
+          type = "cairo",
+          antialias = "none"
+        )
 
-                   plot(..4)
+        plot(..4)
 
-                   grDevices::dev.off()
-                 }
+        grDevices::dev.off()
+      }
     )
 
     return(plots_df)
@@ -582,7 +588,7 @@ quick_popup <- function(data, popup, latitude, longitude, control) {
 #' does 'cutdata'
 #' @param data,type inherited from parent function
 #' @noRd
-quick_cutdata <- function(data, type){
+quick_cutdata <- function(data, type) {
   if (is.null(type)) type <- "default"
   openair::cutData(data, type = type)
 }

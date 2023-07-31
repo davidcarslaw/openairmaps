@@ -1,31 +1,51 @@
 # openairmaps (development version)
 
+These are items associated with the development version of `{openairmaps}`.
+
+## Breaking changes
+
+* BREAKING: The arguments of `addPolarMarkers()` have been rejigged to move "data" after "pollutant", owing to the new use of `leaflet::getMapData()`. (#45)
+
+* BREAKING: The default arguments of some `polarMap()`-family functions have changed from, e.g., `NULL` to `"free"` or `"fixed"`. (#34)
+
 ## New features
 
-* Several "limit" arguments can now take one of three options: "fixed" (which forces all markers to share scales), "free" (which allows them to use different scales), or a numeric vector to define the scales. These arguments and their defaults include:
+* Several "limit" arguments can now take one of three options: "fixed" (which forces all markers to share scales), "free" (which allows them to use different scales), or a numeric vector to define the scales. (#34) These arguments and their defaults include:
 
   * `polarMap()`: `upper` (fixed); `limits` (free)
   * `annulusMap()`: `limits` (free)
   * `freqMap()`: `breaks` (free)
   * `percentileMap()`: `intervals` (fixed)
 
+* Added `searchNetwork()`, which allows users to find local air quality monitoring sites by specifying a target latitude and longitude. Function arguments allow the site metadata to be subset (for example, by site type, pollutants measured, or distance from the target).
+
+* Added `convertPostcode()`, which converts a valid UK postcode to a latitude/longitude pair. This is intended to be used with `searchNetwork()`.
+
+* The "data" argument of `addPolarMarkers()` and `addTrajPaths()` and both the "before" and "after" arguments of `addPolarDiffMarkers()` now default to `leaflet::getMapData(map)`. This makes their use less verbose when creating multiple polar plots with the same underlying data, which will likely be a common use-case. (#45)
+
+* `networkMap()` popups now contain links to the associated network websites. For example, the popup for London Marylebone Road in `networkMap("aurn")` now contains a link to <https://uk-air.defra.gov.uk/networks/site-info?site_id=MY1>. All networks are supported with the exception of "europe". (#39)
+
+* `addPolarMarkers()` and `addPolarDiffMarkers()` now have all of the "options" arguments of `leaflet::addMarkers()`. This means that, for example, polar markers can be clustered (<https://leafletjs.com/reference.html#marker>). (#38)
+
+* The `polarMap()` family and `networkMap()` `provider` argument can now take a named vector. The names will be used in the layer control menu, if `length(provider) > 1`. (#42)
+
 # openairmaps 0.8.0
 
-This is a minor release adding a range of quality of life features and fixing a few bugs.
+This is a minor release adding a range of quality of life features, adding two new experimental functions, and fixing a few bugs.
 
 ## New features
 
-* `trajMapStatic()` and `trajLevelMapStatic()` have been added as two new *experimental* functions to provide `{ggplot2}` equivalents of `openair::trajPlot()` and `openair::trajLevel()`. 
+* `trajMapStatic()` and `trajLevelMapStatic()` have been added as two new *experimental* functions to provide `{ggplot2}` equivalents of `openair::trajPlot()` and `openair::trajLevel()`. (#28)
 
   * These are experimental as the long term place for these functions is uncertain; there will definitely be need for a `{ggplot2}` incarnation of the trajectory plotting functions, but whether they will sit in `{openair}`, `{ggopenair}` or `{openairmaps}` and what they will be named is not clear.
 
 * The `control` and `facet` arguments of all polar marker mapping functions (static and interactive) and trajectory mapping functions are now passed to `openair::cutData()`.
 
-* The `popup` argument of all interactive polar marker mapping functions can now take a vector of colum names. If more than one column is provided, it is automatically passed to `buildPopup()` using its default values.
+* The `popup` argument of all interactive polar marker mapping functions can now take a vector of column names. If more than one column is provided, it is automatically passed to `buildPopup()` using its default values.
 
 * `trajLevelMap()` now has the `control` argument, which maps directly onto the `type` argument of `openair::trajLevel()`. Like other `control` arguments elsewhere in `{openairmaps}`, this creates a "layer control" menu.
 
-* `networkMap()` now uses different coloured markers for different networks. If more than one network is specified, and `draw.legend` is set to `TRUE`, a legend will also be drawn for quick identification of different data sources.
+* `networkMap()` now uses different coloured markers for different networks. If more than one network is specified, and `draw.legend` is set to `TRUE`, a legend will also be drawn for quick identification of different data sources. (#30)
 
 * Deprecations are now managed by the `{lifecycle}` package. This currently only applies to the `type` argument.
 
@@ -33,13 +53,13 @@ This is a minor release adding a range of quality of life features and fixing a 
 
 * Fixed issues where multiple `addPolarMarkers()` chained together would all show the same plot.
 
-* Fixed issue where `...` and `pollutant` weren't being passed to `addPolarMarkers()`.
+* Fixed issue where `...` and `pollutant` weren't being passed to `addPolarMarkers()`. (#27)
 
 * Fixed issue in `trajMap()` caused by recent updates to `{dplyr}` and `{forcats}`.
 
 * Fixed issue where `polarMapStatic()` and others would turn factor facet levels into characters. 
 
-  * Specifically, this meant that, for example, months of the year would be in alphabetical order. Now factor levels, including those resulting from a pass to `cutData()`, will now be honoured by the `facet` argument (thanks @Jair-89, #31).
+  * Specifically, this meant that, for example, months of the year would be in alphabetical order. Now factor levels, including those resulting from a pass to `cutData()`, will now be honoured by the `facet` argument. (#31)
 
 * Fixed issue where `polarMapStatic()` and others would error when trying to draw a legend.
 
@@ -57,21 +77,21 @@ This is a minor release containing several important new features that expand th
 
 * BREAKING: The arguments in `addPolarMarkers()` have been put in a more sensible order, leading with `data`, `pollutant` and `fun`.
 
-* BREAKING: The `date` argument from `networkMap()` has been replaced by `year`.
+* BREAKING: The `date` argument from `networkMap()` has been replaced by `year`. (#26)
 
 ## New features
 
-* Added "static" equivalents of all of the polar marker maps written in `{ggplot2}`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications.
+* Added "static" equivalents of all of the polar marker maps written in `{ggplot2}`. While interactive HTML maps are preferred, the static equivalents may be more appropriate for, e.g., academic publications. (#19)
 
   * The `{ggplot2}` functions can be identified by "Static" being appended to the function name. For example, `polarMap()` is the `{leaflet}` polar plot map, whereas `polarMapStatic()` is the `{ggplot2}` equivalent.
   
   * Currently, "static" versions of the trajectory maps are served by `openair::trajPlot()` and `openair::trajLevel()`, but there may be space in future to have `ggmap` equivalents of these in `openairmaps`.
 
-* Added `diffMap()` and `diffMapStatic()` which are to `openair::polarDiff()` what `polarMap()` and `polarMapStatic()` are to `openair::polarPlot()`. Also added `addPolarDiffMarkers()`, which is the equivalent of `addPolarMarkers()`.
+* Added `diffMap()` and `diffMapStatic()` which are to `openair::polarDiff()` what `polarMap()` and `polarMapStatic()` are to `openair::polarPlot()` (#17). Also added `addPolarDiffMarkers()`, which is the equivalent of `addPolarMarkers()`. (#25)
 
-* Added `alpha` as an argument to all of the directional analysis polar mapping functions, not just `polarMap()`.
+* Added `alpha` as an argument to all of the directional analysis polar mapping functions, not just `polarMap()`. (#14)
 
-* Fixed `alpha` to work on both Windows and MacOS by forcing the use of the "cairo" device to save plots.
+* Fixed `alpha` to work on both Windows and MacOS by forcing the use of the "cairo" device to save plots. (#14)
 
 * Polar marker maps and `addPolarMarkers()` now show a progress bar when creating the markers takes more than a few seconds (most commonly in `polarMap()` and `annulusMap()`, particularly with multiple pollutants/control groups).
 
@@ -89,7 +109,7 @@ This is a patch release primarily to fix a few bugs in `{openairmaps}`, and impl
 
 ## Bug fixes
 
-* Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and James/"@jenright-git" for noticing this issue.
+* Fixed issue with polar marker maps (e.g., `polarMap()`) and the generic `addPolarMarkers()` function where lat/lon info in the Southern Hemisphere would misalign markers. Hat tip to Deanna Tuxford and James for noticing this issue. (#18)
 
 * Fixed an issue with `networkMap()` where `control = "variable"` would fail to show all pollutants.
 
@@ -101,15 +121,15 @@ This is a minor release, mainly focusing on enhancing the ability for polar mark
 
 ## New features
 
-* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc., depending on function). This was always possible through `...`, but it is now explicitly listed as an option.
+* All directional analysis maps can now have their limits provided (can be "limits", "breaks", "percentiles", etc., depending on function). This was always possible through `...`, but it is now explicitly listed as an option. (#12)
 
-* If limits are defined in a directional analysis function, a shared legend will now be drawn at the top-right of the map. This functionality can be disabled by setting `draw.legend` to FALSE.
+* If limits are defined in a directional analysis function, a shared legend will now be drawn at the top-right of the map. This functionality can be disabled by setting `draw.legend` to FALSE. (#12)
 
 * Added the `buildPopup()` function, which allows users to easily construct HTML popups for use with the "popup" argument of directional analysis maps (or `leaflet` maps more widely).
 
 * The default options for fig.width and fig.height are now `3.5` rather than `4`. This appears to remove some visual artefacts and makes the axis labels more legible.
 
-* `networkMap()` now supports multiple sources. For example, using `source = c("aurn", "saqn")` will show both the AURN and SAQN on one map. This may be useful if users are interested in air quality in a specific region of the UK (e.g., users may wish to locate AURN, AQE *and* locally managed sites near to a given urban centre).
+* `networkMap()` now supports multiple sources. For example, using `source = c("aurn", "saqn")` will show both the AURN and SAQN on one map. This may be useful if users are interested in air quality in a specific region of the UK (e.g., users may wish to locate AURN, AQE *and* locally managed sites near to a given urban centre). (#16)
 
 * `networkMap()` now supports `source = "local"`.
 
@@ -141,17 +161,17 @@ This is a minor release centred around the addition of the `control` argument, w
 
 ## Breaking changes
 
-* All functions now use latitude and longitude to distinguish between site types. Therefore, "type" is now deprecated. Maps using the old system will still render, but popups will not be displayed. For most users, to restore previous site labels simply rewrite `type = "site"` as `popup = "site"`.
+* All functions now use latitude and longitude to distinguish between site types. Therefore, "type" is now deprecated. Maps using the old system will still render, but popups will not be displayed. For most users, to restore previous site labels simply rewrite `type = "site"` as `popup = "site"`. (#10)
 
 * The default values for "pollutant" have all been removed. Any users relying on this default should update their code to explicitly state `pollutant = "nox"`.
 
 ## New features
 
-* All functions now possess the "control" argument, which allows users to create a "layer control" menu with any arbitrary column. Appropriate columns may be those produced using `openair::cutData()`, `openair::splitByDate()`, or a user-defined `dplyr::case_when()`/`dplyr::if_else()` column transformation.
+* All functions now possess the "control" argument, which allows users to create a "layer control" menu with any arbitrary column. Appropriate columns may be those produced using `openair::cutData()`, `openair::splitByDate()`, or a user-defined `dplyr::case_when()`/`dplyr::if_else()` column transformation. (#9)
 
-* All functions now possess the "popup" and "label" arguments, which control pop-up and hover-over labels, respectively. This allows users to define *any* popup or label column, even non-unique ones. For example, multiple sites can be labelled with identical site types.
+* All functions now possess the "popup" and "label" arguments, which control pop-up and hover-over labels, respectively. This allows users to define *any* popup or label column, even non-unique ones. For example, multiple sites can be labelled with identical site types. (#10)
 
-* All functions now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`.
+* All functions now try to guess the latitude/longitude column if not provided, similar to `{leaflet}`. (#10)
 
 * Updated many error messages and warnings to use `{cli}` and be broadly more descriptive.
 
