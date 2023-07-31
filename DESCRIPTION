@@ -21,6 +21,8 @@ Imports:
     ggmap,
     ggplot2,
     ggtext,
+    httr,
+    jsonlite,
     leaflet,
     lifecycle,
     lubridate,

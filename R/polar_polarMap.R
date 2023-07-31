@@ -99,8 +99,10 @@ polarMap <- function(data,
     lifecycle::deprecate_soft(
       when = "0.5.0",
       what = "openairmaps::polarMap(type)",
-      details = c("Different sites are now automatically detected based on latitude and longitude",
-                  "Please use the `popup` argument to create popups.")
+      details = c(
+        "Different sites are now automatically detected based on latitude and longitude",
+        "Please use the `popup` argument to create popups."
+      )
     )
   }
 
@@ -373,9 +375,11 @@ polarMapStatic <- function(data,
   if (!is.null(limits)) {
     plt <-
       plt +
-      ggplot2::geom_point(data = plots_df,
-                          ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-                          alpha = 0) +
+      ggplot2::geom_point(
+        data = plots_df,
+        ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+        alpha = 0
+      ) +
       ggplot2::scale_color_gradientn(
         limits = theLimits,
         colours = openair::openColours(scheme = cols)
