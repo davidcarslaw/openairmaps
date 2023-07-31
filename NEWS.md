@@ -6,7 +6,16 @@ These are items associated with the development version of `{openairmaps}`.
 
 * BREAKING: The arguments of `addPolarMarkers()` have been rejigged to move "data" after "pollutant", owing to the new use of `leaflet::getMapData()`. (#45)
 
+* BREAKING: The default arguments of some `polarMap()`-family functions have changed from, e.g., `NULL` to `"free"` or `"fixed"`. (#34)
+
 ## New features
+
+* Several "limit" arguments can now take one of three options: "fixed" (which forces all markers to share scales), "free" (which allows them to use different scales), or a numeric vector to define the scales. (#34) These arguments and their defaults include:
+
+  * `polarMap()`: `upper` (fixed); `limits` (free)
+  * `annulusMap()`: `limits` (free)
+  * `freqMap()`: `breaks` (free)
+  * `percentileMap()`: `intervals` (fixed)
 
 * Added `searchNetwork()`, which allows users to find local air quality monitoring sites by specifying a target latitude and longitude. Function arguments allow the site metadata to be subset (for example, by site type, pollutants measured, or distance from the target).
 

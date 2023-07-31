@@ -19,6 +19,17 @@
 #'   scale. The `limits` argument will force all markers to use the same colour
 #'   scale. The limits are set in the form `c(lower, upper)`, so `limits = c(0,
 #'   100)` would force the plot limits to span 0-100.
+#' @param limits One of:
+#' - `"fixed"` which ensures all of the markers use the same colour scale.
+#' - `"free"` (the default) which allows all of the markers to use different
+#' colour scales.
+#' - A numeric vector in the form `c(lower, upper)` used to define the colour
+#' scale. For example, `limits = c(0, 100)` would force the plot limits to
+#' span 0-100.
+#' @param upper One of:
+#' - `"fixed"` (the default) which ensures all of the markers use the same radial axis scale.
+#' - `"free"` which allows all of the markers to use different radial axis scales.
+#' - A numeric value, used as the upper limit for the radial axis scale.
 #' @param latitude,longitude The decimal latitude/longitude. If not provided,
 #'   will be automatically inferred from data by looking for a column named
 #'   "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
@@ -79,7 +90,8 @@
 polarMap <- function(data,
                      pollutant = NULL,
                      x = "ws",
-                     limits = NULL,
+                     limits = "free",
+                     upper = "fixed",
                      latitude = NULL,
                      longitude = NULL,
                      control = NULL,
@@ -115,14 +127,47 @@ polarMap <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
-  # deal with limits
-  theLimits <- limits
-  if (is.null(limits)) {
+  # auto limits
+  limits <- check_multipoll(limits, pollutant)
+
+  if ("fixed" %in% limits) {
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
+    }
+
+    testplots <-
+      openair::polarPlot(
+        data,
+        pollutant = pollutant,
+        x = x,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theLimits <- range(testplots$z, na.rm = TRUE)
+  } else if ("free" %in% limits) {
     theLimits <- NA
+  } else if (is.numeric(limits)){
+    theLimits <- limits
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+    )
   }
 
   # cut data
   data <- quick_cutdata(data = data, type = control)
+
+  # deal with upper
+  if (upper == "fixed") {
+    upper <- max(data[[x]], na.rm = TRUE)
+  }
 
   # deal with popups
   if (length(popup) > 1) {
@@ -163,18 +208,34 @@ polarMap <- function(data,
 
   # define function
   fun <- function(data) {
-    openair::polarPlot(
-      data,
-      pollutant = "conc",
-      x = x,
-      plot = FALSE,
-      limits = theLimits,
-      cols = cols,
-      alpha = alpha,
-      key = key,
-      ...,
-      par.settings = list(axis.line = list(col = "transparent"))
-    )$plot
+    if (upper == "free") {
+      openair::polarPlot(
+        data,
+        pollutant = "conc",
+        x = x,
+        plot = FALSE,
+        limits = theLimits,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    } else {
+      openair::polarPlot(
+        data,
+        pollutant = "conc",
+        x = x,
+        plot = FALSE,
+        limits = theLimits,
+        upper = upper,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    }
   }
 
   # plot and save static markers
@@ -195,7 +256,7 @@ polarMap <- function(data,
     make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
 
   # add legend if limits are set
-  if (!is.null(limits) & all(!is.na(limits)) & draw.legend) {
+  if (!all(is.na(theLimits)) & draw.legend) {
     map <-
       leaflet::addLegend(
         map,
@@ -267,10 +328,11 @@ polarMap <- function(data,
 polarMapStatic <- function(data,
                            pollutant = NULL,
                            x = "ws",
-                           facet = NULL,
-                           limits = NULL,
+                           limits = "free",
+                           upper = "fixed",
                            latitude = NULL,
                            longitude = NULL,
+                           facet = NULL,
                            zoom = 13,
                            ggmap = NULL,
                            cols = "turbo",
@@ -289,14 +351,47 @@ polarMapStatic <- function(data,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
-  # deal with limits
-  theLimits <- limits
-  if (is.null(limits)) {
+  # auto limits
+  limits <- check_multipoll(limits, pollutant)
+
+  if ("fixed" %in% limits) {
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+
+    type <- facet
+    if (is.null(facet)) {
+      type <- "default"
+    }
+
+    testplots <-
+      openair::polarPlot(
+        data,
+        pollutant = pollutant,
+        x = x,
+        type = c("latlng", type),
+        plot = FALSE,
+        ...
+      )$data
+
+    theLimits <- range(testplots$z, na.rm = TRUE)
+  } else if ("free" %in% limits) {
     theLimits <- NA
+  } else if (is.numeric(limits)){
+    theLimits <- limits
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+    )
   }
 
   # cut data
   data <- quick_cutdata(data = data, type = facet)
+
+  # deal with upper
+  if (upper == "fixed") {
+    upper <- max(data[[x]], na.rm = TRUE)
+  }
 
   # prep data
   data <-
@@ -322,18 +417,34 @@ polarMapStatic <- function(data,
 
   # define function
   fun <- function(data) {
-    openair::polarPlot(
-      data,
-      pollutant = "conc",
-      x = x,
-      plot = FALSE,
-      limits = theLimits,
-      cols = cols,
-      alpha = alpha,
-      key = key,
-      ...,
-      par.settings = list(axis.line = list(col = "transparent"))
-    )$plot
+    if (upper == "free") {
+      openair::polarPlot(
+        data,
+        pollutant = "conc",
+        x = x,
+        plot = FALSE,
+        limits = theLimits,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    } else {
+      openair::polarPlot(
+        data,
+        pollutant = "conc",
+        x = x,
+        plot = FALSE,
+        limits = theLimits,
+        upper = upper,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    }
   }
 
   # plot and save static markers
@@ -372,7 +483,7 @@ polarMapStatic <- function(data,
     )
 
   # create colorbar if limits specified
-  if (!is.null(limits)) {
+  if (!all(is.na(theLimits))) {
     plt <-
       plt +
       ggplot2::geom_point(

@@ -8,10 +8,10 @@ percentileMapStatic(
   data,
   pollutant = NULL,
   percentile = c(25, 50, 75, 90, 95),
-  facet = NULL,
-  limits = NULL,
+  intervals = "fixed",
   latitude = NULL,
   longitude = NULL,
+  facet = NULL,
   zoom = 13,
   ggmap = NULL,
   cols = "turbo",
@@ -36,17 +36,20 @@ pollutants are specified, they will each form part of a separate panel.}
 \item{percentile}{The percentile value(s) to plot. Must be between 0–100. If
 \code{percentile = NA} then only a mean line will be shown.}
 
-\item{facet}{Used for splitting the input data into different panels, passed
-to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
-multiple \code{pollutant} columns have been provided.}
-
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
+\item{intervals}{One of:
+\itemize{
+\item \code{"fixed"} (the default) which ensures all of the markers use the same radial axis scale.
+\item \code{"free"} which allows all of the markers to use different radial axis scales.
+\item A numeric vector defining a sequence of numbers to use as the intervals, e.g., \code{intervals = c(0, 10, 30, 50)}.
+}}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{facet}{Used for splitting the input data into different panels, passed
+to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
+multiple \code{pollutant} columns have been provided.}
 
 \item{zoom}{The zoom level to use for the basemap, passed to
 \code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}}. Alternatively, the \code{ggmap} argument can be used
@@ -115,8 +118,6 @@ number of samples in the same wind sector (see Ashbaugh et al., 1985).}
     \item{\code{mean.col}}{Line colour for mean line.}
     \item{\code{fill}}{Should the percentile intervals be filled (default) or should
 lines be drawn (\code{fill = FALSE}).}
-    \item{\code{intervals}}{User-supplied intervals for the scale e.g. \code{intervals =
-c(0, 10, 30, 50)}}
     \item{\code{angle.scale}}{Sometimes the placement of the scale may interfere with an
 interesting feature. The user can therefore set \code{angle.scale} to any
 value between 0 and 360 degrees to mitigate such problems. For example
