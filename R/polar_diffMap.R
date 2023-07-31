@@ -42,7 +42,7 @@ diffMap <- function(before,
                     after,
                     pollutant = NULL,
                     x = "ws",
-                    limits = NULL,
+                    limits = "free",
                     latitude = NULL,
                     longitude = NULL,
                     control = NULL,
@@ -88,10 +88,43 @@ diffMap <- function(before,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
-  # deal with limits
-  theLimits <- limits
-  if (is.null(limits)) {
+  # auto limits
+  if ("fixed" %in% limits) {
+    cli::cli_abort("{.code limits = 'fixed'} is currently not supported for {.fun diffMap} and {.fun diffMapStatic}.")
+    # if (length(pollutant) == 1) {
+    #   before <-
+    #     dplyr::mutate(before, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    #   after <-
+    #     dplyr::mutate(after, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    #
+    #   type <- control
+    #   if (is.null(control)) {
+    #     type <- "default"
+    #   }
+    #
+    #   testplots <-
+    #     openair::polarDiff(
+    #       before = before, after = after,
+    #       pollutant = pollutant,
+    #       x = x,
+    #       type = c("latlng", type),
+    #       plot = FALSE,
+    #       ...
+    #     )$data
+    #
+    #   theLimits <- range(testplots[[pollutant]], na.rm = TRUE)
+    # } else {
+    #   cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
+    # }
+  } else if ("free" %in% limits) {
     theLimits <- NA
+  } else if (is.numeric(limits)){
+    theLimits <- limits
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+    )
   }
 
   # deal with popups
@@ -193,7 +226,7 @@ diffMap <- function(before,
     )
 
   # add legend if limits are set
-  if (!is.null(limits) & all(!is.na(limits)) & draw.legend) {
+  if (!all(is.na(theLimits)) & draw.legend) {
     map <-
       leaflet::addLegend(
         map,
@@ -235,11 +268,11 @@ diffMap <- function(before,
 diffMapStatic <- function(before,
                           after,
                           pollutant = NULL,
+                          limits = "free",
                           x = "ws",
-                          facet = NULL,
-                          limits = NULL,
                           latitude = NULL,
                           longitude = NULL,
+                          facet = NULL,
                           zoom = 13,
                           ggmap = NULL,
                           cols = c(
@@ -268,10 +301,43 @@ diffMapStatic <- function(before,
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
-  # deal with limits
-  theLimits <- limits
-  if (is.null(limits)) {
+  # auto limits
+  if ("fixed" %in% limits) {
+    cli::cli_abort("{.code limits = 'fixed'} is currently not supported for {.fun diffMap} and {.fun diffMapStatic}.")
+    # if (length(pollutant) == 1) {
+    #   before <-
+    #     dplyr::mutate(before, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    #   after <-
+    #     dplyr::mutate(after, latlng = paste(.data[[latitude]], .data[[longitude]]))
+    #
+    #   type <- facet
+    #   if (is.null(facet)) {
+    #     type <- "default"
+    #   }
+    #
+    #   testplots <-
+    #     openair::polarDiff(
+    #       before = before, after = after,
+    #       pollutant = pollutant,
+    #       x = x,
+    #       type = c("latlng", type),
+    #       plot = FALSE,
+    #       ...
+    #     )$data
+    #
+    #   theLimits <- range(testplots[[pollutant]], na.rm = TRUE)
+    # } else {
+    #   cli::cli_warn("{.code limits == 'auto'} only works with a single given {.field pollutant}")
+    # }
+  } else if ("free" %in% limits) {
     theLimits <- NA
+  } else if (is.numeric(limits)){
+    theLimits <- limits
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+    )
   }
 
   # cut data
@@ -366,7 +432,7 @@ diffMapStatic <- function(before,
     )
 
   # create colorbar if limits specified
-  if (!is.null(limits)) {
+  if (!all(is.na(theLimits))) {
     plt <-
       plt +
       ggplot2::geom_point(

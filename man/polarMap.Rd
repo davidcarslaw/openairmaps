@@ -8,7 +8,8 @@ polarMap(
   data,
   pollutant = NULL,
   x = "ws",
-  limits = NULL,
+  limits = "free",
+  upper = "fixed",
   latitude = NULL,
   longitude = NULL,
   control = NULL,
@@ -39,9 +40,22 @@ control" interface.}
 
 \item{x}{The radial axis variable to plot.}
 
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(0, 100)} would force the plot limits to span 0-100.}
+\item{limits}{One of:
+\itemize{
+\item \code{"fixed"} which ensures all of the markers use the same colour scale.
+\item \code{"free"} (the default) which allows all of the markers to use different
+colour scales.
+\item A numeric vector in the form \code{c(lower, upper)} used to define the colour
+scale. For example, \code{limits = c(0, 100)} would force the plot limits to
+span 0-100.
+}}
+
+\item{upper}{One of:
+\itemize{
+\item \code{"fixed"} (the default) which ensures all of the markers use the same radial axis scale.
+\item \code{"free"} which allows all of the markers to use different radial axis scales.
+\item A numeric value, used as the upper limit for the radial axis scale.
+}}
 
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
@@ -216,9 +230,6 @@ circumstances.}
 are removed on the plots. This is done by shading the missing data in
 \code{mis.col}. To not highlight missing data when \code{min.bin} > 1
 choose \code{mis.col = "transparent"}.}
-    \item{\code{upper}}{This sets the upper limit wind speed to be used. Often there are
-only a relatively few data points at very high wind speeds and plotting all
-of them can reduce the useful information in the plot.}
     \item{\code{angle.scale}}{Sometimes the placement of the scale may interfere with an
 interesting feature. The user can therefore set \code{angle.scale} to any
 value between 0 and 360 degrees to mitigate such problems. For example

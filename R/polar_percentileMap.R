@@ -1,19 +1,22 @@
 #' Percentile roses on interactive leaflet maps
 #'
-#' [percentileMap()] creates a `leaflet` map using percentile roses as
-#' markers. Any number of pollutants can be specified using the `pollutant`
-#' argument, and multiple layers of markers can be added and toggled between
-#' using `control`.
+#' [percentileMap()] creates a `leaflet` map using percentile roses as markers.
+#' Any number of pollutants can be specified using the `pollutant` argument, and
+#' multiple layers of markers can be added and toggled between using `control`.
 #'
 #' @family interactive directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param percentile The percentile value(s) to plot. Must be between 0–100. If
 #'   `percentile = NA` then only a mean line will be shown.
+#' @param intervals One of:
+#' - `"fixed"` (the default) which ensures all of the markers use the same radial axis scale.
+#' - `"free"` which allows all of the markers to use different radial axis scales.
+#' - A numeric vector defining a sequence of numbers to use as the intervals, e.g., `intervals = c(0, 10, 30, 50)`.
 #' @param draw.legend Should a shared legend be created at the side of the map?
 #'   Default is `TRUE`.
 #' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
-#'   -type -cols -key -plot
+#'   -type -cols -key -plot -intervals
 #' @return A leaflet object.
 #' @export
 #'
@@ -31,6 +34,7 @@
 percentileMap <- function(data,
                           pollutant = NULL,
                           percentile = c(25, 50, 75, 90, 95),
+                          intervals = "fixed",
                           latitude = NULL,
                           longitude = NULL,
                           control = NULL,
@@ -58,13 +62,43 @@ percentileMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
+
+  # auto limits
+  intervals <- check_multipoll(intervals, pollutant)
+
+  if ("fixed" %in% intervals) {
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+
+    type <- control
+    if (is.null(control)) {
+      type <- "default"
+    }
+
+    testplots <-
+      openair::percentileRose(
+        data,
+        pollutant = pollutant,
+        type = c("latlng", type),
+        plot = FALSE
+      )$data
+
+    theIntervals <- pretty(testplots[[pollutant]])
+  } else if ("free" %in% intervals) {
+    theIntervals <- NA
+  } else if (is.numeric(intervals)) {
+    theIntervals <- intervals
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
+        "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+    )
+  }
 
   # cut data
   data <- quick_cutdata(data = data, type = control)
@@ -107,17 +141,32 @@ percentileMap <- function(data,
 
   # define function
   fun <- function(data) {
-    openair::percentileRose(
-      data,
-      pollutant = "conc",
-      percentile = percentile,
-      plot = FALSE,
-      cols = cols,
-      alpha = alpha,
-      key = key,
-      ...,
-      par.settings = list(axis.line = list(col = "transparent"))
-    )$plot
+    if (!"free" %in% intervals) {
+      openair::percentileRose(
+        data,
+        pollutant = "conc",
+        percentile = percentile,
+        plot = FALSE,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        intervals = theIntervals,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    } else {
+      openair::percentileRose(
+        data,
+        pollutant = "conc",
+        percentile = percentile,
+        plot = FALSE,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    }
   }
 
   # plot and save static markers
@@ -135,7 +184,17 @@ percentileMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legend
   if (all(!is.na(percentile)) & draw.legend) {
@@ -169,10 +228,11 @@ percentileMap <- function(data,
 #' @family static directional analysis maps
 #'
 #' @inheritParams polarMapStatic
+#' @inheritParams percentileMap
 #' @param percentile The percentile value(s) to plot. Must be between 0–100. If
 #'   `percentile = NA` then only a mean line will be shown.
 #' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
-#'   -type -cols -key -plot
+#'   -type -cols -key -plot -intervals
 #'
 #' @seealso the original [openair::percentileRose()]
 #' @seealso [percentileMap()] for the interactive `leaflet` equivalent of
@@ -183,10 +243,10 @@ percentileMap <- function(data,
 percentileMapStatic <- function(data,
                                 pollutant = NULL,
                                 percentile = c(25, 50, 75, 90, 95),
-                                facet = NULL,
-                                limits = NULL,
+                                intervals = "fixed",
                                 latitude = NULL,
                                 longitude = NULL,
+                                facet = NULL,
                                 zoom = 13,
                                 ggmap = NULL,
                                 cols = "turbo",
@@ -197,13 +257,44 @@ percentileMapStatic <- function(data,
                                 d.fig = 3,
                                 ...) {
   # assume lat/lon
-  latlon <- assume_latlon(
-    data = data,
-    latitude = latitude,
-    longitude = longitude
-  )
+  latlon <- assume_latlon(data = data,
+                          latitude = latitude,
+                          longitude = longitude)
   latitude <- latlon$latitude
   longitude <- latlon$longitude
+
+  # auto limits
+  intervals <- check_multipoll(intervals, pollutant)
+
+  if ("fixed" %in% intervals) {
+    data <-
+      dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
+
+    type <- facet
+    if (is.null(facet)) {
+      type <- "default"
+    }
+
+    testplots <-
+      openair::percentileRose(
+        data,
+        pollutant = pollutant,
+        type = c("latlng", type),
+        plot = FALSE
+      )$data
+
+    theIntervals <- pretty(testplots[[pollutant]])
+
+  } else if ("free" %in% intervals) {
+    theIntervals <- NA
+  } else if (is.numeric(intervals)) {
+    theIntervals <- intervals
+  } else {
+    cli::cli_abort(
+      c("!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
+        "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+    )
+  }
 
   # cut data
   data <- quick_cutdata(data = data, type = facet)
@@ -231,17 +322,32 @@ percentileMapStatic <- function(data,
 
   # define function
   fun <- function(data) {
-    openair::percentileRose(
-      data,
-      pollutant = "conc",
-      percentile = percentile,
-      plot = FALSE,
-      cols = cols,
-      alpha = alpha,
-      key = key,
-      ...,
-      par.settings = list(axis.line = list(col = "transparent"))
-    )$plot
+    if (!"free" %in% intervals) {
+      openair::percentileRose(
+        data,
+        pollutant = "conc",
+        percentile = percentile,
+        plot = FALSE,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        intervals = theIntervals,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    } else {
+      openair::percentileRose(
+        data,
+        pollutant = "conc",
+        percentile = percentile,
+        plot = FALSE,
+        cols = cols,
+        alpha = alpha,
+        key = key,
+        ...,
+        par.settings = list(axis.line = list(col = "transparent"))
+      )$plot
+    }
   }
 
   # plot and save static markers
@@ -281,19 +387,19 @@ percentileMapStatic <- function(data,
 
   # create legend
   percs <- unique(c(0, percentile))
-  intervals <- stringr::str_c(percs, dplyr::lead(percs), sep = " - ")
+  intervals <-
+    stringr::str_c(percs, dplyr::lead(percs), sep = " - ")
   intervals <- intervals[!is.na(intervals)]
   intervals <- factor(intervals, intervals)
-  pal <- openair::openColours(scheme = cols, n = length(intervals)) %>%
+  pal <-
+    openair::openColours(scheme = cols, n = length(intervals)) %>%
     stats::setNames(intervals)
 
   plt <-
     plt +
     ggplot2::geom_point(
-      data = plots_df,
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
-        fill = intervals[1]
-      ),
+                   fill = intervals[1]),
       size = 0,
       key_glyph = ggplot2::draw_key_rect
     ) +
