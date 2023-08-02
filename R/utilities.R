@@ -110,9 +110,9 @@ buildPopup <-
         data %>%
         dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
         dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
-        dplyr::summarise(dplyr::across(tidyselect::where(is.character) | tidyselect::where(is.factor), fun.character),
-          dplyr::across(tidyselect::where(is.numeric), fun.numeric),
-          dplyr::across(tidyselect::where(lubridate::is.POSIXct), fun.dttm),
+        dplyr::summarise(dplyr::across(dplyr::where(is.character) | dplyr::where(is.factor), fun.character),
+          dplyr::across(dplyr::where(is.numeric), fun.numeric),
+          dplyr::across(dplyr::where(lubridate::is.POSIXct), fun.dttm),
           .groups = "drop"
         )
 
@@ -183,6 +183,16 @@ buildPopup <-
 #'   <https://github.com/ropensci/PostcodesioR/>
 #' @source <https://postcodes.io/>
 convertPostcode <- function(postcode) {
+
+  if (!requireNamespace("httr", quietly = TRUE) |
+      !requireNamespace("jsonlite", quietly = TRUE)) {
+    cli::cli_abort(
+      c("x" = "Please install the {.pkg httr} and {.pkg jsonlite} packages to use {.fun convertPostcode}.",
+        "i" = 'To do so, run {.code install.packages(c("httr", "jsonlite"))}')
+    )
+  }
+
+
   postcode <- stringr::str_remove_all(postcode, " ")
   api <- stringr::str_glue("api.postcodes.io/postcodes/{postcode}")
   get <- httr::GET(api)
