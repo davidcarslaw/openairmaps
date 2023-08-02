@@ -23,8 +23,6 @@ Imports:
     ggmap,
     ggplot2,
     ggtext,
-    httr,
-    jsonlite,
     leaflet,
     lifecycle,
     lubridate,
@@ -36,9 +34,10 @@ Imports:
     sf,
     stringr,
     tibble,
-    tidyr,
-    tidyselect
+    tidyr
 Suggests:
+    httr,
+    jsonlite,
     covr,
     testthat (>= 3.0.0),
     worldmet
