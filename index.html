@@ -121,22 +121,7 @@ An example <code><a href="reference/polarMap.html">polarMap()</a></code> showing
 </p>
 </div>
 <p>While an interactive map is preferred for exploratory directional analysis, it is limited to the HTML format. Some applications (for example, academic journals) demand “static” formats like .docx and .pdf. For this reason, “static” versions of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> polar marker functions have been provided which are written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. A benefit of being written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> is that additional layers can be added (e.g., <code>geom_label()</code> could be used to label sites) and limited further customisation is available using <code>theme()</code> and <code>guides()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">polar_data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">openair</span><span class="fu">::</span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData</a></span><span class="op">(</span><span class="st">"daylight"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/polarMapStatic.html">polarMapStatic</a></span><span class="op">(</span></span>
-<span>    pollutant <span class="op">=</span> <span class="st">"no2"</span>,</span>
-<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">180</span><span class="op">)</span>,</span>
-<span>    facet <span class="op">=</span> <span class="st">"daylight"</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="fl">.75</span>,</span>
-<span>    d.icon <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>    d.fig <span class="op">=</span> <span class="fl">2.5</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-static-1.png" alt="A natively static polar plot map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The map is split into two, with one panel for daylight observations and the other for nighttime." width="100%"><p class="caption">
-A demonstration of <code><a href="reference/polarMapStatic.html">polarMapStatic()</a></code>.
-</p>
-</div>
+<p>Static maps require users to provide a <a href="https://github.com/dkahle/ggmap" class="external-link">ggmap</a> tileset, which at the time of writing requires an API key for either Google or Stadia Maps.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -184,7 +169,6 @@ A demonstration of <code><a href="reference/polarMapStatic.html">polarMapStatic(
 <ul class="list-unstyled">
 <li><a href="https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://CRAN.R-project.org/package=openairmaps" class="external-link"><img src="https://www.r-pkg.org/badges/version/openairmaps" alt="CRAN status"></a></li>
-<li><a href="https://app.codecov.io/gh/davidcarslaw/openairmaps?branch=master" class="external-link"><img src="https://codecov.io/gh/davidcarslaw/openairmaps/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
