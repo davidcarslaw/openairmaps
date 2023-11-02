@@ -8,8 +8,6 @@
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
-[![Codecov test
-coverage](https://codecov.io/gh/davidcarslaw/openairmaps/branch/master/graph/badge.svg)](https://app.codecov.io/gh/davidcarslaw/openairmaps?branch=master)
 <!-- badges: end -->
 
 The main goal of `{openairmaps}` is to combine the robust analytical
@@ -82,24 +80,6 @@ of being written in `{ggplot2}` is that additional layers can be added
 (e.g., `geom_label()` could be used to label sites) and limited further
 customisation is available using `theme()` and `guides()`.
 
-``` r
-polar_data %>%
-  openair::cutData("daylight") %>%
-  polarMapStatic(
-    pollutant = "no2",
-    limits = c(0, 180),
-    facet = "daylight",
-    alpha = .75,
-    d.icon = 100,
-    d.fig = 2.5
-  )
-```
-
-<div class="figure">
-
-<img src="man/figures/README-static-1.png" alt="A natively static polar plot map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The map is split into two, with one panel for daylight observations and the other for nighttime." width="100%" />
-<p class="caption">
-A demonstration of `polarMapStatic()`.
-</p>
-
-</div>
+Static maps require users to provide a
+[ggmap](https://github.com/dkahle/ggmap) tileset, which at the time of
+writing requires an API key for either Google or Stadia Maps.
