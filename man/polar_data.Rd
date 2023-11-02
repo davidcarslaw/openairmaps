@@ -20,7 +20,7 @@ Data frame with example data from four sites in London in 2009.
 }
 \source{
 \code{polar_data} was compiled from data using the
-\code{\link[openair:importAURN]{openair::importAURN()}} function from the \code{openair} package with
+\code{\link[openair:importUKAQ-wrapper]{openair::importAURN()}} function from the \code{openair} package with
 meteorological data from the \code{worldmet} package.
 }
 \description{

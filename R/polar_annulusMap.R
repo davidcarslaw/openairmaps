@@ -241,13 +241,12 @@ annulusMap <- function(data,
 #' @export
 annulusMapStatic <- function(data,
                              pollutant = NULL,
+                             ggmap,
                              period = "hour",
                              facet = NULL,
                              limits = "free",
                              latitude = NULL,
                              longitude = NULL,
-                             zoom = 13,
-                             ggmap = NULL,
                              cols = "turbo",
                              alpha = 1,
                              key = FALSE,
@@ -255,6 +254,9 @@ annulusMapStatic <- function(data,
                              d.icon = 150,
                              d.fig = 3,
                              ...) {
+  # check that there is a ggmap
+  check_ggmap(missing(ggmap))
+
   # assume lat/lon
   latlon <- assume_latlon(data = data,
                           latitude = latitude,
@@ -360,16 +362,6 @@ annulusMapStatic <- function(data,
       longitude = longitude,
       split_col = split_col,
       d.fig = d.fig
-    )
-
-  # load ggmap if not provided
-  ggmap <-
-    estimate_ggmap(
-      ggmap = ggmap,
-      data = plots_df,
-      latitude = latitude,
-      longitude = longitude,
-      zoom = zoom
     )
 
   # create static map - deals with basics & facets
