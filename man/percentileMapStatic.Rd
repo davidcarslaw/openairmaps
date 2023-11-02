@@ -7,13 +7,12 @@
 percentileMapStatic(
   data,
   pollutant = NULL,
+  ggmap,
   percentile = c(25, 50, 75, 90, 95),
   intervals = "fixed",
   latitude = NULL,
   longitude = NULL,
   facet = NULL,
-  zoom = 13,
-  ggmap = NULL,
   cols = "turbo",
   alpha = 1,
   key = FALSE,
@@ -33,6 +32,9 @@ longitude.}
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
 
+\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
+function to use as the basemap.}
+
 \item{percentile}{The percentile value(s) to plot. Must be between 0–100. If
 \code{percentile = NA} then only a mean line will be shown.}
 
@@ -50,16 +52,6 @@ will be automatically inferred from data by looking for a column named
 \item{facet}{Used for splitting the input data into different panels, passed
 to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
 multiple \code{pollutant} columns have been provided.}
-
-\item{zoom}{The zoom level to use for the basemap, passed to
-\code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}}. Alternatively, the \code{ggmap} argument can be used
-for more precise control of the basemap.}
-
-\item{ggmap}{By default, \code{openairmaps} will try to estimate an appropriate
-bounding box for the input data and then run \code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}} to
-import a basemap. The \code{ggmap} argument allows users to provide their own
-\code{ggmap} object to override this, which allows for alternative bounding
-boxes, map types and colours.}
 
 \item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
 more information.}

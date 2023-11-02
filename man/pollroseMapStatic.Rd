@@ -7,13 +7,12 @@
 pollroseMapStatic(
   data,
   pollutant = NULL,
+  ggmap,
   statistic = "prop.count",
   breaks = NULL,
   facet = NULL,
   latitude = NULL,
   longitude = NULL,
-  zoom = 13,
-  ggmap = NULL,
   cols = "turbo",
   alpha = 1,
   key = FALSE,
@@ -32,6 +31,9 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
+
+\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
+function to use as the basemap.}
 
 \item{statistic}{The \code{statistic} to be applied to each data bin in the
 plot. Options currently include "prop.count", "prop.mean" and
@@ -55,16 +57,6 @@ multiple \code{pollutant} columns have been provided.}
 \item{latitude, longitude}{The decimal latitude/longitude. If not provided,
 will be automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
-
-\item{zoom}{The zoom level to use for the basemap, passed to
-\code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}}. Alternatively, the \code{ggmap} argument can be used
-for more precise control of the basemap.}
-
-\item{ggmap}{By default, \code{openairmaps} will try to estimate an appropriate
-bounding box for the input data and then run \code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}} to
-import a basemap. The \code{ggmap} argument allows users to provide their own
-\code{ggmap} object to override this, which allows for alternative bounding
-boxes, map types and colours.}
 
 \item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
 more information.}

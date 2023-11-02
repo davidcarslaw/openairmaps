@@ -15,9 +15,21 @@ networkMap(
 )
 }
 \arguments{
-\item{source}{One or more sources of meta data. Can be \code{aurn}, \code{saqn} (or
-\code{saqd}), \code{aqe}, \code{waqn}, \code{ni}, \code{local} (or \code{lmam}), \code{kcl} or \code{europe}; upper
-or lower case.}
+\item{source}{One or more air quality networks for which data is available
+through openair. Available networks include:
+\itemize{
+\item \code{"aurn"},  The UK Automatic Urban and Rural Network.
+\item \code{"aqe"},  The Air Quality England Network.
+\item \code{"saqn"},  The Scottish Air Quality Network.
+\item \code{"waqn"},  The Welsh Air Quality Network.
+\item \code{"ni"},  The Northern Ireland Air Quality Network.
+\item \code{"local"},  Locally managed air quality networks in England.
+\item \code{"kcl"}, King's College London networks.
+\item \code{"europe"}, European AirBase/e-reporting data.
+There are two additional options provided for convenience:
+\item \code{"ukaq"} will return metadata for all networks for which data is imported by \code{\link[openair:importUKAQ]{importUKAQ()}} (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).
+\item \code{"all"} will import all available metadata (i.e., \code{"ukaq"} plus \code{"kcl"} and \code{"europe"}).
+}}
 
 \item{control}{Option to add a "layer control" menu to allow readers to
 select between different site types. Can choose between effectively any
