@@ -18,7 +18,7 @@ activity, or the centroid of a specific urban area)."><meta property="og:image" 
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,17 +86,26 @@ activity, or the centroid of a specific urban area).</p>
 
 
 <dt>source</dt>
-<dd><p>One or more sources of meta data. Can be <code>aurn</code>, <code>saqn</code> (or
-<code>saqd</code>), <code>aqe</code>, <code>waqn</code>, <code>ni</code>, <code>local</code> (or <code>lmam</code>), <code>kcl</code> or <code>europe</code>; upper
-or lower case.</p></dd>
+<dd><p>One or more air quality networks for which data is available
+through openair. Available networks include:</p><ul><li><p><code>"aurn"</code>,  The UK Automatic Urban and Rural Network.</p></li>
+<li><p><code>"aqe"</code>,  The Air Quality England Network.</p></li>
+<li><p><code>"saqn"</code>,  The Scottish Air Quality Network.</p></li>
+<li><p><code>"waqn"</code>,  The Welsh Air Quality Network.</p></li>
+<li><p><code>"ni"</code>,  The Northern Ireland Air Quality Network.</p></li>
+<li><p><code>"local"</code>,  Locally managed air quality networks in England.</p></li>
+<li><p><code>"kcl"</code>, King's College London networks.</p></li>
+<li><p><code>"europe"</code>, European AirBase/e-reporting data.
+There are two additional options provided for convenience:</p></li>
+<li><p><code>"ukaq"</code> will return metadata for all networks for which data is imported by <code><a href="https://davidcarslaw.github.io/openair/reference/importUKAQ.html" class="external-link">importUKAQ()</a></code> (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).</p></li>
+<li><p><code>"all"</code> will import all available metadata (i.e., <code>"ukaq"</code> plus <code>"kcl"</code> and <code>"europe"</code>).</p></li>
+</ul></dd>
 
 
 <dt>year</dt>
 <dd><p>If a single year is selected, only sites that were open at some
 point in that year are returned. If <code>all = TRUE</code> only sites that
 measured a particular pollutant in that year are returned. Year can also be
-a sequence e.g. <code>year = 2010:2020</code> or of length 2 e.g. <code>year =
-  c(2010, 2020)</code>, which will return only sites that were open over the
+a sequence e.g. <code>year = 2010:2020</code> or of length 2 e.g. <code>year = c(2010, 2020)</code>, which will return only sites that were open over the
 duration. Note that <code>year</code> is ignored when the <code>source</code> is either
 <code>"kcl"</code> or <code>"europe"</code>.</p></dd>
 

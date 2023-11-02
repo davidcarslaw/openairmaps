@@ -16,7 +16,7 @@ ggplot2::guides()."><meta property="og:image" content="https://davidcarslaw.gith
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,13 +66,12 @@ can be achieved using functions like <code><a href="https://ggplot2.tidyverse.or
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">percentileMapStatic</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
 <span>  pollutant <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">ggmap</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">75</span>, <span class="fl">90</span>, <span class="fl">95</span><span class="op">)</span>,</span>
 <span>  intervals <span class="op">=</span> <span class="st">"fixed"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  facet <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  zoom <span class="op">=</span> <span class="fl">13</span>,</span>
-<span>  ggmap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cols <span class="op">=</span> <span class="st">"turbo"</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -98,6 +97,11 @@ longitude.</p></dd>
 pollutants are specified, they will each form part of a separate panel.</p></dd>
 
 
+<dt>ggmap</dt>
+<dd><p>A <code>ggmap</code> object obtained using <code><a href="https://rdrr.io/pkg/ggmap/man/get_map.html" class="external-link">ggmap::get_map()</a></code> or a similar
+function to use as the basemap.</p></dd>
+
+
 <dt>percentile</dt>
 <dd><p>The percentile value(s) to plot. Must be between 0–100. If
 <code>percentile = NA</code> then only a mean line will be shown.</p></dd>
@@ -120,20 +124,6 @@ will be automatically inferred from data by looking for a column named
 <dd><p>Used for splitting the input data into different panels, passed
 to the <code>type</code> argument of <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>. <code>facet</code> cannot be used if
 multiple <code>pollutant</code> columns have been provided.</p></dd>
-
-
-<dt>zoom</dt>
-<dd><p>The zoom level to use for the basemap, passed to
-<code><a href="https://rdrr.io/pkg/ggmap/man/get_stamenmap.html" class="external-link">ggmap::get_stamenmap()</a></code>. Alternatively, the <code>ggmap</code> argument can be used
-for more precise control of the basemap.</p></dd>
-
-
-<dt>ggmap</dt>
-<dd><p>By default, <code>openairmaps</code> will try to estimate an appropriate
-bounding box for the input data and then run <code><a href="https://rdrr.io/pkg/ggmap/man/get_stamenmap.html" class="external-link">ggmap::get_stamenmap()</a></code> to
-import a basemap. The <code>ggmap</code> argument allows users to provide their own
-<code>ggmap</code> object to override this, which allows for alternative bounding
-boxes, map types and colours.</p></dd>
 
 
 <dt>cols</dt>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,6 +54,7 @@
 <h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
 <ul><li><p>BREAKING: The arguments of <code><a href="../reference/addPolarMarkers.html">addPolarMarkers()</a></code> have been rejigged to move “data” after “pollutant”, owing to the new use of <code><a href="https://rdrr.io/pkg/leaflet/man/getMapData.html" class="external-link">leaflet::getMapData()</a></code>. (<a href="https://github.com/davidcarslaw/openairmaps/issues/45" class="external-link">#45</a>)</p></li>
 <li><p>BREAKING: The default arguments of some <code><a href="../reference/polarMap.html">polarMap()</a></code>-family functions have changed from, e.g., <code>NULL</code> to <code>"free"</code> or <code>"fixed"</code>. (<a href="https://github.com/davidcarslaw/openairmaps/issues/34" class="external-link">#34</a>)</p></li>
+<li><p>BREAKING: Due to changes in <a href="https://github.com/dkahle/ggmap" class="external-link">ggmap</a>, all static polar plotting functions now require users to provide their own <code>ggmap</code> object. The <code>zoom</code> argument has also been removed. This is specifically related to the partnership of Stamen and Stadia which has put the stamen tiles behind an API. See <a href="https://maps.stamen.com/stadia-partnership/" class="external-link uri">https://maps.stamen.com/stadia-partnership/</a> and <a href="https://github.com/dkahle/ggmap/issues/353" class="external-link uri">https://github.com/dkahle/ggmap/issues/353</a> for more information. (<a href="https://github.com/davidcarslaw/openairmaps/issues/52" class="external-link">#52</a>)</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
