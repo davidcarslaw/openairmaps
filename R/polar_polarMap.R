@@ -307,14 +307,8 @@ polarMap <- function(data,
 #' @param facet Used for splitting the input data into different panels, passed
 #'   to the `type` argument of [openair::cutData()]. `facet` cannot be used if
 #'   multiple `pollutant` columns have been provided.
-#' @param zoom The zoom level to use for the basemap, passed to
-#'   [ggmap::get_stamenmap()]. Alternatively, the `ggmap` argument can be used
-#'   for more precise control of the basemap.
-#' @param ggmap By default, `openairmaps` will try to estimate an appropriate
-#'   bounding box for the input data and then run [ggmap::get_stamenmap()] to
-#'   import a basemap. The `ggmap` argument allows users to provide their own
-#'   `ggmap` object to override this, which allows for alternative bounding
-#'   boxes, map types and colours.
+#' @param ggmap A `ggmap` object obtained using [ggmap::get_map()] or a similar
+#'   function to use as the basemap.
 #' @param facet.nrow Passed to the `nrow` argument of [ggplot2::facet_wrap()].
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot
@@ -327,14 +321,13 @@ polarMap <- function(data,
 #' @export
 polarMapStatic <- function(data,
                            pollutant = NULL,
+                           ggmap,
                            x = "ws",
                            limits = "free",
                            upper = "fixed",
                            latitude = NULL,
                            longitude = NULL,
                            facet = NULL,
-                           zoom = 13,
-                           ggmap = NULL,
                            cols = "turbo",
                            alpha = 1,
                            key = FALSE,
@@ -342,6 +335,9 @@ polarMapStatic <- function(data,
                            d.icon = 150,
                            d.fig = 3,
                            ...) {
+  # check that there is a ggmap
+  check_ggmap(missing(ggmap))
+
   # assume lat/lon
   latlon <- assume_latlon(
     data = data,
@@ -456,16 +452,6 @@ polarMapStatic <- function(data,
       longitude = longitude,
       split_col = split_col,
       d.fig = d.fig
-    )
-
-  # load ggmap if not provided
-  ggmap <-
-    estimate_ggmap(
-      ggmap = ggmap,
-      data = plots_df,
-      latitude = latitude,
-      longitude = longitude,
-      zoom = zoom
     )
 
   # create static map - deals with basics & facets

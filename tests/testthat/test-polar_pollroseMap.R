@@ -15,16 +15,3 @@ test_that("pollutionrose map works in an advanced way", {
     breaks = 10
   ))
 })
-
-test_that("static pollutionrose map works with two pollutants", {
-  expect_no_error(pollroseMapStatic(polar_data, c("nox", "pm2.5")))
-})
-
-test_that("static pollutionrose map works in an advanced way", {
-  expect_no_error(pollroseMapStatic(
-    polar_data,
-    "nox",
-    facet = "weekend",
-    breaks = 10
-  ))
-})
