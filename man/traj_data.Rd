@@ -29,7 +29,7 @@ A data frame with 53940 rows and 10 variables:
 \source{
 \code{traj_data} was compiled from data using the \code{\link[openair:importTraj]{openair::importTraj()}}
 function from the \code{openair} package with air quality data from
-\code{\link[openair:importAURN]{openair::importAURN()}} function.
+\code{\link[openair:importUKAQ-wrapper]{openair::importAURN()}} function.
 }
 \usage{
 traj_data

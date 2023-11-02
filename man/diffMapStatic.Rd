@@ -8,13 +8,12 @@ diffMapStatic(
   before,
   after,
   pollutant = NULL,
+  ggmap,
   limits = "free",
   x = "ws",
   latitude = NULL,
   longitude = NULL,
   facet = NULL,
-  zoom = 13,
-  ggmap = NULL,
   cols = c("#002F70", "#3167BB", "#879FDB", "#C8D2F1", "#F6F6F6", "#F4C8C8", "#DA8A8B",
     "#AE4647", "#5F1415"),
   alpha = 1,
@@ -35,6 +34,9 @@ for details of different input requirements.}
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
 
+\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
+function to use as the basemap.}
+
 \item{limits}{One of:
 \itemize{
 \item \code{"fixed"} which ensures all of the markers use the same colour scale.
@@ -54,16 +56,6 @@ will be automatically inferred from data by looking for a column named
 \item{facet}{Used for splitting the input data into different panels, passed
 to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
 multiple \code{pollutant} columns have been provided.}
-
-\item{zoom}{The zoom level to use for the basemap, passed to
-\code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}}. Alternatively, the \code{ggmap} argument can be used
-for more precise control of the basemap.}
-
-\item{ggmap}{By default, \code{openairmaps} will try to estimate an appropriate
-bounding box for the input data and then run \code{\link[ggmap:get_stamenmap]{ggmap::get_stamenmap()}} to
-import a basemap. The \code{ggmap} argument allows users to provide their own
-\code{ggmap} object to override this, which allows for alternative bounding
-boxes, map types and colours.}
 
 \item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
 more information.}
@@ -251,6 +243,8 @@ regression statistics are used such as \emph{r}. Default is \code{4}.}
     \item{\code{kernel}}{Type of kernel used for the weighting procedure for when
 correlation or regression techniques are used. Only \code{"gaussian"} is
 supported but this may be enhanced in the future.}
+    \item{\code{formula.label}}{When pair-wise statistics such as regression slopes are
+calculated and plotted, should a formula label be displayed?}
     \item{\code{tau}}{The quantile to be estimated when \code{statistic} is set to
 \code{"quantile.slope"}. Default is \code{0.5} which is equal to the median
 and will be ignored if \code{"quantile.slope"} is not used.}

@@ -20,15 +20,26 @@ searchNetwork(
 \arguments{
 \item{lat, lng}{The latitude and longitude for the location of interest.}
 
-\item{source}{One or more sources of meta data. Can be \code{aurn}, \code{saqn} (or
-\code{saqd}), \code{aqe}, \code{waqn}, \code{ni}, \code{local} (or \code{lmam}), \code{kcl} or \code{europe}; upper
-or lower case.}
+\item{source}{One or more air quality networks for which data is available
+through openair. Available networks include:
+\itemize{
+\item \code{"aurn"},  The UK Automatic Urban and Rural Network.
+\item \code{"aqe"},  The Air Quality England Network.
+\item \code{"saqn"},  The Scottish Air Quality Network.
+\item \code{"waqn"},  The Welsh Air Quality Network.
+\item \code{"ni"},  The Northern Ireland Air Quality Network.
+\item \code{"local"},  Locally managed air quality networks in England.
+\item \code{"kcl"}, King's College London networks.
+\item \code{"europe"}, European AirBase/e-reporting data.
+There are two additional options provided for convenience:
+\item \code{"ukaq"} will return metadata for all networks for which data is imported by \code{\link[openair:importUKAQ]{importUKAQ()}} (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).
+\item \code{"all"} will import all available metadata (i.e., \code{"ukaq"} plus \code{"kcl"} and \code{"europe"}).
+}}
 
 \item{year}{If a single year is selected, only sites that were open at some
 point in that year are returned. If \code{all = TRUE} only sites that
 measured a particular pollutant in that year are returned. Year can also be
-a sequence e.g. \code{year = 2010:2020} or of length 2 e.g. \code{year =
-  c(2010, 2020)}, which will return only sites that were open over the
+a sequence e.g. \code{year = 2010:2020} or of length 2 e.g. \code{year = c(2010, 2020)}, which will return only sites that were open over the
 duration. Note that \code{year} is ignored when the \code{source} is either
 \code{"kcl"} or \code{"europe"}.}
 

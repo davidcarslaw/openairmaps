@@ -268,13 +268,12 @@ diffMap <- function(before,
 diffMapStatic <- function(before,
                           after,
                           pollutant = NULL,
+                          ggmap,
                           limits = "free",
                           x = "ws",
                           latitude = NULL,
                           longitude = NULL,
                           facet = NULL,
-                          zoom = 13,
-                          ggmap = NULL,
                           cols = c(
                             "#002F70",
                             "#3167BB",
@@ -292,6 +291,9 @@ diffMapStatic <- function(before,
                           d.icon = 150,
                           d.fig = 3,
                           ...) {
+  # check that there is a ggmap
+  check_ggmap(missing(ggmap))
+
   # assume lat/lon
   latlon <- assume_latlon(
     data = before,
@@ -405,16 +407,6 @@ diffMapStatic <- function(before,
       longitude = longitude,
       split_col = split_col,
       d.fig = d.fig
-    )
-
-  # load ggmap if not provided
-  ggmap <-
-    estimate_ggmap(
-      ggmap = ggmap,
-      data = plots_df,
-      latitude = latitude,
-      longitude = longitude,
-      zoom = zoom
     )
 
   # create static map - deals with basics & facets

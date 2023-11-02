@@ -15,16 +15,3 @@ test_that("polar map works in an advanced way", {
     limits = c(0, 200)
   ))
 })
-
-test_that("static polar map works with two pollutants", {
-  expect_no_error(polarMapStatic(polar_data, c("nox", "pm2.5")))
-})
-
-test_that("static polar map works in an advanced way", {
-  expect_no_error(polarMapStatic(
-    polar_data,
-    "nox",
-    facet = "weekend",
-    limits = c(0, 200)
-  ))
-})
