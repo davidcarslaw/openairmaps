@@ -1,4 +1,4 @@
-# openairmaps (development version)
+# openairmaps 0.8.1
 
 These are items associated with the development version of `{openairmaps}`.
 
