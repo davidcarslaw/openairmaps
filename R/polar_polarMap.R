@@ -15,10 +15,6 @@
 #'   pollutants are specified, they can be toggled between using a "layer
 #'   control" interface.
 #' @param x The radial axis variable to plot.
-#' @param limits By default, each individual polar marker has its own colour
-#'   scale. The `limits` argument will force all markers to use the same colour
-#'   scale. The limits are set in the form `c(lower, upper)`, so `limits = c(0,
-#'   100)` would force the plot limits to span 0-100.
 #' @param limits One of:
 #' - `"fixed"` which ensures all of the markers use the same colour scale.
 #' - `"free"` (the default) which allows all of the markers to use different

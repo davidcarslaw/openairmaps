@@ -12,7 +12,17 @@
 #'
 #' @inheritParams openair::importMeta
 #'
-#' @param lat,lng The latitude and longitude for the location of interest.
+#' @param lat,lng The decimal latitude/longitude (or other Y/X coordinate if
+#'   using a different `crs`) for the location of interest. If not provided,
+#'   will be automatically inferred from data by looking for a column named
+#'   "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
+#' @param crs The coordinate reference system (CRS) of `lat`/`lng`, passed to
+#'   [sf::st_crs()]. By default this is [EPSG:4326](https://epsg.io/4326), the
+#'   CRS associated with the commonly used latitude and longitude coordinates.
+#'   Different coordinate systems can be specified using `crs` (e.g., `crs =
+#'   27700` for the [British National Grid](https://epsg.io/27700)). Note that
+#'   non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+#'   plotting on the map.
 #' @param site_type Optional. One or more site types with which to subset the
 #'   site metadata. For example, `site_type = "urban background"` will only
 #'   search urban background sites.
@@ -46,6 +56,7 @@ searchNetwork <-
            variable = NULL,
            max_dist = NULL,
            n = NULL,
+           crs = 4326,
            map = TRUE) {
     # swap NULL to NA - to pass to openair
     if (is.null(year)) {
@@ -68,8 +79,9 @@ searchNetwork <-
       dplyr::tibble(latitude = lat, longitude = lng) %>%
       sf::st_as_sf(
         coords = c("longitude", "latitude"),
-        crs = 4326
-      )
+        crs = crs
+      ) %>%
+      sf::st_transform(crs = 4326)
 
     # filter for site_type
     if (!is.null(site_type)) {
@@ -191,7 +203,7 @@ searchNetwork <-
       leaflet::addMarkers(
         data = target,
         label = "Target",
-        popup = stringr::str_glue("<b><u>TARGET</u></b><br> <b>Latitude:</b> {lat}<br> <b>Longitude:</b> {lng}")
+        popup = stringr::str_glue("<b><u>TARGET</u></b><br> <b>Latitude:</b> {sf::st_coordinates(target$geometry)[1,'Y']}<br> <b>Longitude:</b> {sf::st_coordinates(target$geometry)[1,'X']}")
       ) %>%
       leaflet::addControl(
         position = "bottomright",
