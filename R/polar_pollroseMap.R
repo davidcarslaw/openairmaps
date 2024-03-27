@@ -45,6 +45,7 @@ pollroseMap <- function(data,
                         breaks = NULL,
                         latitude = NULL,
                         longitude = NULL,
+                        crs = 4326,
                         control = NULL,
                         popup = NULL,
                         label = NULL,
@@ -159,7 +160,18 @@ pollroseMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      crs,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legend if breaks are defined
   if (!is.null(breaks) & draw.legend) {

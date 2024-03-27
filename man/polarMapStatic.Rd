@@ -55,8 +55,9 @@ span 0-100.
 \item A numeric value, used as the upper limit for the radial axis scale.
 }}
 
-\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+coordinate if using a different \code{crs}). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{facet}{Used for splitting the input data into different panels, passed
