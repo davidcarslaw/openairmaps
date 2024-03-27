@@ -1,3 +1,5 @@
+# openairmaps (development version)
+
 # openairmaps 0.8.1
 
 This is a minor release of `{openairmaps}`, released mainly to fix an issue with `{ggmap}` but also adding some new functionality for polar marker maps.
