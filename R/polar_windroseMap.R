@@ -38,6 +38,7 @@ windroseMap <- function(data,
                         breaks = 4,
                         latitude = NULL,
                         longitude = NULL,
+                        crs = 4326,
                         control = NULL,
                         popup = NULL,
                         label = NULL,
@@ -154,7 +155,18 @@ windroseMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      crs,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legend
   if (draw.legend) {
