@@ -298,12 +298,16 @@ make_leaflet_map <-
   function(data,
            latitude,
            longitude,
+           crs,
            provider,
            d.icon,
            popup,
            label,
            split_col,
            collapse.control) {
+    data <- sf::st_as_sf(data, coords = c(longitude, latitude), crs = crs) %>%
+      sf::st_transform(crs = 4326)
+
     # create map
     map <- leaflet::leaflet(data)
 
@@ -330,8 +334,6 @@ make_leaflet_map <-
     # add markers
     marker_arg <- list(
       map = map,
-      lat = data[[latitude]],
-      lng = data[[longitude]],
       icon = leaflet::makeIcon(
         iconUrl = data$url,
         iconHeight = height,

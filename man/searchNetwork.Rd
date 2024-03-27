@@ -14,11 +14,15 @@ searchNetwork(
   variable = NULL,
   max_dist = NULL,
   n = NULL,
+  crs = 4326,
   map = TRUE
 )
 }
 \arguments{
-\item{lat, lng}{The latitude and longitude for the location of interest.}
+\item{lat, lng}{The decimal latitude/longitude (or other Y/X coordinate if
+using a different \code{crs}) for the location of interest. If not provided,
+will be automatically inferred from data by looking for a column named
+"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{source}{One or more air quality networks for which data is available
 through openair. Available networks include:
@@ -55,6 +59,13 @@ search sites that measure PM10 and/or CO.}
 kilometres.}
 
 \item{n}{Optional. The maximum number of sites to return.}
+
+\item{crs}{The coordinate reference system (CRS) of \code{lat}/\code{lng}, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
 
 \item{map}{If \code{TRUE}, the default, \code{\link[=searchNetwork]{searchNetwork()}} will return a \code{leaflet}
 map. If \code{FALSE}, it will instead return a \link[tibble:tibble-package]{tibble}.}
