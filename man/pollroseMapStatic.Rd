@@ -54,8 +54,9 @@ the data into segments <1, 1-10, 10-100, >100.}
 to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
 multiple \code{pollutant} columns have been provided.}
 
-\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+coordinate if using a different \code{crs}). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for

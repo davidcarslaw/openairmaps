@@ -22,17 +22,25 @@
 #' @param limits One of:
 #' - `"fixed"` which ensures all of the markers use the same colour scale.
 #' - `"free"` (the default) which allows all of the markers to use different
-#' colour scales.
+#'   colour scales.
 #' - A numeric vector in the form `c(lower, upper)` used to define the colour
-#' scale. For example, `limits = c(0, 100)` would force the plot limits to
-#' span 0-100.
+#'   scale. For example, `limits = c(0, 100)` would force the plot limits to
+#'   span 0-100.
 #' @param upper One of:
 #' - `"fixed"` (the default) which ensures all of the markers use the same radial axis scale.
 #' - `"free"` which allows all of the markers to use different radial axis scales.
 #' - A numeric value, used as the upper limit for the radial axis scale.
-#' @param latitude,longitude The decimal latitude/longitude. If not provided,
-#'   will be automatically inferred from data by looking for a column named
+#' @param latitude,longitude The decimal latitude/longitude (or other Y/X
+#'   coordinate if using a different `crs`). If not provided, will be
+#'   automatically inferred from data by looking for a column named
 #'   "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
+#' @param crs The coordinate reference system (CRS) of the data, passed to
+#'   [sf::st_crs()]. By default this is [EPSG:4326](https://epsg.io/4326), the
+#'   CRS associated with the commonly used latitude and longitude coordinates.
+#'   Different coordinate systems can be specified using `crs` (e.g., `crs =
+#'   27700` for the [British National Grid](https://epsg.io/27700)). Note that
+#'   non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+#'   plotting on the map.
 #' @param control Used for splitting the input data into different groups which
 #'   can be selected between using a "layer control" interface, passed to the
 #'   `type` argument of [openair::cutData()]. `control` cannot be used if
@@ -94,6 +102,7 @@ polarMap <- function(data,
                      upper = "fixed",
                      latitude = NULL,
                      longitude = NULL,
+                     crs = 4326,
                      control = NULL,
                      popup = NULL,
                      label = NULL,
@@ -152,7 +161,7 @@ polarMap <- function(data,
     theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
@@ -253,7 +262,18 @@ polarMap <- function(data,
 
   # create leaflet map
   map <-
-    make_leaflet_map(plots_df, latitude, longitude, provider, d.icon, popup, label, split_col, collapse.control)
+    make_leaflet_map(
+      plots_df,
+      latitude,
+      longitude,
+      crs,
+      provider,
+      d.icon,
+      popup,
+      label,
+      split_col,
+      collapse.control
+    )
 
   # add legend if limits are set
   if (!all(is.na(theLimits)) & draw.legend) {
