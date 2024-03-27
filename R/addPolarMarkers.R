@@ -150,7 +150,9 @@ addPolarMarkers <-
         iconHeight = height,
         iconWidth = width,
         iconAnchorX = width / 2,
-        iconAnchorY = height / 2
+        iconAnchorY = height / 2,
+        popupAnchorX = -.Machine$double.eps,
+        popupAnchorY = -(height / 2) * 0.7
       ),
       group = group,
       layerId = layerId,
@@ -268,7 +270,9 @@ addPolarDiffMarkers <-
         iconHeight = height,
         iconWidth = width,
         iconAnchorX = width / 2,
-        iconAnchorY = height / 2
+        iconAnchorY = height / 2,
+        popupAnchorX = -.Machine$double.eps,
+        popupAnchorY = -(height / 2) * 0.7
       ),
       group = group,
       layerId = layerId,
