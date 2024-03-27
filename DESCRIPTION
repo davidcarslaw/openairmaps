@@ -1,7 +1,7 @@
 Type: Package
 Package: openairmaps
 Title: Create Maps of Air Pollution Data
-Version: 0.8.1
+Version: 0.8.1.9000
 Authors@R: c(
     person("Jack", "Davison", , "jack.davison@ricardo.com", role = c("cre", "aut")),
     person("David", "Carslaw", , "david.carslaw@york.ac.uk", role = "aut")

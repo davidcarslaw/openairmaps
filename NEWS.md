@@ -1,3 +1,9 @@
+# openairmaps (development version)
+
+## New features
+
+* The `crs` argument has been added to the `polarMap()` family and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}`.
+
 # openairmaps 0.8.1
 
 This is a minor release of `{openairmaps}`, released mainly to fix an issue with `{ggmap}` but also adding some new functionality for polar marker maps.
