@@ -12,6 +12,7 @@ polarMap(
   upper = "fixed",
   latitude = NULL,
   longitude = NULL,
+  crs = 4326,
   control = NULL,
   popup = NULL,
   label = NULL,
@@ -57,9 +58,17 @@ span 0-100.
 \item A numeric value, used as the upper limit for the radial axis scale.
 }}
 
-\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+coordinate if using a different \code{crs}). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{crs}{The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
 
 \item{control}{Used for splitting the input data into different groups which
 can be selected between using a "layer control" interface, passed to the
