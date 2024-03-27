@@ -45,8 +45,9 @@ function to use as the basemap.}
 \item A numeric vector defining a sequence of numbers to use as the intervals, e.g., \code{intervals = c(0, 10, 30, 50)}.
 }}
 
-\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+coordinate if using a different \code{crs}). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{facet}{Used for splitting the input data into different panels, passed

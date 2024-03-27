@@ -49,8 +49,9 @@ span 0-100.
 
 \item{x}{The radial axis variable to plot.}
 
-\item{latitude, longitude}{The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+coordinate if using a different \code{crs}). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
 \item{facet}{Used for splitting the input data into different panels, passed
