@@ -14,7 +14,7 @@ multiple layers of markers can be added and toggled between using control."><met
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,6 +68,7 @@ multiple layers of markers can be added and toggled between using <code>control<
 <span>  upper <span class="op">=</span> <span class="st">"fixed"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  crs <span class="op">=</span> <span class="fl">4326</span>,</span>
 <span>  control <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  popup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -122,9 +123,19 @@ span 0-100.</p></li>
 
 
 <dt>latitude, longitude</dt>
-<dd><p>The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+<dd><p>The decimal latitude/longitude (or other Y/X
+coordinate if using a different <code>crs</code>). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
+
+
+<dt>crs</dt>
+<dd><p>The coordinate reference system (CRS) of the data, passed to
+<code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">sf::st_crs()</a></code>. By default this is <a href="https://epsg.io/4326" class="external-link">EPSG:4326</a>, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using <code>crs</code> (e.g., <code>crs = 27700</code> for the <a href="https://epsg.io/27700" class="external-link">British National Grid</a>). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.</p></dd>
 
 
 <dt>control</dt>

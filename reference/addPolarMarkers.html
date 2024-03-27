@@ -18,7 +18,7 @@ polarMap().'><meta property="og:image" content="https://davidcarslaw.github.io/o
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,8 +57,8 @@ polarMap().'><meta property="og:image" content="https://davidcarslaw.github.io/o
     </div>
 
     <div class="ref-description section level2">
-    <p>This function is similar (but not identical to) the <code><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">leaflet::addMarkers()</a></code>
-and <code><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">leaflet::addCircleMarkers()</a></code> functions in <code>leaflet</code>, which allows users
+    <p>This function is similar (but not identical to) the <code><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">leaflet::addMarkers()</a></code>
+and <code><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">leaflet::addCircleMarkers()</a></code> functions in <code>leaflet</code>, which allows users
 to add <code>openair</code> directional analysis plots to any leaflet map and have more
 control over groups and layerIds than in "all-in-one" functions like
 <code><a href="polarMap.html">polarMap()</a></code>.</p>
@@ -78,21 +78,21 @@ control over groups and layerIds than in "all-in-one" functions like
 <span>  popupOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  labelOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  options <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">markerOptions</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-options.html" class="external-link">markerOptions</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  clusterOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  clusterId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  d.icon <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
-<span>  data <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/getMapData.html" class="external-link">getMapData</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span>,</span>
+<span>  data <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/getMapData.html" class="external-link">getMapData</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">addPolarDiffMarkers</span><span class="op">(</span></span>
 <span>  <span class="va">map</span>,</span>
 <span>  <span class="va">pollutant</span>,</span>
-<span>  before <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/getMapData.html" class="external-link">getMapData</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span>,</span>
-<span>  after <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/getMapData.html" class="external-link">getMapData</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span>,</span>
+<span>  before <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/getMapData.html" class="external-link">getMapData</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span>,</span>
+<span>  after <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/getMapData.html" class="external-link">getMapData</a></span><span class="op">(</span><span class="va">map</span><span class="op">)</span>,</span>
 <span>  lng <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  layerId <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -101,7 +101,7 @@ control over groups and layerIds than in "all-in-one" functions like
 <span>  popupOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  labelOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  options <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">markerOptions</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  options <span class="op">=</span> <span class="fu">leaflet</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-options.html" class="external-link">markerOptions</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  clusterOptions <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  clusterId <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  key <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -114,7 +114,7 @@ control over groups and layerIds than in "all-in-one" functions like
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>map</dt>
-<dd><p>a map widget object created from <code><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a>()</code></p></dd>
+<dd><p>a map widget object created from <code><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a>()</code></p></dd>
 
 
 <dt>pollutant</dt>
@@ -144,7 +144,7 @@ functions include <code><a href="https://davidcarslaw.github.io/openair/referenc
 
 <dt>group</dt>
 <dd><p>the name of the group the newly created layers should belong to
-(for <code><a href="https://rdrr.io/pkg/leaflet/man/remove.html" class="external-link">clearGroup</a></code> and <code><a href="https://rdrr.io/pkg/leaflet/man/addLayersControl.html" class="external-link">addLayersControl</a></code> purposes).
+(for <code><a href="https://rstudio.github.io/leaflet/reference/remove.html" class="external-link">clearGroup</a></code> and <code><a href="https://rstudio.github.io/leaflet/reference/addLayersControl.html" class="external-link">addLayersControl</a></code> purposes).
 Human-friendly group names are permitted--they need not be short,
 identifier-style names. Any number of layers and even different types of
 layers (e.g. markers and polygons) can share the same group name.</p></dd>
@@ -155,7 +155,7 @@ layers (e.g. markers and polygons) can share the same group name.</p></dd>
 
 
 <dt>popupOptions</dt>
-<dd><p>A Vector of <code><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">popupOptions</a></code> to provide popups</p></dd>
+<dd><p>A Vector of <code><a href="https://rstudio.github.io/leaflet/reference/map-options.html" class="external-link">popupOptions</a></code> to provide popups</p></dd>
 
 
 <dt>label</dt>
@@ -163,7 +163,7 @@ layers (e.g. markers and polygons) can share the same group name.</p></dd>
 
 
 <dt>labelOptions</dt>
-<dd><p>A Vector of <code><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">labelOptions</a></code> to provide label
+<dd><p>A Vector of <code><a href="https://rstudio.github.io/leaflet/reference/map-options.html" class="external-link">labelOptions</a></code> to provide label
 options for each label. Default <code>NULL</code></p></dd>
 
 
@@ -175,7 +175,7 @@ options for each label. Default <code>NULL</code></p></dd>
 <dt>clusterOptions</dt>
 <dd><p>if not <code>NULL</code>, markers will be clustered using
 <a href="https://github.com/Leaflet/Leaflet.markercluster" class="external-link">Leaflet.markercluster</a>;
- you can use <code><a href="https://rdrr.io/pkg/leaflet/man/map-options.html" class="external-link">markerClusterOptions</a>()</code> to specify marker cluster
+ you can use <code><a href="https://rstudio.github.io/leaflet/reference/map-options.html" class="external-link">markerClusterOptions</a>()</code> to specify marker cluster
 options</p></dd>
 
 
@@ -207,7 +207,7 @@ choice of openair directional analysis plot, which includes wind speed
 (<code>ws</code>), wind direction (<code>wd</code>), and the column representing the
 concentration of a pollutant. In addition, <code>data</code> must include a decimal
 latitude and longitude. By default, it is the data object provided to
-<code><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet::leaflet()</a></code> initially, but can be overridden.</p></dd>
+<code><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet::leaflet()</a></code> initially, but can be overridden.</p></dd>
 
 
 <dt>...</dt>
@@ -219,7 +219,7 @@ latitude and longitude. By default, it is the data object provided to
 <dd><p>A data frame that represents the before/after case. See
 <code><a href="https://davidcarslaw.github.io/openair/reference/polarPlot.html" class="external-link">openair::polarPlot()</a></code> for details of different input requirements. By
 default, both <code>before</code> and <code>after</code> are the data object provided to
-<code><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet::leaflet()</a></code> initially, but at least one should be overridden.</p></dd>
+<code><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet::leaflet()</a></code> initially, but at least one should be overridden.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -243,8 +243,8 @@ default, both <code>before</code> and <code>after</code> are the data object pro
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://davidcarslaw.github.io/openair/" class="external-link">openair</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># different types of polar plot on one map</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">polar_data</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">polar_data</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">addPolarMarkers</span><span class="op">(</span><span class="st">"ws"</span>,</span></span>
 <span class="r-in"><span>    fun <span class="op">=</span> <span class="fu">openair</span><span class="fu">::</span><span class="va"><a href="https://davidcarslaw.github.io/openair/reference/windRose.html" class="external-link">windRose</a></span>,</span></span>
 <span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Wind Rose"</span></span></span>
@@ -253,14 +253,14 @@ default, both <code>before</code> and <code>after</code> are the data object pro
 <span class="r-in"><span>    fun <span class="op">=</span> <span class="fu">openair</span><span class="fu">::</span><span class="va"><a href="https://davidcarslaw.github.io/openair/reference/polarPlot.html" class="external-link">polarPlot</a></span>,</span></span>
 <span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Polar Plot"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/addLayersControl.html" class="external-link">addLayersControl</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/addLayersControl.html" class="external-link">addLayersControl</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    baseGroups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Wind Rose"</span>, <span class="st">"Polar Plot"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># use of polar diff (NB: both 'before' and 'after' inherit from `leaflet()`,</span></span></span>
 <span class="r-in"><span><span class="co"># so at least one should be overridden - in this case 'after')</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">polar_data</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html" class="external-link">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rstudio.github.io/leaflet/reference/leaflet.html" class="external-link">leaflet</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">polar_data</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rstudio.github.io/leaflet/reference/map-layers.html" class="external-link">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">addPolarDiffMarkers</span><span class="op">(</span><span class="st">"nox"</span>,</span></span>
 <span class="r-in"><span>    after <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">polar_data</span>, nox <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/jitter.html" class="external-link">jitter</a></span><span class="op">(</span><span class="va">nox</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>

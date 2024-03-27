@@ -16,7 +16,7 @@ ggplot2::guides()."><meta property="og:image" content="https://davidcarslaw.gith
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,8 +126,9 @@ span 0-100.</p></li>
 
 
 <dt>latitude, longitude</dt>
-<dd><p>The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
+<dd><p>The decimal latitude/longitude (or other Y/X
+coordinate if using a different <code>crs</code>). If not provided, will be
+automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
 
 

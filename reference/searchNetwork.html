@@ -18,7 +18,7 @@ activity, or the centroid of a specific urban area)."><meta property="og:image" 
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,6 +75,7 @@ activity, or the centroid of a specific urban area).</p>
 <span>  variable <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  max_dist <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  crs <span class="op">=</span> <span class="fl">4326</span>,</span>
 <span>  map <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -82,7 +83,10 @@ activity, or the centroid of a specific urban area).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>lat, lng</dt>
-<dd><p>The latitude and longitude for the location of interest.</p></dd>
+<dd><p>The decimal latitude/longitude (or other Y/X coordinate if
+using a different <code>crs</code>) for the location of interest. If not provided,
+will be automatically inferred from data by looking for a column named
+"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
 
 
 <dt>source</dt>
@@ -129,6 +133,15 @@ kilometres.</p></dd>
 
 <dt>n</dt>
 <dd><p>Optional. The maximum number of sites to return.</p></dd>
+
+
+<dt>crs</dt>
+<dd><p>The coordinate reference system (CRS) of <code>lat</code>/<code>lng</code>, passed to
+<code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">sf::st_crs()</a></code>. By default this is <a href="https://epsg.io/4326" class="external-link">EPSG:4326</a>, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using <code>crs</code> (e.g., <code>crs = 27700</code> for the <a href="https://epsg.io/27700" class="external-link">British National Grid</a>). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.</p></dd>
 
 
 <dt>map</dt>
