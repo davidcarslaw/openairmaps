@@ -22,7 +22,10 @@ addTrajPaths(
 
 \item{lat}{The decimal latitude.}
 
-\item{layerId}{The layer id.}
+\item{layerId}{The base string for the layer id. The actual layer IDs will be
+in the format "layerId-linenum" for lines and "layerId_linenum-pointnum"
+for points. For example, the first point of the first trajectory path will
+be "layerId-1-1".}
 
 \item{group}{the name of the group the newly created layers should belong to
 (for \code{\link[leaflet:remove]{leaflet::clearGroup()}} and \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}} purposes).
@@ -95,4 +98,8 @@ for (i in seq(length(unique(traj_data$date)))) {
 
 map
 }
+}
+\seealso{
+\code{shiny::runExample(package = "openairmaps")} to see examples of this
+function used in a \code{\link[shiny:shinyApp]{shiny::shinyApp()}}
 }
