@@ -2,12 +2,11 @@
 % Please edit documentation in R/polar_freqMap.R
 \name{freqMapStatic}
 \alias{freqMapStatic}
-\title{Polar frequency plots on a static ggmap}
+\title{Polar frequency plots on a static map}
 \usage{
 freqMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   statistic = "mean",
   breaks = "free",
   latitude = NULL,
@@ -31,9 +30,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{statistic}{The statistic that should be applied to each wind
 speed/direction bin. Can be "frequency", "mean", "median", "max" (maximum),
@@ -151,7 +147,7 @@ and units properly e.g.  by subscripting the `2' in NO2.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=freqMapStatic]{freqMapStatic()}} creates a \code{ggplot2} map using polar frequency plots as

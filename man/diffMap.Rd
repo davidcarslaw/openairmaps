@@ -318,7 +318,7 @@ diffMap(
 \seealso{
 the original \code{\link[openair:polarDiff]{openair::polarDiff()}}
 
-\code{\link[=diffMapStatic]{diffMapStatic()}} for the static \code{ggmap} equivalent of \code{\link[=diffMap]{diffMap()}}
+\code{\link[=diffMapStatic]{diffMapStatic()}} for the static equivalent of \code{\link[=diffMap]{diffMap()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},

@@ -2,11 +2,10 @@
 % Please edit documentation in R/polar_windroseMap.R
 \name{windroseMapStatic}
 \alias{windroseMapStatic}
-\title{Wind rose plots on a static ggmap}
+\title{Wind rose plots on a static map}
 \usage{
 windroseMapStatic(
   data,
-  ggmap = NULL,
   ws.int = 2,
   breaks = 4,
   facet = NULL,
@@ -27,9 +26,6 @@ directional analysis marker, which includes wind speed (\code{ws}), wind
 direction (\code{wd}), and the column representing the concentration of a
 pollutant. In addition, \code{data} must include a decimal latitude and
 longitude.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{ws.int}{The wind speed interval. Default is 2 m/s but for low met masts
 with low mean wind speeds a value of 1 or 0.5 m/s may be better.}
@@ -188,7 +184,7 @@ and units properly e.g.  by subscripting the `2' in NO2.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=windroseMapStatic]{windroseMapStatic()}} creates a \code{ggplot2} map using wind roses as markers. As

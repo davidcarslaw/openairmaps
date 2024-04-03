@@ -36,7 +36,7 @@
 #' @export
 #'
 #' @seealso the original [openair::polarFreq()]
-#' @seealso [freqMapStatic()] for the static `ggmap` equivalent of [freqMap()]
+#' @seealso [freqMapStatic()] for the static equivalent of [freqMap()]
 #'
 #' @examples
 #' \dontrun{
@@ -246,7 +246,7 @@ freqMap <- function(data,
   map
 }
 
-#' Polar frequency plots on a static ggmap
+#' Polar frequency plots on a static map
 #'
 #' [freqMapStatic()] creates a `ggplot2` map using polar frequency plots as
 #' markers. As this function returns a `ggplot2` object, further customisation
@@ -278,11 +278,10 @@ freqMap <- function(data,
 #' @seealso [freqMap()] for the interactive `leaflet` equivalent of
 #'   [freqMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 freqMapStatic <- function(data,
                           pollutant = NULL,
-                          ggmap,
                           statistic = "mean",
                           breaks = "free",
                           latitude = NULL,
@@ -295,9 +294,6 @@ freqMapStatic <- function(data,
                           d.icon = 150,
                           d.fig = 3,
                           ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
   latlon <- assume_latlon(data = data,
                           latitude = latitude,
@@ -418,7 +414,6 @@ freqMapStatic <- function(data,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,

@@ -2,12 +2,11 @@
 % Please edit documentation in R/polar_percentileMap.R
 \name{percentileMapStatic}
 \alias{percentileMapStatic}
-\title{Percentile roses on a static ggmap}
+\title{Percentile roses on a static map}
 \usage{
 percentileMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   percentile = c(25, 50, 75, 90, 95),
   intervals = "fixed",
   latitude = NULL,
@@ -31,9 +30,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{percentile}{The percentile value(s) to plot. Must be between 0–100. If
 \code{percentile = NA} then only a mean line will be shown.}
@@ -130,7 +126,7 @@ and \code{"left"}.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=percentileMapStatic]{percentileMapStatic()}} creates a \code{ggplot2} map using percentile roses as

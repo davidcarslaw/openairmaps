@@ -166,7 +166,7 @@ percentileMap(polar_data,
 \seealso{
 the original \code{\link[openair:percentileRose]{openair::percentileRose()}}
 
-\code{\link[=percentileMapStatic]{percentileMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=percentileMapStatic]{percentileMapStatic()}} for the static equivalent of
 \code{\link[=percentileMap]{percentileMap()}}
 
 Other interactive directional analysis maps: 

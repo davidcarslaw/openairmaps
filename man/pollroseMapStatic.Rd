@@ -2,12 +2,11 @@
 % Please edit documentation in R/polar_pollroseMap.R
 \name{pollroseMapStatic}
 \alias{pollroseMapStatic}
-\title{Percentile roses on a static ggmap}
+\title{Percentile roses on a static map}
 \usage{
 pollroseMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   statistic = "prop.count",
   breaks = NULL,
   facet = NULL,
@@ -31,9 +30,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{statistic}{The \code{statistic} to be applied to each data bin in the
 plot. Options currently include "prop.count", "prop.mean" and
@@ -101,7 +97,7 @@ wind directions is from a particular wind sector is also shown.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=pollroseMapStatic]{pollroseMapStatic()}} creates a \code{ggplot2} map using percentile roses as
