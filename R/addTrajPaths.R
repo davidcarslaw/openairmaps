@@ -45,6 +45,8 @@
 #'   `opacity` controls the opacity of the lines and `fillOpacity` the opacity
 #'   of the markers.
 #' @return A leaflet object.
+#' @seealso `shiny::runExample(package = "openairmaps")` to see examples of this
+#'   function used in a [shiny::shinyApp()]
 #' @export
 #'
 #' @examples
