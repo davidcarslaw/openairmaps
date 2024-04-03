@@ -220,6 +220,8 @@ windroseMapStatic <- function(data,
                               facet = NULL,
                               latitude = NULL,
                               longitude = NULL,
+                              crs = 4326,
+                              provider = "osm",
                               cols = "turbo",
                               alpha = 1,
                               key = FALSE,
@@ -310,7 +312,9 @@ windroseMapStatic <- function(data,
       pollutant = "ws",
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # sort out legend

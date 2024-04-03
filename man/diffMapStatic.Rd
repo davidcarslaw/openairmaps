@@ -12,6 +12,8 @@ diffMapStatic(
   x = "ws",
   latitude = NULL,
   longitude = NULL,
+  crs = 4326,
+  provider = "osm",
   facet = NULL,
   cols = c("#002F70", "#3167BB", "#879FDB", "#C8D2F1", "#F6F6F6", "#F4C8C8", "#DA8A8B",
     "#AE4647", "#5F1415"),
@@ -49,6 +51,16 @@ span 0-100.
 coordinate if using a different \code{crs}). If not provided, will be
 automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{crs}{The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
+
+\item{provider}{The base map to be used. See \code{rosm::osm.types()} for a list of
+all base maps that can be used.}
 
 \item{facet}{Used for splitting the input data into different panels, passed
 to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if

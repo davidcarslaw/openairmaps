@@ -274,6 +274,8 @@ diffMapStatic <- function(before,
                           x = "ws",
                           latitude = NULL,
                           longitude = NULL,
+                          crs = 4326,
+                          provider = "osm",
                           facet = NULL,
                           cols = c(
                             "#002F70",
@@ -417,7 +419,9 @@ diffMapStatic <- function(before,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create colorbar if limits specified
