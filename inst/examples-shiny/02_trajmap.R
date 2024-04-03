@@ -4,6 +4,8 @@ library(bslib)
 library(openairmaps)
 
 dates <- unique(traj_data$date)
+
+# get combos for layerId removal
 combos <- expand.grid(1:100, 1:100)
 pcombos <- paste("traj", combos$Var1, combos$Var2, sep = "-")
 lcombos <- paste("traj", combos$Var1, sep = "-")
@@ -42,7 +44,7 @@ server <- function(input, output, session) {
       leaflet::removeShape(lcombos)
 
     thedates <-
-      dates[dates > min(input$slider) & dates < max(input$slider)]
+      dates[dates >= min(input$slider) & dates <= max(input$slider)]
 
     thedata <- traj_data[traj_data$date %in% thedates, ]
     leaflet::leafletProxy("map") %>%
