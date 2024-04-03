@@ -485,35 +485,19 @@ create_polar_markers <-
   }
 
 #' if ggmap is not provided, have a guess
-#' @param data `plots_df` input
-#' @param ggmap,latitude,longitude,zoom inherited from parent
+#' @param data `plots_sf` input
 #' @noRd
-estimate_ggmap <-
-  function(ggmap = ggmap,
-           data,
-           latitude = latitude,
-           longitude = longitude,
-           zoom = zoom) {
-    if (is.null(ggmap)) {
-      lat_d <- abs(diff(range(data[[latitude]])) / 2)
-      lon_d <- abs(diff(range(data[[longitude]])) / 2)
-      d <- max(lon_d, lat_d)
-      if (d == 0) d <- 0.05
-
-      minlat <- min(data[[latitude]]) - d
-      maxlat <- max(data[[latitude]]) + d
-
-      minlon <- min(data[[longitude]]) - d
-      maxlon <- max(data[[longitude]]) + d
-
-      ggmap <-
-        ggmap::get_stamenmap(
-          bbox = c(minlon, minlat, maxlon, maxlat),
-          zoom = zoom
-        )
-    }
-
-    return(ggmap)
+estimate_bbox <-
+  function(data) {
+    bbox <- sf::st_bbox(data) %>% as.list()
+    xdiff <- abs(bbox$xmin - bbox$xmax) / 2
+    ydiff <- abs(bbox$ymin - bbox$ymax) / 2
+    mindiff <- min(c(xdiff, ydiff))
+    bbox$xmin <- bbox$xmin - mindiff
+    bbox$xmax <- bbox$xmax + mindiff
+    bbox$ymin <- bbox$ymin - mindiff
+    bbox$ymax <- bbox$ymax + mindiff
+    return(bbox)
   }
 
 #' Create static map
@@ -560,14 +544,7 @@ create_static_map <-
     plots_sf$link <- link_to_img(plots_sf$url, height, width)
 
     # work out an approximate bounding box for the plot
-    bbox <- sf::st_bbox(plots_sf) %>% as.list()
-    xdiff <- abs(bbox$xmin - bbox$xmax) / 2
-    ydiff <- abs(bbox$ymin - bbox$ymax) / 2
-    mindiff <- min(c(xdiff, ydiff))
-    bbox$xmin <- bbox$xmin - mindiff
-    bbox$xmax <- bbox$xmax + mindiff
-    bbox$ymin <- bbox$ymin - mindiff
-    bbox$ymax <- bbox$ymax + mindiff
+    bbox <- estimate_bbox(plots_sf)
 
     # make plot
     plt <-
