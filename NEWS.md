@@ -6,6 +6,8 @@
 
 * Popups for the `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
 
+* Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these.
+
 # openairmaps 0.8.1
 
 This is a minor release of `{openairmaps}`, released mainly to fix an issue with `{ggmap}` but also adding some new functionality for polar marker maps.
