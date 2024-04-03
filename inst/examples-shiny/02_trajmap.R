@@ -12,7 +12,7 @@ lcombos <- paste("traj", combos$Var1, sep = "-")
 
 # create initial map
 map <- leaflet::leaflet() %>%
-  leaflet::addTiles() %>%
+  leaflet::addProviderTiles(provider = leaflet::providers$CartoDB.Voyager) %>%
   leaflet::setView(lng = -10, lat = 60, zoom = 4)
 
 # create user interface
