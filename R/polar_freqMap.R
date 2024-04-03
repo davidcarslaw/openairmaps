@@ -78,9 +78,11 @@ freqMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -120,8 +122,10 @@ freqMap <- function(data,
     theBreaks <- breaks
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
-        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+      c(
+        "!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
+        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector."
+      )
     )
   }
 
@@ -297,9 +301,11 @@ freqMapStatic <- function(data,
                           d.fig = 3,
                           ...) {
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -342,8 +348,10 @@ freqMapStatic <- function(data,
     theBreaks <- breaks
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
-        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+      c(
+        "!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
+        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector."
+      )
     )
   }
 
@@ -443,7 +451,8 @@ freqMapStatic <- function(data,
       ggplot2::geom_point(
         data = plots_df,
         ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                     fill = intervals[1]),
+          fill = intervals[1]
+        ),
         size = 0,
         key_glyph = ggplot2::draw_key_rect
       ) +

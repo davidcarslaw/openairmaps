@@ -161,8 +161,10 @@ polarMap <- function(data,
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -386,12 +388,14 @@ polarMapStatic <- function(data,
     theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 

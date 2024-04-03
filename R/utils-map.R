@@ -84,7 +84,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -234,7 +234,7 @@ assume_latlon <- function(data, latitude, longitude) {
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-                     call = NULL
+        call = NULL
       )
       return(NULL)
     } else if (len == 0) {
@@ -317,8 +317,8 @@ make_leaflet_map <-
     }
     for (i in seq_along(provider)) {
       map <- leaflet::addProviderTiles(map,
-                                       provider[[i]],
-                                       group = names(provider)[[i]]
+        provider[[i]],
+        group = names(provider)[[i]]
       )
     }
 
@@ -464,21 +464,21 @@ create_polar_markers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-                 .f = ~ {
-                   grDevices::png(
-                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-                     width = width * 300,
-                     height = height * 300,
-                     res = 300,
-                     bg = "transparent",
-                     type = "cairo",
-                     antialias = "none"
-                   )
+      .f = ~ {
+        grDevices::png(
+          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+          width = width * 300,
+          height = height * 300,
+          res = 300,
+          bg = "transparent",
+          type = "cairo",
+          antialias = "none"
+        )
 
-                   plot(..4)
+        plot(..4)
 
-                   grDevices::dev.off()
-                 }
+        grDevices::dev.off()
+      }
     )
 
     return(plots_df)
@@ -555,12 +555,14 @@ create_static_map <-
       ggspatial::annotation_map_tile(zoomin = 0, cachedir = tempdir(), type = provider) +
       geom_sf_richtext(data = plots_sf, ggplot2::aes(label = .data[["link"]]), fill = NA, color = NA) +
       theme_static() +
-      ggplot2::coord_sf(xlim = c(bbox$xmin, bbox$xmax),
-                        ylim = c(bbox$ymin, bbox$ymax)) +
+      ggplot2::coord_sf(
+        xlim = c(bbox$xmin, bbox$xmax),
+        ylim = c(bbox$ymin, bbox$ymax)
+      ) +
       ggplot2::labs(x = NULL, y = NULL)
 
     if (length(pollutant) > 1 |
-        !is.null(facet)) {
+      !is.null(facet)) {
       plt <-
         plt + ggplot2::facet_wrap(ggplot2::vars(.data[[split_col]]), nrow = facet.nrow) +
         ggplot2::theme(strip.text = ggtext::element_markdown())
@@ -599,7 +601,7 @@ quick_cutdata <- function(data, type) {
 
 #' checks if multiple pollutants have been provided with a "fixed" scale
 #' @noRd
-check_multipoll <- function(vec, pollutant){
+check_multipoll <- function(vec, pollutant) {
   if ("fixed" %in% vec & length(pollutant) > 1) {
     cli::cli_warn("{.code 'fixed'} limits only work with a single given {.field pollutant}")
     "free"
@@ -623,14 +625,15 @@ geom_sf_richtext <-
            nudge_x = 0,
            nudge_y = 0,
            label.padding = ggplot2::unit(0.25, "lines"),
-           label.r = ggplot2::unit(0.15,
-                                   "lines"),
+           label.r = ggplot2::unit(
+             0.15,
+             "lines"
+           ),
            label.size = 0.25,
            na.rm = FALSE,
            show.legend = NA,
            inherit.aes = TRUE,
-           fun.geometry = NULL)
-  {
+           fun.geometry = NULL) {
     if (!missing(nudge_x) || !missing(nudge_y)) {
       if (!missing(position)) {
         abort("Specify either `position` or `nudge_x`/`nudge_y`")
@@ -655,4 +658,3 @@ geom_sf_richtext <-
       )
     )
   }
-
