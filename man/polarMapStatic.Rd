@@ -2,12 +2,11 @@
 % Please edit documentation in R/polar_polarMap.R
 \name{polarMapStatic}
 \alias{polarMapStatic}
-\title{Bivariate polar plots on a static ggmap}
+\title{Bivariate polar plots on a static map}
 \usage{
 polarMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   x = "ws",
   limits = "free",
   upper = "fixed",
@@ -32,9 +31,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{x}{The radial axis variable to plot.}
 
@@ -269,7 +265,7 @@ and will be ignored if \code{"quantile.slope"} is not used.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=polarMapStatic]{polarMapStatic()}} creates a \code{ggplot2} map using bivariate polar plots as

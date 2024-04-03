@@ -28,7 +28,7 @@
 #' @export
 #'
 #' @seealso the original [openair::pollutionRose()]
-#' @seealso [pollroseMapStatic()] for the static `ggmap` equivalent of
+#' @seealso [pollroseMapStatic()] for the static equivalent of
 #'   [pollroseMap()]
 #'
 #' @examples
@@ -192,7 +192,7 @@ pollroseMap <- function(data,
   return(map)
 }
 
-#' Percentile roses on a static ggmap
+#' Percentile roses on a static map
 #'
 #' [pollroseMapStatic()] creates a `ggplot2` map using percentile roses as
 #' markers. As this function returns a `ggplot2` object, further customisation
@@ -223,11 +223,10 @@ pollroseMap <- function(data,
 #' @seealso [pollroseMap()] for the interactive `leaflet` equivalent of
 #'   [pollroseMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 pollroseMapStatic <- function(data,
                               pollutant = NULL,
-                              ggmap,
                               statistic = "prop.count",
                               breaks = NULL,
                               facet = NULL,
@@ -240,9 +239,6 @@ pollroseMapStatic <- function(data,
                               d.icon = 150,
                               d.fig = 3,
                               ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
   latlon <- assume_latlon(
     data = data,
@@ -317,7 +313,6 @@ pollroseMapStatic <- function(data,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,

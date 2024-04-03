@@ -2,13 +2,12 @@
 % Please edit documentation in R/polar_diffMap.R
 \name{diffMapStatic}
 \alias{diffMapStatic}
-\title{Bivariate polar plots on a static ggmap}
+\title{Bivariate polar plots on a static map}
 \usage{
 diffMapStatic(
   before,
   after,
   pollutant = NULL,
-  ggmap,
   limits = "free",
   x = "ws",
   latitude = NULL,
@@ -33,9 +32,6 @@ for details of different input requirements.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{limits}{One of:
 \itemize{
@@ -254,7 +250,7 @@ analysing data to extract plot components and plotting them in other ways.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=diffMapStatic]{diffMapStatic()}} creates a \code{ggplot2} map using bivariate "difference" polar

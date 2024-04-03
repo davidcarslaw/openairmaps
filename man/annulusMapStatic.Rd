@@ -2,12 +2,11 @@
 % Please edit documentation in R/polar_annulusMap.R
 \name{annulusMapStatic}
 \alias{annulusMapStatic}
-\title{Bivariate polar plots on a static ggmap}
+\title{Bivariate polar plots on a static map}
 \usage{
 annulusMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   period = "hour",
   facet = NULL,
   limits = "free",
@@ -31,9 +30,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{period}{This determines the temporal period to consider. Options are
 "hour" (the default, to plot diurnal variations), "season" to plot
@@ -198,7 +194,7 @@ and units properly e.g.  by subscripting the `2' in NO2.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=annulusMapStatic]{annulusMapStatic()}} creates a \code{ggplot2} map using polar annulus plots as

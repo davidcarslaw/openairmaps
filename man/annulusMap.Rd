@@ -228,7 +228,7 @@ annulusMap(polar_data,
 \seealso{
 the original \code{\link[openair:polarAnnulus]{openair::polarAnnulus()}}
 
-\code{\link[=annulusMapStatic]{annulusMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=annulusMapStatic]{annulusMapStatic()}} for the static equivalent of
 \code{\link[=annulusMap]{annulusMap()}}
 
 Other interactive directional analysis maps: 

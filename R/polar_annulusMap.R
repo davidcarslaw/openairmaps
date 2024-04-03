@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @seealso the original [openair::polarAnnulus()]
-#' @seealso [annulusMapStatic()] for the static `ggmap` equivalent of
+#' @seealso [annulusMapStatic()] for the static equivalent of
 #'   [annulusMap()]
 #'
 #' @examples
@@ -216,7 +216,7 @@ annulusMap <- function(data,
   return(map)
 }
 
-#' Bivariate polar plots on a static ggmap
+#' Bivariate polar plots on a static map
 #'
 #' [annulusMapStatic()] creates a `ggplot2` map using polar annulus plots as
 #' markers. As this function returns a `ggplot2` object, further customisation
@@ -239,11 +239,10 @@ annulusMap <- function(data,
 #' @seealso [annulusMap()] for the interactive `leaflet` equivalent of
 #'   [annulusMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 annulusMapStatic <- function(data,
                              pollutant = NULL,
-                             ggmap,
                              period = "hour",
                              facet = NULL,
                              limits = "free",
@@ -256,9 +255,6 @@ annulusMapStatic <- function(data,
                              d.icon = 150,
                              d.fig = 3,
                              ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
   latlon <- assume_latlon(data = data,
                           latitude = latitude,
@@ -369,7 +365,6 @@ annulusMapStatic <- function(data,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,

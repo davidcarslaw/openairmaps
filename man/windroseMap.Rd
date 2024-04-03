@@ -197,7 +197,7 @@ windroseMap(polar_data,
 \seealso{
 the original \code{\link[openair:windRose]{openair::windRose()}}
 
-\code{\link[=windroseMapStatic]{windroseMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=windroseMapStatic]{windroseMapStatic()}} for the static equivalent of
 \code{\link[=windroseMap]{windroseMap()}}
 
 Other interactive directional analysis maps: 

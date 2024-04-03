@@ -628,18 +628,6 @@ check_multipoll <- function(vec, pollutant){
   }
 }
 
-#' check if ggmap has been provided
-#' @noRd
-check_ggmap <- function(missing) {
-  if (missing) {
-    cli::cli_abort(
-      c("!" = "No {.field ggmap} provided.",
-        "i" = "Please use {.fun ggmap::get_map} or similar to get a tileset."),
-      call = NULL
-    )
-  }
-}
-
 #' a combination of geom_sf and geom_richtext
 #'
 #' @author StuieT85 on GitHub

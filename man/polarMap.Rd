@@ -323,7 +323,7 @@ polarMap(polar_data,
 \seealso{
 the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
 
-\code{\link[=polarMapStatic]{polarMapStatic()}} for the static \code{ggmap} equivalent of \code{\link[=polarMap]{polarMap()}}
+\code{\link[=polarMapStatic]{polarMapStatic()}} for the static equivalent of \code{\link[=polarMap]{polarMap()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
