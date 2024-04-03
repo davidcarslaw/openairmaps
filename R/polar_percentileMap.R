@@ -63,9 +63,11 @@ percentileMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -96,8 +98,10 @@ percentileMap <- function(data,
     theIntervals <- intervals
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
-        "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+      c(
+        "!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
+        "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector."
+      )
     )
   }
 
@@ -259,9 +263,11 @@ percentileMapStatic <- function(data,
                                 d.fig = 3,
                                 ...) {
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -286,15 +292,16 @@ percentileMapStatic <- function(data,
       )$data
 
     theIntervals <- pretty(testplots[[pollutant]])
-
   } else if ("free" %in% intervals) {
     theIntervals <- NA
   } else if (is.numeric(intervals)) {
     theIntervals <- intervals
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
-        "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+      c(
+        "!" = "Do not recognise {.field intervals} value of {.code {intervals}}",
+        "i" = "{.field intervals} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector."
+      )
     )
   }
 
@@ -392,7 +399,8 @@ percentileMapStatic <- function(data,
     plt +
     ggplot2::geom_point(
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                   fill = intervals[1]),
+        fill = intervals[1]
+      ),
       size = 0,
       key_glyph = ggplot2::draw_key_rect
     ) +

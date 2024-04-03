@@ -60,9 +60,11 @@ annulusMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -95,8 +97,10 @@ annulusMap <- function(data,
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -258,9 +262,11 @@ annulusMapStatic <- function(data,
                              d.fig = 3,
                              ...) {
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -293,8 +299,10 @@ annulusMapStatic <- function(data,
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -383,11 +391,15 @@ annulusMapStatic <- function(data,
   if (!all(is.na(theLimits))) {
     plt <-
       plt +
-      ggplot2::geom_point(data = plots_df,
-                          ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-                          alpha = 0) +
-      ggplot2::scale_color_gradientn(limits = theLimits,
-                                     colours = openair::openColours(scheme = cols)) +
+      ggplot2::geom_point(
+        data = plots_df,
+        ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+        alpha = 0
+      ) +
+      ggplot2::scale_color_gradientn(
+        limits = theLimits,
+        colours = openair::openColours(scheme = cols)
+      ) +
       ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
   }
 
