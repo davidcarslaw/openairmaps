@@ -335,12 +335,18 @@ pollroseMapStatic <- function(data,
       openair::openColours(scheme = cols, n = length(intervals)) %>%
       stats::setNames(intervals)
 
+    # create dummy df for creating legend
+    dummy <-
+      dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
+      tidyr::crossing(intervals)
+
+    # add legend
     plt <-
       plt +
       ggplot2::geom_point(
-        data = plots_df,
+        data = dummy,
         ggplot2::aes(.data[[longitude]], .data[[latitude]],
-          fill = intervals[1]
+          fill = .data[["intervals"]]
         ),
         size = 0,
         key_glyph = ggplot2::draw_key_rect
