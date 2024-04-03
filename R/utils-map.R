@@ -552,7 +552,7 @@ create_static_map <-
     # make plot
     plt <-
       ggplot2::ggplot(plots_sf) +
-      ggspatial::annotation_map_tile(zoomin = 0, cachedir = tempdir(), type = provider) +
+      ggspatial::annotation_map_tile(zoomin = 0, cachedir = tempdir(), type = provider, progress = "none") +
       geom_sf_richtext(data = plots_sf, ggplot2::aes(label = .data[["link"]]), fill = NA, color = NA) +
       theme_static() +
       ggplot2::coord_sf(
