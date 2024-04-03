@@ -1,10 +1,18 @@
 # openairmaps (development version)
 
+## Breaking changes
+
+* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added.
+
 ## New features
 
-* The `crs` argument has been added to the `polarMap()` family and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}`.
+* The `crs` argument has been added to the `polarMap()` and `polarMapStatic()` families and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}` / `{ggspatial}`.
 
 * Popups for the `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
+
+## Bug fixes
+
+* Legends drawn by the `polarMapStatic()` function should now render using more recent versions of `{ggplot2}`.
 
 # openairmaps 0.8.1
 
