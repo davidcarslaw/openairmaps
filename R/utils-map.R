@@ -526,7 +526,7 @@ create_static_map <-
     }
 
     link_to_img <- function(x, width, height) {
-      glue::glue("<img src='{x}' width='{width}' height='{height}'/>")
+      stringr::str_glue("<img src='{x}' width='{width}' height='{height}'/>")
     }
 
     # don't turn facet levels into chr, keep as fct
@@ -636,7 +636,7 @@ geom_sf_richtext <-
            fun.geometry = NULL) {
     if (!missing(nudge_x) || !missing(nudge_y)) {
       if (!missing(position)) {
-        abort("Specify either `position` or `nudge_x`/`nudge_y`")
+        cli::cli_abort("Specify either {.arg position} or {.arg nudge_x}/{.arg nudge_y}")
       }
       position <- ggplot2::position_nudge(nudge_x, nudge_y)
     }
