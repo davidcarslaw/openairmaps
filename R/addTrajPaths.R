@@ -24,7 +24,10 @@
 #' @param map a map widget object created from [leaflet::leaflet()].
 #' @param lng The decimal longitude.
 #' @param lat The decimal latitude.
-#' @param layerId The layer id.
+#' @param layerId The base string for the layer id. The actual layer IDs will be
+#'   in the format "layerId-linenum" for lines and "layerId_linenum-pointnum"
+#'   for points. For example, the first point of the first trajectory path will
+#'   be "layerId-1-1".
 #' @param group the name of the group the newly created layers should belong to
 #'   (for [leaflet::clearGroup()] and [leaflet::addLayersControl()] purposes).
 #'   Human-friendly group names are permitted–they need not be short,
@@ -106,6 +109,8 @@ addTrajPaths <-
     )
 
     for (i in seq(length(unique(data$datef)))) {
+      layerid = paste(layerId, i, sep = "-")
+
       # get line/points data
       ldata <- dplyr::filter(data, .data$datef == unique(data$datef)[[i]])
       pdata <- dplyr::filter(ldata, .data$hour.inc %% npoints == 0)
@@ -119,20 +124,25 @@ addTrajPaths <-
           lat = ldata[[lat]],
           weight = 2,
           group = group,
-          layerId = layerId,
-          ...
-        ) %>%
-        leaflet::addCircleMarkers(
-          data = pdata,
-          radius = 3,
-          stroke = F,
-          lng = pdata[[lng]],
-          lat = pdata[[lat]],
-          group = group,
-          layerId = layerId,
-          popup = pdata[["lab"]],
+          layerId = layerid,
           ...
         )
+
+      for (i in 1:nrow(pdata)) {
+        map <-
+          leaflet::addCircleMarkers(
+            map = map,
+            data = pdata[i, ],
+            radius = 3,
+            stroke = F,
+            lng = pdata[i, ][[lng]],
+            lat = pdata[i, ][[lat]],
+            group = group,
+            layerId = paste(layerid, i, sep = "-"),
+            popup = pdata[i, ][["lab"]],
+            ...
+          )
+      }
     }
 
     map
