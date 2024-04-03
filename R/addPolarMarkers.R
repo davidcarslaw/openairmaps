@@ -38,6 +38,8 @@
 #' @param ... Other arguments for the plotting function (e.g. `period` for
 #'   [openair::polarAnnulus()]).
 #' @return A leaflet object.
+#' @seealso `shiny::runExample(package = "openairmaps")` to see examples of this
+#'   function used in a [shiny::shinyApp()]
 #' @describeIn addPolarMarkers Add any one-table polar marker (e.g.,
 #'   [openair::polarPlot()])
 #' @export

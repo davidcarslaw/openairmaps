@@ -96,3 +96,7 @@ for (i in seq(length(unique(traj_data$date)))) {
 map
 }
 }
+\seealso{
+\code{shiny::runExample(package = "openairmaps")} to see examples of this
+function used in a \code{\link[shiny:shinyApp]{shiny::shinyApp()}}
+}
