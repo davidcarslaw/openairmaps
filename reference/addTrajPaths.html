@@ -90,7 +90,10 @@ leaflet map and have more control over groups and layerIds than in
 
 
 <dt>layerId</dt>
-<dd><p>The layer id.</p></dd>
+<dd><p>The base string for the layer id. The actual layer IDs will be
+in the format "layerId-linenum" for lines and "layerId_linenum-pointnum"
+for points. For example, the first point of the first trajectory path will
+be "layerId-1-1".</p></dd>
 
 
 <dt>group</dt>
@@ -146,6 +149,11 @@ colour, but more difficult if you want to colour by a pollutant, for
 example. The easiest way to achieve this is to write a for loop or use
 another iterative approach (e.g. the <code>purrr</code> package) to add one path per
 arrival date. An example of this is provided in the Examples.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p><code>shiny::runExample(package = "openairmaps")</code> to see examples of this
+function used in a <code>shiny::shinyApp()</code></p></div>
     </div>
 
     <div class="section level2">
