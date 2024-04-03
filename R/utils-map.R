@@ -508,6 +508,8 @@ create_static_map <-
   function(plots_df,
            latitude,
            longitude,
+           crs,
+           provider,
            split_col,
            pollutant,
            d.icon,
@@ -536,9 +538,10 @@ create_static_map <-
       sf::st_as_sf(
         plots_df,
         coords = c(longitude, latitude),
-        crs = 4326,
+        crs = crs,
         remove = FALSE
-      )
+      ) %>%
+      sf::st_transform(crs = 4326)
 
     # create link to image
     plots_sf$link <- link_to_img(plots_sf$url, height, width)
@@ -549,7 +552,7 @@ create_static_map <-
     # make plot
     plt <-
       ggplot2::ggplot(plots_sf) +
-      ggspatial::annotation_map_tile(zoomin = 0, cachedir = tempdir()) +
+      ggspatial::annotation_map_tile(zoomin = 0, cachedir = tempdir(), type = provider) +
       geom_sf_richtext(data = plots_sf, ggplot2::aes(label = .data[["link"]]), fill = NA, color = NA) +
       theme_static() +
       ggplot2::coord_sf(xlim = c(bbox$xmin, bbox$xmax),

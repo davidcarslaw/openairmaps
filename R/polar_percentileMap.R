@@ -248,6 +248,8 @@ percentileMapStatic <- function(data,
                                 intervals = "fixed",
                                 latitude = NULL,
                                 longitude = NULL,
+                                crs = 4326,
+                                provider = "osm",
                                 facet = NULL,
                                 cols = "turbo",
                                 alpha = 1,
@@ -371,7 +373,9 @@ percentileMapStatic <- function(data,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create legend

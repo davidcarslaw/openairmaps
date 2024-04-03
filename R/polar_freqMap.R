@@ -286,6 +286,8 @@ freqMapStatic <- function(data,
                           breaks = "free",
                           latitude = NULL,
                           longitude = NULL,
+                          crs = 4326,
+                          provider = "osm",
                           facet = NULL,
                           cols = "turbo",
                           alpha = 1,
@@ -421,7 +423,9 @@ freqMapStatic <- function(data,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create legend

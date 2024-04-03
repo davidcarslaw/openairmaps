@@ -320,6 +320,8 @@ polarMap <- function(data,
 #' @inheritParams polarMap
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they will each form part of a separate panel.
+#' @param provider The base map to be used. See `rosm::osm.types()` for a list of
+#'   all base maps that can be used.
 #' @param facet Used for splitting the input data into different panels, passed
 #'   to the `type` argument of [openair::cutData()]. `facet` cannot be used if
 #'   multiple `pollutant` columns have been provided.
@@ -340,6 +342,8 @@ polarMapStatic <- function(data,
                            upper = "fixed",
                            latitude = NULL,
                            longitude = NULL,
+                           crs = 4326,
+                           provider = "osm",
                            facet = NULL,
                            cols = "turbo",
                            alpha = 1,
@@ -474,7 +478,9 @@ polarMapStatic <- function(data,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create colorbar if limits specified
