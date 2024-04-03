@@ -4,6 +4,9 @@ library(bslib)
 library(openairmaps)
 
 dates <- unique(traj_data$date)
+combos <- expand.grid(1:100, 1:100)
+pcombos <- paste("traj", combos$Var1, combos$Var2, sep = "-")
+lcombos <- paste("traj", combos$Var1, sep = "-")
 
 # create initial map
 map <- leaflet::leaflet() %>%
@@ -35,18 +38,15 @@ server <- function(input, output, session) {
 
   observeEvent(input$slider, {
     leaflet::leafletProxy("map") %>%
-      leaflet::removeMarker(as.character(dates)) %>%
-      leaflet::removeShape(as.character(dates))
+      leaflet::removeMarker(pcombos) %>%
+      leaflet::removeShape(lcombos)
 
     thedates <-
       dates[dates > min(input$slider) & dates < max(input$slider)]
 
-    for (i in seq_along(thedates)) {
-      thedata <- traj_data[traj_data$date == thedates[i], ]
-      leaflet::leafletProxy("map") %>%
-        addTrajPaths(layerId = as.character(thedates[i]),
-                     data = thedata)
-    }
+    thedata <- traj_data[traj_data$date %in% thedates, ]
+    leaflet::leafletProxy("map") %>%
+      addTrajPaths(layerId = "traj", data = thedata)
   })
 }
 
