@@ -45,7 +45,7 @@ server <- function(input, output, session) {
       thedata <- polar_data[polar_data$site == input$sites[i], ]
 
       leaflet::leafletProxy("map") %>%
-        addPolarMarkers(
+        openairmaps::addPolarMarkers(
           data = thedata,
           pollutant = input$pollutant,
           layerId = input$sites[i],
