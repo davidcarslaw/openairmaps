@@ -1,8 +1,6 @@
 
-library(shiny)
-library(bslib)
-library(openairmaps)
-
+traj_data <- openairmaps::traj_data
+`%>%` <- magrittr::`%>%`
 dates <- unique(traj_data$date)
 
 # get combos for layerId removal
@@ -21,15 +19,18 @@ ui <-
     bslib::card_header("Trajectory Map"),
     bslib::card_body(leaflet::leafletOutput("map")),
     bslib::card_footer(
-      shiny::sliderInput(
-        timezone = "GMT",
-        width = "100%",
-        timeFormat = "%F",
-        "slider",
-        "Date",
-        min = min(dates),
-        max = max(dates),
-        value = range(dates)
+      shiny::div(
+        style = "margin:auto;width:80%;",
+        shiny::sliderInput(
+          timezone = "+0000",
+          width = "100%",
+          timeFormat = "%F",
+          "slider",
+          "Range of Arrival Dates",
+          min = min(dates),
+          max = max(dates),
+          value = range(dates)
+        )
       )
     )
   ))
@@ -48,9 +49,9 @@ server <- function(input, output, session) {
 
     thedata <- traj_data[traj_data$date %in% thedates, ]
     leaflet::leafletProxy("map") %>%
-      addTrajPaths(layerId = "traj", data = thedata)
+      openairmaps::addTrajPaths(layerId = "traj", data = thedata)
   })
 }
 
 # run app
-shinyApp(ui, server)
+shiny::shinyApp(ui, server)
