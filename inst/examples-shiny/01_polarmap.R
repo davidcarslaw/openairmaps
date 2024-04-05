@@ -1,7 +1,6 @@
 
-library(shiny)
-library(bslib)
-library(openairmaps)
+polar_data <- openairmaps::polar_data
+`%>%` <- magrittr::`%>%`
 
 # get list of sites in data
 sites <- unique(polar_data$site)
@@ -19,17 +18,17 @@ ui <-
     sidebar = bslib::sidebar(
       shiny::selectInput(
         "pollutant",
-        "Pollutant",
-        choices = c("nox", "no2", "pm2.5", "pm10")
+        "Select Pollutant of Interest",
+        choices = c("NOx" = "nox", "NO2" = "no2", "PM2.5" = "pm2.5", "PM10" = "pm10")
       ),
       shiny::selectInput(
         "sites",
-        "Sites",
+        "Select Sites to Plot",
         choices = sites,
         selected = sites,
         multiple = TRUE
       ),
-      bslib::input_task_button("button", "Plot")
+      bslib::input_task_button("button", "View Polar Plots")
     ),
     leaflet::leafletOutput("map")
   )
@@ -60,4 +59,4 @@ server <- function(input, output, session) {
 }
 
 # run app
-shinyApp(ui, server)
+shiny::shinyApp(ui, server)
