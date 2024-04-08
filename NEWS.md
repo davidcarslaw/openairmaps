@@ -10,9 +10,15 @@
 
 * Popups for the `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
 
+* Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these.
+
 ## Bug fixes
 
 * Legends drawn by the `polarMapStatic()` function should now render using more recent versions of `{ggplot2}`.
+
+* The `addTrajPaths()` `layerId` argument is now implemented in a sensible way to ensure each geometry has a unique `layerId` and can therefore be interacted with in a `{shiny}` context. 
+
+    * `layerId` is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if `layerId = "traj"`, the first point of the first line has the ID `"traj-1-1"`, the second point of the first line has ID `"traj-1-2"`, the first point of the second line has ID `"traj-2-1"`, and so on.
 
 # openairmaps 0.8.1
 
