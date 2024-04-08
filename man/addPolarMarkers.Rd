@@ -166,3 +166,7 @@ leaflet(data = polar_data) \%>\%
   )
 }
 }
+\seealso{
+\code{shiny::runExample(package = "openairmaps")} to see examples of this
+function used in a \code{\link[shiny:shinyApp]{shiny::shinyApp()}}
+}
