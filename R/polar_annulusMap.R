@@ -20,7 +20,6 @@
 #' @export
 #'
 #' @seealso the original [openair::polarAnnulus()]
-#' @seealso [annulusMapStatic()] for the static equivalent of [annulusMap()]
 #'
 #' @examples
 #' \dontrun{
