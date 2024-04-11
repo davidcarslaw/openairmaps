@@ -57,7 +57,7 @@
 #'  meteorological variables such as ambient temperature or atmospheric
 #'  stability may be useful.
 #'
-#'@param limits *Specifier for the polar plot colour scale bounds.*
+#'@param limits *Specifier for the plot colour scale bounds.*
 #'
 #'   *default:* `"free"` | *scope:* dynamic & static
 #'
