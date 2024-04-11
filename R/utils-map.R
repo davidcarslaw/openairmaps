@@ -492,7 +492,7 @@ estimate_bbox <-
     bbox <- sf::st_bbox(data) %>% as.list()
     xdiff <- abs(bbox$xmin - bbox$xmax) / 2
     ydiff <- abs(bbox$ymin - bbox$ymax) / 2
-    mindiff <- min(c(xdiff, ydiff))
+    mindiff <- max(c(xdiff, ydiff))
     bbox$xmin <- bbox$xmin - mindiff
     bbox$xmax <- bbox$xmax + mindiff
     bbox$ymin <- bbox$ymin - mindiff
@@ -658,3 +658,16 @@ geom_sf_richtext <-
       )
     )
   }
+
+#' Check providers are valid
+#' @noRd
+check_providers <- function(provider, static){
+  if (static) {
+    provider <- provider %||% "osm"
+    rlang::arg_match(provider, rosm::osm.types(), multiple = FALSE)
+  } else {
+    provider <- provider %||% "OpenStreetMap"
+    rlang::arg_match(provider, names(leaflet::providers), multiple = TRUE)
+  }
+  return(provider)
+}
