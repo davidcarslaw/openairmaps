@@ -492,11 +492,11 @@ estimate_bbox <-
     bbox <- sf::st_bbox(data) %>% as.list()
     xdiff <- abs(bbox$xmin - bbox$xmax) / 2
     ydiff <- abs(bbox$ymin - bbox$ymax) / 2
-    mindiff <- max(c(xdiff, ydiff))
-    bbox$xmin <- bbox$xmin - mindiff
-    bbox$xmax <- bbox$xmax + mindiff
-    bbox$ymin <- bbox$ymin - mindiff
-    bbox$ymax <- bbox$ymax + mindiff
+    diff <- mean(c(xdiff, ydiff))
+    bbox$xmin <- bbox$xmin - diff
+    bbox$xmax <- bbox$xmax + diff
+    bbox$ymin <- bbox$ymin - diff
+    bbox$ymax <- bbox$ymax + diff
     return(bbox)
   }
 
