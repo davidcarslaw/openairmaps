@@ -277,7 +277,7 @@ polarMap <- function(data,
       dplyr::mutate(data, latlng = paste(.data[[latitude]], .data[[longitude]]))
 
     type_fixed <- type
-    if (is.null(control)) {
+    if (is.null(type)) {
       type_fixed <- "default"
     }
 
@@ -450,16 +450,19 @@ polarMap <- function(data,
 
 #' Deprecated static directional analysis functions
 #'
-#' Static direction analysis mapping functions have been deprecated in favour of
-#' combined functions (e.g., `polarMap()`), which present a more consistent,
-#' unified API for users to simply swap between the two output formats.
+#' @description `r lifecycle::badge("deprecated")`
+#'
+#'   Static direction analysis mapping functions have been deprecated in favour
+#'   of combined functions (e.g., `polarMap()`), which present a more
+#'   consistent, unified API for users to simply swap between the two output
+#'   formats.
 #'
 #' @family deprecated functions
 #' @rdname deprecated-static-polar-maps
 #' @inheritParams polarMap
 #' @param facet Passed to the `type` argument of `polarMap()`.
 #' @param ... Passed to the polar plotting function
-#'
+#' @order 1
 #' @seealso [polarMap()]
 #'
 #' @return a `ggplot2` plot with a `ggspatial` basemap
