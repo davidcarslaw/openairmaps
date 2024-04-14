@@ -257,6 +257,26 @@ Either:
 Any number of pollutants can be specified using the \code{pollutant} argument, and
 multiple layers of markers can be added and toggled between using \code{control}.
 }
+\section{Customisation of static maps using ggplot2}{
+
+
+As the outputs of the static directional analysis functions are \code{ggplot2}
+figures, further customisation is possible using functions such as
+\code{\link[ggplot2:theme]{ggplot2::theme()}}, \code{\link[ggplot2:guides]{ggplot2::guides()}} and \code{\link[ggplot2:labs]{ggplot2::labs()}}.
+
+If multiple pollutants are specified, subscripting (e.g., the "x" in "NOx")
+is achieved using the \link[ggtext:ggtext]{ggtext} package. Therefore if you
+choose to override the plot theme, it is recommended to use
+\verb{[ggplot2::theme()]} and \verb{[ggtext::element_markdown()]} to define the
+\code{strip.text} parameter.
+
+When arguments like \code{limits}, \code{percentile} or \code{breaks} are defined, a legend
+is automatically added to the figure. Legends can be removed using
+\code{ggplot2::theme(legend.position = "none")}, or further customised using
+\code{\link[ggplot2:guides]{ggplot2::guides()}} and either \code{color = ggplot2::guide_colourbar()} for
+continuous legends or \code{fill = ggplot2::guide_legend()} for discrete legends.
+}
+
 \examples{
 \dontrun{
 percentileMap(polar_data,
@@ -271,6 +291,7 @@ percentileMap(polar_data,
 Other directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{diffMap}()},
+\code{\link{freqMap}()},
 \code{\link{polarMap}()},
 \code{\link{pollroseMap}()},
 \code{\link{windroseMap}()}

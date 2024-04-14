@@ -454,6 +454,7 @@ polarMap(polar_data,
 Other directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{diffMap}()},
+\code{\link{freqMap}()},
 \code{\link{percentileMap}()},
 \code{\link{pollroseMap}()},
 \code{\link{windroseMap}()}

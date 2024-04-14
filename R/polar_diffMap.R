@@ -5,6 +5,7 @@
 #'argument, and multiple layers of markers can be added and toggled between
 #'using `control`.
 #'
+#' @inheritSection polarMap Customisation of static maps using ggplot2
 #'@family directional analysis maps
 #'
 #'@inheritParams openair::polarDiff

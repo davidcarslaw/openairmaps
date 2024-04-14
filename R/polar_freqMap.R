@@ -4,7 +4,8 @@
 #'number of pollutants can be specified using the `pollutant` argument, and
 #'multiple layers of markers can be added and toggled between using `control`.
 #'
-#'@family interactive directional analysis maps
+#' @inheritSection polarMap Customisation of static maps using ggplot2
+#'@family directional analysis maps
 #'
 #'@inheritParams polarMap
 #'@param statistic *The statistic that should be applied to each wind
