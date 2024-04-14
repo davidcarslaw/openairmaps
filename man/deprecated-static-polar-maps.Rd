@@ -154,8 +154,8 @@ information.}
 A data frame. The data frame must contain the data to plot the directional
 analysis marker, which includes wind speed (\code{ws}), wind direction (\code{wd}),
 and the column representing the concentration of a pollutant. In addition,
-\code{data} must include a decimal latitude and longitude (or X/Y coordinate used
-in conjunction with \code{crs}).}
+\code{data} must include a decimal latitude and longitude (or X/Y coordinate
+used in conjunction with \code{crs}).}
 
 \item{pollutant}{\emph{Pollutant name(s).}
 
@@ -189,8 +189,8 @@ One of:
 \item \code{"free"} (the default) which allows all of the markers to use different
 colour scales.
 \item A numeric vector in the form \code{c(lower, upper)} used to define the colour
-scale. For example, \code{limits = c(0, 100)} would force the plot limits to span
-0-100.
+scale. For example, \code{limits = c(0, 100)} would force the plot limits to
+span 0-100.
 }}
 
 \item{upper}{\emph{Specifier for the polar plot radial axis upper boundary.}
@@ -217,13 +217,12 @@ automatically inferred from data by looking for a column named
 
 \emph{default:} \code{4326} | \emph{scope:} dynamic & static
 
-The coordinate reference system (CRS) of the data, passed to \code{\link[sf:st_crs]{sf::st_crs()}}.
-By default this is \href{https://epsg.io/4326}{EPSG:4326}, the CRS associated
-with the commonly used latitude and longitude coordinates. Different
-coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the
-\href{https://epsg.io/27700}{British National Grid}). Note that non-lat/lng
-coordinate systems will be re-projected to EPSG:4326 for plotting on the
-map.}
+The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
 
 \item{provider}{\emph{The basemap(s) to be used.}
 
@@ -237,7 +236,7 @@ See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
-own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"  = "Esri.WorldImagery")})
+own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")})
 \item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
 }}
 
@@ -311,9 +310,9 @@ mean wind speeds a value of 1 or 0.5 m/s may be better.}
 
 Most commonly, the number of break points for wind speed in
 \code{\link[openair:windRose]{openair::windRose()}}. For the \code{ws.int} default of \code{2}, the default
-\code{breaks}, \code{4}, generates the break points 2, 4, 6, and 8. Breaks can also be
-used to set specific break points. For example, the argument `breaks = c(0,
-1, 10, 100)`` breaks the data into segments <1, 1-10, 10-100, >100.}
+\code{breaks}, \code{4}, generates the break points 2, 4, 6, and 8. Breaks can also
+be used to set specific break points. For example, the argument `breaks =
+c(0, 1, 10, 100)`` breaks the data into segments <1, 1-10, 10-100, >100.}
 
 \item{statistic}{\emph{The statistic to be applied to each data bin in the plot}
 
@@ -322,8 +321,8 @@ used to set specific break points. For example, the argument `breaks = c(0,
 Options currently include \code{"prop.count"}, \code{"prop.mean"} and \code{"abs.count"}.
 \code{"prop.count"} sizes bins according to the proportion of the frequency of
 measurements.  Similarly, \code{"prop.mean"} sizes bins according to their
-relative contribution to the mean. \code{"abs.count"} provides the absolute count
-of measurements in each bin.}
+relative contribution to the mean. \code{"abs.count"} provides the absolute
+count of measurements in each bin.}
 
 \item{percentile}{\emph{The percentile values for the colour scale bin.}
 

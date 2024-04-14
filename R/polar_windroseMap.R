@@ -1,7 +1,10 @@
-#' Wind rose plots on interactive leaflet maps
+#' Wind roses on dynamic and static maps
 #'
-#' [windroseMap()] creates a `leaflet` map using wind roses as markers. Multiple
-#' layers of markers can be added and toggled between using `control`.
+#' The [windroseMap()] function creates a map using wind roses as markers.
+#' Multiple layers of markers can be created using the `type` argument. By
+#' default, these maps are dynamic and can be panned, zoomed, and otherwise
+#' interacted with. Using the `static` argument allows for static images to be
+#' produced instead.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
 #' @family directional analysis maps
@@ -11,27 +14,27 @@
 #'
 #'   **required** | *scope:* dynamic & static
 #'
-#'  A data frame. The data frame must contain the data to plot the directional
-#'  analysis marker, which includes wind speed (`ws`) and wind direction (`wd`).
-#'  In addition, `data` must include a decimal latitude and longitude (or X/Y
-#'  coordinate used in conjunction with `crs`).
+#'   A data frame. The data frame must contain the data to plot the directional
+#'   analysis marker, which includes wind speed (`ws`) and wind direction
+#'   (`wd`). In addition, `data` must include a decimal latitude and longitude
+#'   (or X/Y coordinate used in conjunction with `crs`).
 #'
 #' @param ws.int *The wind speed interval of the colour axis.*
 #'
 #'  *default:* `2` | *scope:* dynamic & static
 #'
-#'  The wind speed interval. Default is 2 m/s but for low met masts with low
-#'  mean wind speeds a value of 1 or 0.5 m/s may be better.
+#'   The wind speed interval. Default is 2 m/s but for low met masts with low
+#'   mean wind speeds a value of 1 or 0.5 m/s may be better.
 #'
 #' @param breaks *Specifier for the number of breaks of the colour axis.*
 #'
 #'  *default:* `4` | *scope:* dynamic & static
 #'
-#'  Most commonly, the number of break points for wind speed in
-#'  [openair::windRose()]. For the `ws.int` default of `2`, the default
-#'  `breaks`, `4`, generates the break points 2, 4, 6, and 8. Breaks can also be
-#'  used to set specific break points. For example, the argument `breaks = c(0,
-#'  1, 10, 100)`` breaks the data into segments <1, 1-10, 10-100, >100.
+#'   Most commonly, the number of break points for wind speed in
+#'   [openair::windRose()]. For the `ws.int` default of `2`, the default
+#'   `breaks`, `4`, generates the break points 2, 4, 6, and 8. Breaks can also
+#'   be used to set specific break points. For example, the argument `breaks =
+#'   c(0, 1, 10, 100)`` breaks the data into segments <1, 1-10, 10-100, >100.
 #'
 #' @inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate
 #'   -pollutant -type -cols -key
