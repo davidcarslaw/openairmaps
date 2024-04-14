@@ -1,14 +1,14 @@
-#'Polar frequency plots on interactive leaflet maps
+#' Polar frequency plots on interactive leaflet maps
 #'
-#'[freqMap()] creates a `leaflet` map using binned polar plots as markers. Any
-#'number of pollutants can be specified using the `pollutant` argument, and
-#'multiple layers of markers can be added and toggled between using `control`.
+#' [freqMap()] creates a `leaflet` map using binned polar plots as markers. Any
+#' number of pollutants can be specified using the `pollutant` argument, and
+#' multiple layers of markers can be added and toggled between using `control`.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
-#'@family directional analysis maps
+#' @family directional analysis maps
 #'
-#'@inheritParams polarMap
-#'@param statistic *The statistic that should be applied to each wind
+#' @inheritParams polarMap
+#' @param statistic *The statistic that should be applied to each wind
 #'  speed/direction bin.*
 #'
 #'  *default:* `"mean"` | *scope:* dynamic & static
@@ -38,15 +38,15 @@
 #'   100, 10)` - a scale from 0-10 in intervals of 10, or a more flexible
 #'   sequence, e.g., `breaks = c(0, 1, 5, 7, 10)`, which may be useful for some
 #'   situations.
-#'@inheritDotParams openair::polarFreq -mydata -pollutant -statistic -breaks
+#' @inheritDotParams openair::polarFreq -mydata -pollutant -statistic -breaks
 #'   -type -cols -key -plot
-#'@returns Either:
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
-#'@export
+#' @export
 #'
-#'@seealso [openair::polarFreq()]
+#' @seealso [openair::polarFreq()]
 #'
 #' @examples
 #' \dontrun{
@@ -243,7 +243,7 @@ freqMap <- function(data,
         ggplot2::geom_point(
           data = dummy,
           ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                       fill = .data[["intervals"]]
+            fill = .data[["intervals"]]
           ),
           size = 0,
           key_glyph = ggplot2::draw_key_rect

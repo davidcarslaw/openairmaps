@@ -661,7 +661,7 @@ geom_sf_richtext <-
 
 #' Check providers are valid
 #' @noRd
-check_providers <- function(provider, static){
+check_providers <- function(provider, static) {
   if (static) {
     provider <- provider %||% "osm"
     rlang::arg_match(provider, rosm::osm.types(), multiple = FALSE)

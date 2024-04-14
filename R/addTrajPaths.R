@@ -109,7 +109,7 @@ addTrajPaths <-
     )
 
     for (i in seq(length(unique(data$datef)))) {
-      layerid = paste(layerId, i, sep = "-")
+      layerid <- paste(layerId, i, sep = "-")
 
       # get line/points data
       ldata <- dplyr::filter(data, .data$datef == unique(data$datef)[[i]])

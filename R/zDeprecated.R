@@ -1,7 +1,7 @@
 #' Function for back-compatibility with the facet/control args
 #' @param ... inherited from parent function
 #' @noRd
-check_facet_control <- function(...){
+check_facet_control <- function(...) {
   dots <- rlang::list2(...)
 
   if ("control" %in% names(dots)) {
@@ -31,26 +31,26 @@ check_facet_control <- function(...){
   return(NULL)
 }
 
-#'Deprecated static directional analysis functions
+#' Deprecated static directional analysis functions
 #'
-#'@description `r lifecycle::badge("deprecated")`
+#' @description `r lifecycle::badge("deprecated")`
 #'
 #'  Static direction analysis mapping functions have been deprecated in favour
 #'  of combined functions (e.g., `polarMap()`), which present a more consistent,
 #'  unified API for users to simply swap between the two output formats.
 #'
-#'@family deprecated functions
-#'@rdname deprecated-static-polar-maps
-#'@inheritParams polarMap
-#'@param facet Passed to the `type` argument of the relevant `polarMap()` family
+#' @family deprecated functions
+#' @rdname deprecated-static-polar-maps
+#' @inheritParams polarMap
+#' @param facet Passed to the `type` argument of the relevant `polarMap()` family
 #'  function.
-#'@param ... Passed to the polar plotting function
-#'@order 1
-#'@seealso [polarMap()]
+#' @param ... Passed to the polar plotting function
+#' @order 1
+#' @seealso [polarMap()]
 #'
-#'@returns a `ggplot2` object using [ggplot2::coord_sf()] coordinates with a
+#' @returns a `ggplot2` object using [ggplot2::coord_sf()] coordinates with a
 #'  `ggspatial` basemap
-#'@export
+#' @export
 polarMapStatic <- function(data,
                            pollutant = NULL,
                            x = "ws",
@@ -388,4 +388,3 @@ diffMapStatic <- function(before,
     ...
   )
 }
-

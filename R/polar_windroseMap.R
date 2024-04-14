@@ -1,13 +1,13 @@
-#'Wind rose plots on interactive leaflet maps
+#' Wind rose plots on interactive leaflet maps
 #'
-#'[windroseMap()] creates a `leaflet` map using wind roses as markers. Multiple
-#'layers of markers can be added and toggled between using `control`.
+#' [windroseMap()] creates a `leaflet` map using wind roses as markers. Multiple
+#' layers of markers can be added and toggled between using `control`.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
-#'@family directional analysis maps
+#' @family directional analysis maps
 #'
-#'@inheritParams polarMap
-#'@param data *Input data table with wind and geo-spatial information.*
+#' @inheritParams polarMap
+#' @param data *Input data table with wind and geo-spatial information.*
 #'
 #'   **required** | *scope:* dynamic & static
 #'
@@ -16,14 +16,14 @@
 #'  In addition, `data` must include a decimal latitude and longitude (or X/Y
 #'  coordinate used in conjunction with `crs`).
 #'
-#'@param ws.int *The wind speed interval of the colour axis.*
+#' @param ws.int *The wind speed interval of the colour axis.*
 #'
 #'  *default:* `2` | *scope:* dynamic & static
 #'
 #'  The wind speed interval. Default is 2 m/s but for low met masts with low
 #'  mean wind speeds a value of 1 or 0.5 m/s may be better.
 #'
-#'@param breaks *Specifier for the number of breaks of the colour axis.*
+#' @param breaks *Specifier for the number of breaks of the colour axis.*
 #'
 #'  *default:* `4` | *scope:* dynamic & static
 #'
@@ -33,16 +33,16 @@
 #'  used to set specific break points. For example, the argument `breaks = c(0,
 #'  1, 10, 100)`` breaks the data into segments <1, 1-10, 10-100, >100.
 #'
-#'@inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate
+#' @inheritDotParams openair::windRose -ws.int -breaks -mydata -plot -annotate
 #'   -pollutant -type -cols -key
-#'@returns Either:
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
 #'
-#'@export
+#' @export
 #'
-#'@seealso [openair::windRose()]
+#' @seealso [openair::windRose()]
 #'
 #' @examples
 #' \dontrun{
@@ -200,7 +200,7 @@ windroseMap <- function(data,
         ggplot2::geom_point(
           data = dummy,
           ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                       fill = .data[["intervals"]]
+            fill = .data[["intervals"]]
           ),
           size = 0,
           key_glyph = ggplot2::draw_key_rect

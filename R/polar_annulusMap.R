@@ -17,7 +17,7 @@
 #'   variation and "trend" to plot the trend by wind direction.
 #' @inheritDotParams openair::polarAnnulus -mydata -pollutant -period -limits
 #'   -type -cols -key -plot
-#'@returns Either:
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap

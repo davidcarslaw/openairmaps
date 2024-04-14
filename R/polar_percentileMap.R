@@ -27,7 +27,7 @@
 #'
 #' @inheritDotParams openair::percentileRose -mydata -pollutant -percentile
 #'   -type -cols -key -plot -intervals
-#'@returns Either:
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
@@ -217,7 +217,7 @@ percentileMap <- function(data,
         ggplot2::geom_point(
           data = dummy,
           ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                       fill = .data[["intervals"]]
+            fill = .data[["intervals"]]
           ),
           size = 0,
           key_glyph = ggplot2::draw_key_rect
@@ -263,4 +263,3 @@ percentileMap <- function(data,
   # return map
   return(map)
 }
-
