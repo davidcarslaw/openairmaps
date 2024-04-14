@@ -1,9 +1,11 @@
 url: https://davidcarslaw.github.io/openairmaps/
 template:
   bootstrap: 5
+  bootswatch: lumen
+  pkgdown-nav-height: 100px
 
 navbar:
-  title: worldmet
+  title: openairmaps
   structure:
     left:  [intro, reference, news, articles, tutorials, book]
     right: [search, github]
@@ -29,15 +31,11 @@ reference:
   desc: Example data to use with directional mapping functions.
   contents:
   - polar_data
-- subtitle: Interactive
-  desc: Create HTML `leaflet` maps with polar plot markers.
+- subtitle: Mapping
+  desc: Create HTML `leaflet` and static `ggplot2` maps with polar plot markers.
   contents:
-  - has_concept("interactive directional analysis maps")
+  - has_concept("directional analysis maps")
   - addPolarMarkers
-- subtitle: Static
-  desc: Create static `ggmap` maps with polar plot markers.
-  contents:
-  - has_concept("static directional analysis maps")
 
 - title: Trajectory Analysis
 - subtitle: Data
@@ -61,3 +59,7 @@ reference:
   - quickTextHTML
   - convertPostcode
 
+- title: Deprecated
+  desc: Functions which are no longer recommended for use.
+  contents:
+  - has_concept("deprecated functions")
