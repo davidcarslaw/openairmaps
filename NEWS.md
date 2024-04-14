@@ -2,7 +2,7 @@
 
 ## Breaking changes
 
-* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added. Other benefits of this switch include a greater number of available base maps (see: `rosm.osm.types()`) and the ability to simply change the extent of the map axes using `ggplot2::coord_sf()`.
+* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added. Other benefits of this switch include a greater number of available base maps (see: `rosm::osm.types()`) and the ability to simply change the extent of the map axes using `ggplot2::coord_sf()`.
 
 * BREAKING: The `control` and `facet` arguments have been deprecated in favour of `type` in the `polarMap()` family. These arguments will eventually be removed, but as of this version of `{openairmaps}` users will be warned away from their use.
 
