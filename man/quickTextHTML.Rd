@@ -28,7 +28,7 @@ quickTextHTML(labs)
 
 }
 \seealso{
-The original \code{\link[openair:quickText]{openair::quickText()}}, useful for non-HTML/static maps
+\code{\link[openair:quickText]{openair::quickText()}}, useful for non-HTML/static maps
 and plots
 }
 \author{

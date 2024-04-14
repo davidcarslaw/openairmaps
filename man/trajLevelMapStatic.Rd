@@ -198,7 +198,7 @@ It is a \code{ggplot2} implementation of \code{\link[openair:trajLevel]{openair:
 same arguments, which should be more flexible for post-hoc changes.
 }
 \seealso{
-the original \code{\link[openair:trajLevel]{openair::trajLevel()}}
+\code{\link[openair:trajLevel]{openair::trajLevel()}}
 
 \code{\link[=trajLevelMap]{trajLevelMap()}} for the interactive \code{leaflet} equivalent of
 \code{\link[=trajLevelMapStatic]{trajLevelMapStatic()}}

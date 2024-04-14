@@ -27,7 +27,7 @@
 #'@param data *Input data table with pollutant, wind, and geo-spatial
 #'  information.*
 #'
-#'   *Required* | *Scope: dynamic & static*
+#'   **required** | *scope:* dynamic & static
 #'
 #'  A data frame. The data frame must contain the data to plot the directional
 #'  analysis marker, which includes wind speed (`ws`), wind direction (`wd`),
@@ -37,7 +37,7 @@
 #'
 #'@param pollutant *Pollutant name(s).*
 #'
-#'   *Required* | *Scope: dynamic & static*
+#'   **required** | *scope:* dynamic & static
 #'
 #'  The column name(s) of the pollutant(s) to plot. If multiple pollutants are
 #'  specified the `type` argument will no longer be able to be used, and:
@@ -171,8 +171,8 @@
 #'
 #'  *default:* `TRUE` | *scope:* dynamic & static
 #'
-#'  When `limits != "free"`, should a shared legend be created at the side of
-#'  the map?
+#'  When all markers share the same colour scale (e.g., when `limits != "free"`
+#'  in [polarMap()]), should a shared legend be created at the side of the map?
 #'
 #'@param collapse.control *Show the layer control as a collapsed?*
 #'
@@ -218,21 +218,21 @@
 #'@inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot
 #'
-#'@return Either:
+#'@returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
 #'
 #'@export
 #'
-#'@seealso the original [openair::polarPlot()]
+#'@seealso [openair::polarPlot()]
 #'
 #' @examples
 #' \dontrun{
 #' polarMap(polar_data,
 #'   pollutant = "nox",
 #'   x = "ws",
-#'   provider = "Stamen.Toner"
+#'   provider = "CartoDB.Voyager"
 #' )
 #' }
 polarMap <- function(data,
@@ -259,6 +259,9 @@ polarMap <- function(data,
                      ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+
+  # check for old facet/control opts
+  type <- type %||% check_facet_control(...)
 
   # assume lat/lon
   latlon <- assume_latlon(
@@ -448,67 +451,3 @@ polarMap <- function(data,
   return(map)
 }
 
-#' Deprecated static directional analysis functions
-#'
-#' @description `r lifecycle::badge("deprecated")`
-#'
-#'   Static direction analysis mapping functions have been deprecated in favour
-#'   of combined functions (e.g., `polarMap()`), which present a more
-#'   consistent, unified API for users to simply swap between the two output
-#'   formats.
-#'
-#' @family deprecated functions
-#' @rdname deprecated-static-polar-maps
-#' @inheritParams polarMap
-#' @param facet Passed to the `type` argument of `polarMap()`.
-#' @param ... Passed to the polar plotting function
-#' @order 1
-#' @seealso [polarMap()]
-#'
-#' @return a `ggplot2` plot with a `ggspatial` basemap
-#' @export
-polarMapStatic <- function(data,
-                           pollutant = NULL,
-                           x = "ws",
-                           limits = "free",
-                           upper = "fixed",
-                           latitude = NULL,
-                           longitude = NULL,
-                           crs = 4326,
-                           provider = "osm",
-                           facet = NULL,
-                           cols = "turbo",
-                           alpha = 1,
-                           key = FALSE,
-                           facet.nrow = NULL,
-                           d.icon = 150,
-                           d.fig = 3,
-                           ...) {
-  lifecycle::deprecate_soft(
-    when = "0.9.0",
-    what = "polarMapStatic()",
-    with = "polarMap()",
-    details = "The `static` argument in `polarMap()` can now create static outputs."
-  )
-
-  polarMap(
-    data = data,
-    pollutant = pollutant,
-    x = x,
-    limits = limits,
-    upper = upper,
-    latitude = latitude,
-    longitude = longitude,
-    crs = crs,
-    provider = provider,
-    type = facet,
-    cols = cols,
-    alpha = alpha,
-    key = key,
-    static.nrow = facet.nrow,
-    d.icon = d.icon,
-    d.fig = d.fig,
-    static = TRUE,
-    ...
-  )
-}

@@ -37,7 +37,7 @@
 #'
 #' @order 2
 #'
-#' @return Either a [tibble][tibble::tibble-package] or `leaflet` map.
+#' @returns Either a [tibble][tibble::tibble-package] or `leaflet` map.
 #' @export
 #' @family uk air quality network mapping functions
 #'

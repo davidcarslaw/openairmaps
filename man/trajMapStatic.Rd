@@ -169,7 +169,7 @@ trajMapStatic(traj_data, colour = "pm2.5", crs = sf::st_crs(4326)) +
 }
 }
 \seealso{
-the original \code{\link[openair:trajPlot]{openair::trajPlot()}}
+\code{\link[openair:trajPlot]{openair::trajPlot()}}
 
 \code{\link[=trajMap]{trajMap()}} for the interactive \code{leaflet} equivalent of
 \code{\link[=trajMapStatic]{trajMapStatic()}}

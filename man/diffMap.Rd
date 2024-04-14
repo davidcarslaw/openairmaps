@@ -13,19 +13,19 @@ diffMap(
   latitude = NULL,
   longitude = NULL,
   crs = 4326,
-  control = NULL,
+  type = NULL,
   popup = NULL,
   label = NULL,
-  provider = "OpenStreetMap",
-  cols = c("#002F70", "#3167BB", "#879FDB", "#C8D2F1", "#F6F6F6", "#F4C8C8", "#DA8A8B",
-    "#AE4647", "#5F1415"),
+  provider = NULL,
+  cols = "RdBu",
   alpha = 1,
   key = FALSE,
   draw.legend = TRUE,
   collapse.control = FALSE,
   d.icon = 200,
   d.fig = 3.5,
-  type = deprecated(),
+  static = FALSE,
+  static.nrow = NULL,
   ...
 )
 }
@@ -52,73 +52,155 @@ Pearson correlation and regression techniques are to be plotted,
 \item{x}{Name of variable to plot against wind direction in polar
 coordinates, the default is wind speed, \dQuote{ws}.}
 
-\item{limits}{By default, each individual polar marker has its own colour
-scale. The \code{limits} argument will force all markers to use the same colour
-scale. The limits are set in the form \code{c(lower, upper)}, so \code{limits = c(-5, 5)} would force the plot limits to span -5 to 5. It is recommended to use a
-symmetrical limit scale (along with a "diverging" colour palette) for
-effective visualisation.}
+\item{limits}{\emph{Limits for the plot colour scale.}
 
-\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+\emph{default:} \code{"free"} | \emph{scope:} dynamic & static
+
+One of:
+\itemize{
+\item \code{"free"} (the default) which allows all of the markers to use different
+colour scales.
+\item A numeric vector in the form \code{c(lower, upper)} used to define the colour
+scale. For example, \code{limits = c(-10, 10)} would force the plot limits to
+span -10 to 10. It is recommended to use a symmetrical limit scale (along
+with a "diverging" colour palette) for effective visualisation.
+}
+
+Note that the \code{"fixed"} option is not supported in \code{\link[=diffMap]{diffMap()}}.}
+
+\item{latitude, longitude}{\emph{The decimal latitude(Y)/longitude(X).}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+Column names representing the decimal latitude and longitude (or other Y/X
 coordinate if using a different \code{crs}). If not provided, will be
 automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
-\item{crs}{The coordinate reference system (CRS) of the data, passed to
-\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
-CRS associated with the commonly used latitude and longitude coordinates.
-Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
-non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
-plotting on the map.}
+\item{crs}{\emph{The coordinate reference system (CRS).}
 
-\item{control}{Used for splitting the input data into different groups which
-can be selected between using a "layer control" interface, passed to the
-\code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{control} cannot be used if
-multiple \code{pollutant} columns have been provided.}
+\emph{default:} \code{4326} | \emph{scope:} dynamic & static
 
-\item{popup}{Columns to be used as the HTML content for marker popups. Popups
-may be useful to show information about the individual sites (e.g., site
-names, codes, types, etc.). If a vector of column names are provided they
-are passed to \code{\link[=buildPopup]{buildPopup()}} using its default values.}
+The coordinate reference system (CRS) of the data, passed to \code{\link[sf:st_crs]{sf::st_crs()}}.
+By default this is \href{https://epsg.io/4326}{EPSG:4326}, the CRS associated
+with the commonly used latitude and longitude coordinates. Different
+coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the
+\href{https://epsg.io/27700}{British National Grid}). Note that non-lat/lng
+coordinate systems will be re-projected to EPSG:4326 for plotting on the
+map.}
 
-\item{label}{Column to be used as the HTML content for hover-over labels.
-Labels are useful for the same reasons as popups, though are typically
-shorter.}
+\item{type}{\emph{A method to condition the \code{data} for separate plotting.}
 
-\item{provider}{The base map(s) to be used. See
-\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
-all base maps that can be used. If multiple base maps are provided, they
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+Used for splitting the input data into different groups, passed to the
+\code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. When \code{type} is specified:
+\itemize{
+\item \emph{Dynamic}: The different data splits can be toggled between using a "layer control" menu.
+\item \emph{Static:}: The data splits will each appear in a different panel.
+}
+
+\code{type} cannot be used if multiple \code{pollutant} columns have been provided.}
+
+\item{popup}{\emph{Content for marker popups on dynamic maps.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic
+
+Columns to be used as the HTML content for marker popups on dynamic maps.
+Popups may be useful to show information about the individual sites (e.g.,
+site names, codes, types, etc.). If a vector of column names are provided
+they are passed to \code{\link[=buildPopup]{buildPopup()}} using its default values.}
+
+\item{label}{\emph{Content for marker hover-over on dynamic maps.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic
+
+Column to be used as the HTML content for hover-over labels. Labels are
+useful for the same reasons as popups, though are typically shorter.}
+
+\item{provider}{\emph{The basemap(s) to be used.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+The base map(s) to be used beneath the polar markers. If not provided, will
+default to OpenStreetMap for both dynamic and static maps.
+\itemize{
+\item \emph{Dynamic}: Any number of \link[leaflet:providers]{leaflet::providers}.
+See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
+of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
-own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite" = "Esri.WorldImagery")})}
+own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"  = "Esri.WorldImagery")})
+\item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
+}}
 
-\item{cols}{The colours used for plotting. It is recommended to use a
-"diverging" colour palette (along with a symmetrical limit scale) for
-effective visualisation.}
+\item{cols}{\emph{Colours to use for plotting.}
 
-\item{alpha}{The alpha transparency to use for the plotting surface (a value
-between 0 and 1 with zero being fully transparent and 1 fully opaque).}
+\emph{default:} \code{"RdBu"} | \emph{scope:} dynamic & static
 
-\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+The colours used for plotting, passed to \code{\link[openair:openColours]{openair::openColours()}}.  It is
+recommended to use a "diverging" colour palette (along with a symmetrical
+\code{limit} scale) for effective visualisation.}
 
-\item{draw.legend}{When \code{limits} are specified, should a shared legend be
-created at the side of the map? Default is \code{TRUE}.}
+\item{alpha}{\emph{Transparency value for polar markers.}
 
-\item{collapse.control}{Should the "layer control" interface be collapsed?
-Defaults to \code{FALSE}.}
+\emph{default:} \code{1} | \emph{scope:} dynamic & static
 
-\item{d.icon}{The diameter of the plot on the map in pixels. This will affect
-the size of the individual polar markers. Alternatively, a vector in the
-form \code{c(width, height)} can be provided if a non-circular marker is
-desired.}
+A value between 0 (fully transparent) and 1 (fully opaque).}
 
-\item{d.fig}{The diameter of the plots to be produced using \code{openair} in
-inches. This will affect the resolution of the markers on the map.
-Alternatively, a vector in the form \code{c(width, height)} can be provided if a
-non-circular marker is desired.}
+\item{key}{\emph{Transparency value for polar markers.}
 
-\item{type}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Different sites are now
-automatically detected based on latitude and longitude. Please use \code{label}
-and/or \code{popup} to label different sites.}
+\emph{default:} \code{FALSE} | \emph{scope:} dynamic & static
+
+Draw a key for each individual marker? Potentially useful when \code{limits = "free"}, but of limited use otherwise.}
+
+\item{draw.legend}{\emph{Draw a shared legend?}
+
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
+
+When all markers share the same colour scale (e.g., when \code{limits != "free"}
+in \code{\link[=polarMap]{polarMap()}}), should a shared legend be created at the side of the map?}
+
+\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+
+\emph{default:} \code{FALSE} | \emph{scope:} dynamic
+
+For \emph{dynamic} maps, should the "layer control" interface be collapsed? If
+\code{TRUE}, users will have to hover over an icon to view the options.}
+
+\item{d.icon}{\emph{The diameter of the plot on the map in pixels.}
+
+\emph{default:} \code{200} | \emph{scope:} dynamic & static
+
+This will affect the size of the individual polar markers. Alternatively, a
+vector in the form \code{c(width, height)} can be provided if a non-circular
+marker is desired.}
+
+\item{d.fig}{\emph{The diameter of the plots to be produced using \code{{openair}} in
+inches.}
+
+\emph{default:} \code{3.5} | \emph{scope:} dynamic & static
+
+This will affect the resolution of the markers on the map. Alternatively, a
+vector in the form \code{c(width, height)} can be provided if a non-circular
+marker is desired.}
+
+\item{static}{\emph{Produce a static map?}
+
+\emph{default:} \code{FALSE}
+
+This controls whether a \emph{dynamic} or \emph{static} map is produced. The former is
+the default and is broadly more useful, but the latter may be preferable for
+DOCX or PDF outputs (e.g., academic papers).}
+
+\item{static.nrow}{\emph{Number of rows in a static map.}
+
+\emph{default:} \code{NULL} | \emph{scope:} static
+
+Controls the number of rows of panels on a static map when multiple
+\code{pollutant}s or \code{type} are specified; passed to the \code{nrow} argument of
+\code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. The default, \code{NULL}, results in a roughly square
+grid of panels.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:polarPlot]{openair::polarPlot}}
@@ -296,7 +378,11 @@ analysing data to extract plot components and plotting them in other ways.}
   }}
 }
 \value{
-A leaflet object.
+Either:
+\itemize{
+\item \emph{Dynamic:} A leaflet object
+\item \emph{Static:} A \code{ggplot2} object using \code{\link[ggplot2:ggsf]{ggplot2::coord_sf()}} coordinates with a \code{ggspatial} basemap
+}
 }
 \description{
 \code{\link[=diffMap]{diffMap()}} creates a \code{leaflet} map using bivariate polar "difference" plots
@@ -310,22 +396,18 @@ using \code{control}.
 diffMap(
   before = polar_data,
   after = dplyr::mutate(polar_data, nox = jitter(nox, factor = 5)),
-  pollutant = "nox",
-  provider = "Stamen.Toner"
+  pollutant = "nox"
 )
 }
 }
 \seealso{
-the original \code{\link[openair:polarDiff]{openair::polarDiff()}}
+\code{\link[openair:polarDiff]{openair::polarDiff()}}
 
-\code{\link[=diffMapStatic]{diffMapStatic()}} for the static equivalent of \code{\link[=diffMap]{diffMap()}}
-
-Other interactive directional analysis maps: 
+Other directional analysis maps: 
 \code{\link{annulusMap}()},
-\code{\link{freqMap}()},
 \code{\link{percentileMap}()},
 \code{\link{polarMap}()},
 \code{\link{pollroseMap}()},
 \code{\link{windroseMap}()}
 }
-\concept{interactive directional analysis maps}
+\concept{directional analysis maps}
