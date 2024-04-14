@@ -10,10 +10,10 @@
 #'
 #' @param text A character vector.
 #' @export
-#' @return The function returns a character vector for HTML evaluation.
+#' @returns The function returns a character vector for HTML evaluation.
 #' @author Jack Davison.
 #' @keywords methods
-#' @seealso The original [openair::quickText()], useful for non-HTML/static maps
+#' @seealso [openair::quickText()], useful for non-HTML/static maps
 #'   and plots
 #'
 #' @examples
@@ -73,7 +73,7 @@ quickTextHTML <- function(text) {
 #' @param fun.dttm A function to summarise date columns. Defaults to presenting
 #'   the date as a range.
 #'
-#' @return a [tibble::tibble()]
+#' @returns a [tibble::tibble()]
 #' @export
 #'
 #' @examples
@@ -167,7 +167,7 @@ buildPopup <-
 #'
 #' @param postcode A valid UK postcode, e.g., `"SW1A 1AA"`.
 #'
-#' @return A list containing the latitude, longitude, and input postcode.
+#' @returns A list containing the latitude, longitude, and input postcode.
 #' @export
 #' @examples
 #' # convert a UK postcode
