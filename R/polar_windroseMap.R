@@ -3,6 +3,7 @@
 #'[windroseMap()] creates a `leaflet` map using wind roses as markers. Multiple
 #'layers of markers can be added and toggled between using `control`.
 #'
+#' @inheritSection polarMap Customisation of static maps using ggplot2
 #'@family directional analysis maps
 #'
 #'@inheritParams polarMap
