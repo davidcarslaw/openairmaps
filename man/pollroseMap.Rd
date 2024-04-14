@@ -2,7 +2,7 @@
 % Please edit documentation in R/polar_pollroseMap.R
 \name{pollroseMap}
 \alias{pollroseMap}
-\title{Pollution rose plots on interactive leaflet maps}
+\title{Pollution roses on dynamic and static maps}
 \usage{
 pollroseMap(
   data,
@@ -37,8 +37,8 @@ information.}
 A data frame. The data frame must contain the data to plot the directional
 analysis marker, which includes wind speed (\code{ws}), wind direction (\code{wd}),
 and the column representing the concentration of a pollutant. In addition,
-\code{data} must include a decimal latitude and longitude (or X/Y coordinate used
-in conjunction with \code{crs}).}
+\code{data} must include a decimal latitude and longitude (or X/Y coordinate
+used in conjunction with \code{crs}).}
 
 \item{pollutant}{\emph{Pollutant name(s).}
 
@@ -60,19 +60,19 @@ Multiple \code{pollutants} prohibit the use of the \code{type} argument.}
 Options currently include \code{"prop.count"}, \code{"prop.mean"} and \code{"abs.count"}.
 \code{"prop.count"} sizes bins according to the proportion of the frequency of
 measurements.  Similarly, \code{"prop.mean"} sizes bins according to their
-relative contribution to the mean. \code{"abs.count"} provides the absolute count
-of measurements in each bin.}
+relative contribution to the mean. \code{"abs.count"} provides the absolute
+count of measurements in each bin.}
 
 \item{breaks}{\emph{Specifier for the number of breaks of the colour axis.}
 
 \emph{default:} \code{NULL} | \emph{scope:} dynamic & static
 
 Most commonly, the number of break points. If not specified, each marker
-will independently break its supplied data at approximately 6 sensible break
-points. When \code{breaks} are specified, all markers will use the same break
-points. Breaks can also be used to set specific break points. For example,
-the argument \code{breaks = c(0, 1, 10, 100)} breaks the data into segments <1,
-1-10, 10-100, >100.}
+will independently break its supplied data at approximately 6 sensible
+break points. When \code{breaks} are specified, all markers will use the same
+break points. Breaks can also be used to set specific break points. For
+example, the argument \code{breaks = c(0, 1, 10, 100)} breaks the data into
+segments <1, 1-10, 10-100, >100.}
 
 \item{latitude, longitude}{\emph{The decimal latitude(Y)/longitude(X).}
 
@@ -87,13 +87,12 @@ automatically inferred from data by looking for a column named
 
 \emph{default:} \code{4326} | \emph{scope:} dynamic & static
 
-The coordinate reference system (CRS) of the data, passed to \code{\link[sf:st_crs]{sf::st_crs()}}.
-By default this is \href{https://epsg.io/4326}{EPSG:4326}, the CRS associated
-with the commonly used latitude and longitude coordinates. Different
-coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the
-\href{https://epsg.io/27700}{British National Grid}). Note that non-lat/lng
-coordinate systems will be re-projected to EPSG:4326 for plotting on the
-map.}
+The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
 
 \item{type}{\emph{A method to condition the \code{data} for separate plotting.}
 
@@ -136,7 +135,7 @@ See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
-own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"  = "Esri.WorldImagery")})
+own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")})
 \item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
 }}
 
@@ -196,9 +195,9 @@ marker is desired.}
 
 \emph{default:} \code{FALSE}
 
-This controls whether a \emph{dynamic} or \emph{static} map is produced. The former is
-the default and is broadly more useful, but the latter may be preferable for
-DOCX or PDF outputs (e.g., academic papers).}
+This controls whether a \emph{dynamic} or \emph{static} map is produced. The former
+is the default and is broadly more useful, but the latter may be preferable
+for DOCX or PDF outputs (e.g., academic papers).}
 
 \item{static.nrow}{\emph{Number of rows in a static map.}
 
@@ -238,9 +237,11 @@ Either:
 }
 }
 \description{
-\code{\link[=pollroseMap]{pollroseMap()}} creates a \code{leaflet} map using "pollution roses" as markers.
+The \code{\link[=pollroseMap]{pollroseMap()}} function creates a map using pollution roses as markers.
 Any number of pollutants can be specified using the \code{pollutant} argument, and
-multiple layers of markers can be added and toggled between using \code{control}.
+multiple layers of markers can be created using \code{type}. By default, these
+maps are dynamic and can be panned, zoomed, and otherwise interacted with.
+Using the \code{static} argument allows for static images to be produced instead.
 }
 \section{Customisation of static maps using ggplot2}{
 
@@ -255,11 +256,12 @@ choose to override the plot theme, it is recommended to use
 \verb{[ggplot2::theme()]} and \verb{[ggtext::element_markdown()]} to define the
 \code{strip.text} parameter.
 
-When arguments like \code{limits}, \code{percentile} or \code{breaks} are defined, a legend
-is automatically added to the figure. Legends can be removed using
+When arguments like \code{limits}, \code{percentile} or \code{breaks} are defined, a
+legend is automatically added to the figure. Legends can be removed using
 \code{ggplot2::theme(legend.position = "none")}, or further customised using
 \code{\link[ggplot2:guides]{ggplot2::guides()}} and either \code{color = ggplot2::guide_colourbar()} for
-continuous legends or \code{fill = ggplot2::guide_legend()} for discrete legends.
+continuous legends or \code{fill = ggplot2::guide_legend()} for discrete
+legends.
 }
 
 \examples{

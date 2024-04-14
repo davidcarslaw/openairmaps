@@ -1,8 +1,11 @@
-#' Percentile roses on interactive leaflet maps
+#' Percentile roses on dynamic and static maps
 #'
-#' [percentileMap()] creates a `leaflet` map using percentile roses as markers.
-#' Any number of pollutants can be specified using the `pollutant` argument, and
-#' multiple layers of markers can be added and toggled between using `control`.
+#' The [percentileMap()] function creates a map using polar percentile roses as
+#' markers. Any number of pollutants can be specified using the `pollutant`
+#' argument, and multiple layers of markers can be created using `type`. By
+#' default, these maps are dynamic and can be panned, zoomed, and otherwise
+#' interacted with. Using the `static` argument allows for static images to be
+#' produced instead.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
 #' @family directional analysis maps
@@ -20,7 +23,7 @@
 #'
 #'  *default:* `"fixed"` | *scope:* dynamic & static
 #'
-#' One of:
+#'   One of:
 #' - `"fixed"` (the default) which ensures all of the markers use the same radial axis scale.
 #' - `"free"` which allows all of the markers to use different radial axis scales.
 #' - A numeric vector defining a sequence of numbers to use as the intervals, e.g., `intervals = c(0, 10, 30, 50)`.

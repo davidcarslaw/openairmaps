@@ -2,7 +2,7 @@
 % Please edit documentation in R/polar_diffMap.R
 \name{diffMap}
 \alias{diffMap}
-\title{Bivariate polar plots on interactive leaflet maps}
+\title{Bivariate polar 'difference' plots on dynamic and static maps}
 \usage{
 diffMap(
   before,
@@ -81,13 +81,12 @@ automatically inferred from data by looking for a column named
 
 \emph{default:} \code{4326} | \emph{scope:} dynamic & static
 
-The coordinate reference system (CRS) of the data, passed to \code{\link[sf:st_crs]{sf::st_crs()}}.
-By default this is \href{https://epsg.io/4326}{EPSG:4326}, the CRS associated
-with the commonly used latitude and longitude coordinates. Different
-coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the
-\href{https://epsg.io/27700}{British National Grid}). Note that non-lat/lng
-coordinate systems will be re-projected to EPSG:4326 for plotting on the
-map.}
+The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
 
 \item{type}{\emph{A method to condition the \code{data} for separate plotting.}
 
@@ -130,7 +129,7 @@ See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
 of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
-own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"  = "Esri.WorldImagery")})
+own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")})
 \item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
 }}
 
@@ -189,9 +188,9 @@ marker is desired.}
 
 \emph{default:} \code{FALSE}
 
-This controls whether a \emph{dynamic} or \emph{static} map is produced. The former is
-the default and is broadly more useful, but the latter may be preferable for
-DOCX or PDF outputs (e.g., academic papers).}
+This controls whether a \emph{dynamic} or \emph{static} map is produced. The former
+is the default and is broadly more useful, but the latter may be preferable
+for DOCX or PDF outputs (e.g., academic papers).}
 
 \item{static.nrow}{\emph{Number of rows in a static map.}
 
@@ -385,10 +384,12 @@ Either:
 }
 }
 \description{
-\code{\link[=diffMap]{diffMap()}} creates a \code{leaflet} map using bivariate polar "difference" plots
-as markers. Any number of pollutants can be specified using the \code{pollutant}
-argument, and multiple layers of markers can be added and toggled between
-using \code{control}.
+The \code{\link[=diffMap]{diffMap()}} function creates a map using bivariate polar plots as
+markers. Any number of pollutants can be specified using the \code{pollutant}
+argument, and multiple layers of markers can be created using \code{type}. By
+default, these maps are dynamic and can be panned, zoomed, and otherwise
+interacted with. Using the \code{static} argument allows for static images to be
+produced instead.
 }
 \section{Customisation of static maps using ggplot2}{
 
@@ -403,11 +404,12 @@ choose to override the plot theme, it is recommended to use
 \verb{[ggplot2::theme()]} and \verb{[ggtext::element_markdown()]} to define the
 \code{strip.text} parameter.
 
-When arguments like \code{limits}, \code{percentile} or \code{breaks} are defined, a legend
-is automatically added to the figure. Legends can be removed using
+When arguments like \code{limits}, \code{percentile} or \code{breaks} are defined, a
+legend is automatically added to the figure. Legends can be removed using
 \code{ggplot2::theme(legend.position = "none")}, or further customised using
 \code{\link[ggplot2:guides]{ggplot2::guides()}} and either \code{color = ggplot2::guide_colourbar()} for
-continuous legends or \code{fill = ggplot2::guide_legend()} for discrete legends.
+continuous legends or \code{fill = ggplot2::guide_legend()} for discrete
+legends.
 }
 
 \examples{

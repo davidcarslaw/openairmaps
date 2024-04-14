@@ -1,8 +1,11 @@
-#' Polar annulus plots on interactive leaflet maps
+#' Polar annulus plots on dynamic and static maps
 #'
-#' [annulusMap()] creates a `leaflet` map using polar annulus plots as markers.
-#' Any number of pollutants can be specified using the `pollutant` argument, and
-#' multiple layers of markers can be added and toggled between using `control`.
+#' The [annulusMap()] function creates a map using polar annulus plots as
+#' markers. Any number of pollutants can be specified using the `pollutant`
+#' argument, and multiple layers of markers can be created using `type`. By
+#' default, these maps are dynamic and can be panned, zoomed, and otherwise
+#' interacted with. Using the `static` argument allows for static images to be
+#' produced instead.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
 #' @family directional analysis maps

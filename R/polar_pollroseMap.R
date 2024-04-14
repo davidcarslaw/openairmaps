@@ -1,8 +1,10 @@
-#' Pollution rose plots on interactive leaflet maps
+#' Pollution roses on dynamic and static maps
 #'
-#' [pollroseMap()] creates a `leaflet` map using "pollution roses" as markers.
+#' The [pollroseMap()] function creates a map using pollution roses as markers.
 #' Any number of pollutants can be specified using the `pollutant` argument, and
-#' multiple layers of markers can be added and toggled between using `control`.
+#' multiple layers of markers can be created using `type`. By default, these
+#' maps are dynamic and can be panned, zoomed, and otherwise interacted with.
+#' Using the `static` argument allows for static images to be produced instead.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
 #' @family directional analysis maps
@@ -12,22 +14,22 @@
 #'
 #'  *default:* `"prop.mean"` | *scope:* dynamic & static
 #'
-#'  Options currently include `"prop.count"`, `"prop.mean"` and `"abs.count"`.
-#'  `"prop.count"` sizes bins according to the proportion of the frequency of
-#'  measurements.  Similarly, `"prop.mean"` sizes bins according to their
-#'  relative contribution to the mean. `"abs.count"` provides the absolute count
-#'  of measurements in each bin.
+#'   Options currently include `"prop.count"`, `"prop.mean"` and `"abs.count"`.
+#'   `"prop.count"` sizes bins according to the proportion of the frequency of
+#'   measurements.  Similarly, `"prop.mean"` sizes bins according to their
+#'   relative contribution to the mean. `"abs.count"` provides the absolute
+#'   count of measurements in each bin.
 #'
 #' @param breaks *Specifier for the number of breaks of the colour axis.*
 #'
 #'  *default:* `NULL` | *scope:* dynamic & static
 #'
-#'  Most commonly, the number of break points. If not specified, each marker
-#'  will independently break its supplied data at approximately 6 sensible break
-#'  points. When `breaks` are specified, all markers will use the same break
-#'  points. Breaks can also be used to set specific break points. For example,
-#'  the argument `breaks = c(0, 1, 10, 100)` breaks the data into segments <1,
-#'  1-10, 10-100, >100.
+#'   Most commonly, the number of break points. If not specified, each marker
+#'   will independently break its supplied data at approximately 6 sensible
+#'   break points. When `breaks` are specified, all markers will use the same
+#'   break points. Breaks can also be used to set specific break points. For
+#'   example, the argument `breaks = c(0, 1, 10, 100)` breaks the data into
+#'   segments <1, 1-10, 10-100, >100.
 #'
 #' @inheritDotParams openair::pollutionRose -breaks -mydata -pollutant -plot
 #' @returns Either:

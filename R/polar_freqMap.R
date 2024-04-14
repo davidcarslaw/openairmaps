@@ -1,8 +1,11 @@
-#' Polar frequency plots on interactive leaflet maps
+#' Polar frequency plots on dynamic and static maps
 #'
-#' [freqMap()] creates a `leaflet` map using binned polar plots as markers. Any
-#' number of pollutants can be specified using the `pollutant` argument, and
-#' multiple layers of markers can be added and toggled between using `control`.
+#' The [freqMap()] function creates a map using polar frequency plots as
+#' markers. Any number of pollutants can be specified using the `pollutant`
+#' argument, and multiple layers of markers can be created using `type`. By
+#' default, these maps are dynamic and can be panned, zoomed, and otherwise
+#' interacted with. Using the `static` argument allows for static images to be
+#' produced instead.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
 #' @family directional analysis maps
