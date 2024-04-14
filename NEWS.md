@@ -2,13 +2,25 @@
 
 ## Breaking changes
 
-* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added.
+* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added. Other benefits of this switch include a greater number of available base maps (see: `rosm.osm.types()`) and the ability to simply change the extent of the map axes using `ggplot2::coord_sf()`.
+
+* BREAKING: The `control` and `facet` arguments have been deprecated in favour of `type` in the `polarMap()` family. These arguments will eventually be removed, but as of this version of `{openairmaps}` users will be warned away from their use.
 
 ## New features
 
+* The `polarMapStatic()` family of functions have been combined with the `polarMap()` family, with static maps available to be accessed using the `static` argument. The `polarMapStatic()` family are therefore deprecated, and will later be removed from `{openairmaps}`. The justification for this is as follows:
+
+    * The combined functions allows for a more simple, consistent API for users (e.g., avoiding needing to switch between `facet` and `control`).
+    
+    * The use of the `static` argument allows for simple switching between dynamic and static maps. For example, a researcher may wish to use the dynamic maps for data exploration, but then switch to a static map for placement into a PDF report.
+
+    * Recent developments have meant that the arguments and capability of these functions have started to align regardless (e.g., `provider`, `crs`).
+
+    * Combining these functions has reduced repetition in the source code of `{openairmaps}`, reducing the likelihood of oversights and bugs, and allowing for more rapid development.
+
 * The `crs` argument has been added to the `polarMap()` and `polarMapStatic()` families and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}` / `{ggspatial}`.
 
-* Popups for the `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
+* Popups for the dynamic `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
 
 * Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these.
 
