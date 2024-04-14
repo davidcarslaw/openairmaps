@@ -1,17 +1,17 @@
-#'Bivariate polar plots on interactive leaflet maps
+#' Bivariate polar plots on interactive leaflet maps
 #'
-#'[diffMap()] creates a `leaflet` map using bivariate polar "difference" plots
-#'as markers. Any number of pollutants can be specified using the `pollutant`
-#'argument, and multiple layers of markers can be added and toggled between
-#'using `control`.
+#' [diffMap()] creates a `leaflet` map using bivariate polar "difference" plots
+#' as markers. Any number of pollutants can be specified using the `pollutant`
+#' argument, and multiple layers of markers can be added and toggled between
+#' using `control`.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
-#'@family directional analysis maps
+#' @family directional analysis maps
 #'
-#'@inheritParams openair::polarDiff
-#'@inheritParams polarMap
+#' @inheritParams openair::polarDiff
+#' @inheritParams polarMap
 #'
-#'@param limits *Limits for the plot colour scale.*
+#' @param limits *Limits for the plot colour scale.*
 #'
 #'  *default:* `"free"` | *scope:* dynamic & static
 #'
@@ -25,23 +25,23 @@
 #'
 #'  Note that the `"fixed"` option is not supported in [diffMap()].
 #'
-#'@param cols *Colours to use for plotting.*
+#' @param cols *Colours to use for plotting.*
 #'
 #'  *default:* `"RdBu"` | *scope:* dynamic & static
 #'
 #'  The colours used for plotting, passed to [openair::openColours()].  It is
 #'  recommended to use a "diverging" colour palette (along with a symmetrical
 #'  `limit` scale) for effective visualisation.
-#'@inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
+#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -key.footer -key.header -key.position -units -angle.scale -alpha
 #'   -plot
-#'@returns Either:
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
-#'@export
+#' @export
 #'
-#'@seealso [openair::polarDiff()]
+#' @seealso [openair::polarDiff()]
 #'
 #' @examples
 #' \dontrun{
@@ -81,9 +81,11 @@ diffMap <- function(before,
   type <- type %||% check_facet_control(...)
 
   # assume lat/lon
-  latlon <- assume_latlon(data = before,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = before,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -121,8 +123,10 @@ diffMap <- function(before,
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -230,14 +234,17 @@ diffMap <- function(before,
     if (!all(is.na(theLimits)) & draw.legend) {
       map <-
         map +
-        ggplot2::geom_point(data = plots_df,
-                            ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
-                            alpha = 0) +
-        ggplot2::scale_color_gradientn(limits = theLimits,
-                                       colours = openair::openColours(scheme = cols)) +
+        ggplot2::geom_point(
+          data = plots_df,
+          ggplot2::aes(.data[[longitude]], .data[[latitude]], color = 0),
+          alpha = 0
+        ) +
+        ggplot2::scale_color_gradientn(
+          limits = theLimits,
+          colours = openair::openColours(scheme = cols)
+        ) +
         ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
     }
-
   }
 
   if (!static) {
@@ -339,25 +346,30 @@ create_polar_diffmarkers <-
         dplyr::distinct(.data$warning)
 
       cli::cli_warn(
-        c("!" = "Not all {.code latitude}/{.code longitude}/{.code control} combinations in {.code before} matched in {.code after}.",
-          "i" = "Not matched: {.field {warn_df$warning}}")
+        c(
+          "!" = "Not all {.code latitude}/{.code longitude}/{.code control} combinations in {.code before} matched in {.code after}.",
+          "i" = "Not matched: {.field {warn_df$warning}}"
+        )
       )
     }
 
     # check for popup issues
     if (nrow(nested_before) > valid_rows) {
       cli::cli_abort(
-        c("x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
+        c(
+          "x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
           "i" = "Have you used a numeric column, e.g., a pollutant concentration?",
-          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker.")
+          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker."
+        )
       )
     }
 
     # create plots
     plots_df <-
       dplyr::inner_join(nested_before,
-                        nested_after,
-                        by = c(latitude, longitude, split_col)) %>%
+        nested_after,
+        by = c(latitude, longitude, split_col)
+      ) %>%
       dplyr::mutate(
         plot = purrr::map2(before, after, fun, .progress = "Creating Polar Markers"),
         url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], "_", id, ".png")
@@ -373,21 +385,22 @@ create_polar_diffmarkers <-
     }
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
-                 .f = ~ {
-                   grDevices::png(
-                     filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-                     width = width * 300,
-                     height = height * 300,
-                     res = 300,
-                     bg = "transparent",
-                     type = "cairo",
-                     antialias = "none"
-                   )
+      .f = ~ {
+        grDevices::png(
+          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+          width = width * 300,
+          height = height * 300,
+          res = 300,
+          bg = "transparent",
+          type = "cairo",
+          antialias = "none"
+        )
 
-                   plot(..4)
+        plot(..4)
 
-                   grDevices::dev.off()
-                 })
+        grDevices::dev.off()
+      }
+    )
 
     return(plots_df)
   }

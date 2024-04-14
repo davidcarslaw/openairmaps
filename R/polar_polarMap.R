@@ -1,10 +1,10 @@
-#'Bivariate polar plots on dynamic and static maps
+#' Bivariate polar plots on dynamic and static maps
 #'
-#'[polarMap()] creates a map using bivariate polar plots as markers. Any number
-#'of pollutants can be specified using the `pollutant` argument, and multiple
-#'layers of markers can be created using `type`.
+#' [polarMap()] creates a map using bivariate polar plots as markers. Any number
+#' of pollutants can be specified using the `pollutant` argument, and multiple
+#' layers of markers can be created using `type`.
 #'
-#'@section Customisation of static maps using ggplot2:
+#' @section Customisation of static maps using ggplot2:
 #'
 #'  As the outputs of the static directional analysis functions are `ggplot2`
 #'  figures, further customisation is possible using functions such as
@@ -22,9 +22,9 @@
 #'  [ggplot2::guides()] and either `color = ggplot2::guide_colourbar()` for
 #'  continuous legends or `fill = ggplot2::guide_legend()` for discrete legends.
 #'
-#'@family directional analysis maps
+#' @family directional analysis maps
 #'
-#'@param data *Input data table with pollutant, wind, and geo-spatial
+#' @param data *Input data table with pollutant, wind, and geo-spatial
 #'  information.*
 #'
 #'   **required** | *scope:* dynamic & static
@@ -35,7 +35,7 @@
 #'  `data` must include a decimal latitude and longitude (or X/Y coordinate used
 #'  in conjunction with `crs`).
 #'
-#'@param pollutant *Pollutant name(s).*
+#' @param pollutant *Pollutant name(s).*
 #'
 #'   **required** | *scope:* dynamic & static
 #'
@@ -48,7 +48,7 @@
 #'
 #'  Multiple `pollutants` prohibit the use of the `type` argument.
 #'
-#'@param x *The radial axis variable.*
+#' @param x *The radial axis variable.*
 #'
 #'   *default:* `"ws"` | *scope:* dynamic & static
 #'
@@ -57,7 +57,7 @@
 #'  meteorological variables such as ambient temperature or atmospheric
 #'  stability may be useful.
 #'
-#'@param limits *Specifier for the plot colour scale bounds.*
+#' @param limits *Specifier for the plot colour scale bounds.*
 #'
 #'   *default:* `"free"` | *scope:* dynamic & static
 #'
@@ -69,7 +69,7 @@
 #'  scale. For example, `limits = c(0, 100)` would force the plot limits to span
 #'  0-100.
 #'
-#'@param upper *Specifier for the polar plot radial axis upper boundary.*
+#' @param upper *Specifier for the polar plot radial axis upper boundary.*
 #'
 #'  *default:* `"fixed"` | *scope:* dynamic & static
 #'
@@ -78,7 +78,7 @@
 #'  - `"free"` which allows all of the markers to use different radial axis scales.
 #'  - A numeric value, used as the upper limit for the radial axis scale.
 #'
-#'@param latitude,longitude *The decimal latitude(Y)/longitude(X).*
+#' @param latitude,longitude *The decimal latitude(Y)/longitude(X).*
 #'
 #'  *default:* `NULL` | *scope:* dynamic & static
 #'
@@ -87,7 +87,7 @@
 #'  automatically inferred from data by looking for a column named
 #'  "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).
 #'
-#'@param crs *The coordinate reference system (CRS).*
+#' @param crs *The coordinate reference system (CRS).*
 #'
 #'  *default:* `4326` | *scope:* dynamic & static
 #'
@@ -99,7 +99,7 @@
 #'  coordinate systems will be re-projected to EPSG:4326 for plotting on the
 #'  map.
 #'
-#'@param type *A method to condition the `data` for separate plotting.*
+#' @param type *A method to condition the `data` for separate plotting.*
 #'
 #'  *default:* `NULL` | *scope:* dynamic & static
 #'
@@ -112,7 +112,7 @@
 #'
 #'  `type` cannot be used if multiple `pollutant` columns have been provided.
 #'
-#'@param popup *Content for marker popups on dynamic maps.*
+#' @param popup *Content for marker popups on dynamic maps.*
 #'
 #'  *default:* `NULL` | *scope:* dynamic
 #'
@@ -121,14 +121,14 @@
 #'  site names, codes, types, etc.). If a vector of column names are provided
 #'  they are passed to [buildPopup()] using its default values.
 #'
-#'@param label *Content for marker hover-over on dynamic maps.*
+#' @param label *Content for marker hover-over on dynamic maps.*
 #'
 #'  *default:* `NULL` | *scope:* dynamic
 #'
 #'  Column to be used as the HTML content for hover-over labels. Labels are
 #'  useful for the same reasons as popups, though are typically shorter.
 #'
-#'@param provider *The basemap(s) to be used.*
+#' @param provider *The basemap(s) to be used.*
 #'
 #'  *default:* `NULL` | *scope:* dynamic & static
 #'
@@ -145,7 +145,7 @@
 #'
 #'  - *Static*: One of [rosm::osm.types()].
 #'
-#'@param cols *Colours to use for plotting.*
+#' @param cols *Colours to use for plotting.*
 #'
 #'  *default:* `"turbo"` | *scope:* dynamic & static
 #'
@@ -154,34 +154,34 @@
 #'  uniform colours. Read more about this palette at
 #'  <https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/>.
 #'
-#'@param alpha *Transparency value for polar markers.*
+#' @param alpha *Transparency value for polar markers.*
 #'
 #'  *default:* `1` | *scope:* dynamic & static
 #'
 #'  A value between 0 (fully transparent) and 1 (fully opaque).
 #'
-#'@param key *Transparency value for polar markers.*
+#' @param key *Transparency value for polar markers.*
 #'
 #'  *default:* `FALSE` | *scope:* dynamic & static
 #'
 #'  Draw a key for each individual marker? Potentially useful when `limits =
 #'  "free"`, but of limited use otherwise.
 #'
-#'@param draw.legend *Draw a shared legend?*
+#' @param draw.legend *Draw a shared legend?*
 #'
 #'  *default:* `TRUE` | *scope:* dynamic & static
 #'
 #'  When all markers share the same colour scale (e.g., when `limits != "free"`
 #'  in [polarMap()]), should a shared legend be created at the side of the map?
 #'
-#'@param collapse.control *Show the layer control as a collapsed?*
+#' @param collapse.control *Show the layer control as a collapsed?*
 #'
 #'  *default:* `FALSE` | *scope:* dynamic
 #'
 #'  For *dynamic* maps, should the "layer control" interface be collapsed? If
 #'  `TRUE`, users will have to hover over an icon to view the options.
 #'
-#'@param d.icon *The diameter of the plot on the map in pixels.*
+#' @param d.icon *The diameter of the plot on the map in pixels.*
 #'
 #'  *default:* `200` | *scope:* dynamic & static
 #'
@@ -189,7 +189,7 @@
 #'  vector in the form `c(width, height)` can be provided if a non-circular
 #'  marker is desired.
 #'
-#'@param d.fig *The diameter of the plots to be produced using `{openair}` in
+#' @param d.fig *The diameter of the plots to be produced using `{openair}` in
 #'  inches.*
 #'
 #'  *default:* `3.5` | *scope:* dynamic & static
@@ -198,7 +198,7 @@
 #'  vector in the form `c(width, height)` can be provided if a non-circular
 #'  marker is desired.
 #'
-#'@param static *Produce a static map?*
+#' @param static *Produce a static map?*
 #'
 #'  *default:* `FALSE`
 #'
@@ -206,7 +206,7 @@
 #'  the default and is broadly more useful, but the latter may be preferable for
 #'  DOCX or PDF outputs (e.g., academic papers).
 #'
-#'@param static.nrow *Number of rows in a static map.*
+#' @param static.nrow *Number of rows in a static map.*
 #'
 #'  *default:* `NULL` | *scope:* static
 #'
@@ -215,17 +215,17 @@
 #'  [ggplot2::facet_wrap()]. The default, `NULL`, results in a roughly square
 #'  grid of panels.
 #'
-#'@inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
+#' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot
 #'
-#'@returns Either:
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
 #'
-#'@export
+#' @export
 #'
-#'@seealso [openair::polarPlot()]
+#' @seealso [openair::polarPlot()]
 #'
 #' @examples
 #' \dontrun{
@@ -450,4 +450,3 @@ polarMap <- function(data,
   # return map
   return(map)
 }
-

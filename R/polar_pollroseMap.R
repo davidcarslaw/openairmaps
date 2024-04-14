@@ -1,14 +1,14 @@
-#'Pollution rose plots on interactive leaflet maps
+#' Pollution rose plots on interactive leaflet maps
 #'
-#'[pollroseMap()] creates a `leaflet` map using "pollution roses" as markers.
-#'Any number of pollutants can be specified using the `pollutant` argument, and
-#'multiple layers of markers can be added and toggled between using `control`.
+#' [pollroseMap()] creates a `leaflet` map using "pollution roses" as markers.
+#' Any number of pollutants can be specified using the `pollutant` argument, and
+#' multiple layers of markers can be added and toggled between using `control`.
 #'
 #' @inheritSection polarMap Customisation of static maps using ggplot2
-#'@family directional analysis maps
+#' @family directional analysis maps
 #'
-#'@inheritParams polarMap
-#'@param statistic *The statistic to be applied to each data bin in the plot*
+#' @inheritParams polarMap
+#' @param statistic *The statistic to be applied to each data bin in the plot*
 #'
 #'  *default:* `"prop.mean"` | *scope:* dynamic & static
 #'
@@ -18,7 +18,7 @@
 #'  relative contribution to the mean. `"abs.count"` provides the absolute count
 #'  of measurements in each bin.
 #'
-#'@param breaks *Specifier for the number of breaks of the colour axis.*
+#' @param breaks *Specifier for the number of breaks of the colour axis.*
 #'
 #'  *default:* `NULL` | *scope:* dynamic & static
 #'
@@ -29,14 +29,14 @@
 #'  the argument `breaks = c(0, 1, 10, 100)` breaks the data into segments <1,
 #'  1-10, 10-100, >100.
 #'
-#'@inheritDotParams openair::pollutionRose -breaks -mydata -pollutant -plot
-#'@returns Either:
+#' @inheritDotParams openair::pollutionRose -breaks -mydata -pollutant -plot
+#' @returns Either:
 #'
 #'  - *Dynamic:* A leaflet object
 #'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
-#'@export
+#' @export
 #'
-#'@seealso [openair::pollutionRose()]
+#' @seealso [openair::pollutionRose()]
 #'
 #' @examples
 #' \dontrun{
@@ -196,7 +196,7 @@ pollroseMap <- function(data,
         ggplot2::geom_point(
           data = dummy,
           ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                       fill = .data[["intervals"]]
+            fill = .data[["intervals"]]
           ),
           size = 0,
           key_glyph = ggplot2::draw_key_rect
