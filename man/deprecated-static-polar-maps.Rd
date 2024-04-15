@@ -240,8 +240,8 @@ own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"
 \item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
 }}
 
-\item{facet}{Passed to the \code{type} argument of the relevant \code{polarMap()} family
-function.}
+\item{facet}{Passed to the \code{type} argument of the relevant \code{polarMap()}
+family function.}
 
 \item{cols}{\emph{Colours to use for plotting.}
 
@@ -263,6 +263,9 @@ A value between 0 (fully transparent) and 1 (fully opaque).}
 \emph{default:} \code{FALSE} | \emph{scope:} dynamic & static
 
 Draw a key for each individual marker? Potentially useful when \code{limits = "free"}, but of limited use otherwise.}
+
+\item{facet.nrow}{Passed to the \code{static.nrow} argument of the relevant
+\code{polarMap()} family function.}
 
 \item{d.icon}{\emph{The diameter of the plot on the map in pixels.}
 
@@ -351,8 +354,9 @@ a \code{ggplot2} object using \code{\link[ggplot2:ggsf]{ggplot2::coord_sf()}} co
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 
 Static direction analysis mapping functions have been deprecated in favour
-of combined functions (e.g., \code{polarMap()}), which present a more consistent,
-unified API for users to simply swap between the two output formats.
+of combined functions (e.g., \code{polarMap()}), which present a more
+consistent, unified API for users to simply swap between the two output
+formats.
 }
 \seealso{
 \code{\link[=polarMap]{polarMap()}}

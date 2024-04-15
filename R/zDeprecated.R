@@ -35,21 +35,24 @@ check_facet_control <- function(...) {
 #'
 #' @description `r lifecycle::badge("deprecated")`
 #'
-#'  Static direction analysis mapping functions have been deprecated in favour
-#'  of combined functions (e.g., `polarMap()`), which present a more consistent,
-#'  unified API for users to simply swap between the two output formats.
+#'   Static direction analysis mapping functions have been deprecated in favour
+#'   of combined functions (e.g., `polarMap()`), which present a more
+#'   consistent, unified API for users to simply swap between the two output
+#'   formats.
 #'
 #' @family deprecated functions
 #' @rdname deprecated-static-polar-maps
 #' @inheritParams polarMap
-#' @param facet Passed to the `type` argument of the relevant `polarMap()` family
-#'  function.
+#' @param facet Passed to the `type` argument of the relevant `polarMap()`
+#'   family function.
+#' @param facet.nrow Passed to the `static.nrow` argument of the relevant
+#'   `polarMap()` family function.
 #' @param ... Passed to the polar plotting function
 #' @order 1
 #' @seealso [polarMap()]
 #'
 #' @returns a `ggplot2` object using [ggplot2::coord_sf()] coordinates with a
-#'  `ggspatial` basemap
+#'   `ggspatial` basemap
 #' @export
 polarMapStatic <- function(data,
                            pollutant = NULL,
