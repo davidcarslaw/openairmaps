@@ -72,7 +72,7 @@ trajMap(traj_data, colour = "nox")
 
 }
 \seealso{
-the original \code{\link[openair:trajPlot]{openair::trajPlot()}}
+\code{\link[openair:trajPlot]{openair::trajPlot()}}
 
 \code{\link[=trajMapStatic]{trajMapStatic()}} for the static \code{ggplot2} equivalent of \code{\link[=trajMap]{trajMap()}}
 

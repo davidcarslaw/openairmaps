@@ -44,7 +44,7 @@
 #' @param collapse.control Should the "layer control" interface be collapsed?
 #'   Defaults to `FALSE`.
 #'
-#' @return A leaflet object.
+#' @returns A leaflet object.
 #' @export
 #' @family uk air quality network mapping functions
 #'

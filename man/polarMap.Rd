@@ -2,7 +2,7 @@
 % Please edit documentation in R/polar_polarMap.R
 \name{polarMap}
 \alias{polarMap}
-\title{Bivariate polar plots on interactive leaflet maps}
+\title{Bivariate polar plots on dynamic and static maps}
 \usage{
 polarMap(
   data,
@@ -13,10 +13,10 @@ polarMap(
   latitude = NULL,
   longitude = NULL,
   crs = 4326,
-  control = NULL,
+  type = NULL,
   popup = NULL,
   label = NULL,
-  provider = "OpenStreetMap",
+  provider = NULL,
   cols = "turbo",
   alpha = 1,
   key = FALSE,
@@ -24,24 +24,50 @@ polarMap(
   collapse.control = FALSE,
   d.icon = 200,
   d.fig = 3.5,
-  type = deprecated(),
+  static = FALSE,
+  static.nrow = NULL,
   ...
 )
 }
 \arguments{
-\item{data}{A data frame. The data frame must contain the data to plot the
-directional analysis marker, which includes wind speed (\code{ws}), wind
-direction (\code{wd}), and the column representing the concentration of a
-pollutant. In addition, \code{data} must include a decimal latitude and
-longitude.}
+\item{data}{\emph{Input data table with pollutant, wind, and geo-spatial
+information.}
 
-\item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
-pollutants are specified, they can be toggled between using a "layer
-control" interface.}
+\strong{required} | \emph{scope:} dynamic & static
 
-\item{x}{The radial axis variable to plot.}
+A data frame. The data frame must contain the data to plot the directional
+analysis marker, which includes wind speed (\code{ws}), wind direction (\code{wd}),
+and the column representing the concentration of a pollutant. In addition,
+\code{data} must include a decimal latitude and longitude (or X/Y coordinate
+used in conjunction with \code{crs}).}
 
-\item{limits}{One of:
+\item{pollutant}{\emph{Pollutant name(s).}
+
+\strong{required} | \emph{scope:} dynamic & static
+
+The column name(s) of the pollutant(s) to plot. If multiple pollutants are
+specified the \code{type} argument will no longer be able to be used, and:
+\itemize{
+\item \emph{Dynamic}: The pollutants can be toggled between using a "layer control" menu.
+\item \emph{Static:}: The pollutants will each appear in a different panel.
+}
+
+Multiple \code{pollutants} prohibit the use of the \code{type} argument.}
+
+\item{x}{\emph{The radial axis variable.}
+
+\emph{default:} \code{"ws"} | \emph{scope:} dynamic & static
+
+The column name for the radial axis variable to use in
+\code{\link[openair:polarPlot]{openair::polarPlot()}}. Defaults to using wind speed, \code{"ws"}, but other
+meteorological variables such as ambient temperature or atmospheric
+stability may be useful.}
+
+\item{limits}{\emph{Specifier for the plot colour scale bounds.}
+
+\emph{default:} \code{"free"} | \emph{scope:} dynamic & static
+
+One of:
 \itemize{
 \item \code{"fixed"} which ensures all of the markers use the same colour scale.
 \item \code{"free"} (the default) which allows all of the markers to use different
@@ -51,73 +77,150 @@ scale. For example, \code{limits = c(0, 100)} would force the plot limits to
 span 0-100.
 }}
 
-\item{upper}{One of:
+\item{upper}{\emph{Specifier for the polar plot radial axis upper boundary.}
+
+\emph{default:} \code{"fixed"} | \emph{scope:} dynamic & static
+
+One of:
 \itemize{
 \item \code{"fixed"} (the default) which ensures all of the markers use the same radial axis scale.
 \item \code{"free"} which allows all of the markers to use different radial axis scales.
 \item A numeric value, used as the upper limit for the radial axis scale.
 }}
 
-\item{latitude, longitude}{The decimal latitude/longitude (or other Y/X
+\item{latitude, longitude}{\emph{The decimal latitude(Y)/longitude(X).}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+Column names representing the decimal latitude and longitude (or other Y/X
 coordinate if using a different \code{crs}). If not provided, will be
 automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
 
-\item{crs}{The coordinate reference system (CRS) of the data, passed to
+\item{crs}{\emph{The coordinate reference system (CRS).}
+
+\emph{default:} \code{4326} | \emph{scope:} dynamic & static
+
+The coordinate reference system (CRS) of the data, passed to
 \code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
 CRS associated with the commonly used latitude and longitude coordinates.
 Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
 non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
 plotting on the map.}
 
-\item{control}{Used for splitting the input data into different groups which
-can be selected between using a "layer control" interface, passed to the
-\code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{control} cannot be used if
-multiple \code{pollutant} columns have been provided.}
+\item{type}{\emph{A method to condition the \code{data} for separate plotting.}
 
-\item{popup}{Columns to be used as the HTML content for marker popups. Popups
-may be useful to show information about the individual sites (e.g., site
-names, codes, types, etc.). If a vector of column names are provided they
-are passed to \code{\link[=buildPopup]{buildPopup()}} using its default values.}
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
 
-\item{label}{Column to be used as the HTML content for hover-over labels.
-Labels are useful for the same reasons as popups, though are typically
-shorter.}
+Used for splitting the input data into different groups, passed to the
+\code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. When \code{type} is specified:
+\itemize{
+\item \emph{Dynamic}: The different data splits can be toggled between using a "layer control" menu.
+\item \emph{Static:}: The data splits will each appear in a different panel.
+}
 
-\item{provider}{The base map(s) to be used. See
-\url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
-all base maps that can be used. If multiple base maps are provided, they
+\code{type} cannot be used if multiple \code{pollutant} columns have been provided.}
+
+\item{popup}{\emph{Content for marker popups on dynamic maps.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic
+
+Columns to be used as the HTML content for marker popups on dynamic maps.
+Popups may be useful to show information about the individual sites (e.g.,
+site names, codes, types, etc.). If a vector of column names are provided
+they are passed to \code{\link[=buildPopup]{buildPopup()}} using its default values.}
+
+\item{label}{\emph{Content for marker hover-over on dynamic maps.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic
+
+Column to be used as the HTML content for hover-over labels. Labels are
+useful for the same reasons as popups, though are typically shorter.}
+
+\item{provider}{\emph{The basemap(s) to be used.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+The base map(s) to be used beneath the polar markers. If not provided, will
+default to OpenStreetMap for both dynamic and static maps.
+\itemize{
+\item \emph{Dynamic}: Any number of \link[leaflet:providers]{leaflet::providers}.
+See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
+of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
-own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite" = "Esri.WorldImagery")})}
+own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")})
+\item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
+}}
 
-\item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
-more information.}
+\item{cols}{\emph{Colours to use for plotting.}
 
-\item{alpha}{The alpha transparency to use for the plotting surface (a value
-between 0 and 1 with zero being fully transparent and 1 fully opaque).}
+\emph{default:} \code{"turbo"} | \emph{scope:} dynamic & static
 
-\item{key}{Should a key for each marker be drawn? Default is \code{FALSE}.}
+The colours used for plotting, passed to \code{\link[openair:openColours]{openair::openColours()}}. The
+default, \code{"turbo"}, is a rainbow palette with relatively perceptually
+uniform colours. Read more about this palette at
+\url{https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/}.}
 
-\item{draw.legend}{When \code{limits} are specified, should a shared legend be
-created at the side of the map? Default is \code{TRUE}.}
+\item{alpha}{\emph{Transparency value for polar markers.}
 
-\item{collapse.control}{Should the "layer control" interface be collapsed?
-Defaults to \code{FALSE}.}
+\emph{default:} \code{1} | \emph{scope:} dynamic & static
 
-\item{d.icon}{The diameter of the plot on the map in pixels. This will affect
-the size of the individual polar markers. Alternatively, a vector in the
-form \code{c(width, height)} can be provided if a non-circular marker is
-desired.}
+A value between 0 (fully transparent) and 1 (fully opaque).}
 
-\item{d.fig}{The diameter of the plots to be produced using \code{openair} in
-inches. This will affect the resolution of the markers on the map.
-Alternatively, a vector in the form \code{c(width, height)} can be provided if a
-non-circular marker is desired.}
+\item{key}{\emph{Transparency value for polar markers.}
 
-\item{type}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}. Different sites are now
-automatically detected based on latitude and longitude. Please use \code{label}
-and/or \code{popup} to label different sites.}
+\emph{default:} \code{FALSE} | \emph{scope:} dynamic & static
+
+Draw a key for each individual marker? Potentially useful when \code{limits = "free"}, but of limited use otherwise.}
+
+\item{draw.legend}{\emph{Draw a shared legend?}
+
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
+
+When all markers share the same colour scale (e.g., when \code{limits != "free"}
+in \code{\link[=polarMap]{polarMap()}}), should a shared legend be created at the side of the map?}
+
+\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+
+\emph{default:} \code{FALSE} | \emph{scope:} dynamic
+
+For \emph{dynamic} maps, should the "layer control" interface be collapsed? If
+\code{TRUE}, users will have to hover over an icon to view the options.}
+
+\item{d.icon}{\emph{The diameter of the plot on the map in pixels.}
+
+\emph{default:} \code{200} | \emph{scope:} dynamic & static
+
+This will affect the size of the individual polar markers. Alternatively, a
+vector in the form \code{c(width, height)} can be provided if a non-circular
+marker is desired.}
+
+\item{d.fig}{\emph{The diameter of the plots to be produced using \code{{openair}} in
+inches.}
+
+\emph{default:} \code{3.5} | \emph{scope:} dynamic & static
+
+This will affect the resolution of the markers on the map. Alternatively, a
+vector in the form \code{c(width, height)} can be provided if a non-circular
+marker is desired.}
+
+\item{static}{\emph{Produce a static map?}
+
+\emph{default:} \code{FALSE}
+
+This controls whether a \emph{dynamic} or \emph{static} map is produced. The former
+is the default and is broadly more useful, but the latter may be preferable
+for DOCX or PDF outputs (e.g., academic papers).}
+
+\item{static.nrow}{\emph{Number of rows in a static map.}
+
+\emph{default:} \code{NULL} | \emph{scope:} static
+
+Controls the number of rows of panels on a static map when multiple
+\code{pollutant}s or \code{type} are specified; passed to the \code{nrow} argument of
+\code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. The default, \code{NULL}, results in a roughly square
+grid of panels.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:polarPlot]{openair::polarPlot}}
@@ -304,28 +407,54 @@ and will be ignored if \code{"quantile.slope"} is not used.}
   }}
 }
 \value{
-A leaflet object.
+Either:
+\itemize{
+\item \emph{Dynamic:} A leaflet object
+\item \emph{Static:} A \code{ggplot2} object using \code{\link[ggplot2:ggsf]{ggplot2::coord_sf()}} coordinates with a \code{ggspatial} basemap
+}
 }
 \description{
-\code{\link[=polarMap]{polarMap()}} creates a \code{leaflet} map using bivariate polar plots as markers.
-Any number of pollutants can be specified using the \code{pollutant} argument, and
-multiple layers of markers can be added and toggled between using \code{control}.
+The \code{\link[=polarMap]{polarMap()}} function creates a map using bivariate polar plots as
+markers. Any number of pollutants can be specified using the \code{pollutant}
+argument, and multiple layers of markers can be created using \code{type}. By
+default, these maps are dynamic and can be panned, zoomed, and otherwise
+interacted with. Using the \code{static} argument allows for static images to be
+produced instead.
 }
+\section{Customisation of static maps using ggplot2}{
+
+
+As the outputs of the static directional analysis functions are \code{ggplot2}
+figures, further customisation is possible using functions such as
+\code{\link[ggplot2:theme]{ggplot2::theme()}}, \code{\link[ggplot2:guides]{ggplot2::guides()}} and \code{\link[ggplot2:labs]{ggplot2::labs()}}.
+
+If multiple pollutants are specified, subscripting (e.g., the "x" in "NOx")
+is achieved using the \link[ggtext:ggtext]{ggtext} package. Therefore if you
+choose to override the plot theme, it is recommended to use
+\verb{[ggplot2::theme()]} and \verb{[ggtext::element_markdown()]} to define the
+\code{strip.text} parameter.
+
+When arguments like \code{limits}, \code{percentile} or \code{breaks} are defined, a
+legend is automatically added to the figure. Legends can be removed using
+\code{ggplot2::theme(legend.position = "none")}, or further customised using
+\code{\link[ggplot2:guides]{ggplot2::guides()}} and either \code{color = ggplot2::guide_colourbar()} for
+continuous legends or \code{fill = ggplot2::guide_legend()} for discrete
+legends.
+}
+
 \examples{
 \dontrun{
 polarMap(polar_data,
   pollutant = "nox",
   x = "ws",
-  provider = "Stamen.Toner"
+  provider = "CartoDB.Voyager"
 )
 }
 }
 \seealso{
-the original \code{\link[openair:polarPlot]{openair::polarPlot()}}
+\code{\link[openair:polarPlot]{openair::polarPlot()}}
 
-\code{\link[=polarMapStatic]{polarMapStatic()}} for the static equivalent of \code{\link[=polarMap]{polarMap()}}
-
-Other interactive directional analysis maps: 
+Other directional analysis maps: 
 \code{\link{annulusMap}()},
 \code{\link{diffMap}()},
 \code{\link{freqMap}()},
@@ -333,4 +462,4 @@ Other interactive directional analysis maps:
 \code{\link{pollroseMap}()},
 \code{\link{windroseMap}()}
 }
-\concept{interactive directional analysis maps}
+\concept{directional analysis maps}

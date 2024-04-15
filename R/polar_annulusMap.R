@@ -1,10 +1,14 @@
-#' Polar annulus plots on interactive leaflet maps
+#' Polar annulus plots on dynamic and static maps
 #'
-#' [annulusMap()] creates a `leaflet` map using polar annulus plots as markers.
-#' Any number of pollutants can be specified using the `pollutant` argument, and
-#' multiple layers of markers can be added and toggled between using `control`.
+#' The [annulusMap()] function creates a map using polar annulus plots as
+#' markers. Any number of pollutants can be specified using the `pollutant`
+#' argument, and multiple layers of markers can be created using `type`. By
+#' default, these maps are dynamic and can be panned, zoomed, and otherwise
+#' interacted with. Using the `static` argument allows for static images to be
+#' produced instead.
 #'
-#' @family interactive directional analysis maps
+#' @inheritSection polarMap Customisation of static maps using ggplot2
+#' @family directional analysis maps
 #'
 #' @inheritParams polarMap
 #' @param period *Temporal period for radial axis.*
@@ -16,17 +20,20 @@
 #'   variation and "trend" to plot the trend by wind direction.
 #' @inheritDotParams openair::polarAnnulus -mydata -pollutant -period -limits
 #'   -type -cols -key -plot
-#' @return A leaflet object.
+#' @returns Either:
+#'
+#'  - *Dynamic:* A leaflet object
+#'  - *Static:* A `ggplot2` object using [ggplot2::coord_sf()] coordinates with a `ggspatial` basemap
 #' @export
 #'
-#' @seealso the original [openair::polarAnnulus()]
+#' @seealso [openair::polarAnnulus()]
 #'
 #' @examples
 #' \dontrun{
 #' annulusMap(polar_data,
 #'   pollutant = "nox",
 #'   period = "hour",
-#'   provider = "Stamen.Toner"
+#'   provider = "CartoDB.Voyager"
 #' )
 #' }
 annulusMap <- function(data,
@@ -52,6 +59,9 @@ annulusMap <- function(data,
                        ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+
+  # check for old facet/control opts
+  type <- type %||% check_facet_control(...)
 
   # assume lat/lon
   latlon <- assume_latlon(
@@ -247,52 +257,4 @@ annulusMap <- function(data,
 
   # return map
   return(map)
-}
-
-#' @family deprecated functions
-#' @rdname deprecated-static-polar-maps
-#' @inheritParams annulusMap
-#' @export
-annulusMapStatic <- function(data,
-                             pollutant = NULL,
-                             period = "hour",
-                             facet = NULL,
-                             limits = "free",
-                             latitude = NULL,
-                             longitude = NULL,
-                             crs = 4326,
-                             provider = "osm",
-                             cols = "turbo",
-                             alpha = 1,
-                             key = FALSE,
-                             facet.nrow = NULL,
-                             d.icon = 150,
-                             d.fig = 3,
-                             ...) {
-  lifecycle::deprecate_soft(
-    when = "0.9.0",
-    what = "annulusMapStatic()",
-    with = "annulusMap()",
-    details = "The `static` argument in `annulusMap()` can now create static outputs."
-  )
-
-  annulusMap(
-    data = data,
-    pollutant = pollutant,
-    period = period,
-    type = facet,
-    limits = limits,
-    latitude = latitude,
-    longitude = longitude,
-    crs = crs,
-    provider = provider,
-    cols = cols,
-    alpha = alpha,
-    key = key,
-    static.nrow = facet.nrow,
-    d.icon = d.icon,
-    d.fig = d.fig,
-    static = TRUE,
-    ...
-  )
 }

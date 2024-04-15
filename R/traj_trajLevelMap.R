@@ -18,10 +18,10 @@
 #' @param smooth Should the trajectory surface be smoothed? Defaults to `FALSE`.
 #'   Note that, when `smooth = TRUE`, no popup information will be available.
 #'
-#' @return A leaflet object.
+#' @returns A leaflet object.
 #' @export
 #'
-#' @seealso the original [openair::trajLevel()]
+#' @seealso [openair::trajLevel()]
 #' @seealso [trajLevelMapStatic()] for the static `ggplot2` equivalent of [trajLevelMap()]
 #'
 #' @examples
@@ -257,10 +257,10 @@ trajLevelMap <-
 #'   setting `crs` to `sf::st_crs(4326)` or `NULL`.
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim -crs -default_crs
 #'
-#' @return A `ggplot2` plot
+#' @returns A `ggplot2` plot
 #' @export
 #'
-#' @seealso the original [openair::trajLevel()]
+#' @seealso [openair::trajLevel()]
 #' @seealso [trajLevelMap()] for the interactive `leaflet` equivalent of
 #'   [trajLevelMapStatic()]
 trajLevelMapStatic <-
