@@ -62,41 +62,37 @@ polar_data %>%
   )
 ```
 
-<div class="figure">
-
 <img src="man/figures/README-examplemap.png" alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations." width="100%" />
-<p class="caption">
-An example `polarMap()` showing NO2 concentrations in central London.
-</p>
-
-</div>
 
 While an interactive map is preferred for exploratory directional
 analysis, it is limited to the HTML format. Some applications (for
 example, academic journals) demand “static” formats like .docx and .pdf.
 For this reason, “static” versions of `{openairmaps}` polar marker
-functions have been provided which are written in `{ggplot2}`. A benefit
-of being written in `{ggplot2}` is that additional layers can be added
-(e.g., `geom_label_sf()` could be used to label sites) and limited
-further customisation is available using `theme()` and `guides()`.
+functions powered by `{ggplot2}` can be created using the `static`
+argument. A benefit of being written in `{ggplot2}` is that additional
+layers can be added (e.g., `ggplot2::geom_label_sf()` could be used to
+label sites) and limited further customisation is available using
+`ggplot2::theme()` and `ggplot2::guides()`.
 
 ``` r
 polar_data %>%
   openair::cutData("daylight") %>%
-  polarMapStatic(
+  polarMap(
     pollutant = "no2",
     limits = c(0, 180),
-    facet = "daylight",
-    facet.nrow = 2
-  )
+    type = "daylight",
+    static = TRUE,
+    d.fig = 2.5,
+    d.icon = 150,
+    alpha = 0.75
+  ) +
+  ggplot2::theme(
+    legend.position = "bottom",
+    legend.key.width = ggplot2::unit(1, "null"),
+    legend.title.position = "top",
+    legend.title = ggplot2::element_text(hjust = .5)
+  ) +
+  ggplot2::labs(color = openair::quickText("NO2 (ug/m3)"))
 ```
 
-<div class="figure">
-
 <img src="man/figures/README-egstatic-1.png" alt="Two static maps. They show OpenStreetMap map layers, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The two maps represent daylight and nighttime observations separately." width="100%" />
-<p class="caption">
-An example `polarMapStatic()` showing NO2 concentrations in central
-London.
-</p>
-
-</div>

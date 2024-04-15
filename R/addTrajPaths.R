@@ -47,7 +47,7 @@
 #'   [leaflet::addPolylines()] (i.e., use `color = ~ pal(nox)[1]`). Note that
 #'   `opacity` controls the opacity of the lines and `fillOpacity` the opacity
 #'   of the markers.
-#' @return A leaflet object.
+#' @returns A leaflet object.
 #' @seealso `shiny::runExample(package = "openairmaps")` to see examples of this
 #'   function used in a [shiny::shinyApp()]
 #' @export
@@ -109,7 +109,7 @@ addTrajPaths <-
     )
 
     for (i in seq(length(unique(data$datef)))) {
-      layerid = paste(layerId, i, sep = "-")
+      layerid <- paste(layerId, i, sep = "-")
 
       # get line/points data
       ldata <- dplyr::filter(data, .data$datef == unique(data$datef)[[i]])

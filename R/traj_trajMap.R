@@ -38,10 +38,10 @@
 #' @param collapse.control Should the "layer control" interface be collapsed?
 #'   Defaults to `FALSE`.
 #'
-#' @return A leaflet object.
+#' @returns A leaflet object.
 #' @export
 #'
-#' @seealso the original [openair::trajPlot()]
+#' @seealso [openair::trajPlot()]
 #' @seealso [trajMapStatic()] for the static `ggplot2` equivalent of [trajMap()]
 #'
 #' @examples
@@ -244,10 +244,10 @@ trajMap <-
 #'
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim -crs -default_crs
 #'
-#' @return a `ggplot2` plot
+#' @returns a `ggplot2` plot
 #' @export
 #'
-#' @seealso the original [openair::trajPlot()]
+#' @seealso [openair::trajPlot()]
 #' @seealso [trajMap()] for the interactive `leaflet` equivalent of
 #'   [trajMapStatic()]
 #'

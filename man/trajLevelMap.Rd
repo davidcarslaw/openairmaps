@@ -116,7 +116,7 @@ trajLevelMap(traj_data, pollutant = "pm2.5", statistic = "pscf", min.bin = 10)
 
 }
 \seealso{
-the original \code{\link[openair:trajLevel]{openair::trajLevel()}}
+\code{\link[openair:trajLevel]{openair::trajLevel()}}
 
 \code{\link[=trajLevelMapStatic]{trajLevelMapStatic()}} for the static \code{ggplot2} equivalent of \code{\link[=trajLevelMap]{trajLevelMap()}}
 
