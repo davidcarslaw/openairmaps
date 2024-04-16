@@ -26,7 +26,7 @@
 #' @export
 #'
 #' @seealso the original [openair::polarDiff()]
-#' @seealso [diffMapStatic()] for the static `ggmap` equivalent of [diffMap()]
+#' @seealso [diffMapStatic()] for the static equivalent of [diffMap()]
 #'
 #' @examples
 #' \dontrun{
@@ -119,12 +119,14 @@ diffMap <- function(before,
     # }
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -245,7 +247,7 @@ diffMap <- function(before,
   return(map)
 }
 
-#' Bivariate polar plots on a static ggmap
+#' Bivariate polar plots on a static map
 #'
 #' [diffMapStatic()] creates a `ggplot2` map using bivariate "difference" polar
 #' plots as markers. As this function returns a `ggplot2` object, further
@@ -265,16 +267,17 @@ diffMap <- function(before,
 #' @seealso [diffMap()] for the interactive `leaflet` equivalent of
 #'   [diffMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 diffMapStatic <- function(before,
                           after,
                           pollutant = NULL,
-                          ggmap,
                           limits = "free",
                           x = "ws",
                           latitude = NULL,
                           longitude = NULL,
+                          crs = 4326,
+                          provider = "osm",
                           facet = NULL,
                           cols = c(
                             "#002F70",
@@ -293,9 +296,6 @@ diffMapStatic <- function(before,
                           d.icon = 150,
                           d.fig = 3,
                           ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
   latlon <- assume_latlon(
     data = before,
@@ -335,12 +335,14 @@ diffMapStatic <- function(before,
     # }
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -414,7 +416,6 @@ diffMapStatic <- function(before,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,
@@ -422,7 +423,9 @@ diffMapStatic <- function(before,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create colorbar if limits specified

@@ -24,7 +24,7 @@
 #' @export
 #'
 #' @seealso the original [openair::windRose()]
-#' @seealso [windroseMapStatic()] for the static `ggmap` equivalent of
+#' @seealso [windroseMapStatic()] for the static equivalent of
 #'   [windroseMap()]
 #'
 #' @examples
@@ -186,7 +186,7 @@ windroseMap <- function(data,
   return(map)
 }
 
-#' Wind rose plots on a static ggmap
+#' Wind rose plots on a static map
 #'
 #' [windroseMapStatic()] creates a `ggplot2` map using wind roses as markers. As
 #' this function returns a `ggplot2` object, further customisation can be
@@ -212,15 +212,16 @@ windroseMap <- function(data,
 #' @seealso [windroseMap()] for the interactive `leaflet` equivalent of
 #'   [windroseMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 windroseMapStatic <- function(data,
-                              ggmap = NULL,
                               ws.int = 2,
                               breaks = 4,
                               facet = NULL,
                               latitude = NULL,
                               longitude = NULL,
+                              crs = 4326,
+                              provider = "osm",
                               cols = "turbo",
                               alpha = 1,
                               key = FALSE,
@@ -228,9 +229,6 @@ windroseMapStatic <- function(data,
                               d.icon = 150,
                               d.fig = 3,
                               ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
   latlon <- assume_latlon(
     data = data,
@@ -307,7 +305,6 @@ windroseMapStatic <- function(data,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,
@@ -315,7 +312,9 @@ windroseMapStatic <- function(data,
       pollutant = "ws",
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # sort out legend
@@ -324,12 +323,18 @@ windroseMapStatic <- function(data,
   pal <- openair::openColours(scheme = cols, n = length(intervals)) %>%
     stats::setNames(intervals)
 
+  # create dummy df for creating legend
+  dummy <-
+    dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
+    tidyr::crossing(intervals)
+
+  # add legend
   plt <-
     plt +
     ggplot2::geom_point(
-      data = plots_df,
+      data = dummy,
       ggplot2::aes(.data[[longitude]], .data[[latitude]],
-        fill = intervals[1]
+        fill = .data[["intervals"]]
       ),
       size = 0,
       key_glyph = ggplot2::draw_key_rect

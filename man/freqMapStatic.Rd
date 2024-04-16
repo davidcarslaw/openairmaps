@@ -2,16 +2,17 @@
 % Please edit documentation in R/polar_freqMap.R
 \name{freqMapStatic}
 \alias{freqMapStatic}
-\title{Polar frequency plots on a static ggmap}
+\title{Polar frequency plots on a static map}
 \usage{
 freqMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   statistic = "mean",
   breaks = "free",
   latitude = NULL,
   longitude = NULL,
+  crs = 4326,
+  provider = "osm",
   facet = NULL,
   cols = "turbo",
   alpha = 1,
@@ -31,9 +32,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{statistic}{The statistic that should be applied to each wind
 speed/direction bin. Can be "frequency", "mean", "median", "max" (maximum),
@@ -63,6 +61,16 @@ situations.
 coordinate if using a different \code{crs}). If not provided, will be
 automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{crs}{The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
+
+\item{provider}{The base map to be used. See \code{rosm::osm.types()} for a list of
+all base maps that can be used.}
 
 \item{facet}{Used for splitting the input data into different panels, passed
 to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
@@ -151,7 +159,7 @@ and units properly e.g.  by subscripting the `2' in NO2.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=freqMapStatic]{freqMapStatic()}} creates a \code{ggplot2} map using polar frequency plots as

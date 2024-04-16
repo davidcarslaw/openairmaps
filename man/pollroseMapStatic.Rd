@@ -2,17 +2,18 @@
 % Please edit documentation in R/polar_pollroseMap.R
 \name{pollroseMapStatic}
 \alias{pollroseMapStatic}
-\title{Percentile roses on a static ggmap}
+\title{Percentile roses on a static map}
 \usage{
 pollroseMapStatic(
   data,
   pollutant = NULL,
-  ggmap,
   statistic = "prop.count",
   breaks = NULL,
   facet = NULL,
   latitude = NULL,
   longitude = NULL,
+  crs = 4326,
+  provider = "osm",
   cols = "turbo",
   alpha = 1,
   key = FALSE,
@@ -31,9 +32,6 @@ longitude.}
 
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
-
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
 
 \item{statistic}{The \code{statistic} to be applied to each data bin in the
 plot. Options currently include "prop.count", "prop.mean" and
@@ -58,6 +56,16 @@ multiple \code{pollutant} columns have been provided.}
 coordinate if using a different \code{crs}). If not provided, will be
 automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{crs}{The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
+
+\item{provider}{The base map to be used. See \code{rosm::osm.types()} for a list of
+all base maps that can be used.}
 
 \item{cols}{The colours used for plotting. See \code{\link[openair:openColours]{openair::openColours()}} for
 more information.}
@@ -101,7 +109,7 @@ wind directions is from a particular wind sector is also shown.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=pollroseMapStatic]{pollroseMapStatic()}} creates a \code{ggplot2} map using percentile roses as

@@ -188,7 +188,7 @@ freqMap(polar_data,
 \seealso{
 the original \code{\link[openair:polarFreq]{openair::polarFreq()}}
 
-\code{\link[=freqMapStatic]{freqMapStatic()}} for the static \code{ggmap} equivalent of \code{\link[=freqMap]{freqMap()}}
+\code{\link[=freqMapStatic]{freqMapStatic()}} for the static equivalent of \code{\link[=freqMap]{freqMap()}}
 
 Other interactive directional analysis maps: 
 \code{\link{annulusMap}()},
