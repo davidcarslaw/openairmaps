@@ -36,7 +36,7 @@
 #' @export
 #'
 #' @seealso the original [openair::polarFreq()]
-#' @seealso [freqMapStatic()] for the static `ggmap` equivalent of [freqMap()]
+#' @seealso [freqMapStatic()] for the static equivalent of [freqMap()]
 #'
 #' @examples
 #' \dontrun{
@@ -78,9 +78,11 @@ freqMap <- function(data,
   }
 
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -120,8 +122,10 @@ freqMap <- function(data,
     theBreaks <- breaks
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
-        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+      c(
+        "!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
+        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector."
+      )
     )
   }
 
@@ -246,7 +250,7 @@ freqMap <- function(data,
   map
 }
 
-#' Polar frequency plots on a static ggmap
+#' Polar frequency plots on a static map
 #'
 #' [freqMapStatic()] creates a `ggplot2` map using polar frequency plots as
 #' markers. As this function returns a `ggplot2` object, further customisation
@@ -278,15 +282,16 @@ freqMap <- function(data,
 #' @seealso [freqMap()] for the interactive `leaflet` equivalent of
 #'   [freqMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 freqMapStatic <- function(data,
                           pollutant = NULL,
-                          ggmap,
                           statistic = "mean",
                           breaks = "free",
                           latitude = NULL,
                           longitude = NULL,
+                          crs = 4326,
+                          provider = "osm",
                           facet = NULL,
                           cols = "turbo",
                           alpha = 1,
@@ -295,13 +300,12 @@ freqMapStatic <- function(data,
                           d.icon = 150,
                           d.fig = 3,
                           ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
-  latlon <- assume_latlon(data = data,
-                          latitude = latitude,
-                          longitude = longitude)
+  latlon <- assume_latlon(
+    data = data,
+    latitude = latitude,
+    longitude = longitude
+  )
   latitude <- latlon$latitude
   longitude <- latlon$longitude
 
@@ -344,8 +348,10 @@ freqMapStatic <- function(data,
     theBreaks <- breaks
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
-        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector.")
+      c(
+        "!" = "Do not recognise {.field breaks} value of {.code {breaks}}",
+        "i" = "{.field breaks} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector."
+      )
     )
   }
 
@@ -418,7 +424,6 @@ freqMapStatic <- function(data,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,
@@ -426,7 +431,9 @@ freqMapStatic <- function(data,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create legend
@@ -439,12 +446,18 @@ freqMapStatic <- function(data,
       openair::openColours(scheme = cols, n = length(intervals)) %>%
       stats::setNames(intervals)
 
+    # create dummy df for creating legend
+    dummy <-
+      dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
+      tidyr::crossing(intervals)
+
     plt <-
       plt +
       ggplot2::geom_point(
-        data = plots_df,
+        data = dummy,
         ggplot2::aes(.data[[longitude]], .data[[latitude]],
-                     fill = intervals[1]),
+          fill = .data[["intervals"]]
+        ),
         size = 0,
         key_glyph = ggplot2::draw_key_rect
       ) +

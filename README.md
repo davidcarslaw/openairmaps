@@ -77,9 +77,26 @@ example, academic journals) demand “static” formats like .docx and .pdf.
 For this reason, “static” versions of `{openairmaps}` polar marker
 functions have been provided which are written in `{ggplot2}`. A benefit
 of being written in `{ggplot2}` is that additional layers can be added
-(e.g., `geom_label()` could be used to label sites) and limited further
-customisation is available using `theme()` and `guides()`.
+(e.g., `geom_label_sf()` could be used to label sites) and limited
+further customisation is available using `theme()` and `guides()`.
 
-Static maps require users to provide a
-[ggmap](https://github.com/dkahle/ggmap) tileset, which at the time of
-writing requires an API key for either Google or Stadia Maps.
+``` r
+polar_data %>%
+  openair::cutData("daylight") %>%
+  polarMapStatic(
+    pollutant = "no2",
+    limits = c(0, 180),
+    facet = "daylight",
+    facet.nrow = 2
+  )
+```
+
+<div class="figure">
+
+<img src="man/figures/README-egstatic-1.png" alt="Two static maps. They show OpenStreetMap map layers, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The two maps represent daylight and nighttime observations separately." width="100%" />
+<p class="caption">
+An example `polarMapStatic()` showing NO2 concentrations in central
+London.
+</p>
+
+</div>

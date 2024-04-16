@@ -156,7 +156,7 @@ pollroseMap(polar_data,
 \seealso{
 the original \code{\link[openair:pollutionRose]{openair::pollutionRose()}}
 
-\code{\link[=pollroseMapStatic]{pollroseMapStatic()}} for the static \code{ggmap} equivalent of
+\code{\link[=pollroseMapStatic]{pollroseMapStatic()}} for the static equivalent of
 \code{\link[=pollroseMap]{pollroseMap()}}
 
 Other interactive directional analysis maps: 

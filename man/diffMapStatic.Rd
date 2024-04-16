@@ -2,17 +2,18 @@
 % Please edit documentation in R/polar_diffMap.R
 \name{diffMapStatic}
 \alias{diffMapStatic}
-\title{Bivariate polar plots on a static ggmap}
+\title{Bivariate polar plots on a static map}
 \usage{
 diffMapStatic(
   before,
   after,
   pollutant = NULL,
-  ggmap,
   limits = "free",
   x = "ws",
   latitude = NULL,
   longitude = NULL,
+  crs = 4326,
+  provider = "osm",
   facet = NULL,
   cols = c("#002F70", "#3167BB", "#879FDB", "#C8D2F1", "#F6F6F6", "#F4C8C8", "#DA8A8B",
     "#AE4647", "#5F1415"),
@@ -34,9 +35,6 @@ for details of different input requirements.}
 \item{pollutant}{The column name(s) of the pollutant(s) to plot. If multiple
 pollutants are specified, they will each form part of a separate panel.}
 
-\item{ggmap}{A \code{ggmap} object obtained using \code{\link[ggmap:get_map]{ggmap::get_map()}} or a similar
-function to use as the basemap.}
-
 \item{limits}{One of:
 \itemize{
 \item \code{"fixed"} which ensures all of the markers use the same colour scale.
@@ -53,6 +51,16 @@ span 0-100.
 coordinate if using a different \code{crs}). If not provided, will be
 automatically inferred from data by looking for a column named
 "lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).}
+
+\item{crs}{The coordinate reference system (CRS) of the data, passed to
+\code{\link[sf:st_crs]{sf::st_crs()}}. By default this is \href{https://epsg.io/4326}{EPSG:4326}, the
+CRS associated with the commonly used latitude and longitude coordinates.
+Different coordinate systems can be specified using \code{crs} (e.g., \code{crs = 27700} for the \href{https://epsg.io/27700}{British National Grid}). Note that
+non-lat/lng coordinate systems will be re-projected to EPSG:4326 for
+plotting on the map.}
+
+\item{provider}{The base map to be used. See \code{rosm::osm.types()} for a list of
+all base maps that can be used.}
 
 \item{facet}{Used for splitting the input data into different panels, passed
 to the \code{type} argument of \code{\link[openair:cutData]{openair::cutData()}}. \code{facet} cannot be used if
@@ -254,7 +262,7 @@ analysing data to extract plot components and plotting them in other ways.}
   }}
 }
 \value{
-a \code{ggplot2} plot with a \code{ggmap} basemap
+a \code{ggplot2} plot with a \code{ggspatial} basemap
 }
 \description{
 \code{\link[=diffMapStatic]{diffMapStatic()}} creates a \code{ggplot2} map using bivariate "difference" polar

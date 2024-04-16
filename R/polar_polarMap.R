@@ -81,7 +81,7 @@
 #' @export
 #'
 #' @seealso the original [openair::polarPlot()]
-#' @seealso [polarMapStatic()] for the static `ggmap` equivalent of [polarMap()]
+#' @seealso [polarMapStatic()] for the static equivalent of [polarMap()]
 #'
 #' @examples
 #' \dontrun{
@@ -161,8 +161,10 @@ polarMap <- function(data,
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -289,7 +291,7 @@ polarMap <- function(data,
   return(map)
 }
 
-#' Bivariate polar plots on a static ggmap
+#' Bivariate polar plots on a static map
 #'
 #' [polarMapStatic()] creates a `ggplot2` map using bivariate polar plots as
 #' markers. As this function returns a `ggplot2` object, further customisation
@@ -320,11 +322,11 @@ polarMap <- function(data,
 #' @inheritParams polarMap
 #' @param pollutant The column name(s) of the pollutant(s) to plot. If multiple
 #'   pollutants are specified, they will each form part of a separate panel.
+#' @param provider The base map to be used. See `rosm::osm.types()` for a list of
+#'   all base maps that can be used.
 #' @param facet Used for splitting the input data into different panels, passed
 #'   to the `type` argument of [openair::cutData()]. `facet` cannot be used if
 #'   multiple `pollutant` columns have been provided.
-#' @param ggmap A `ggmap` object obtained using [ggmap::get_map()] or a similar
-#'   function to use as the basemap.
 #' @param facet.nrow Passed to the `nrow` argument of [ggplot2::facet_wrap()].
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -alpha -plot
@@ -333,16 +335,17 @@ polarMap <- function(data,
 #' @seealso [polarMap()] for the interactive `leaflet` equivalent of
 #'   [polarMapStatic()]
 #'
-#' @return a `ggplot2` plot with a `ggmap` basemap
+#' @return a `ggplot2` plot with a `ggspatial` basemap
 #' @export
 polarMapStatic <- function(data,
                            pollutant = NULL,
-                           ggmap,
                            x = "ws",
                            limits = "free",
                            upper = "fixed",
                            latitude = NULL,
                            longitude = NULL,
+                           crs = 4326,
+                           provider = "osm",
                            facet = NULL,
                            cols = "turbo",
                            alpha = 1,
@@ -351,9 +354,6 @@ polarMapStatic <- function(data,
                            d.icon = 150,
                            d.fig = 3,
                            ...) {
-  # check that there is a ggmap
-  check_ggmap(missing(ggmap))
-
   # assume lat/lon
   latlon <- assume_latlon(
     data = data,
@@ -388,12 +388,14 @@ polarMapStatic <- function(data,
     theLimits <- range(testplots$z, na.rm = TRUE)
   } else if ("free" %in% limits) {
     theLimits <- NA
-  } else if (is.numeric(limits)){
+  } else if (is.numeric(limits)) {
     theLimits <- limits
   } else {
     cli::cli_abort(
-      c("!" = "Do not recognise {.field limits} value of {.code {limits}}",
-        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2.")
+      c(
+        "!" = "Do not recognise {.field limits} value of {.code {limits}}",
+        "i" = "{.field limits} should be one of {.code 'fixed'}, {.code 'free'} or a numeric vector of length 2."
+      )
     )
   }
 
@@ -473,7 +475,6 @@ polarMapStatic <- function(data,
   # create static map - deals with basics & facets
   plt <-
     create_static_map(
-      ggmap = ggmap,
       plots_df = plots_df,
       latitude = latitude,
       longitude = longitude,
@@ -481,7 +482,9 @@ polarMapStatic <- function(data,
       pollutant = pollutant,
       facet = facet,
       facet.nrow = facet.nrow,
-      d.icon = d.icon
+      d.icon = d.icon,
+      crs = crs,
+      provider = provider
     )
 
   # create colorbar if limits specified

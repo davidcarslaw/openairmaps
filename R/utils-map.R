@@ -485,46 +485,31 @@ create_polar_markers <-
   }
 
 #' if ggmap is not provided, have a guess
-#' @param data `plots_df` input
-#' @param ggmap,latitude,longitude,zoom inherited from parent
+#' @param data `plots_sf` input
 #' @noRd
-estimate_ggmap <-
-  function(ggmap = ggmap,
-           data,
-           latitude = latitude,
-           longitude = longitude,
-           zoom = zoom) {
-    if (is.null(ggmap)) {
-      lat_d <- abs(diff(range(data[[latitude]])) / 2)
-      lon_d <- abs(diff(range(data[[longitude]])) / 2)
-      d <- max(lon_d, lat_d)
-      if (d == 0) d <- 0.05
-
-      minlat <- min(data[[latitude]]) - d
-      maxlat <- max(data[[latitude]]) + d
-
-      minlon <- min(data[[longitude]]) - d
-      maxlon <- max(data[[longitude]]) + d
-
-      ggmap <-
-        ggmap::get_stamenmap(
-          bbox = c(minlon, minlat, maxlon, maxlat),
-          zoom = zoom
-        )
-    }
-
-    return(ggmap)
+estimate_bbox <-
+  function(data) {
+    bbox <- sf::st_bbox(data) %>% as.list()
+    xdiff <- abs(bbox$xmin - bbox$xmax) / 2
+    ydiff <- abs(bbox$ymin - bbox$ymax) / 2
+    mindiff <- min(c(xdiff, ydiff))
+    bbox$xmin <- bbox$xmin - mindiff
+    bbox$xmax <- bbox$xmax + mindiff
+    bbox$ymin <- bbox$ymin - mindiff
+    bbox$ymax <- bbox$ymax + mindiff
+    return(bbox)
   }
 
 #' Create static map
-#' @param ggmap:facet.nrow inherited from parent
+#' @param latitude:facet.nrow inherited from parent
 #' @param plots_df `plots_df`
 #' @noRd
 create_static_map <-
-  function(ggmap,
-           plots_df,
+  function(plots_df,
            latitude,
            longitude,
+           crs,
+           provider,
            split_col,
            pollutant,
            d.icon,
@@ -540,27 +525,44 @@ create_static_map <-
       height <- d.icon[[2]]
     }
 
+    link_to_img <- function(x, width, height) {
+      stringr::str_glue("<img src='{x}' width='{width}' height='{height}'/>")
+    }
+
     # don't turn facet levels into chr, keep as fct
     if (length(pollutant) > 1 | !is.null(facet)) {
       levels(plots_df[[split_col]]) <- quickTextHTML(levels(plots_df[[split_col]]))
     }
 
+    plots_sf <-
+      sf::st_as_sf(
+        plots_df,
+        coords = c(longitude, latitude),
+        crs = crs,
+        remove = FALSE
+      ) %>%
+      sf::st_transform(crs = 4326)
+
+    # create link to image
+    plots_sf$link <- link_to_img(plots_sf$url, height, width)
+
+    # work out an approximate bounding box for the plot
+    bbox <- estimate_bbox(plots_sf)
+
     # make plot
     plt <-
-      ggmap::ggmap(ggmap) +
-      ggtext::geom_richtext(
-        data = dplyr::mutate(
-          plots_df,
-          url = stringr::str_glue("<img src='{url}' width='{width}' height='{height}'/>")
-        ),
-        ggplot2::aes(.data[[longitude]], .data[[latitude]], label = .data$url),
-        fill = NA,
-        color = NA
+      ggplot2::ggplot(plots_sf) +
+      ggspatial::annotation_map_tile(zoomin = 0, cachedir = tempdir(), type = provider, progress = "none") +
+      geom_sf_richtext(data = plots_sf, ggplot2::aes(label = .data[["link"]]), fill = NA, color = NA) +
+      theme_static() +
+      ggplot2::coord_sf(
+        xlim = c(bbox$xmin, bbox$xmax),
+        ylim = c(bbox$ymin, bbox$ymax)
       ) +
-      ggplot2::labs(x = NULL, y = NULL) +
-      theme_static()
+      ggplot2::labs(x = NULL, y = NULL)
 
-    if (length(pollutant) > 1 | !is.null(facet)) {
+    if (length(pollutant) > 1 |
+      !is.null(facet)) {
       plt <-
         plt + ggplot2::facet_wrap(ggplot2::vars(.data[[split_col]]), nrow = facet.nrow) +
         ggplot2::theme(strip.text = ggtext::element_markdown())
@@ -599,7 +601,7 @@ quick_cutdata <- function(data, type) {
 
 #' checks if multiple pollutants have been provided with a "fixed" scale
 #' @noRd
-check_multipoll <- function(vec, pollutant){
+check_multipoll <- function(vec, pollutant) {
   if ("fixed" %in% vec & length(pollutant) > 1) {
     cli::cli_warn("{.code 'fixed'} limits only work with a single given {.field pollutant}")
     "free"
@@ -608,14 +610,51 @@ check_multipoll <- function(vec, pollutant){
   }
 }
 
-#' check if ggmap has been provided
+#' a combination of geom_sf and geom_richtext
+#'
+#' @author StuieT85 on GitHub
+#' @source https://github.com/wilkelab/ggtext/issues/76#issuecomment-1011166509
 #' @noRd
-check_ggmap <- function(missing) {
-  if (missing) {
-    cli::cli_abort(
-      c("!" = "No {.field ggmap} provided.",
-        "i" = "Please use {.fun ggmap::get_map} or similar to get a tileset."),
-      call = NULL
+geom_sf_richtext <-
+  function(mapping = ggplot2::aes(),
+           data = NULL,
+           stat = "sf_coordinates",
+           position = "identity",
+           ...,
+           parse = FALSE,
+           nudge_x = 0,
+           nudge_y = 0,
+           label.padding = ggplot2::unit(0.25, "lines"),
+           label.r = ggplot2::unit(
+             0.15,
+             "lines"
+           ),
+           label.size = 0.25,
+           na.rm = FALSE,
+           show.legend = NA,
+           inherit.aes = TRUE,
+           fun.geometry = NULL) {
+    if (!missing(nudge_x) || !missing(nudge_y)) {
+      if (!missing(position)) {
+        cli::cli_abort("Specify either {.arg position} or {.arg nudge_x}/{.arg nudge_y}")
+      }
+      position <- ggplot2::position_nudge(nudge_x, nudge_y)
+    }
+    ggplot2::layer_sf(
+      data = data,
+      mapping = mapping,
+      stat = stat,
+      geom = ggtext::GeomRichText,
+      position = position,
+      show.legend = show.legend,
+      inherit.aes = inherit.aes,
+      params = list(
+        label.padding = label.padding,
+        label.r = label.r,
+        label.size = label.size,
+        na.rm = na.rm,
+        fun.geometry = fun.geometry,
+        ...
+      )
     )
   }
-}
