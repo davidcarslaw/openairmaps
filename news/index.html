@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
@@ -50,14 +50,19 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="openairmaps-development-version">openairmaps (development version)<a class="anchor" aria-label="anchor" href="#openairmaps-development-version"></a></h2>
 <div class="section level3">
+<h3 id="breaking-changes-development-version">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-development-version"></a></h3>
+<ul><li>BREAKING: The <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> family is now powered by <a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a> rather than <a href="https://github.com/dkahle/ggmap" class="external-link">ggmap</a> as it does not require an API key. This means the <code>ggmap</code> argument has been removed and the <code>provider</code> argument has been added.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li><p>The <code>crs</code> argument has been added to the <code><a href="../reference/polarMap.html">polarMap()</a></code> family and to <code><a href="../reference/searchNetwork.html">searchNetwork()</a></code>. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a>.</p></li>
+<ul><li><p>The <code>crs</code> argument has been added to the <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> families and to <code><a href="../reference/searchNetwork.html">searchNetwork()</a></code>. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> / <a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a>.</p></li>
 <li><p>Popups for the <code><a href="../reference/polarMap.html">polarMap()</a></code> family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.</p></li>
 <li><p>Two examples of the use of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> with <a href="https://shiny.posit.co/" class="external-link">shiny</a> have been added to the package. Run <code>shiny::runExample(package = "openairmaps")</code> to view these.</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-development-version">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h3>
-<ul><li>
+<ul><li><p>Legends drawn by the <code><a href="../reference/polarMapStatic.html">polarMapStatic()</a></code> function should now render using more recent versions of <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>.</p></li>
+<li>
 <p>The <code><a href="../reference/addTrajPaths.html">addTrajPaths()</a></code> <code>layerId</code> argument is now implemented in a sensible way to ensure each geometry has a unique <code>layerId</code> and can therefore be interacted with in a <a href="https://shiny.posit.co/" class="external-link">shiny</a> context.</p>
 <ul><li>
 <code>layerId</code> is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if <code>layerId = "traj"</code>, the first point of the first line has the ID <code>"traj-1-1"</code>, the second point of the first line has ID <code>"traj-1-2"</code>, the first point of the second line has ID <code>"traj-2-1"</code>, and so on.</li>
@@ -260,7 +265,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer></div>
