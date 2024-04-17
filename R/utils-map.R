@@ -694,7 +694,6 @@ rm_illegal_chars <- function(x) {
       "\\/" = "forwardslash",
       " " = "space",
       "\\$" = "dollar",
-      "\\£" = "pound",
       "\\!" = "exclame",
       "\\'" = "singletick",
       '\\"' = "doubletick",
