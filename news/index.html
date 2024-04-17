@@ -67,6 +67,7 @@
 <ul><li>
 <code>layerId</code> is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if <code>layerId = "traj"</code>, the first point of the first line has the ID <code>"traj-1-1"</code>, the second point of the first line has ID <code>"traj-1-2"</code>, the first point of the second line has ID <code>"traj-2-1"</code>, and so on.</li>
 </ul></li>
+<li><p>“illegal” filepath characters can now be used in the columns provided to the <code>type</code> argument of the <code><a href="../reference/polarMap.html">polarMap()</a></code> family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
