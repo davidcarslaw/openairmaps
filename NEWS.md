@@ -32,6 +32,8 @@
 
     * `layerId` is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if `layerId = "traj"`, the first point of the first line has the ID `"traj-1-1"`, the second point of the first line has ID `"traj-1-2"`, the first point of the second line has ID `"traj-2-1"`, and so on.
 
+* "illegal" filepath characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.
+
 # openairmaps 0.8.1
 
 This is a minor release of `{openairmaps}`, released mainly to fix an issue with `{ggmap}` but also adding some new functionality for polar marker maps.
