@@ -8,13 +8,19 @@
 #' character vector `text` and automatically applies formatting to any
 #' recognised character sub-series to properly render in HTML.
 #'
-#' @param text A character vector.
+#' @param text *A character vector.*
+#'
+#'  **required**
+#'
+#'   A character vector containing common pollutant names to be formatted.
+#'   Commonly, this will insert super- and subscript HTML tags, e.g., "NO2" will
+#'   be replaced with "NO<sub>2</sub>".
+#'
 #' @export
-#' @returns The function returns a character vector for HTML evaluation.
+#' @returns a character vector
 #' @author Jack Davison.
 #' @keywords methods
-#' @seealso [openair::quickText()], useful for non-HTML/static maps
-#'   and plots
+#' @seealso [openair::quickText()], useful for non-HTML/static maps and plots
 #'
 #' @examples
 #' labs <- c("no2", "o3", "so2")
@@ -52,26 +58,54 @@ quickTextHTML <- function(text) {
 #' the input dataframe appended with a "popup" column, which can then be used in
 #' the `popup` argument of a function like [polarMap()].
 #'
-#' @param data A data frame containing latitude and longitude information that
-#'   will go on to be used in a function such as [polarMap()].
-#' @param cols A character vector of column names, the data from which will
-#'   appear in the popup.
-#' @param latitude,longitude The decimal latitude/longitude. If not provided,
-#'   will be automatically inferred from data by looking for a column named
-#'   "lat"/"latitude" or "lon"/"lng"/"long"\"longitude". (case-insensitively).
-#' @param names Optional. A named vector used to rename certain columns in the
-#'   popups. See the Example for more information.
-#' @param control Optional. Column which will be used for the `control` argument
-#'   of other mapping functions. This only needs to be used if `control` is
-#'   going to be used in [polarMap()] or another similar function, and you'd
-#'   expect different values for the different map layers (for example, if you
-#'   are calculating a mean pollutant concentration).
-#' @param fun.character A function to summarise character and factor columns.
-#'   Defaults to collapsing unique values into a comma-separated list.
-#' @param fun.numeric A function to summarise numeric columns. Defaults to
-#'   taking the mean to three significant figures.
-#' @param fun.dttm A function to summarise date columns. Defaults to presenting
-#'   the date as a range.
+#' @inheritParams polarMap
+#'
+#' @param data *Input data table with geo-spatial information.*
+#'
+#'   **required**
+#'
+#'   A data frame containing latitude and longitude information that will go on
+#'   to be used in a function such as [polarMap()].
+#'
+#' @param columns *A character vector of column names to include in the popup.*
+#'
+#'   **required**
+#'
+#'   Summaries of the selected columns will appear in the popup. If a named
+#'   vector is provided, the names of the vector will be used in place of the
+#'   raw column names. See the Examples for more information.
+#'
+#' @param type *A column to be passed to the `type` argument of another
+#'   function.*
+#'
+#'  *default:* `NULL`
+#'
+#'   Column which will be used for the `type` argument of other mapping
+#'   functions. This only needs to be used if `type` is going to be used in
+#'   [polarMap()] or another similar function, and you'd expect different values
+#'   for the different map layers (for example, if you are calculating a mean
+#'   pollutant concentration).
+#'
+#' @param fun.character *A function to summarise character and factor columns.*
+#'
+#'  *default:* `function(x) paste(unique(x), collapse = ", ")`
+#'
+#'   The default collapses unique values into a comma-separated list.
+#'
+#' @param fun.numeric *A function to summarise numeric columns.*
+#'
+#'  *default:* `function(x) signif(mean(x, na.rm = TRUE), 3)`
+#'
+#'   The default takes the mean to three significant figures. Other numeric
+#'   summaries may be of interest, such as the maximum, minimum, standard
+#'   deviation, and so on.
+#'
+#' @param fun.dttm *A function to summarise date columns.*
+#'
+#'  *default:* `function(x) paste(lubridate::floor_date(range(x, na.rm = TRUE), "day"), collapse = " to ")`
+#'
+#'   The default presents the date as a range. Other statistics of interest
+#'   could be the start or end of the dates.
 #'
 #' @returns a [tibble::tibble()]
 #' @export
@@ -79,22 +113,28 @@ quickTextHTML <- function(text) {
 #' @examples
 #' \dontrun{
 #' buildPopup(
-#'   data = openairmaps::polar_data,
-#'   cols = c("site", "site_type", "date", "nox"),
-#'   names = c("Site" = "site", "Site Type" = "site_type", "Date Range" = "date")
+#'   data = polar_data,
+#'   columns = c(
+#'     "Site" = "site",
+#'     "Site Type" = "site_type",
+#'     "Date Range" = "date"
+#'   )
 #' ) %>%
 #'   polarMap("nox", popup = "popup")
 #' }
 buildPopup <-
   function(data,
-           cols,
+           columns,
            latitude = NULL,
            longitude = NULL,
-           names = NULL,
-           control = NULL,
+           type = NULL,
            fun.character = function(x) paste(unique(x), collapse = ", "),
            fun.numeric = function(x) signif(mean(x, na.rm = TRUE), 3),
-           fun.dttm = function(x) paste(lubridate::floor_date(range(x, na.rm = TRUE), "day"), collapse = " to ")) {
+           fun.dttm = function(x) paste(lubridate::floor_date(range(x, na.rm = TRUE), "day"), collapse = " to "),
+           ...) {
+    # check for old facet/control opts
+    type <- type %||% check_facet_control(...)
+
     # assume latitude/longitude
     latlon <- assume_latlon(
       data = data,
@@ -108,7 +148,7 @@ buildPopup <-
       # multiple columns
       summary <-
         data %>%
-        dplyr::select(dplyr::all_of(c(latitude, longitude, cols))) %>%
+        dplyr::select(dplyr::all_of(c(latitude, longitude, as.vector(columns)))) %>%
         dplyr::group_by(.data[[latitude]], .data[[longitude]]) %>%
         dplyr::summarise(dplyr::across(dplyr::where(is.character) | dplyr::where(is.factor), fun.character),
           dplyr::across(dplyr::where(is.numeric), fun.numeric),
@@ -116,8 +156,9 @@ buildPopup <-
           .groups = "drop"
         )
 
-      if (!is.null(names)) {
-        summary <- dplyr::rename(summary, dplyr::all_of(names))
+      if (!is.null(names(columns))) {
+        names(columns)[names(columns) == ""] <- columns[names(columns) == ""]
+        summary <- dplyr::rename(summary, dplyr::all_of(columns))
       }
 
       out <-
@@ -127,7 +168,7 @@ buildPopup <-
 
       if (typeof(out) == "list") {
         out <- as.data.frame(out)
-        names(out) <- cols
+        names(out) <- as.vector(columns)
       }
 
       out <-
@@ -148,8 +189,8 @@ buildPopup <-
       return(out)
     }
 
-    if (!is.null(control)) {
-      out <- dplyr::group_split(data, .data[[control]]) %>%
+    if (!is.null(type)) {
+      out <- dplyr::group_split(data, .data[[type]]) %>%
         purrr::map(make_popup) %>%
         purrr::list_rbind()
     } else {
@@ -165,7 +206,11 @@ buildPopup <-
 #' `PostcodesioR` R package, intended for use with the [searchNetwork()]
 #' function.
 #'
-#' @param postcode A valid UK postcode, e.g., `"SW1A 1AA"`.
+#' @param postcode *A valid UK postcode.*
+#'
+#'    **required**
+#'
+#'    A string containing a single valid UK postcode, e.g., `"SW1A 1AA"`.
 #'
 #' @returns A list containing the latitude, longitude, and input postcode.
 #' @export
