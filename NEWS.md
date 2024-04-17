@@ -6,6 +6,8 @@
 
 * BREAKING: The `control` and `facet` arguments have been deprecated in favour of `type` in the `polarMap()` family. These arguments will eventually be removed, but as of this version of `{openairmaps}` users will be warned away from their use.
 
+* BREAKING: The `names` and `cols` arguments of `buildPopup()` have been coalesced into a single `columns` argument for less verbose function usage.
+
 ## New features
 
 * The `polarMapStatic()` family of functions have been combined with the `polarMap()` family, with static maps available to be accessed using the `static` argument. The `polarMapStatic()` family are therefore deprecated, and will later be removed from `{openairmaps}`. The justification for this is as follows:

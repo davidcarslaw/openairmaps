@@ -10,7 +10,11 @@
 convertPostcode(postcode)
 }
 \arguments{
-\item{postcode}{A valid UK postcode, e.g., \code{"SW1A 1AA"}.}
+\item{postcode}{\emph{A valid UK postcode.}
+
+\strong{required}
+
+A string containing a single valid UK postcode, e.g., \code{"SW1A 1AA"}.}
 }
 \value{
 A list containing the latitude, longitude, and input postcode.
