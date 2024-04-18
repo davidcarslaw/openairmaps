@@ -7,7 +7,7 @@
 trajMapStatic(
   data,
   colour = "height",
-  facet = NULL,
+  type = NULL,
   group = NULL,
   longitude = "lon",
   latitude = "lat",
@@ -22,60 +22,124 @@ trajMapStatic(
   map.alpha = 0.8,
   map.lwd = 0.5,
   map.lty = 1,
+  facet = NULL,
   ...
 )
 }
 \arguments{
-\item{data}{Data frame, the result of importing a trajectory file using
-\code{\link[openair:importTraj]{openair::importTraj()}}.}
+\item{data}{\emph{A data frame containing a HYSPLIT trajectory, perhaps accessed
+with \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{colour}{Column to be used for colouring each trajectory. This column
-may be numeric, character or factor. This will commonly be a pollutant
-concentration which has been joined (e.g., by \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the
-trajectory data by "date".}
+\strong{required}
 
-\item{facet}{Used for splitting the trajectories into different panels.
-Passed to \code{\link[openair:cutData]{openair::cutData()}}.}
+A data frame containing HYSPLIT model outputs. If this data were not
+obtained using \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{group}{By default, trajectory paths are distinguished using the arrival
-date. \code{group} allows for additional columns to be used (e.g.,
-\code{"receptor"}).}
+\item{colour}{\emph{Column to be used for colouring each trajectory.}
 
-\item{latitude, longitude}{The decimal latitude/longitude.}
+\emph{default:} \code{NULL}
 
-\item{npoints}{A dot is placed every \code{npoints} along each full trajectory.
-For hourly back trajectories points are plotted every \code{npoints} hours. This
-helps to understand where the air masses were at particular times and get a
-feel for the speed of the air (points closer together correspond to slower
-moving air masses). Defaults to \code{12}.}
+This column may be numeric, character, factor or date(time). This will
+commonly be a pollutant concentration which has been joined (e.g., by
+\code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the trajectory data by "date".}
 
-\item{xlim, ylim}{The x- and y-limits of the plot. If \code{NULL}, limits will be
-estimated based on the lat/lon ranges of the input data.}
+\item{type}{\emph{A method to condition the \code{data} for separate plotting.}
 
-\item{crs}{The coordinate reference system (CRS) into which all data should
-be projected before plotting. Defaults to the Lambert projection
-(\code{sf::st_crs(3812)}). Alternatively, can be set to \code{NULL}, which will
-typically render the map quicker but may cause countries far from the
+\emph{default:} \code{NULL}
+
+Used for splitting the trajectories into different groups which will appear
+as different panels. Passed to \code{\link[openair:cutData]{openair::cutData()}}.}
+
+\item{group}{\emph{Column to use to distinguish different trajectory paths.}
+
+\emph{default:} \code{NULL}
+
+By default, trajectory paths are distinguished using the arrival date.
+\code{group} allows for additional columns to be used (e.g., \code{"receptor"} if
+multiple receptors are being plotted).}
+
+\item{latitude, longitude}{\emph{The decimal latitude/longitude.}
+
+\emph{default:} \code{"lat"} / \code{"lon"}
+
+Column names representing the decimal latitude and longitude.}
+
+\item{npoints}{\emph{Interval at which points are placed along the trajectory
+paths.}
+
+\emph{default:} \code{12}
+
+A dot is placed every \code{npoints} along each full trajectory. For hourly back
+trajectories points are plotted every \code{npoints} hours. This helps to
+understand where the air masses were at particular times and get a feel for
+the speed of the air (points closer together correspond to slower moving
+air masses). Defaults to \code{12}.}
+
+\item{xlim, ylim}{\emph{The x- and y-limits of the plot.}
+
+\emph{default:} \code{NULL}
+
+A numeric vector of length two defining the x-/y-limits of the map, passed
+to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf()}}. If \code{NULL}, limits will be estimated based on the
+lat/lon ranges of the input data.}
+
+\item{crs}{\emph{The coordinate reference system (CRS) into which all data should
+be projected before plotting.}
+
+\emph{default:} \code{sf::st_crs(3812)}
+
+This argument defaults to the Lambert projection, but can take any
+coordinate reference system to pass to the \code{crs} argument of
+\code{\link[ggplot2:ggsf]{ggplot2::coord_sf()}}. Alternatively, \code{crs} can be set to \code{NULL}, which
+will typically render the map quicker but may cause countries far from the
 equator or large areas to appear distorted.}
 
-\item{origin}{Should the receptor point be marked with a circle? Defaults to
-\code{TRUE}.}
+\item{origin}{\emph{Draw the receptor point as a circle?}
 
-\item{map}{Should a base map be drawn? Defaults to \code{TRUE}.}
+\emph{default:} \code{TRUE}
 
-\item{map.fill}{Colour to use to fill the polygons of the base map (see
-\code{colors()}).}
+When \code{TRUE}, the receptor point(s) are marked with black circles.}
 
-\item{map.colour}{Colour to use for the polygon borders of the base map (see
-\code{colors()}).}
+\item{map}{\emph{Draw a base map?}
 
-\item{map.alpha}{Transparency of the base map polygons. Must be between \code{0}
-(fully transparent) and \code{1} (fully opaque).}
+\emph{default:} \code{TRUE}
 
-\item{map.lwd}{Line width of the base map polygon borders.}
+Draws the geometries of countries under the trajectory paths.}
 
-\item{map.lty}{Line type of the base map polygon borders. See
-\code{\link[ggplot2:scale_linetype]{ggplot2::scale_linetype()}} for common examples.}
+\item{map.fill}{\emph{Colour to use to fill the polygons of the base map.}
+
+\emph{default:} \code{"grey85"}
+
+See \code{colors()} for colour options. Alternatively, a hexadecimal color code
+can be provided.}
+
+\item{map.colour}{\emph{Colour to use for the polygon borders of the base map.}
+
+\emph{default:} \code{"grey75"}
+
+See \code{colors()} for colour options. Alternatively, a hexadecimal color code
+can be provided.}
+
+\item{map.alpha}{\emph{Transparency of the base map polygons.}
+
+\emph{default:} \code{0.8}
+
+Must be between \code{0} (fully transparent) and \code{1} (fully opaque).}
+
+\item{map.lwd}{\emph{Line width of the base map polygon borders.}
+
+\emph{default:} \code{0.5}
+
+Any numeric value.}
+
+\item{map.lty}{\emph{Line type of the base map polygon borders.}
+
+\emph{default:} \code{1}
+
+See \code{\link[ggplot2:scale_linetype]{ggplot2::scale_linetype()}} for common examples. The default, \code{1},
+draws solid lines.}
+
+\item{facet}{Deprecated. Please use \code{type}.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}
@@ -169,7 +233,7 @@ trajMapStatic(traj_data, colour = "pm2.5", crs = sf::st_crs(4326)) +
 }
 }
 \seealso{
-the original \code{\link[openair:trajPlot]{openair::trajPlot()}}
+\code{\link[openair:trajPlot]{openair::trajPlot()}}
 
 \code{\link[=trajMap]{trajMap()}} for the interactive \code{leaflet} equivalent of
 \code{\link[=trajMapStatic]{trajMapStatic()}}

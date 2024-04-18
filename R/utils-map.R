@@ -504,11 +504,11 @@ estimate_bbox <-
     bbox <- sf::st_bbox(data) %>% as.list()
     xdiff <- abs(bbox$xmin - bbox$xmax) / 2
     ydiff <- abs(bbox$ymin - bbox$ymax) / 2
-    mindiff <- min(c(xdiff, ydiff))
-    bbox$xmin <- bbox$xmin - mindiff
-    bbox$xmax <- bbox$xmax + mindiff
-    bbox$ymin <- bbox$ymin - mindiff
-    bbox$ymax <- bbox$ymax + mindiff
+    diff <- mean(c(xdiff, ydiff))
+    bbox$xmin <- bbox$xmin - diff
+    bbox$xmax <- bbox$xmax + diff
+    bbox$ymin <- bbox$ymin - diff
+    bbox$ymax <- bbox$ymax + diff
     return(bbox)
   }
 
@@ -595,11 +595,10 @@ quick_popup <- function(data, popup, latitude, longitude, control) {
 
   buildPopup(
     data,
-    cols = popup,
+    columns = names,
     latitude = latitude,
     longitude = longitude,
-    names = names,
-    control = control
+    type = control
   )
 }
 
@@ -670,6 +669,19 @@ geom_sf_richtext <-
       )
     )
   }
+
+#' Check providers are valid
+#' @noRd
+check_providers <- function(provider, static) {
+  if (static) {
+    provider <- provider %||% "osm"
+    rlang::arg_match(provider, rosm::osm.types(), multiple = FALSE)
+  } else {
+    provider <- provider %||% "OpenStreetMap"
+    rlang::arg_match(provider, names(leaflet::providers), multiple = TRUE)
+  }
+  return(provider)
+}
 
 #' strip away illegal characters in path
 #'

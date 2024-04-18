@@ -40,6 +40,7 @@
 
 ## usethis namespace: start
 #' @importFrom lifecycle deprecated
+#' @importFrom rlang %||%
 #' @importFrom rlang .data
 #' @importFrom tibble tibble
 ## usethis namespace: end
