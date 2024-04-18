@@ -73,6 +73,8 @@ deviation, and so on.}
 
 The default presents the date as a range. Other statistics of interest
 could be the start or end of the dates.}
+
+\item{...}{\strong{Not currently used.}}
 }
 \value{
 a \code{\link[tibble:tibble]{tibble::tibble()}}

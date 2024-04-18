@@ -107,6 +107,8 @@ quickTextHTML <- function(text) {
 #'   The default presents the date as a range. Other statistics of interest
 #'   could be the start or end of the dates.
 #'
+#' @param ... **Not currently used.**
+#'
 #' @returns a [tibble::tibble()]
 #' @export
 #'

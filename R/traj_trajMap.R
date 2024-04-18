@@ -109,7 +109,7 @@ trajMap <-
         with = "trajMap(type)"
       )
     }
-    type <- type %||% facet
+    type <- type %||% control
 
     # make lat/lon easier to use
     names(data)[names(data) == longitude] <- "lon"
