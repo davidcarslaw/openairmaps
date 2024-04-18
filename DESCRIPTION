@@ -31,6 +31,7 @@ Imports:
     openair (>= 2.13),
     purrr (>= 1.0.0),
     rlang,
+    rosm,
     sf,
     stringr,
     tibble,
@@ -38,6 +39,7 @@ Imports:
 Suggests:
     httr,
     jsonlite,
+    shiny,
     worldmet
 Encoding: UTF-8
 Language: en-GB

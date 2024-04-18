@@ -6,23 +6,22 @@
 #' @family interactive trajectory maps
 #' @inheritParams trajMap
 #' @inheritParams openair::trajLevel
-#' @param cols Colours to be used for plotting. Options include "default",
-#'   "increment", "heat", "turbo" and `RColorBrewer` colours — see the
-#'   [openair::openColours()] function for more details. For user defined the
-#'   user can supply a list of colour names recognised by R (type
-#'   [grDevices::colours()] to see the full list). An example would be `cols =
-#'   c("yellow", "green", "blue")`.
+#' @param cols The colours used for plotting, passed to
+#'   [openair::openColours()]. The default, `"turbo"`, is a rainbow palette with
+#'   relatively perceptually uniform colours. Read more about this palette at
+#'   <https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/>.
 #' @param alpha Opacity of the tiles. Must be between `0` and `1`.
 #' @param tile.border Colour to use for the border of binned tiles. Defaults to
 #'   `NA`, which draws no border.
 #' @param smooth Should the trajectory surface be smoothed? Defaults to `FALSE`.
 #'   Note that, when `smooth = TRUE`, no popup information will be available.
 #'
-#' @return A leaflet object.
+#' @returns A leaflet object.
 #' @export
 #'
-#' @seealso the original [openair::trajLevel()]
-#' @seealso [trajLevelMapStatic()] for the static `ggplot2` equivalent of [trajLevelMap()]
+#' @seealso [openair::trajLevel()]
+#' @seealso [trajLevelMapStatic()] for the static `ggplot2` equivalent of
+#'   [trajLevelMap()]
 #'
 #' @examples
 #' \dontrun{
@@ -34,7 +33,7 @@ trajLevelMap <-
            longitude = "lon",
            latitude = "lat",
            pollutant,
-           control = "default",
+           type = NULL,
            smooth = FALSE,
            statistic = "frequency",
            percentile = 90,
@@ -43,7 +42,7 @@ trajLevelMap <-
            min.bin = 1,
            .combine = NA,
            sigma = 1.5,
-           cols = "default",
+           cols = "turbo",
            alpha = .5,
            tile.border = NA,
            provider = "OpenStreetMap") {
@@ -108,7 +107,7 @@ trajLevelMap <-
       min.bin = min.bin,
       .combine = .combine,
       sigma = sigma,
-      type = control,
+      type = type %||% "default",
       plot = FALSE
     )$data
 
@@ -129,7 +128,7 @@ trajLevelMap <-
 
     names(data)[names(data) == "height"] <- pollutant
 
-    if (statistic == "frequency") {
+    if (statistic == "frequency" & !smooth) {
       pal <- leaflet::colorBin(
         palette = openair::openColours(scheme = cols),
         domain = data[[pollutant]],
@@ -173,7 +172,7 @@ trajLevelMap <-
        <b>Count:</b> {gridcount}<br>
        <b>Value:</b> {signif(val, 3)}"
         ),
-        coord = stringr::str_glue("({ygrid}, {xgrid})")
+       coord = stringr::str_glue("({ygrid}, {xgrid})")
       )
 
       if (statistic %in% c("difference", "frequency")) {
@@ -208,7 +207,7 @@ trajLevelMap <-
         fillColor = pal(data[[pollutant]]),
         popup = popup,
         label = data[["label"]],
-        group = data[[control]]
+        group = data[[type %||% "default"]]
       ) %>%
       leaflet::addLegend(
         title = title,
@@ -218,18 +217,18 @@ trajLevelMap <-
       )
 
     # control menu
-    if (length(unique(provider)) > 1 & control == "default") {
+    if (length(unique(provider)) > 1 & is.null(type)) {
       map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
     } else if (length(unique(provider)) == 1 &
-      control != "default") {
+      !is.null(type)) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = sort(unique(data[[control]])))
+        leaflet::addLayersControl(map, baseGroups = sort(unique(data[[type]])))
     } else if (length(unique(provider)) > 1 &
-      control != "default") {
+      !is.null(type)) {
       map <-
         leaflet::addLayersControl(map,
           overlayGroups = unique(provider),
-          baseGroups = sort(unique(data[[control]]))
+          baseGroups = sort(unique(data[[type]]))
         )
     }
 
@@ -257,10 +256,10 @@ trajLevelMap <-
 #'   setting `crs` to `sf::st_crs(4326)` or `NULL`.
 #' @inheritDotParams ggplot2::coord_sf -xlim -ylim -crs -default_crs
 #'
-#' @return A `ggplot2` plot
+#' @returns A `ggplot2` plot
 #' @export
 #'
-#' @seealso the original [openair::trajLevel()]
+#' @seealso [openair::trajLevel()]
 #' @seealso [trajLevelMap()] for the interactive `leaflet` equivalent of
 #'   [trajLevelMapStatic()]
 trajLevelMapStatic <-
@@ -268,7 +267,7 @@ trajLevelMapStatic <-
            longitude = "lon",
            latitude = "lat",
            pollutant,
-           facet = "default",
+           type = NULL,
            smooth = FALSE,
            statistic = "frequency",
            percentile = 90,
@@ -288,7 +287,18 @@ trajLevelMapStatic <-
            map.alpha = 0.8,
            map.lwd = 0.5,
            map.lty = 1,
+           facet = NULL,
            ...) {
+    # handle deprecated argument
+    if (!is.null(facet)) {
+      lifecycle::deprecate_soft(
+        when = "0.9.0",
+        what = "trajLevelMapStatic(facet)",
+        with = "trajLevelMapStatic(type)"
+      )
+    }
+    type <- type %||% facet
+
     # prep data for running in TrajLevel
     if (statistic == "frequency") {
       title <- "percentage\ntrajectories"
@@ -334,7 +344,7 @@ trajLevelMapStatic <-
       lat.inc = lat.inc,
       lon.inc = lon.inc,
       min.bin = min.bin,
-      type = facet,
+      type = type %||% "default",
       .combine = .combine,
       sigma = sigma,
       plot = FALSE
@@ -412,9 +422,9 @@ trajLevelMapStatic <-
       coords
 
     # deal with facets
-    if (facet != "default") {
+    if (!is.null(type)) {
       plt <-
-        plt + ggplot2::facet_wrap(ggplot2::vars(.data[[facet]]))
+        plt + ggplot2::facet_wrap(ggplot2::vars(.data[[type]]))
     }
 
     # return plot

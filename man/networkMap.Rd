@@ -15,46 +15,83 @@ networkMap(
 )
 }
 \arguments{
-\item{source}{One or more air quality networks for which data is available
-through openair. Available networks include:
+\item{source}{\emph{One or more UK or European monitoring networks.}
+
+\emph{default:} \code{"aurn"}
+
+One or more air quality networks for which data is available through
+openair. Available networks include:
 \itemize{
-\item \code{"aurn"},  The UK Automatic Urban and Rural Network.
-\item \code{"aqe"},  The Air Quality England Network.
-\item \code{"saqn"},  The Scottish Air Quality Network.
-\item \code{"waqn"},  The Welsh Air Quality Network.
-\item \code{"ni"},  The Northern Ireland Air Quality Network.
-\item \code{"local"},  Locally managed air quality networks in England.
+\item \code{"aurn"}, The UK Automatic Urban and Rural Network.
+\item \code{"aqe"}, The Air Quality England Network.
+\item \code{"saqn"}, The Scottish Air Quality Network.
+\item \code{"waqn"}, The Welsh Air Quality Network.
+\item \code{"ni"}, The Northern Ireland Air Quality Network.
+\item \code{"local"}, Locally managed air quality networks in England.
 \item \code{"kcl"}, King's College London networks.
 \item \code{"europe"}, European AirBase/e-reporting data.
+}
+
 There are two additional options provided for convenience:
-\item \code{"ukaq"} will return metadata for all networks for which data is imported by \code{\link[openair:importUKAQ]{importUKAQ()}} (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).
-\item \code{"all"} will import all available metadata (i.e., \code{"ukaq"} plus \code{"kcl"} and \code{"europe"}).
+\itemize{
+\item \code{"ukaq"} will return metadata for all networks for which data is imported by importUKAQ() (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).
+\item \code{"all"} will import all available metadata (i.e., "ukaq" plus "kcl" and "europe").
 }}
 
-\item{control}{Option to add a "layer control" menu to allow readers to
-select between different site types. Can choose between effectively any
-column in the \code{\link[openair:importMeta]{openair::importMeta()}} output, such as \code{"variable"},
-\code{"site_type"}, or \code{"agglomeration"}, as well as \code{"network"} when more than
-one \code{source} was specified.}
+\item{control}{\emph{Option to create a 'layer control' menu.}
 
-\item{year}{By default, \code{\link[=networkMap]{networkMap()}} visualises sites which are currently
+\emph{default}: \code{NULL}
+
+A string to specify categories in a "layer control" menu, to allow readers
+to select between different site categories. Choices include:
+\itemize{
+\item \code{"variable"} to toggle between different pollutants
+\item \code{"site_type"} for different site classifications
+\item \code{"agglomeration"}, \code{"zone"} or \code{"local_authority"} for different regions of the UK
+\item \code{"network"} for different monitoring networks, if more than one \code{source} is provided.
+}}
+
+\item{year}{\emph{A year, or range of years, with which to filter data.}
+
+\emph{default}: \code{NULL}
+
+By default, \code{\link[=networkMap]{networkMap()}} visualises sites which are currently
 operational. \code{year} allows users to show sites open in a specific year, or
 over a range of years. See \code{\link[openair:importMeta]{openair::importMeta()}} for more information.}
 
-\item{cluster}{When \code{cluster = TRUE}, markers are clustered together. This
-may be useful for sources like "kcl" where there are many markers very
-close together. Defaults to \code{TRUE}, and is forced to be \code{TRUE} when \code{source = "europe"} due to the large number of sites.}
+\item{cluster}{\emph{Cluster markers together when zoomed out?}
 
-\item{provider}{The base map(s) to be used. See
+\emph{default:} \code{FALSE}
+
+When \code{cluster = TRUE}, markers are clustered together. This may be useful
+for sources like "kcl" where there are many markers very close together.
+Defaults to \code{TRUE}, and is forced to be \code{TRUE} when \code{source = "europe"} due
+to the large number of sites.}
+
+\item{provider}{\emph{The basemap(s) to be used.}
+
+\emph{default:} \code{c("Default" = "OpenStreetMap", "Satellite" = "Esri.WorldImagery")}
+
+Any number of \link[leaflet:providers]{leaflet::providers}. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
 all base maps that can be used. If multiple base maps are provided, they
-can be toggled between using a "layer control" interface.}
+can be toggled between using a "layer control" interface. By default, the
+interface will use the provider names as labels, but users can define their
+own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite" = "Esri.WorldImagery")})}
 
-\item{draw.legend}{When multiple \code{source}s are specified, should a legend be
-created at the side of the map? Default is \code{TRUE}.}
+\item{draw.legend}{\emph{Draw a shared legend?}
 
-\item{collapse.control}{Should the "layer control" interface be collapsed?
-Defaults to \code{FALSE}.}
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
+
+When multiple \code{source}s are defined, should a shared legend be created at
+the side of the map?}
+
+\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+
+\emph{default:} \code{FALSE} | \emph{scope:} dynamic
+
+Should the "layer control" interface be collapsed? If \code{TRUE}, users will
+have to hover over an icon to view the options.}
 }
 \value{
 A leaflet object.
