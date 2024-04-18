@@ -172,7 +172,7 @@ trajLevelMap <-
        <b>Count:</b> {gridcount}<br>
        <b>Value:</b> {signif(val, 3)}"
         ),
-        coord = stringr::str_glue("({ygrid}, {xgrid})")
+       coord = stringr::str_glue("({ygrid}, {xgrid})")
       )
 
       if (statistic %in% c("difference", "frequency")) {
