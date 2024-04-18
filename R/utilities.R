@@ -231,7 +231,7 @@ buildPopup <-
 #' @source <https://postcodes.io/>
 convertPostcode <- function(postcode) {
   if (!requireNamespace("httr", quietly = TRUE) |
-    !requireNamespace("jsonlite", quietly = TRUE)) {
+      !requireNamespace("jsonlite", quietly = TRUE)) {
     cli::cli_abort(
       c(
         "x" = "Please install the {.pkg httr} and {.pkg jsonlite} packages to use {.fun convertPostcode}.",
