@@ -4,7 +4,7 @@
 
 * BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added. Other benefits of this switch include a greater number of available base maps (see: `rosm::osm.types()`) and the ability to simply change the extent of the map axes using `ggplot2::coord_sf()`.
 
-* BREAKING: The `control` and `facet` arguments have been deprecated in favour of `type` in the `polarMap()` family. These arguments will eventually be removed, but as of this version of `{openairmaps}` users will be warned away from their use.
+* BREAKING: The `control` and `facet` arguments have been deprecated in favour of `type` in all functions. These arguments will eventually be removed, but as of this version of `{openairmaps}` users will be warned away from their use. This brings `{openairmaps}` in-line with the `{openair}` package.
 
 * BREAKING: The `names` and `cols` arguments of `buildPopup()` have been coalesced into a single `columns` argument for less verbose function usage.
 
@@ -34,7 +34,7 @@
 
     * `layerId` is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if `layerId = "traj"`, the first point of the first line has the ID `"traj-1-1"`, the second point of the first line has ID `"traj-1-2"`, the first point of the second line has ID `"traj-2-1"`, and so on.
 
-* "illegal" filepath characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.
+* "illegal" file path characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.
 
 # openairmaps 0.8.1
 

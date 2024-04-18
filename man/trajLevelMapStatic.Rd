@@ -9,7 +9,7 @@ trajLevelMapStatic(
   longitude = "lon",
   latitude = "lat",
   pollutant,
-  facet = "default",
+  type = NULL,
   smooth = FALSE,
   statistic = "frequency",
   percentile = 90,
@@ -29,20 +29,35 @@ trajLevelMapStatic(
   map.alpha = 0.8,
   map.lwd = 0.5,
   map.lty = 1,
+  facet = NULL,
   ...
 )
 }
 \arguments{
-\item{data}{Data frame, the result of importing a trajectory file using
-\code{\link[openair:importTraj]{openair::importTraj()}}.}
+\item{data}{\emph{A data frame containing a HYSPLIT trajectory, perhaps accessed
+with \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{latitude, longitude}{The decimal latitude/longitude.}
+\strong{required}
+
+A data frame containing HYSPLIT model outputs. If this data were not
+obtained using \code{\link[openair:importTraj]{openair::importTraj()}}.}
+
+\item{latitude, longitude}{\emph{The decimal latitude/longitude.}
+
+\emph{default:} \code{"lat"} / \code{"lon"}
+
+Column names representing the decimal latitude and longitude.}
 
 \item{pollutant}{Pollutant to be plotted. By default the trajectory height is
 used.}
 
-\item{facet}{Used for splitting the trajectories into different panels.
-Passed to \code{\link[openair:cutData]{openair::cutData()}}.}
+\item{type}{\emph{A method to condition the \code{data} for separate plotting.}
+
+\emph{default:} \code{NULL}
+
+Used for splitting the trajectories into different groups which can be
+selected between using a "layer control" menu. Passed to
+\code{\link[openair:cutData]{openair::cutData()}}.}
 
 \item{smooth}{Should the trajectory surface be smoothed? Defaults to \code{FALSE}.
 Note that smoothing may cause the plot to render slower, so consider
@@ -100,28 +115,58 @@ much noise.}
 \item{tile.border}{Colour to use for the border of binned tiles. Defaults to
 \code{NA}, which draws no border.}
 
-\item{xlim, ylim}{The x- and y-limits of the plot. If \code{NULL}, limits will be
-estimated based on the lat/lon ranges of the input data.}
+\item{xlim, ylim}{\emph{The x- and y-limits of the plot.}
+
+\emph{default:} \code{NULL}
+
+A numeric vector of length two defining the x-/y-limits of the map, passed
+to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf()}}. If \code{NULL}, limits will be estimated based on the
+lat/lon ranges of the input data.}
 
 \item{crs}{The coordinate reference system (CRS) into which all data should
 be projected before plotting. Defaults to latitude/longitude
 (\code{sf::st_crs(4326)}).}
 
-\item{map}{Should a base map be drawn? Defaults to \code{TRUE}.}
+\item{map}{\emph{Draw a base map?}
 
-\item{map.fill}{Colour to use to fill the polygons of the base map (see
-\code{colors()}).}
+\emph{default:} \code{TRUE}
 
-\item{map.colour}{Colour to use for the polygon borders of the base map (see
-\code{colors()}).}
+Draws the geometries of countries under the trajectory paths.}
 
-\item{map.alpha}{Transparency of the base map polygons. Must be between \code{0}
-(fully transparent) and \code{1} (fully opaque).}
+\item{map.fill}{\emph{Colour to use to fill the polygons of the base map.}
 
-\item{map.lwd}{Line width of the base map polygon borders.}
+\emph{default:} \code{"grey85"}
 
-\item{map.lty}{Line type of the base map polygon borders. See
-\code{\link[ggplot2:scale_linetype]{ggplot2::scale_linetype()}} for common examples.}
+See \code{colors()} for colour options. Alternatively, a hexadecimal color code
+can be provided.}
+
+\item{map.colour}{\emph{Colour to use for the polygon borders of the base map.}
+
+\emph{default:} \code{"grey75"}
+
+See \code{colors()} for colour options. Alternatively, a hexadecimal color code
+can be provided.}
+
+\item{map.alpha}{\emph{Transparency of the base map polygons.}
+
+\emph{default:} \code{0.8}
+
+Must be between \code{0} (fully transparent) and \code{1} (fully opaque).}
+
+\item{map.lwd}{\emph{Line width of the base map polygon borders.}
+
+\emph{default:} \code{0.5}
+
+Any numeric value.}
+
+\item{map.lty}{\emph{Line type of the base map polygon borders.}
+
+\emph{default:} \code{1}
+
+See \code{\link[ggplot2:scale_linetype]{ggplot2::scale_linetype()}} for common examples. The default, \code{1},
+draws solid lines.}
+
+\item{facet}{Deprecated. Please use \code{type}.}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:ggsf]{ggplot2::coord_sf}}
