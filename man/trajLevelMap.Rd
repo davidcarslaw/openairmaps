@@ -9,7 +9,7 @@ trajLevelMap(
   longitude = "lon",
   latitude = "lat",
   pollutant,
-  control = "default",
+  type = NULL,
   smooth = FALSE,
   statistic = "frequency",
   percentile = 90,
@@ -18,23 +18,36 @@ trajLevelMap(
   min.bin = 1,
   .combine = NA,
   sigma = 1.5,
-  cols = "default",
+  cols = "turbo",
   alpha = 0.5,
   tile.border = NA,
   provider = "OpenStreetMap"
 )
 }
 \arguments{
-\item{data}{Data frame, the result of importing a trajectory file using
-\code{\link[openair:importTraj]{openair::importTraj()}}.}
+\item{data}{\emph{A data frame containing a HYSPLIT trajectory, perhaps accessed
+with \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{latitude, longitude}{The decimal latitude/longitude.}
+\strong{required}
+
+A data frame containing HYSPLIT model outputs. If this data were not
+obtained using \code{\link[openair:importTraj]{openair::importTraj()}}.}
+
+\item{latitude, longitude}{\emph{The decimal latitude/longitude.}
+
+\emph{default:} \code{"lat"} / \code{"lon"}
+
+Column names representing the decimal latitude and longitude.}
 
 \item{pollutant}{Pollutant to be plotted. By default the trajectory height is
 used.}
 
-\item{control}{Used for splitting the trajectories into different groups
-which can be selected between using a "layer control" menu. Passed to
+\item{type}{\emph{A method to condition the \code{data} for separate plotting.}
+
+\emph{default:} \code{NULL}
+
+Used for splitting the trajectories into different groups which can be
+selected between using a "layer control" menu. Passed to
 \code{\link[openair:cutData]{openair::cutData()}}.}
 
 \item{smooth}{Should the trajectory surface be smoothed? Defaults to \code{FALSE}.
@@ -87,18 +100,21 @@ literature suggest 5.4 km after one hour. However, testing suggests lower
 values reveal source regions more effectively while not introducing too
 much noise.}
 
-\item{cols}{Colours to be used for plotting. Options include "default",
-"increment", "heat", "turbo" and \code{RColorBrewer} colours — see the
-\code{\link[openair:openColours]{openair::openColours()}} function for more details. For user defined the
-user can supply a list of colour names recognised by R (type
-\code{\link[grDevices:colors]{grDevices::colours()}} to see the full list). An example would be \code{cols = c("yellow", "green", "blue")}.}
+\item{cols}{The colours used for plotting, passed to
+\code{\link[openair:openColours]{openair::openColours()}}. The default, \code{"turbo"}, is a rainbow palette with
+relatively perceptually uniform colours. Read more about this palette at
+\url{https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/}.}
 
 \item{alpha}{Opacity of the tiles. Must be between \code{0} and \code{1}.}
 
 \item{tile.border}{Colour to use for the border of binned tiles. Defaults to
 \code{NA}, which draws no border.}
 
-\item{provider}{The base map to be used. See
+\item{provider}{\emph{The basemap to be used.}
+
+\emph{default:} \code{"OpenStreetMap"}
+
+A single \link[leaflet:providers]{leaflet::providers}. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
 all base maps that can be used.}
 }
@@ -118,7 +134,8 @@ trajLevelMap(traj_data, pollutant = "pm2.5", statistic = "pscf", min.bin = 10)
 \seealso{
 \code{\link[openair:trajLevel]{openair::trajLevel()}}
 
-\code{\link[=trajLevelMapStatic]{trajLevelMapStatic()}} for the static \code{ggplot2} equivalent of \code{\link[=trajLevelMap]{trajLevelMap()}}
+\code{\link[=trajLevelMapStatic]{trajLevelMapStatic()}} for the static \code{ggplot2} equivalent of
+\code{\link[=trajLevelMap]{trajLevelMap()}}
 
 Other interactive trajectory maps: 
 \code{\link{trajMap}()}

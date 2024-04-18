@@ -8,52 +8,86 @@ trajMap(
   data,
   longitude = "lon",
   latitude = "lat",
-  colour,
-  control = "default",
+  colour = NULL,
+  type = NULL,
   cols = "default",
   alpha = 0.5,
   npoints = 12,
   provider = "OpenStreetMap",
-  collapse.control = FALSE
+  collapse.control = FALSE,
+  control = NULL
 )
 }
 \arguments{
-\item{data}{Data frame, the result of importing a trajectory file using
-\code{\link[openair:importTraj]{openair::importTraj()}}.}
+\item{data}{\emph{A data frame containing a HYSPLIT trajectory, perhaps accessed
+with \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{latitude, longitude}{The decimal latitude/longitude.}
+\strong{required}
 
-\item{colour}{Column to be used for colouring each trajectory. This column
-may be numeric, character or factor. This will commonly be a pollutant
-concentration which has been joined (e.g., by \code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the
-trajectory data by "date".}
+A data frame containing HYSPLIT model outputs. If this data were not
+obtained using \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{control}{Used for splitting the trajectories into different groups
-which can be selected between using a "layer control" menu. Passed to
+\item{latitude, longitude}{\emph{The decimal latitude/longitude.}
+
+\emph{default:} \code{"lat"} / \code{"lon"}
+
+Column names representing the decimal latitude and longitude.}
+
+\item{colour}{\emph{Column to be used for colouring each trajectory.}
+
+\emph{default:} \code{NULL}
+
+This column may be numeric, character, factor or date(time). This will
+commonly be a pollutant concentration which has been joined (e.g., by
+\code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the trajectory data by "date".}
+
+\item{type}{\emph{A method to condition the \code{data} for separate plotting.}
+
+\emph{default:} \code{NULL}
+
+Used for splitting the trajectories into different groups which can be
+selected between using a "layer control" menu. Passed to
 \code{\link[openair:cutData]{openair::cutData()}}.}
 
-\item{cols}{Colours to be used for plotting. Options include "default",
-"increment", "heat", "turbo" and \code{RColorBrewer} colours — see the
-\code{\link[openair:openColours]{openair::openColours()}} function for more details. For user defined the
-user can supply a list of colour names recognised by R (type
-\code{\link[grDevices:colors]{grDevices::colours()}} to see the full list). An example would be \code{cols = c("yellow", "green", "blue")}. If the \code{"colour"} argument was not used, a
-single colour can be named which will be used consistently for all
-lines/points (e.g., \code{cols = "red"}).}
+\item{cols}{\emph{Colours to use for plotting.}
 
-\item{alpha}{Opacity of lines/points. Must be between \code{0} and \code{1}.}
+\emph{default:} \code{"turbo"}
 
-\item{npoints}{A dot is placed every \code{npoints} along each full trajectory.
-For hourly back trajectories points are plotted every \code{npoints} hours. This
-helps to understand where the air masses were at particular times and get a
-feel for the speed of the air (points closer together correspond to slower
-moving air masses). Defaults to \code{12}.}
+The colours used for plotting, passed to \code{\link[openair:openColours]{openair::openColours()}}.}
 
-\item{provider}{The base map to be used. See
+\item{alpha}{\emph{Transparency value for trajectories.}
+
+\emph{default:} \code{1}
+
+A value between \code{0} (fully transparent) and \code{1} (fully opaque).}
+
+\item{npoints}{\emph{Interval at which points are placed along the trajectory
+paths.}
+
+\emph{default:} \code{12}
+
+A dot is placed every \code{npoints} along each full trajectory. For hourly back
+trajectories points are plotted every \code{npoints} hours. This helps to
+understand where the air masses were at particular times and get a feel for
+the speed of the air (points closer together correspond to slower moving
+air masses). Defaults to \code{12}.}
+
+\item{provider}{\emph{The basemap to be used.}
+
+\emph{default:} \code{"OpenStreetMap"}
+
+A single \link[leaflet:providers]{leaflet::providers}. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
 all base maps that can be used.}
 
-\item{collapse.control}{Should the "layer control" interface be collapsed?
-Defaults to \code{FALSE}.}
+\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+
+\emph{default:} \code{FALSE}
+
+Should the "layer control" interface be collapsed? If \code{TRUE}, users will
+have to hover over an icon to view the options.}
+
+\item{control}{Deprecated. Please use \code{type}.}
 }
 \value{
 A leaflet object.
@@ -67,7 +101,7 @@ different layers.
 }
 \examples{
 \dontrun{
-trajMap(traj_data, colour = "nox")
+trajMap(traj_data, colour = "pm10")
 }
 
 }
