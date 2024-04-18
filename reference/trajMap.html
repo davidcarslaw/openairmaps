@@ -70,71 +70,89 @@ different layers.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="st">"lon"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="st">"lat"</span>,</span>
-<span>  <span class="va">colour</span>,</span>
-<span>  control <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  colour <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  cols <span class="op">=</span> <span class="st">"default"</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  npoints <span class="op">=</span> <span class="fl">12</span>,</span>
 <span>  provider <span class="op">=</span> <span class="st">"OpenStreetMap"</span>,</span>
-<span>  collapse.control <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  collapse.control <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  control <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>Data frame, the result of importing a trajectory file using
-<code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
+<dd><p><em>A data frame containing a HYSPLIT trajectory, perhaps accessed
+with <code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</em></p>
+<p><strong>required</strong></p>
+<p>A data frame containing HYSPLIT model outputs. If this data were not
+obtained using <code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
 
 
 <dt>latitude, longitude</dt>
-<dd><p>The decimal latitude/longitude.</p></dd>
+<dd><p><em>The decimal latitude/longitude.</em></p>
+<p><em>default:</em> <code>"lat"</code> / <code>"lon"</code></p>
+<p>Column names representing the decimal latitude and longitude.</p></dd>
 
 
 <dt>colour</dt>
-<dd><p>Column to be used for colouring each trajectory. This column
-may be numeric, character or factor. This will commonly be a pollutant
-concentration which has been joined (e.g., by <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) to the
-trajectory data by "date".</p></dd>
+<dd><p><em>Column to be used for colouring each trajectory.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>This column may be numeric, character, factor or date(time). This will
+commonly be a pollutant concentration which has been joined (e.g., by
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) to the trajectory data by "date".</p></dd>
 
 
-<dt>control</dt>
-<dd><p>Used for splitting the trajectories into different groups
-which can be selected between using a "layer control" menu. Passed to
+<dt>type</dt>
+<dd><p><em>A method to condition the <code>data</code> for separate plotting.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>Used for splitting the trajectories into different groups which can be
+selected between using a "layer control" menu. Passed to
 <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></dd>
 
 
 <dt>cols</dt>
-<dd><p>Colours to be used for plotting. Options include "default",
-"increment", "heat", "turbo" and <code>RColorBrewer</code> colours — see the
-<code><a href="https://davidcarslaw.github.io/openair/reference/openColours.html" class="external-link">openair::openColours()</a></code> function for more details. For user defined the
-user can supply a list of colour names recognised by R (type
-<code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">grDevices::colours()</a></code> to see the full list). An example would be <code>cols = c("yellow", "green", "blue")</code>. If the <code>"colour"</code> argument was not used, a
-single colour can be named which will be used consistently for all
-lines/points (e.g., <code>cols = "red"</code>).</p></dd>
+<dd><p><em>Colours to use for plotting.</em></p>
+<p><em>default:</em> <code>"turbo"</code></p>
+<p>The colours used for plotting, passed to <code><a href="https://davidcarslaw.github.io/openair/reference/openColours.html" class="external-link">openair::openColours()</a></code>.</p></dd>
 
 
 <dt>alpha</dt>
-<dd><p>Opacity of lines/points. Must be between <code>0</code> and <code>1</code>.</p></dd>
+<dd><p><em>Transparency value for trajectories.</em></p>
+<p><em>default:</em> <code>1</code></p>
+<p>A value between <code>0</code> (fully transparent) and <code>1</code> (fully opaque).</p></dd>
 
 
 <dt>npoints</dt>
-<dd><p>A dot is placed every <code>npoints</code> along each full trajectory.
-For hourly back trajectories points are plotted every <code>npoints</code> hours. This
-helps to understand where the air masses were at particular times and get a
-feel for the speed of the air (points closer together correspond to slower
-moving air masses). Defaults to <code>12</code>.</p></dd>
+<dd><p><em>Interval at which points are placed along the trajectory
+paths.</em></p>
+<p><em>default:</em> <code>12</code></p>
+<p>A dot is placed every <code>npoints</code> along each full trajectory. For hourly back
+trajectories points are plotted every <code>npoints</code> hours. This helps to
+understand where the air masses were at particular times and get a feel for
+the speed of the air (points closer together correspond to slower moving
+air masses). Defaults to <code>12</code>.</p></dd>
 
 
 <dt>provider</dt>
-<dd><p>The base map to be used. See
+<dd><p><em>The basemap to be used.</em></p>
+<p><em>default:</em> <code>"OpenStreetMap"</code></p>
+<p>A single <a href="https://rstudio.github.io/leaflet/reference/providers.html" class="external-link">leaflet::providers</a>. See
 <a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list of
 all base maps that can be used.</p></dd>
 
 
 <dt>collapse.control</dt>
-<dd><p>Should the "layer control" interface be collapsed?
-Defaults to <code>FALSE</code>.</p></dd>
+<dd><p><em>Show the layer control as a collapsed?</em></p>
+<p><em>default:</em> <code>FALSE</code></p>
+<p>Should the "layer control" interface be collapsed? If <code>TRUE</code>, users will
+have to hover over an icon to view the options.</p></dd>
+
+
+<dt>control</dt>
+<dd><p>Deprecated. Please use <code>type</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -145,7 +163,7 @@ Defaults to <code>FALSE</code>.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>the original <code><a href="https://davidcarslaw.github.io/openair/reference/trajPlot.html" class="external-link">openair::trajPlot()</a></code></p>
+    <div class="dont-index"><p><code><a href="https://davidcarslaw.github.io/openair/reference/trajPlot.html" class="external-link">openair::trajPlot()</a></code></p>
 <p><code><a href="trajMapStatic.html">trajMapStatic()</a></code> for the static <code>ggplot2</code> equivalent of <code>trajMap()</code></p>
 <p>Other interactive trajectory maps: 
 <code><a href="trajLevelMap.html">trajLevelMap</a>()</code></p></div>
@@ -154,7 +172,7 @@ Defaults to <code>FALSE</code>.</p></dd>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">trajMap</span><span class="op">(</span><span class="va">traj_data</span>, colour <span class="op">=</span> <span class="st">"nox"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">trajMap</span><span class="op">(</span><span class="va">traj_data</span>, colour <span class="op">=</span> <span class="st">"pm10"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

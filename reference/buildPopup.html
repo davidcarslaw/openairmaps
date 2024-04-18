@@ -71,62 +71,78 @@ the <code>popup</code> argument of a function like <code><a href="polarMap.html"
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">buildPopup</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  <span class="va">cols</span>,</span>
+<span>  <span class="va">columns</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  names <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  control <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fun.character <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span>,</span>
 <span>  fun.numeric <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">signif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  fun.dttm <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">floor_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">x</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="st">"day"</span><span class="op">)</span>,</span>
-<span>    collapse <span class="op">=</span> <span class="st">" to "</span><span class="op">)</span></span>
+<span>    collapse <span class="op">=</span> <span class="st">" to "</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A data frame containing latitude and longitude information that
-will go on to be used in a function such as <code><a href="polarMap.html">polarMap()</a></code>.</p></dd>
+<dd><p><em>Input data table with geo-spatial information.</em></p>
+<p><strong>required</strong></p>
+<p>A data frame containing latitude and longitude information that will go on
+to be used in a function such as <code><a href="polarMap.html">polarMap()</a></code>.</p></dd>
 
 
-<dt>cols</dt>
-<dd><p>A character vector of column names, the data from which will
-appear in the popup.</p></dd>
+<dt>columns</dt>
+<dd><p><em>A character vector of column names to include in the popup.</em></p>
+<p><strong>required</strong></p>
+<p>Summaries of the selected columns will appear in the popup. If a named
+vector is provided, the names of the vector will be used in place of the
+raw column names. See the Examples for more information.</p></dd>
 
 
 <dt>latitude, longitude</dt>
-<dd><p>The decimal latitude/longitude. If not provided,
-will be automatically inferred from data by looking for a column named
-"lat"/"latitude" or "lon"/"lng"/"long"\"longitude". (case-insensitively).</p></dd>
+<dd><p><em>The decimal latitude(Y)/longitude(X).</em></p>
+<p><em>default:</em> <code>NULL</code> | <em>scope:</em> dynamic &amp; static</p>
+<p>Column names representing the decimal latitude and longitude (or other Y/X
+coordinate if using a different <code>crs</code>). If not provided, will be
+automatically inferred from data by looking for a column named
+"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
 
 
-<dt>names</dt>
-<dd><p>Optional. A named vector used to rename certain columns in the
-popups. See the Example for more information.</p></dd>
-
-
-<dt>control</dt>
-<dd><p>Optional. Column which will be used for the <code>control</code> argument
-of other mapping functions. This only needs to be used if <code>control</code> is
-going to be used in <code><a href="polarMap.html">polarMap()</a></code> or another similar function, and you'd
-expect different values for the different map layers (for example, if you
-are calculating a mean pollutant concentration).</p></dd>
+<dt>type</dt>
+<dd><p><em>A column to be passed to the <code>type</code> argument of another
+function.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>Column which will be used for the <code>type</code> argument of other mapping
+functions. This only needs to be used if <code>type</code> is going to be used in
+<code><a href="polarMap.html">polarMap()</a></code> or another similar function, and you'd expect different values
+for the different map layers (for example, if you are calculating a mean
+pollutant concentration).</p></dd>
 
 
 <dt>fun.character</dt>
-<dd><p>A function to summarise character and factor columns.
-Defaults to collapsing unique values into a comma-separated list.</p></dd>
+<dd><p><em>A function to summarise character and factor columns.</em></p>
+<p><em>default:</em> <code>function(x) paste(unique(x), collapse = ", ")</code></p>
+<p>The default collapses unique values into a comma-separated list.</p></dd>
 
 
 <dt>fun.numeric</dt>
-<dd><p>A function to summarise numeric columns. Defaults to
-taking the mean to three significant figures.</p></dd>
+<dd><p><em>A function to summarise numeric columns.</em></p>
+<p><em>default:</em> <code>function(x) signif(mean(x, na.rm = TRUE), 3)</code></p>
+<p>The default takes the mean to three significant figures. Other numeric
+summaries may be of interest, such as the maximum, minimum, standard
+deviation, and so on.</p></dd>
 
 
 <dt>fun.dttm</dt>
-<dd><p>A function to summarise date columns. Defaults to presenting
-the date as a range.</p></dd>
+<dd><p><em>A function to summarise date columns.</em></p>
+<p><em>default:</em> <code>function(x) paste(lubridate::floor_date(range(x, na.rm = TRUE), "day"), collapse = " to ")</code></p>
+<p>The default presents the date as a range. Other statistics of interest
+could be the start or end of the dates.</p></dd>
+
+
+<dt>...</dt>
+<dd><p><strong>Not currently used.</strong></p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -142,9 +158,12 @@ the date as a range.</p></dd>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">buildPopup</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="fu">openairmaps</span><span class="fu">::</span><span class="va"><a href="polar_data.html">polar_data</a></span>,</span></span>
-<span class="r-in"><span>  cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"site_type"</span>, <span class="st">"date"</span>, <span class="st">"nox"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Site"</span> <span class="op">=</span> <span class="st">"site"</span>, <span class="st">"Site Type"</span> <span class="op">=</span> <span class="st">"site_type"</span>, <span class="st">"Date Range"</span> <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">polar_data</span>,</span></span>
+<span class="r-in"><span>  columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"Site"</span> <span class="op">=</span> <span class="st">"site"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Site Type"</span> <span class="op">=</span> <span class="st">"site_type"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"Date Range"</span> <span class="op">=</span> <span class="st">"date"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="polarMap.html">polarMap</a></span><span class="op">(</span><span class="st">"nox"</span>, popup <span class="op">=</span> <span class="st">"popup"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

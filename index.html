@@ -96,39 +96,34 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a></span><span class="op">)</span></span></code></pre></div>
 <p>The <code>openairmaps</code> package is thoroughly documented in the <a href="https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html" class="external-link">openair book</a>, which goes into great detail about its various functions. Functionality includes visualising UK AQ networks (<code><a href="reference/networkMap.html">networkMap()</a></code>), putting “polar directional markers” on maps (e.g., <code><a href="reference/polarMap.html">polarMap()</a></code>) and overlaying HYSPLIT trajectories on maps (e.g., <code><a href="reference/trajMap.html">trajMap()</a></code>), all using the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> package.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/polarMap.html">polarMap</a></span><span class="op">(</span></span>
+<span>  <span class="va">polar_data</span>,</span>
+<span>  pollutant <span class="op">=</span> <span class="st">"no2"</span>,</span>
+<span>  limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">180</span><span class="op">)</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"daylight"</span>,</span>
+<span>  popup <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"site_type"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-examplemap.png" alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations." width="100%"></p>
+<p>While an interactive map is preferred for exploratory directional analysis, it is limited to the HTML format. Some applications (for example, academic journals) demand “static” formats like .docx and .pdf. For this reason, “static” versions of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> polar marker functions powered by <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> can be created using the <code>static</code> argument. A benefit of being written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> is that additional layers can be added (e.g., <code>ggplot2::geom_label_sf()</code> could be used to label sites) and limited further customisation is available using <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">ggplot2::guides()</a></code>.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">polar_data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">openair</span><span class="fu">::</span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData</a></span><span class="op">(</span><span class="st">"daylight"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/buildPopup.html">buildPopup</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"site"</span>, <span class="st">"site_type"</span><span class="op">)</span>,</span>
-<span>    names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Site"</span> <span class="op">=</span> <span class="st">"site"</span>, <span class="st">"Site Type"</span> <span class="op">=</span> <span class="st">"site_type"</span><span class="op">)</span>,</span>
-<span>    control <span class="op">=</span> <span class="st">"daylight"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/polarMap.html">polarMap</a></span><span class="op">(</span></span>
 <span>    pollutant <span class="op">=</span> <span class="st">"no2"</span>,</span>
 <span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">180</span><span class="op">)</span>,</span>
-<span>    control <span class="op">=</span> <span class="st">"daylight"</span>,</span>
-<span>    popup <span class="op">=</span> <span class="st">"popup"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-examplemap.png" alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations." width="100%"><p class="caption">
-An example <code><a href="reference/polarMap.html">polarMap()</a></code> showing NO2 concentrations in central London.
-</p>
-</div>
-<p>While an interactive map is preferred for exploratory directional analysis, it is limited to the HTML format. Some applications (for example, academic journals) demand “static” formats like .docx and .pdf. For this reason, “static” versions of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> polar marker functions have been provided which are written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>. A benefit of being written in <a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a> is that additional layers can be added (e.g., <code>geom_label_sf()</code> could be used to label sites) and limited further customisation is available using <code>theme()</code> and <code>guides()</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">polar_data</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">openair</span><span class="fu">::</span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">cutData</a></span><span class="op">(</span><span class="st">"daylight"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="reference/polarMapStatic.html">polarMapStatic</a></span><span class="op">(</span></span>
-<span>    pollutant <span class="op">=</span> <span class="st">"no2"</span>,</span>
-<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">180</span><span class="op">)</span>,</span>
-<span>    facet <span class="op">=</span> <span class="st">"daylight"</span>,</span>
-<span>    facet.nrow <span class="op">=</span> <span class="fl">2</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="reference/figures/README-egstatic-1.png" alt="Two static maps. They show OpenStreetMap map layers, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The two maps represent daylight and nighttime observations separately." width="100%"><p class="caption">
-An example <code><a href="reference/polarMapStatic.html">polarMapStatic()</a></code> showing NO2 concentrations in central London.
-</p>
-</div>
+<span>    type <span class="op">=</span> <span class="st">"daylight"</span>,</span>
+<span>    static <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    d.fig <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>    d.icon <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.75</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
+<span>    legend.key.width <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"null"</span><span class="op">)</span>,</span>
+<span>    legend.title.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    legend.title <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu">openair</span><span class="fu">::</span><span class="fu"><a href="https://davidcarslaw.github.io/openair/reference/quickText.html" class="external-link">quickText</a></span><span class="op">(</span><span class="st">"NO2 (ug/m3)"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-egstatic-1.png" alt="Two static maps. They show OpenStreetMap map layers, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The two maps represent daylight and nighttime observations separately." width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

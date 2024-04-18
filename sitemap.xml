@@ -31,25 +31,19 @@
     <loc>https://davidcarslaw.github.io/openairmaps/reference/annulusMap.html</loc>
   </url>
   <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/annulusMapStatic.html</loc>
-  </url>
-  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/buildPopup.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/convertPostcode.html</loc>
   </url>
   <url>
+    <loc>https://davidcarslaw.github.io/openairmaps/reference/deprecated-static-polar-maps.html</loc>
+  </url>
+  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/diffMap.html</loc>
   </url>
   <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/diffMapStatic.html</loc>
-  </url>
-  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/freqMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/freqMapStatic.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/index.html</loc>
@@ -64,25 +58,16 @@
     <loc>https://davidcarslaw.github.io/openairmaps/reference/percentileMap.html</loc>
   </url>
   <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/percentileMapStatic.html</loc>
-  </url>
-  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/pipe.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/polarMap.html</loc>
   </url>
   <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/polarMapStatic.html</loc>
-  </url>
-  <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/polar_data.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/pollroseMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/pollroseMapStatic.html</loc>
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/quickTextHTML.html</loc>
@@ -107,8 +92,5 @@
   </url>
   <url>
     <loc>https://davidcarslaw.github.io/openairmaps/reference/windroseMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/windroseMapStatic.html</loc>
   </url>
 </urlset>

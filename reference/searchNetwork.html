@@ -80,60 +80,75 @@ activity, or the centroid of a specific urban area).</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>lat, lng</dt>
-<dd><p>The decimal latitude/longitude (or other Y/X coordinate if
-using a different <code>crs</code>) for the location of interest. If not provided,
-will be automatically inferred from data by looking for a column named
-"lat"/"latitude" or "lon"/"lng"/"long"/"longitude" (case-insensitively).</p></dd>
+<dd><p><em>The decimal latitude(Y)/longitude(X).</em></p>
+<p><strong>required</strong></p>
+<p>Values representing the decimal latitude and longitude (or other Y/X
+coordinate if using a different <code>crs</code>) of the site of interest.</p></dd>
 
 
 <dt>source</dt>
-<dd><p>One or more air quality networks for which data is available
-through openair. Available networks include:</p><ul><li><p><code>"aurn"</code>,  The UK Automatic Urban and Rural Network.</p></li>
-<li><p><code>"aqe"</code>,  The Air Quality England Network.</p></li>
-<li><p><code>"saqn"</code>,  The Scottish Air Quality Network.</p></li>
-<li><p><code>"waqn"</code>,  The Welsh Air Quality Network.</p></li>
-<li><p><code>"ni"</code>,  The Northern Ireland Air Quality Network.</p></li>
-<li><p><code>"local"</code>,  Locally managed air quality networks in England.</p></li>
+<dd><p><em>One or more UK or European monitoring networks.</em></p>
+<p><em>default:</em> <code>"aurn"</code></p>
+<p>One or more air quality networks for which data is available through
+openair. Available networks include:</p><ul><li><p><code>"aurn"</code>, The UK Automatic Urban and Rural Network.</p></li>
+<li><p><code>"aqe"</code>, The Air Quality England Network.</p></li>
+<li><p><code>"saqn"</code>, The Scottish Air Quality Network.</p></li>
+<li><p><code>"waqn"</code>, The Welsh Air Quality Network.</p></li>
+<li><p><code>"ni"</code>, The Northern Ireland Air Quality Network.</p></li>
+<li><p><code>"local"</code>, Locally managed air quality networks in England.</p></li>
 <li><p><code>"kcl"</code>, King's College London networks.</p></li>
-<li><p><code>"europe"</code>, European AirBase/e-reporting data.
-There are two additional options provided for convenience:</p></li>
-<li><p><code>"ukaq"</code> will return metadata for all networks for which data is imported by <code><a href="https://davidcarslaw.github.io/openair/reference/importUKAQ.html" class="external-link">importUKAQ()</a></code> (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).</p></li>
-<li><p><code>"all"</code> will import all available metadata (i.e., <code>"ukaq"</code> plus <code>"kcl"</code> and <code>"europe"</code>).</p></li>
+<li><p><code>"europe"</code>, European AirBase/e-reporting data.</p></li>
+</ul><p>There are two additional options provided for convenience:</p><ul><li><p><code>"ukaq"</code> will return metadata for all networks for which data is imported by importUKAQ() (i.e., AURN, AQE, SAQN, WAQN, NI, and the local networks).</p></li>
+<li><p><code>"all"</code> will import all available metadata (i.e., "ukaq" plus "kcl" and "europe").</p></li>
 </ul></dd>
 
 
 <dt>year</dt>
-<dd><p>If a single year is selected, only sites that were open at some
-point in that year are returned. If <code>all = TRUE</code> only sites that
-measured a particular pollutant in that year are returned. Year can also be
-a sequence e.g. <code>year = 2010:2020</code> or of length 2 e.g. <code>year = c(2010, 2020)</code>, which will return only sites that were open over the
-duration. Note that <code>year</code> is ignored when the <code>source</code> is either
-<code>"kcl"</code> or <code>"europe"</code>.</p></dd>
+<dd><p><em>A year, or range of years, with which to filter data.</em></p>
+<p><em>default</em>: <code>NULL</code></p>
+<p>By default, <code><a href="networkMap.html">networkMap()</a></code> visualises sites which are currently
+operational. <code>year</code> allows users to show sites open in a specific year, or
+over a range of years. See <code><a href="https://davidcarslaw.github.io/openair/reference/importMeta.html" class="external-link">openair::importMeta()</a></code> for more information.</p></dd>
 
 
 <dt>site_type</dt>
-<dd><p>Optional. One or more site types with which to subset the
-site metadata. For example, <code>site_type = "urban background"</code> will only
-search urban background sites.</p></dd>
+<dd><p><em>One or more site types with which to subset the site
+metadata.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>If <code>site_type</code> is specified, only sites of that type will be searched for.
+For example, <code>site_type = "urban background"</code> will only search urban
+background sites.</p></dd>
 
 
 <dt>variable</dt>
-<dd><p>Optional. One or more variables of interest with which to
-subset the site metadata. For example, <code>variable = c("pm10", "co")</code> will
-search sites that measure PM10 and/or CO.</p></dd>
+<dd><p><em>One or more variables of interest with which to subset the
+site metadata.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>If <code>variable</code> is specified, only sites measuring at least one of these
+pollutants will be searched for. For example, <code>variable = c("pm10", "co")</code>
+will search sites that measure PM10 and/or CO.</p></dd>
 
 
 <dt>max_dist</dt>
-<dd><p>Optional. A maximum distance from the location of interest in
-kilometres.</p></dd>
+<dd><p><em>A maximum distance from the location of interest in
+kilometres.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>If <code>max_dist</code> is specified, only sites within <code>max_dist</code> kilometres from
+the <code>lat</code> / <code>lng</code> coordinate will be searched for.</p></dd>
 
 
 <dt>n</dt>
-<dd><p>Optional. The maximum number of sites to return.</p></dd>
+<dd><p><em>The maximum number of sites to return.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>If <code>n</code> is specified, only <code>n</code> sites will be returned. Note that this
+filtering step is applied last, after <code>site_type</code>, <code>variable</code>, and
+<code>max_dist</code>.</p></dd>
 
 
 <dt>crs</dt>
-<dd><p>The coordinate reference system (CRS) of <code>lat</code>/<code>lng</code>, passed to
+<dd><p><em>The coordinate reference system (CRS).</em></p>
+<p><em>default:</em> <code>4326</code> | <em>scope:</em> dynamic &amp; static</p>
+<p>The coordinate reference system (CRS) of the data, passed to
 <code><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">sf::st_crs()</a></code>. By default this is <a href="https://epsg.io/4326" class="external-link">EPSG:4326</a>, the
 CRS associated with the commonly used latitude and longitude coordinates.
 Different coordinate systems can be specified using <code>crs</code> (e.g., <code>crs = 27700</code> for the <a href="https://epsg.io/27700" class="external-link">British National Grid</a>). Note that
@@ -142,8 +157,10 @@ plotting on the map.</p></dd>
 
 
 <dt>map</dt>
-<dd><p>If <code>TRUE</code>, the default, <code>searchNetwork()</code> will return a <code>leaflet</code>
-map. If <code>FALSE</code>, it will instead return a <a href="https://tibble.tidyverse.org/reference/tibble-package.html" class="external-link">tibble</a>.</p></dd>
+<dd><p><em>Return a map?</em></p>
+<p><em>default:</em> <code>TRUE</code></p>
+<p>If <code>TRUE</code>, the default, <code>searchNetwork()</code> will return a <code>leaflet</code> map. If
+<code>FALSE</code>, it will instead return a <a href="https://tibble.tidyverse.org/reference/tibble-package.html" class="external-link">tibble</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">

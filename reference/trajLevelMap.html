@@ -62,7 +62,7 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 <span>  longitude <span class="op">=</span> <span class="st">"lon"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>  <span class="va">pollutant</span>,</span>
-<span>  control <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="st">"frequency"</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fl">90</span>,</span>
@@ -71,7 +71,7 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 <span>  min.bin <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  .combine <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  sigma <span class="op">=</span> <span class="fl">1.5</span>,</span>
-<span>  cols <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  cols <span class="op">=</span> <span class="st">"turbo"</span>,</span>
 <span>  alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  tile.border <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  provider <span class="op">=</span> <span class="st">"OpenStreetMap"</span></span>
@@ -81,12 +81,17 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>Data frame, the result of importing a trajectory file using
-<code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
+<dd><p><em>A data frame containing a HYSPLIT trajectory, perhaps accessed
+with <code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</em></p>
+<p><strong>required</strong></p>
+<p>A data frame containing HYSPLIT model outputs. If this data were not
+obtained using <code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
 
 
 <dt>latitude, longitude</dt>
-<dd><p>The decimal latitude/longitude.</p></dd>
+<dd><p><em>The decimal latitude/longitude.</em></p>
+<p><em>default:</em> <code>"lat"</code> / <code>"lon"</code></p>
+<p>Column names representing the decimal latitude and longitude.</p></dd>
 
 
 <dt>pollutant</dt>
@@ -94,9 +99,11 @@ requires that data are imported using the <code><a href="https://davidcarslaw.gi
 used.</p></dd>
 
 
-<dt>control</dt>
-<dd><p>Used for splitting the trajectories into different groups
-which can be selected between using a "layer control" menu. Passed to
+<dt>type</dt>
+<dd><p><em>A method to condition the <code>data</code> for separate plotting.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>Used for splitting the trajectories into different groups which can be
+selected between using a "layer control" menu. Passed to
 <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></dd>
 
 
@@ -160,11 +167,10 @@ much noise.</p></dd>
 
 
 <dt>cols</dt>
-<dd><p>Colours to be used for plotting. Options include "default",
-"increment", "heat", "turbo" and <code>RColorBrewer</code> colours — see the
-<code><a href="https://davidcarslaw.github.io/openair/reference/openColours.html" class="external-link">openair::openColours()</a></code> function for more details. For user defined the
-user can supply a list of colour names recognised by R (type
-<code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">grDevices::colours()</a></code> to see the full list). An example would be <code>cols = c("yellow", "green", "blue")</code>.</p></dd>
+<dd><p>The colours used for plotting, passed to
+<code><a href="https://davidcarslaw.github.io/openair/reference/openColours.html" class="external-link">openair::openColours()</a></code>. The default, <code>"turbo"</code>, is a rainbow palette with
+relatively perceptually uniform colours. Read more about this palette at
+<a href="https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/" class="external-link">https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/</a>.</p></dd>
 
 
 <dt>alpha</dt>
@@ -177,7 +183,9 @@ user can supply a list of colour names recognised by R (type
 
 
 <dt>provider</dt>
-<dd><p>The base map to be used. See
+<dd><p><em>The basemap to be used.</em></p>
+<p><em>default:</em> <code>"OpenStreetMap"</code></p>
+<p>A single <a href="https://rstudio.github.io/leaflet/reference/providers.html" class="external-link">leaflet::providers</a>. See
 <a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list of
 all base maps that can be used.</p></dd>
 
@@ -190,8 +198,9 @@ all base maps that can be used.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>the original <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code></p>
-<p><code><a href="trajLevelMapStatic.html">trajLevelMapStatic()</a></code> for the static <code>ggplot2</code> equivalent of <code>trajLevelMap()</code></p>
+    <div class="dont-index"><p><code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code></p>
+<p><code><a href="trajLevelMapStatic.html">trajLevelMapStatic()</a></code> for the static <code>ggplot2</code> equivalent of
+<code>trajLevelMap()</code></p>
 <p>Other interactive trajectory maps: 
 <code><a href="trajMap.html">trajMap</a>()</code></p></div>
     </div>

@@ -71,7 +71,7 @@ same arguments, which should be more flexible for post-hoc changes.</p>
 <span>  longitude <span class="op">=</span> <span class="st">"lon"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>  <span class="va">pollutant</span>,</span>
-<span>  facet <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  smooth <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  statistic <span class="op">=</span> <span class="st">"frequency"</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fl">90</span>,</span>
@@ -91,6 +91,7 @@ same arguments, which should be more flexible for post-hoc changes.</p>
 <span>  map.alpha <span class="op">=</span> <span class="fl">0.8</span>,</span>
 <span>  map.lwd <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  map.lty <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  facet <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -98,12 +99,17 @@ same arguments, which should be more flexible for post-hoc changes.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>Data frame, the result of importing a trajectory file using
-<code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
+<dd><p><em>A data frame containing a HYSPLIT trajectory, perhaps accessed
+with <code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</em></p>
+<p><strong>required</strong></p>
+<p>A data frame containing HYSPLIT model outputs. If this data were not
+obtained using <code><a href="https://davidcarslaw.github.io/openair/reference/importTraj.html" class="external-link">openair::importTraj()</a></code>.</p></dd>
 
 
 <dt>latitude, longitude</dt>
-<dd><p>The decimal latitude/longitude.</p></dd>
+<dd><p><em>The decimal latitude/longitude.</em></p>
+<p><em>default:</em> <code>"lat"</code> / <code>"lon"</code></p>
+<p>Column names representing the decimal latitude and longitude.</p></dd>
 
 
 <dt>pollutant</dt>
@@ -111,9 +117,12 @@ same arguments, which should be more flexible for post-hoc changes.</p>
 used.</p></dd>
 
 
-<dt>facet</dt>
-<dd><p>Used for splitting the trajectories into different panels.
-Passed to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></dd>
+<dt>type</dt>
+<dd><p><em>A method to condition the <code>data</code> for separate plotting.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>Used for splitting the trajectories into different groups which can be
+selected between using a "layer control" menu. Passed to
+<code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code>.</p></dd>
 
 
 <dt>smooth</dt>
@@ -186,8 +195,11 @@ much noise.</p></dd>
 
 
 <dt>xlim, ylim</dt>
-<dd><p>The x- and y-limits of the plot. If <code>NULL</code>, limits will be
-estimated based on the lat/lon ranges of the input data.</p></dd>
+<dd><p><em>The x- and y-limits of the plot.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>A numeric vector of length two defining the x-/y-limits of the map, passed
+to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::coord_sf()</a></code>. If <code>NULL</code>, limits will be estimated based on the
+lat/lon ranges of the input data.</p></dd>
 
 
 <dt>crs</dt>
@@ -197,31 +209,46 @@ be projected before plotting. Defaults to latitude/longitude
 
 
 <dt>map</dt>
-<dd><p>Should a base map be drawn? Defaults to <code>TRUE</code>.</p></dd>
+<dd><p><em>Draw a base map?</em></p>
+<p><em>default:</em> <code>TRUE</code></p>
+<p>Draws the geometries of countries under the trajectory paths.</p></dd>
 
 
 <dt>map.fill</dt>
-<dd><p>Colour to use to fill the polygons of the base map (see
-<code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code>).</p></dd>
+<dd><p><em>Colour to use to fill the polygons of the base map.</em></p>
+<p><em>default:</em> <code>"grey85"</code></p>
+<p>See <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code> for colour options. Alternatively, a hexadecimal color code
+can be provided.</p></dd>
 
 
 <dt>map.colour</dt>
-<dd><p>Colour to use for the polygon borders of the base map (see
-<code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code>).</p></dd>
+<dd><p><em>Colour to use for the polygon borders of the base map.</em></p>
+<p><em>default:</em> <code>"grey75"</code></p>
+<p>See <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">colors()</a></code> for colour options. Alternatively, a hexadecimal color code
+can be provided.</p></dd>
 
 
 <dt>map.alpha</dt>
-<dd><p>Transparency of the base map polygons. Must be between <code>0</code>
-(fully transparent) and <code>1</code> (fully opaque).</p></dd>
+<dd><p><em>Transparency of the base map polygons.</em></p>
+<p><em>default:</em> <code>0.8</code></p>
+<p>Must be between <code>0</code> (fully transparent) and <code>1</code> (fully opaque).</p></dd>
 
 
 <dt>map.lwd</dt>
-<dd><p>Line width of the base map polygon borders.</p></dd>
+<dd><p><em>Line width of the base map polygon borders.</em></p>
+<p><em>default:</em> <code>0.5</code></p>
+<p>Any numeric value.</p></dd>
 
 
 <dt>map.lty</dt>
-<dd><p>Line type of the base map polygon borders. See
-<code><a href="https://ggplot2.tidyverse.org/reference/scale_linetype.html" class="external-link">ggplot2::scale_linetype()</a></code> for common examples.</p></dd>
+<dd><p><em>Line type of the base map polygon borders.</em></p>
+<p><em>default:</em> <code>1</code></p>
+<p>See <code><a href="https://ggplot2.tidyverse.org/reference/scale_linetype.html" class="external-link">ggplot2::scale_linetype()</a></code> for common examples. The default, <code>1</code>,
+draws solid lines.</p></dd>
+
+
+<dt>facet</dt>
+<dd><p>Deprecated. Please use <code>type</code>.</p></dd>
 
 
 <dt>...</dt>
@@ -309,7 +336,7 @@ legend, the plot title, or the plot margins.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>the original <code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code></p>
+    <div class="dont-index"><p><code><a href="https://davidcarslaw.github.io/openair/reference/trajLevel.html" class="external-link">openair::trajLevel()</a></code></p>
 <p><code><a href="trajLevelMap.html">trajLevelMap()</a></code> for the interactive <code>leaflet</code> equivalent of
 <code>trajLevelMapStatic()</code></p>
 <p>Other static trajectory maps: 
