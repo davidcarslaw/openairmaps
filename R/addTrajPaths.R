@@ -109,7 +109,11 @@ addTrajPaths <-
     )
 
     for (i in seq(length(unique(data$datef)))) {
-      layerid <- paste(layerId, i, sep = "-")
+      if (!is.null(layerId)) {
+        layerid <- paste(layerId, i, sep = "-")
+      } else {
+        layerid <- NULL
+      }
 
       # get line/points data
       ldata <- dplyr::filter(data, .data$datef == unique(data$datef)[[i]])
@@ -129,6 +133,11 @@ addTrajPaths <-
         )
 
       for (i in 1:nrow(pdata)) {
+        if (!is.null(layerId)) {
+          layeridp <- paste(layerid, i, sep = "-")
+        } else {
+          layeridp <- NULL
+        }
         map <-
           leaflet::addCircleMarkers(
             map = map,
@@ -138,7 +147,7 @@ addTrajPaths <-
             lng = pdata[i, ][[lng]],
             lat = pdata[i, ][[lat]],
             group = group,
-            layerId = paste(layerid, i, sep = "-"),
+            layerId = layeridp,
             popup = pdata[i, ][["lab"]],
             ...
           )
