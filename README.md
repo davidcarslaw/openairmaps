@@ -47,19 +47,13 @@ trajectories on maps (e.g., `trajMap()`), all using the `{leaflet}`
 package.
 
 ``` r
-polar_data %>%
-  openair::cutData("daylight") %>%
-  buildPopup(
-    c("site", "site_type"),
-    names = c("Site" = "site", "Site Type" = "site_type"),
-    control = "daylight"
-  ) %>%
-  polarMap(
-    pollutant = "no2",
-    limits = c(0, 180),
-    control = "daylight",
-    popup = "popup"
-  )
+polarMap(
+  polar_data,
+  pollutant = "no2",
+  limits = c(0, 180),
+  type = "daylight",
+  popup = c("site", "site_type")
+)
 ```
 
 <img src="man/figures/README-examplemap.png" alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations." width="100%" />
@@ -76,7 +70,6 @@ label sites) and limited further customisation is available using
 
 ``` r
 polar_data %>%
-  openair::cutData("daylight") %>%
   polarMap(
     pollutant = "no2",
     limits = c(0, 180),

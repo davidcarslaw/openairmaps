@@ -50,19 +50,13 @@ library(openairmaps)
 The `openairmaps` package is thoroughly documented in the [openair book](https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html), which goes into great detail about its various functions. Functionality includes visualising UK AQ networks (`networkMap()`), putting "polar directional markers" on maps (e.g., `polarMap()`) and overlaying HYSPLIT trajectories on maps (e.g., `trajMap()`), all using the `{leaflet}` package.
 
 ```{r eg, eval = FALSE}
-polar_data %>%
-  openair::cutData("daylight") %>%
-  buildPopup(
-    c("site", "site_type"),
-    names = c("Site" = "site", "Site Type" = "site_type"),
-    control = "daylight"
-  ) %>%
-  polarMap(
-    pollutant = "no2",
-    limits = c(0, 180),
-    control = "daylight",
-    popup = "popup"
-  )
+polarMap(
+  polar_data,
+  pollutant = "no2",
+  limits = c(0, 180),
+  type = "daylight",
+  popup = c("site", "site_type")
+)
 ```
 
 ```{r egreal, echo = FALSE, fig.alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations."}
@@ -73,7 +67,6 @@ While an interactive map is preferred for exploratory directional analysis, it i
 
 ```{r egstatic, fig.alt="Two static maps. They show OpenStreetMap map layers, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The two maps represent daylight and nighttime observations separately.", fig.width=12, fig.height=8}
 polar_data %>%
-  openair::cutData("daylight") %>%
   polarMap(
     pollutant = "no2",
     limits = c(0, 180),
