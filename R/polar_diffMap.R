@@ -69,8 +69,12 @@ diffMap <- function(before,
                     cols = "RdBu",
                     alpha = 1,
                     key = FALSE,
-                    draw.legend = TRUE,
-                    collapse.control = FALSE,
+                    legend = TRUE,
+                    legend.position = NULL,
+                    legend.title = NULL,
+                    legend.title.autotext = TRUE,
+                    control.collapsed = FALSE,
+                    control.position = "topright",
                     d.icon = 200,
                     d.fig = 3.5,
                     static = FALSE,
@@ -233,7 +237,19 @@ diffMap <- function(before,
       )
 
     # create colorbar if limits specified
-    if (!all(is.na(theLimits)) & draw.legend) {
+    if (!all(is.na(theLimits)) & legend) {
+      if (legend.title.autotext) {
+        textfun <- openair::quickText
+      } else {
+        textfun <- function(x) {
+          return(x)
+        }
+      }
+
+      legend.title <-
+        legend.title %||% paste(pollutant, collapse = ", ")
+      legend.title <- textfun(legend.title)
+
       map <-
         map +
         ggplot2::geom_point(
@@ -245,7 +261,8 @@ diffMap <- function(before,
           limits = theLimits,
           colours = openair::openColours(scheme = cols)
         ) +
-        ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
+        ggplot2::labs(color = legend.title) +
+        ggplot2::theme(legend.position = legend.position)
     }
   }
 
@@ -262,15 +279,29 @@ diffMap <- function(before,
         popup,
         label,
         split_col,
-        collapse.control
+        control.collapsed,
+        control.position
       )
 
     # add legend if limits are set
-    if (!all(is.na(theLimits)) & draw.legend) {
+    if (!all(is.na(theLimits)) & legend) {
+      if (legend.title.autotext) {
+        textfun <- quickTextHTML
+      } else {
+        textfun <- function(x) {
+          return(x)
+        }
+      }
+
+      legend.title <-
+        legend.title %||% paste(pollutant, collapse = ",<br>")
+      legend.title <- textfun(legend.title)
+
       map <-
         leaflet::addLegend(
           map,
-          title = quickTextHTML(paste(pollutant, collapse = ",<br>")),
+          title = legend.title,
+          position = legend.position,
           pal = leaflet::colorNumeric(
             palette = openair::openColours(scheme = cols),
             domain = theLimits
