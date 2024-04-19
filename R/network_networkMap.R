@@ -88,12 +88,28 @@
 #'   When multiple `source`s are defined, should a shared legend be created at
 #'   the side of the map?
 #'
-#' @param collapse.control *Show the layer control as a collapsed?*
+#' @param legend.position *Position of the legend*
+#'
+#'  *default:* `"topright"`
+#'
+#'   Where should the shared legend be placed? One of "topleft", "topright",
+#'   "bottomleft" or "bottomright". Passed to the `position` argument of
+#'   [leaflet::addLayersControl()].
+#'
+#' @param control.collapsed *Show the layer control as a collapsed?*
 #'
 #'  *default:* `FALSE`
 #'
 #'   Should the "layer control" interface be collapsed? If `TRUE`, users will
 #'   have to hover over an icon to view the options.
+#'
+#' @param control.position *Position of the layer control menu*
+#'
+#'  *default:* `"topright"`
+#'
+#'   Where should the "layer control" interface be placed? One of "topleft",
+#'   "topright", "bottomleft" or "bottomright". Passed to the `position`
+#'   argument of [leaflet::addLayersControl()].
 #'
 #' @returns A leaflet object.
 #' @export
@@ -120,7 +136,9 @@ networkMap <-
              "Satellite" = "Esri.WorldImagery"
            ),
            legend = TRUE,
-           collapse.control = FALSE) {
+           legend.position = "topright",
+           control.collapsed = FALSE,
+           control.position = "topright") {
     # if year isn't provided, use current year
     if (is.null(year)) {
       year <- lubridate::year(Sys.Date())
@@ -218,6 +236,7 @@ networkMap <-
 
     # sort out control
     if (!is.null(control)) {
+      control.position <- check_legendposition(control.position, static = FALSE)
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
           c(
@@ -299,7 +318,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars)),
               overlayGroups = names(provider)
             ) %>%
@@ -308,7 +328,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars))
             )
         }
@@ -317,7 +338,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars)),
               baseGroups = names(provider)
             ) %>%
@@ -326,7 +348,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars))
             )
         }
@@ -356,7 +379,8 @@ networkMap <-
         map <-
           leaflet::addLayersControl(
             map,
-            options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+            position = control.position,
+            options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
             baseGroups = names(provider)
           ) %>%
           leaflet::hideGroup(group = names(provider)[[-1]])
@@ -368,6 +392,7 @@ networkMap <-
       map <-
         leaflet::addLegend(
           map,
+          position = check_legendposition(legend.position, static = FALSE),
           title = "Network",
           colors = cols$colour,
           labels = cols$network

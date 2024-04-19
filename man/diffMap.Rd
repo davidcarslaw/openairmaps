@@ -202,8 +202,8 @@ For \emph{dynamic} maps, should the "layer control" interface be collapsed? If
 \emph{default:} \code{"topright"} | \emph{scope:} dynamic
 
 When \code{type != NULL}, or multiple pollutants are specified, where should the
-legend be placed? One of "topleft", "topright", "bottomleft" or
-"bottomright". Passed to the \code{position} argument of
+"layer control" interface be placed? One of "topleft", "topright",
+"bottomleft" or "bottomright". Passed to the \code{position} argument of
 \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
 
 \item{d.icon}{\emph{The diameter of the plot on the map in pixels.}

@@ -216,8 +216,8 @@
 #'  *default:* `"topright"` | *scope:* dynamic
 #'
 #'   When `type != NULL`, or multiple pollutants are specified, where should the
-#'   legend be placed? One of "topleft", "topright", "bottomleft" or
-#'   "bottomright". Passed to the `position` argument of
+#'   "layer control" interface be placed? One of "topleft", "topright",
+#'   "bottomleft" or "bottomright". Passed to the `position` argument of
 #'   [leaflet::addLayersControl()].
 #'
 #' @param d.icon *The diameter of the plot on the map in pixels.*

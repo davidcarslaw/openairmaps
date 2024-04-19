@@ -104,9 +104,9 @@
 #'
 #'  *default:* `"topright"`
 #'
-#'   Where should the legend be placed? One of "topleft", "topright",
-#'   "bottomleft" or "bottomright". Passed to the `position` argument of
-#'   [leaflet::addLayersControl()].
+#'   Where should the "layer control" interface be placed? One of "topleft",
+#'   "topright", "bottomleft" or "bottomright". Passed to the `position`
+#'   argument of [leaflet::addLayersControl()].
 #'
 #' @param control Deprecated. Please use `type`.
 #'
