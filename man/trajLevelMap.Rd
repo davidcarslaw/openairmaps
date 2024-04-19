@@ -158,9 +158,9 @@ have to hover over an icon to view the options.}
 
 \emph{default:} \code{"topright"}
 
-Where should the legend be placed? One of "topleft", "topright",
-"bottomleft" or "bottomright". Passed to the \code{position} argument of
-\code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
+Where should the "layer control" interface be placed? One of "topleft",
+"topright", "bottomleft" or "bottomright". Passed to the \code{position}
+argument of \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
 }
 \value{
 A leaflet object.

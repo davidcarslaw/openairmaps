@@ -11,7 +11,9 @@ networkMap(
   cluster = TRUE,
   provider = c(Default = "OpenStreetMap", Satellite = "Esri.WorldImagery"),
   legend = TRUE,
-  collapse.control = FALSE
+  legend.position = "topright",
+  control.collapsed = FALSE,
+  control.position = "topright"
 )
 }
 \arguments{
@@ -86,12 +88,28 @@ own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"
 When multiple \code{source}s are defined, should a shared legend be created at
 the side of the map?}
 
-\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+\item{legend.position}{\emph{Position of the legend}
+
+\emph{default:} \code{"topright"}
+
+Where should the shared legend be placed? One of "topleft", "topright",
+"bottomleft" or "bottomright". Passed to the \code{position} argument of
+\code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
+
+\item{control.collapsed}{\emph{Show the layer control as a collapsed?}
 
 \emph{default:} \code{FALSE}
 
 Should the "layer control" interface be collapsed? If \code{TRUE}, users will
 have to hover over an icon to view the options.}
+
+\item{control.position}{\emph{Position of the layer control menu}
+
+\emph{default:} \code{"topright"}
+
+Where should the "layer control" interface be placed? One of "topleft",
+"topright", "bottomleft" or "bottomright". Passed to the \code{position}
+argument of \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
 }
 \value{
 A leaflet object.

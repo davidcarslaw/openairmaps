@@ -230,15 +230,15 @@ trajLevelMap <-
     if (length(unique(provider)) > 1 & is.null(type)) {
       map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
     } else if (length(unique(provider)) == 1 &
-      !is.null(type)) {
+               !is.null(type)) {
       map <-
         leaflet::addLayersControl(map, baseGroups = sort(unique(data[[type]])))
     } else if (length(unique(provider)) > 1 &
-      !is.null(type)) {
+               !is.null(type)) {
       map <-
         leaflet::addLayersControl(map,
-          overlayGroups = unique(provider),
-          baseGroups = sort(unique(data[[type]]))
+                                  overlayGroups = unique(provider),
+                                  baseGroups = sort(unique(data[[type]]))
         )
     }
 
