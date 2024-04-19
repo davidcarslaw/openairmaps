@@ -698,7 +698,7 @@ check_providers <- function(provider, static) {
 
 #' Check legend positions are valid
 #' @noRd
-check_leafposition <- function(position, static) {
+check_legendposition <- function(position, static) {
   if (static) {
     position <- position %||% "right"
     rlang::arg_match(position, c("top", "right", "bottom", "left"), multiple = FALSE)
