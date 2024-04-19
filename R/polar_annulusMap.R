@@ -216,11 +216,11 @@ annulusMap <- function(data,
     if (!all(is.na(theLimits)) & legend) {
       legend.title <-
         create_legend_title(
-        static = static,
-        legend.title.autotext = legend.title.autotext,
-        legend.title = legend.title,
-        str = paste(pollutant, collapse = ", ")
-      )
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ", ")
+        )
 
       map <-
         map +

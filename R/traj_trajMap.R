@@ -139,9 +139,11 @@ trajMap <-
            control = NULL) {
     # handle deprecated argument
     if (!is.null(control)) {
-      lifecycle::deprecate_soft(when = "0.9.0",
-                                what = "trajMap(control)",
-                                with = "trajMap(type)")
+      lifecycle::deprecate_soft(
+        when = "0.9.0",
+        what = "trajMap(control)",
+        with = "trajMap(type)"
+      )
     }
     type <- type %||% control
 
@@ -169,7 +171,7 @@ trajMap <-
         data <- dplyr::arrange(data, .data$datef)
 
         if ("factor" %in% class(data[[colour]]) |
-            "character" %in% class(data[[colour]])) {
+          "character" %in% class(data[[colour]])) {
           pal <- leaflet::colorFactor(
             palette = openair::openColours(scheme = cols, n = length(unique(data[[colour]]))),
             domain = data[[colour]]
@@ -180,8 +182,10 @@ trajMap <-
             domain = as.numeric(data[[colour]], origin = "1964-10-22")
           )
         } else {
-          pal <- leaflet::colorNumeric(palette = openair::openColours(scheme = cols),
-                                       domain = data[[colour]])
+          pal <- leaflet::colorNumeric(
+            palette = openair::openColours(scheme = cols),
+            domain = data[[colour]]
+          )
         }
       } else {
         fixedcol <- colour
@@ -201,10 +205,11 @@ trajMap <-
 
     if (!is.null(colour)) {
       if (colour %in% names(data) &
-          !colour %in% c("date", "date2", "lat", "lon", "height", "pressure")) {
+        !colour %in% c("date", "date2", "lat", "lon", "height", "pressure")) {
         data$lab <- paste(data$lab,
-                          paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
-                          sep = "<br>")
+          paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
+          sep = "<br>"
+        )
       }
     }
 
@@ -275,8 +280,9 @@ trajMap <-
               pal = pal,
               values = as.numeric(data[[colour]], origin = "1964-10-22"),
               labFormat = leaflet::labelFormat(
-                transform = function(x)
+                transform = function(x) {
                   as.Date.POSIXct(x, origin = "1964-10-22")
+                }
               )
             )
         } else {

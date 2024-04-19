@@ -98,8 +98,8 @@ trajLevelMap <-
     # set provider tiles
     for (i in seq(length(unique(provider)))) {
       map <- leaflet::addProviderTiles(map,
-                                       provider = unique(provider)[[i]],
-                                       group = unique(provider)[[i]]
+        provider = unique(provider)[[i]],
+        group = unique(provider)[[i]]
       )
     }
 
@@ -181,7 +181,7 @@ trajLevelMap <-
        <b>Count:</b> {gridcount}<br>
        <b>Value:</b> {signif(val, 3)}"
         ),
-       coord = stringr::str_glue("({ygrid}, {xgrid})")
+        coord = stringr::str_glue("({ygrid}, {xgrid})")
       )
 
       if (statistic %in% c("difference", "frequency")) {
@@ -230,15 +230,15 @@ trajLevelMap <-
     if (length(unique(provider)) > 1 & is.null(type)) {
       map <- leaflet::addLayersControl(map, baseGroups = unique(provider))
     } else if (length(unique(provider)) == 1 &
-               !is.null(type)) {
+      !is.null(type)) {
       map <-
         leaflet::addLayersControl(map, baseGroups = sort(unique(data[[type]])))
     } else if (length(unique(provider)) > 1 &
-               !is.null(type)) {
+      !is.null(type)) {
       map <-
         leaflet::addLayersControl(map,
-                                  overlayGroups = unique(provider),
-                                  baseGroups = sort(unique(data[[type]]))
+          overlayGroups = unique(provider),
+          baseGroups = sort(unique(data[[type]]))
         )
     }
 
