@@ -484,12 +484,16 @@ trajMapStatic <-
     }
 
     if (is.null(xlim)) {
-      d_lon <- diff(range(c(min(data[[longitude]]), max(data[[longitude]])))) * 0.1
-      xlim <- c(min(data[[longitude]]) - d_lon, max(data[[longitude]]) + d_lon)
+      d_lon <-
+        diff(range(c(min(data[[longitude]]), max(data[[longitude]])))) * 0.1
+      xlim <-
+        c(min(data[[longitude]]) - d_lon, max(data[[longitude]]) + d_lon)
     }
     if (is.null(ylim)) {
-      d_lat <- diff(range(c(min(data[[latitude]]), max(data[[latitude]])))) * 0.1
-      ylim <- c(min(data[[latitude]]) - d_lat, max(data[[latitude]]) + d_lat)
+      d_lat <-
+        diff(range(c(min(data[[latitude]]), max(data[[latitude]])))) * 0.1
+      ylim <-
+        c(min(data[[latitude]]) - d_lat, max(data[[latitude]]) + d_lat)
     }
 
     points_df <- dplyr::filter(data, .data$hour.inc %% npoints == 0)
