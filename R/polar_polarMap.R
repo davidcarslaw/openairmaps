@@ -182,8 +182,7 @@
 #'
 #'  *default:* `NULL` | *scope:* dynamic & static
 #'
-#'   When `legend = TRUE`, where should the legend be placed? Defaults to
-#'   "topleft"
+#'   When `legend = TRUE`, where should the legend be placed?
 #'
 #'   - *Dynamic*: One of "topright", "topright", "bottomleft" or "bottomright". Passed to the `position` argument of [leaflet::addLegend()].
 #'
@@ -194,7 +193,7 @@
 #'   *default:* `NULL` | *scope:* dynamic & static
 #'
 #'   By default, when `legend.title = NULL`, the function will attempt to
-#'   provide a sensible legend title. `legent.title` allows users to overwrite
+#'   provide a sensible legend title. `legend.title` allows users to overwrite
 #'   this - for example, to include units or other contextual information. For
 #'   *dynamic* maps, users may wish to use HTML tags to format the title.
 #'

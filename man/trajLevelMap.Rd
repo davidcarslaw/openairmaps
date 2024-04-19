@@ -21,7 +21,12 @@ trajLevelMap(
   cols = "turbo",
   alpha = 0.5,
   tile.border = NA,
-  provider = "OpenStreetMap"
+  provider = "OpenStreetMap",
+  legend.position = "topright",
+  legend.title = NULL,
+  legend.title.autotext = TRUE,
+  control.collapsed = FALSE,
+  control.position = "topright"
 )
 }
 \arguments{
@@ -117,6 +122,45 @@ relatively perceptually uniform colours. Read more about this palette at
 A single \link[leaflet:providers]{leaflet::providers}. See
 \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list of
 all base maps that can be used.}
+
+\item{legend.position}{\emph{Position of the shared legend.}
+
+\emph{default:} \code{"topright"}
+
+Where should the legend be placed? One of "topright", "topright",
+"bottomleft" or "bottomright". Passed to the \code{position} argument of
+\code{\link[leaflet:addLegend]{leaflet::addLegend()}}. \code{NULL} defaults to "topright".}
+
+\item{legend.title}{\emph{Title of the legend.}
+
+\emph{default:} \code{NULL}
+
+By default, when \code{legend.title = NULL}, the function will attempt to
+provide a sensible legend title based on \code{colour}. \code{legend.title} allows
+users to overwrite this - for example, to include units or other contextual
+information. Users may wish to use HTML tags to format the title.}
+
+\item{legend.title.autotext}{\emph{Automatically format the title of the legend?}
+
+\emph{default:} \code{TRUE}
+
+When \code{legend.title.autotext = TRUE}, \code{legend.title} will be first run
+through \code{\link[=quickTextHTML]{quickTextHTML()}}.}
+
+\item{control.collapsed}{\emph{Show the layer control as a collapsed?}
+
+\emph{default:} \code{FALSE}
+
+Should the "layer control" interface be collapsed? If \code{TRUE}, users will
+have to hover over an icon to view the options.}
+
+\item{control.position}{\emph{Position of the layer control menu}
+
+\emph{default:} \code{"topright"}
+
+Where should the legend be placed? One of "topleft", "topright",
+"bottomleft" or "bottomright". Passed to the \code{position} argument of
+\code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
 }
 \value{
 A leaflet object.

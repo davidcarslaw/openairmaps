@@ -176,8 +176,7 @@ in \code{\link[=polarMap]{polarMap()}}), should a shared legend be created at th
 
 \emph{default:} \code{NULL} | \emph{scope:} dynamic & static
 
-When \code{legend = TRUE}, where should the legend be placed? Defaults to
-"topleft"
+When \code{legend = TRUE}, where should the legend be placed?
 \itemize{
 \item \emph{Dynamic}: One of "topright", "topright", "bottomleft" or "bottomright". Passed to the \code{position} argument of \code{\link[leaflet:addLegend]{leaflet::addLegend()}}.
 \item \emph{Static:}: One of "top", "right", "bottom" or "left". Passed to the \code{legend.position} argument of \code{\link[ggplot2:theme]{ggplot2::theme()}}.
@@ -188,7 +187,7 @@ When \code{legend = TRUE}, where should the legend be placed? Defaults to
 \emph{default:} \code{NULL} | \emph{scope:} dynamic & static
 
 By default, when \code{legend.title = NULL}, the function will attempt to
-provide a sensible legend title. \code{legent.title} allows users to overwrite
+provide a sensible legend title. \code{legend.title} allows users to overwrite
 this - for example, to include units or other contextual information. For
 \emph{dynamic} maps, users may wish to use HTML tags to format the title.}
 
