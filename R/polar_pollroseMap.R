@@ -62,8 +62,12 @@ pollroseMap <- function(data,
                         cols = "turbo",
                         alpha = 1,
                         key = FALSE,
-                        draw.legend = TRUE,
-                        collapse.control = FALSE,
+                        legend = TRUE,
+                        legend.position = NULL,
+                        legend.title = NULL,
+                        legend.title.autotext = TRUE,
+                        control.collapsed = FALSE,
+                        control.position = "topright",
                         d.icon = 200,
                         d.fig = 3.5,
                         static = FALSE,
@@ -71,6 +75,7 @@ pollroseMap <- function(data,
                         ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+  legend.position <- check_legendposition(legend.position, static)
 
   # check for old facet/control opts
   type <- type %||% check_facet_control(...)
@@ -180,7 +185,7 @@ pollroseMap <- function(data,
       )
 
     # create legend
-    if (!is.null(breaks) & draw.legend) {
+    if (!is.null(breaks) & legend) {
       intervals <- attr(plots_df$plot[[1]]$data, "intervals")
       intervals <- factor(intervals, intervals)
       pal <-
@@ -191,6 +196,14 @@ pollroseMap <- function(data,
       dummy <-
         dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
         tidyr::crossing(intervals)
+
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ", ")
+        )
 
       # add legend
       map <-
@@ -204,7 +217,8 @@ pollroseMap <- function(data,
           key_glyph = ggplot2::draw_key_rect
         ) +
         ggplot2::scale_fill_manual(values = pal, drop = FALSE) +
-        ggplot2::labs(fill = openair::quickText(paste(pollutant, collapse = ", ")))
+        ggplot2::labs(fill = legend.title) +
+        ggplot2::theme(legend.position = legend.position)
     }
   }
 
@@ -221,21 +235,31 @@ pollroseMap <- function(data,
         popup,
         label,
         split_col,
-        collapse.control
+        control.collapsed,
+        control.position
       )
 
     # add legend if breaks are defined
-    if (!is.null(breaks) & draw.legend) {
+    if (!is.null(breaks) & legend) {
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ",<br>")
+        )
+
       map <-
         leaflet::addLegend(
           map,
+          position = legend.position,
           pal = leaflet::colorBin(
             palette = openair::openColours(cols),
             domain = theBreaks,
             bins = theBreaks
           ),
           values = theBreaks,
-          title = quickTextHTML(paste(pollutant, collapse = ", "))
+          title = legend.title
         )
     }
   }

@@ -8,6 +8,8 @@
 
 * BREAKING: The `names` and `cols` arguments of `buildPopup()` have been coalesced into a single `columns` argument for less verbose function usage.
 
+* BREAKING: The `collapse.control` argument has been renamed to `control.collapsed` and the `draw.legend` argument to `legend`. This is to allow these options to sit more nicely with their new argument family members - `legend.title`, `legend.title.autotext`, `legend.position`, and so on.
+
 ## New features
 
 * The `polarMapStatic()` family of functions have been combined with the `polarMap()` family, with static maps available to be accessed using the `static` argument. The `polarMapStatic()` family are therefore deprecated, and will later be removed from `{openairmaps}`. The justification for this is as follows:
@@ -21,6 +23,8 @@
     * Combining these functions has reduced repetition in the source code of `{openairmaps}`, reducing the likelihood of oversights and bugs, and allowing for more rapid development.
 
 * The `crs` argument has been added to the `polarMap()` and `polarMapStatic()` families and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}` / `{ggspatial}`.
+
+* Users now have greater control over the positions of legends and layer control menus, and the titles of legends, throughout `{openairmaps}` functions, including the `polarMap()` family, `trajMap()` family, and `networkMap()`.
 
 * Popups for the dynamic `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
 

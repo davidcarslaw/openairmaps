@@ -19,8 +19,12 @@ freqMap(
   cols = "turbo",
   alpha = 1,
   key = FALSE,
-  draw.legend = TRUE,
-  collapse.control = FALSE,
+  legend = TRUE,
+  legend.position = NULL,
+  legend.title = NULL,
+  legend.title.autotext = TRUE,
+  control.collapsed = FALSE,
+  control.position = "topright",
   d.icon = 200,
   d.fig = 3.5,
   static = FALSE,
@@ -171,19 +175,54 @@ A value between 0 (fully transparent) and 1 (fully opaque).}
 
 Draw a key for each individual marker? Potentially useful when \code{limits = "free"}, but of limited use otherwise.}
 
-\item{draw.legend}{\emph{Draw a shared legend?}
+\item{legend}{\emph{Draw a shared legend?}
 
 \emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
 
 When all markers share the same colour scale (e.g., when \code{limits != "free"}
 in \code{\link[=polarMap]{polarMap()}}), should a shared legend be created at the side of the map?}
 
-\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+\item{legend.position}{\emph{Position of the shared legend.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+When \code{legend = TRUE}, where should the legend be placed?
+\itemize{
+\item \emph{Dynamic}: One of "topright", "topright", "bottomleft" or "bottomright". Passed to the \code{position} argument of \code{\link[leaflet:addLegend]{leaflet::addLegend()}}.
+\item \emph{Static:}: One of "top", "right", "bottom" or "left". Passed to the \code{legend.position} argument of \code{\link[ggplot2:theme]{ggplot2::theme()}}.
+}}
+
+\item{legend.title}{\emph{Title of the legend.}
+
+\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+
+By default, when \code{legend.title = NULL}, the function will attempt to
+provide a sensible legend title. \code{legend.title} allows users to overwrite
+this - for example, to include units or other contextual information. For
+\emph{dynamic} maps, users may wish to use HTML tags to format the title.}
+
+\item{legend.title.autotext}{\emph{Automatically format the title of the legend?}
+
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
+
+When \code{legend.title.autotext = TRUE}, \code{legend.title} will be first run
+through \code{\link[=quickTextHTML]{quickTextHTML()}} (\emph{dynamic}) or \code{\link[openair:quickText]{openair::quickText()}} (\emph{static}).}
+
+\item{control.collapsed}{\emph{Show the layer control as a collapsed?}
 
 \emph{default:} \code{FALSE} | \emph{scope:} dynamic
 
 For \emph{dynamic} maps, should the "layer control" interface be collapsed? If
 \code{TRUE}, users will have to hover over an icon to view the options.}
+
+\item{control.position}{\emph{Position of the layer control menu}
+
+\emph{default:} \code{"topright"} | \emph{scope:} dynamic
+
+When \code{type != NULL}, or multiple pollutants are specified, where should the
+"layer control" interface be placed? One of "topleft", "topright",
+"bottomleft" or "bottomright". Passed to the \code{position} argument of
+\code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
 
 \item{d.icon}{\emph{The diameter of the plot on the map in pixels.}
 
