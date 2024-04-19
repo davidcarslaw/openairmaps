@@ -62,7 +62,7 @@
 #'
 #' @param cluster *Cluster markers together when zoomed out?*
 #'
-#'  *default:* `FALSE`
+#'  *default:* `TRUE`
 #'
 #'   When `cluster = TRUE`, markers are clustered together. This may be useful
 #'   for sources like "kcl" where there are many markers very close together.
@@ -83,14 +83,14 @@
 #'
 #' @param legend *Draw a shared legend?*
 #'
-#'  *default:* `TRUE` | *scope:* dynamic & static
+#'  *default:* `TRUE`
 #'
 #'   When multiple `source`s are defined, should a shared legend be created at
 #'   the side of the map?
 #'
 #' @param collapse.control *Show the layer control as a collapsed?*
 #'
-#'  *default:* `FALSE` | *scope:* dynamic
+#'  *default:* `FALSE`
 #'
 #'   Should the "layer control" interface be collapsed? If `TRUE`, users will
 #'   have to hover over an icon to view the options.
