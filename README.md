@@ -1,20 +1,24 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" align="right" height="134" alt="the openairmaps logo. It shows a stylised pollution rose overlaid with a typical teardrop shaped map marker." />
+# openairmaps: tools to create maps of air pollution data <img src="man/figures/logo.png" alt="the openairmaps logo. It shows a stylised pollution rose overlaid with a typical teardrop shaped map marker." align="right" height="134"/>
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
+
 <!-- badges: end -->
 
 The main goal of `{openairmaps}` is to combine the robust analytical
-methods found in [openair](https://davidcarslaw.github.io/openair/) with
-the highly capable `{leaflet}` package. `{openairmaps}` is thoroughly
-documented in the [openair
-book](https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html).
+methods found in [`{openair}`](https://davidcarslaw.github.io/openair/)
+on a range of dynamic and static maps. Core functionality includes
+visualising UK AQ networks (`networkMap()`), putting “polar directional
+markers” on maps (e.g., `polarMap()`) and overlaying HYSPLIT
+trajectories on maps (e.g., `trajMap()`), all using the `{leaflet}`
+package. Static equivalents of most functions are also available for
+insertion into traditional reports and academic articles.
 
 ## Installation
 
@@ -32,60 +36,28 @@ with:
 pak::pak("davidcarslaw/openairmaps")
 ```
 
-## Overview
+## Documentation
 
-``` r
-library(openairmaps)
-```
-
-The `openairmaps` package is thoroughly documented in the [openair
+All functions in `{openairmaps}` are thoroughly documented. The
+[openairmaps website](https://davidcarslaw.github.io/openairmaps/)
+contains all documentation and a change log of new features. There are
+also many examples of `{openairmaps}` functionality the [openair
 book](https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html),
-which goes into great detail about its various functions. Functionality
-includes visualising UK AQ networks (`networkMap()`), putting “polar
-directional markers” on maps (e.g., `polarMap()`) and overlaying HYSPLIT
-trajectories on maps (e.g., `trajMap()`), all using the `{leaflet}`
-package.
+which goes into great detail about its various functions.
 
-``` r
-polarMap(
-  polar_data,
-  pollutant = "no2",
-  limits = c(0, 180),
-  type = "daylight",
-  popup = c("site", "site_type")
-)
-```
+<img src="man/figures/README-patchwork.png" alt="An assembly of openairmaps maps, all of which are screenshots of dynamic leaflet maps. Top right: bivaraite polar plots. Bottom right: HYSPLIT trajectories. Right: markers displaying the locations of UK AURN sites." width="100%" />
 
-<img src="man/figures/README-examplemap.png" alt="A screenshot of a leaflet map. It shows an OpenStreetMap map layer, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. A menu is found at the top-right of the map, which allows users to swap between daylight and nighttime observations." width="100%" />
+## The `{openair}` toolkit
 
-While an interactive map is preferred for exploratory directional
-analysis, it is limited to the HTML format. Some applications (for
-example, academic journals) demand “static” formats like .docx and .pdf.
-For this reason, “static” versions of `{openairmaps}` polar marker
-functions powered by `{ggplot2}` can be created using the `static`
-argument. A benefit of being written in `{ggplot2}` is that additional
-layers can be added (e.g., `ggplot2::geom_label_sf()` could be used to
-label sites) and limited further customisation is available using
-`ggplot2::theme()` and `ggplot2::guides()`.
+- [`{openair}`](https://davidcarslaw.github.io/openair/): Import,
+  analyse, and visualise air quality and atmospheric composition data.
 
-``` r
-polar_data %>%
-  polarMap(
-    pollutant = "no2",
-    limits = c(0, 180),
-    type = "daylight",
-    static = TRUE,
-    d.fig = 2.5,
-    d.icon = 150,
-    alpha = 0.75
-  ) +
-  ggplot2::theme(
-    legend.position = "bottom",
-    legend.key.width = ggplot2::unit(1, "null"),
-    legend.title.position = "top",
-    legend.title = ggplot2::element_text(hjust = .5)
-  ) +
-  ggplot2::labs(color = openair::quickText("NO2 (ug/m3)"))
-```
+- [`{worldmet}`](https://davidcarslaw.github.io/worldmet/): Access world
+  meteorological data from NOAA’s Integrated Surface Database.
 
-<img src="man/figures/README-egstatic-1.png" alt="Two static maps. They show OpenStreetMap map layers, overlaid with bivariate polar plots. Polar plots are visualisations on polar coordinates with wind direction on the spoke axes, wind speed on the radial axes, and a smooth surface showing pollutant concentrations. The two maps represent daylight and nighttime observations separately." width="100%" />
+- [`{openairmaps}`](https://davidcarslaw.github.io/openairmaps/):
+  Visualise air quality data on interactive and static maps.
+
+- [`{deweather}`](https://davidcarslaw.github.io/deweather/): Use
+  machine learning to remove the effects of meteorology on air quality
+  time series.
