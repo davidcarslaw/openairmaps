@@ -171,19 +171,54 @@
 #'   Draw a key for each individual marker? Potentially useful when `limits =
 #'   "free"`, but of limited use otherwise.
 #'
-#' @param draw.legend *Draw a shared legend?*
+#' @param legend *Draw a shared legend?*
 #'
 #'  *default:* `TRUE` | *scope:* dynamic & static
 #'
 #'   When all markers share the same colour scale (e.g., when `limits != "free"`
 #'   in [polarMap()]), should a shared legend be created at the side of the map?
 #'
-#' @param collapse.control *Show the layer control as a collapsed?*
+#' @param legend.position *Position of the shared legend.*
+#'
+#'  *default:* `NULL` | *scope:* dynamic & static
+#'
+#'   When `legend = TRUE`, where should the legend be placed?
+#'
+#'   - *Dynamic*: One of "topright", "topright", "bottomleft" or "bottomright". Passed to the `position` argument of [leaflet::addLegend()].
+#'
+#'   - *Static:*: One of "top", "right", "bottom" or "left". Passed to the `legend.position` argument of [ggplot2::theme()].
+#'
+#' @param legend.title *Title of the legend.*
+#'
+#'   *default:* `NULL` | *scope:* dynamic & static
+#'
+#'   By default, when `legend.title = NULL`, the function will attempt to
+#'   provide a sensible legend title. `legend.title` allows users to overwrite
+#'   this - for example, to include units or other contextual information. For
+#'   *dynamic* maps, users may wish to use HTML tags to format the title.
+#'
+#' @param legend.title.autotext *Automatically format the title of the legend?*
+#'
+#'   *default:* `TRUE` | *scope:* dynamic & static
+#'
+#'   When `legend.title.autotext = TRUE`, `legend.title` will be first run
+#'   through [quickTextHTML()] (*dynamic*) or [openair::quickText()] (*static*).
+#'
+#' @param control.collapsed *Show the layer control as a collapsed?*
 #'
 #'  *default:* `FALSE` | *scope:* dynamic
 #'
 #'   For *dynamic* maps, should the "layer control" interface be collapsed? If
 #'   `TRUE`, users will have to hover over an icon to view the options.
+#'
+#' @param control.position *Position of the layer control menu*
+#'
+#'  *default:* `"topright"` | *scope:* dynamic
+#'
+#'   When `type != NULL`, or multiple pollutants are specified, where should the
+#'   "layer control" interface be placed? One of "topleft", "topright",
+#'   "bottomleft" or "bottomright". Passed to the `position` argument of
+#'   [leaflet::addLayersControl()].
 #'
 #' @param d.icon *The diameter of the plot on the map in pixels.*
 #'
@@ -254,8 +289,12 @@ polarMap <- function(data,
                      cols = "turbo",
                      alpha = 1,
                      key = FALSE,
-                     draw.legend = TRUE,
-                     collapse.control = FALSE,
+                     legend = TRUE,
+                     legend.position = NULL,
+                     legend.title = NULL,
+                     legend.title.autotext = TRUE,
+                     control.collapsed = FALSE,
+                     control.position = "topright",
                      d.icon = 200,
                      d.fig = 3.5,
                      static = FALSE,
@@ -263,6 +302,7 @@ polarMap <- function(data,
                      ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+  legend.position <- check_legendposition(legend.position, static)
 
   # check for old facet/control opts
   type <- type %||% check_facet_control(...)
@@ -402,19 +442,29 @@ polarMap <- function(data,
         popup,
         label,
         split_col,
-        collapse.control
+        control.collapsed,
+        control.position
       )
 
     # add legend if limits are set
-    if (!all(is.na(theLimits)) & draw.legend) {
+    if (!all(is.na(theLimits)) & legend) {
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ",<br>")
+        )
+
       map <-
         leaflet::addLegend(
           map,
-          title = quickTextHTML(paste(pollutant, collapse = ",<br>")),
+          title = legend.title,
           pal = leaflet::colorNumeric(
             palette = openair::openColours(scheme = cols),
             domain = theLimits
           ),
+          position = legend.position,
           values = theLimits
         )
     }
@@ -435,7 +485,15 @@ polarMap <- function(data,
         provider = provider
       )
 
-    if (!all(is.na(theLimits)) & draw.legend) {
+    if (!all(is.na(theLimits)) & legend) {
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ", ")
+        )
+
       map <-
         map +
         ggplot2::geom_point(
@@ -447,7 +505,8 @@ polarMap <- function(data,
           limits = theLimits,
           colours = openair::openColours(scheme = cols)
         ) +
-        ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
+        ggplot2::labs(color = legend.title) +
+        ggplot2::theme(legend.position = legend.position)
     }
   }
 
