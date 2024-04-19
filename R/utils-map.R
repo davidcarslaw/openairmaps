@@ -304,7 +304,9 @@ make_leaflet_map <-
            popup,
            label,
            split_col,
-           collapse.control) {
+           control.collapsed,
+           control.position
+           ) {
     data <- sf::st_as_sf(data, coords = c(longitude, latitude), crs = crs) %>%
       sf::st_transform(crs = 4326)
 
@@ -359,12 +361,13 @@ make_leaflet_map <-
     flag_provider <- dplyr::n_distinct(provider) > 1
     flag_split <- dplyr::n_distinct(data[[split_col]]) > 1
     opts <-
-      leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE)
+      leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE)
 
     if (flag_provider & flag_split) {
       map <-
         leaflet::addLayersControl(
           map,
+          position = control.position,
           baseGroups = quickTextHTML(unique(data[[split_col]])),
           overlayGroups = names(provider),
           options = opts
@@ -372,11 +375,21 @@ make_leaflet_map <-
         leaflet::hideGroup(group = names(provider)[-1])
     } else if (flag_provider & !flag_split) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = names(provider), options = opts) %>%
+        leaflet::addLayersControl(
+          map,
+          position = control.position,
+          baseGroups = names(provider),
+          options = opts
+        ) %>%
         leaflet::hideGroup(group = names(provider)[-1])
     } else if (!flag_provider & flag_split) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = quickTextHTML(unique(data[[split_col]])), options = opts)
+        leaflet::addLayersControl(
+          map,
+          position = control.position,
+          baseGroups = quickTextHTML(unique(data[[split_col]])),
+          options = opts
+        )
     }
 
     return(map)
@@ -681,6 +694,21 @@ check_providers <- function(provider, static) {
     rlang::arg_match(provider, names(leaflet::providers), multiple = TRUE)
   }
   return(provider)
+}
+
+#' Check legend positions are valid
+#' @noRd
+check_leafposition <- function(position, static) {
+  if (static) {
+    position <- position %||% "right"
+    rlang::arg_match(position, c("top", "right", "bottom", "left"), multiple = FALSE)
+  } else {
+    position <- position %||% "topright"
+    rlang::arg_match(position,
+                     c("topright", "topleft", "bottomright", "bottomleft"),
+                     multiple = TRUE)
+  }
+  return(position)
 }
 
 #' strip away illegal characters in path

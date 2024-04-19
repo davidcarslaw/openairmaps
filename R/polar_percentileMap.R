@@ -59,8 +59,12 @@ percentileMap <- function(data,
                           cols = "turbo",
                           alpha = 1,
                           key = FALSE,
-                          draw.legend = TRUE,
-                          collapse.control = FALSE,
+                          legend = TRUE,
+                          legend.position = NULL,
+                          legend.title = NULL,
+                          legend.title.autotext = TRUE,
+                          control.collapsed = FALSE,
+                          control.position = "topright",
                           d.icon = 200,
                           d.fig = 3.5,
                           static = FALSE,
@@ -214,7 +218,18 @@ percentileMap <- function(data,
       dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
       tidyr::crossing(intervals)
 
-    if (draw.legend) {
+    if (legend) {
+      if (legend.title.autotext) {
+        textfun <- openair::quickText
+      } else {
+        textfun <- function(x) {
+          return(x)
+        }
+      }
+
+      legend.title <- legend.title %||% "Percentile"
+      legend.title <- textfun(legend.title)
+
       map <-
         map +
         ggplot2::geom_point(
@@ -226,7 +241,8 @@ percentileMap <- function(data,
           key_glyph = ggplot2::draw_key_rect
         ) +
         ggplot2::scale_fill_manual(values = pal, drop = FALSE) +
-        ggplot2::labs(fill = "percentile")
+        ggplot2::labs(fill = legend.title) +
+        ggplot2::theme(legend.position = legend.position)
     }
   }
 
@@ -243,16 +259,29 @@ percentileMap <- function(data,
         popup,
         label,
         split_col,
-        collapse.control
+        control.collapsed,
+        control.position
       )
 
+    if (legend.title.autotext) {
+      textfun <- quickTextHTML
+    } else {
+      textfun <- function(x) {
+        return(x)
+      }
+    }
+
+    legend.title <- legend.title %||% "Percentile"
+    legend.title <- textfun(legend.title)
+
     # add legend
-    if (all(!is.na(percentile)) & draw.legend) {
+    if (all(!is.na(percentile)) & legend) {
       percs <- unique(c(0, percentile))
       map <-
         leaflet::addLegend(
-          title = "Percentile",
           map,
+          title = legend.title,
+          position = legend.position,
           pal = leaflet::colorBin(
             palette = openair::openColours(scheme = cols, n = length(percs)),
             bins = percs,

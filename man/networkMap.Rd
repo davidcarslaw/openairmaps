@@ -10,7 +10,7 @@ networkMap(
   year = NULL,
   cluster = TRUE,
   provider = c(Default = "OpenStreetMap", Satellite = "Esri.WorldImagery"),
-  draw.legend = TRUE,
+  legend = TRUE,
   collapse.control = FALSE
 )
 }
@@ -79,7 +79,7 @@ can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
 own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite" = "Esri.WorldImagery")})}
 
-\item{draw.legend}{\emph{Draw a shared legend?}
+\item{legend}{\emph{Draw a shared legend?}
 
 \emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
 

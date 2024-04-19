@@ -81,7 +81,7 @@
 #'   own using a named vector (e.g., `c("Default" = "OpenStreetMap", "Satellite"
 #'   = "Esri.WorldImagery")`)
 #'
-#' @param draw.legend *Draw a shared legend?*
+#' @param legend *Draw a shared legend?*
 #'
 #'  *default:* `TRUE` | *scope:* dynamic & static
 #'
@@ -119,7 +119,7 @@ networkMap <-
              "Default" = "OpenStreetMap",
              "Satellite" = "Esri.WorldImagery"
            ),
-           draw.legend = TRUE,
+           legend = TRUE,
            collapse.control = FALSE) {
     # if year isn't provided, use current year
     if (is.null(year)) {
@@ -364,7 +364,7 @@ networkMap <-
     }
 
     # multiple sources - add legend
-    if (length(source) > 1 & draw.legend) {
+    if (length(source) > 1 & legend) {
       map <-
         leaflet::addLegend(
           map,
