@@ -79,6 +79,7 @@ windroseMap <- function(data,
                         ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+  legend.position <- check_legendposition(legend.position, static)
 
   # check for old facet/control opts
   type <- type %||% check_facet_control(...)
