@@ -21,7 +21,6 @@
 #' "aurn")` and the "AURN" layer control group when `source = c("aurn",
 #' "saqn")`.
 #'
-#'
 #' @param source *One or more UK or European monitoring networks.*
 #'
 #'    *default:* `"aurn"`
