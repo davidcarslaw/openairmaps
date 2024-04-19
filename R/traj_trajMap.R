@@ -40,7 +40,7 @@
 #'
 #' @param cols *Colours to use for plotting.*
 #'
-#'  *default:* `"turbo"`
+#'  *default:* `"default"`
 #'
 #'   The colours used for plotting, passed to [openair::openColours()].
 #'
@@ -69,12 +69,44 @@
 #'   <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list of
 #'   all base maps that can be used.
 #'
-#' @param collapse.control *Show the layer control as a collapsed?*
+#' @param legend.position *Position of the shared legend.*
+#'
+#'  *default:* `"topright"`
+#'
+#'   Where should the legend be placed? One of "topright", "topright",
+#'   "bottomleft" or "bottomright". Passed to the `position` argument of
+#'   [leaflet::addLegend()]. `NULL` defaults to "topright".
+#'
+#' @param legend.title *Title of the legend.*
+#'
+#'   *default:* `NULL`
+#'
+#'   By default, when `legend.title = NULL`, the function will attempt to
+#'   provide a sensible legend title based on `colour`. `legend.title` allows
+#'   users to overwrite this - for example, to include units or other contextual
+#'   information. Users may wish to use HTML tags to format the title.
+#'
+#' @param legend.title.autotext *Automatically format the title of the legend?*
+#'
+#'   *default:* `TRUE`
+#'
+#'   When `legend.title.autotext = TRUE`, `legend.title` will be first run
+#'   through [quickTextHTML()].
+#'
+#' @param control.collapsed *Show the layer control as a collapsed?*
 #'
 #'  *default:* `FALSE`
 #'
 #'   Should the "layer control" interface be collapsed? If `TRUE`, users will
 #'   have to hover over an icon to view the options.
+#'
+#' @param control.position *Position of the layer control menu*
+#'
+#'  *default:* `"topright"`
+#'
+#'   Where should the legend be placed? One of "topleft", "topright",
+#'   "bottomleft" or "bottomright". Passed to the `position` argument of
+#'   [leaflet::addLayersControl()].
 #'
 #' @param control Deprecated. Please use `type`.
 #'
@@ -99,15 +131,17 @@ trajMap <-
            alpha = .5,
            npoints = 12,
            provider = "OpenStreetMap",
-           collapse.control = FALSE,
+           legend.position = "topright",
+           legend.title = NULL,
+           legend.title.autotext = TRUE,
+           control.collapsed = FALSE,
+           control.position = "topright",
            control = NULL) {
     # handle deprecated argument
     if (!is.null(control)) {
-      lifecycle::deprecate_soft(
-        when = "0.9.0",
-        what = "trajMap(control)",
-        with = "trajMap(type)"
-      )
+      lifecycle::deprecate_soft(when = "0.9.0",
+                                what = "trajMap(control)",
+                                with = "trajMap(type)")
     }
     type <- type %||% control
 
@@ -134,7 +168,8 @@ trajMap <-
       if (colour %in% names(data)) {
         data <- dplyr::arrange(data, .data$datef)
 
-        if ("factor" %in% class(data[[colour]]) | "character" %in% class(data[[colour]])) {
+        if ("factor" %in% class(data[[colour]]) |
+            "character" %in% class(data[[colour]])) {
           pal <- leaflet::colorFactor(
             palette = openair::openColours(scheme = cols, n = length(unique(data[[colour]]))),
             domain = data[[colour]]
@@ -145,10 +180,8 @@ trajMap <-
             domain = as.numeric(data[[colour]], origin = "1964-10-22")
           )
         } else {
-          pal <- leaflet::colorNumeric(
-            palette = openair::openColours(scheme = cols),
-            domain = data[[colour]]
-          )
+          pal <- leaflet::colorNumeric(palette = openair::openColours(scheme = cols),
+                                       domain = data[[colour]])
         }
       } else {
         fixedcol <- colour
@@ -158,32 +191,36 @@ trajMap <-
     # make labels
     data <- dplyr::mutate(
       data,
-      lab = stringr::str_glue("<b>Arrival Date:</b> {date}<br>
+      lab = stringr::str_glue(
+        "<b>Arrival Date:</b> {date}<br>
                              <b>Trajectory Date:</b> {date2}<br>
                              <b>Lat:</b> {lat} | <b>Lon:</b> {lon}<br>
-                             <b>Height:</b> {height} m | <b>Pressure:</b> {pressure} Pa")
+                             <b>Height:</b> {height} m | <b>Pressure:</b> {pressure} Pa"
+      )
     )
 
     if (!is.null(colour)) {
-      if (colour %in% names(data) & !colour %in% c("date", "date2", "lat", "lon", "height", "pressure")) {
-        data$lab <- paste(
-          data$lab,
-          paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
-          sep = "<br>"
-        )
+      if (colour %in% names(data) &
+          !colour %in% c("date", "date2", "lat", "lon", "height", "pressure")) {
+        data$lab <- paste(data$lab,
+                          paste0("<b>", quickTextHTML(colour), ":</b> ", data[[colour]]),
+                          sep = "<br>")
       }
     }
 
     # iterate over columns in "type" column
     for (j in seq(length(unique(data[[type]])))) {
       # get jth instance of "type"
-      data2 <- dplyr::filter(data, .data[[type]] == unique(data[[type]])[[j]])
+      data2 <-
+        dplyr::filter(data, .data[[type]] == unique(data[[type]])[[j]])
 
       # iterate over different arrival dates to plot separate trajectories
       for (i in seq(length(unique(data2$datef)))) {
         # get line/points data
-        ldata <- dplyr::filter(data2, .data$datef == unique(data2$datef)[[i]])
-        pdata <- dplyr::filter(ldata, .data$hour.inc %% npoints == 0)
+        ldata <-
+          dplyr::filter(data2, .data$datef == unique(data2$datef)[[i]])
+        pdata <-
+          dplyr::filter(ldata, .data$hour.inc %% npoints == 0)
 
         lcolors <- fixedcol
         pcolors <- fixedcol
@@ -209,7 +246,8 @@ trajMap <-
           ) %>%
           leaflet::addCircleMarkers(
             data = pdata,
-            radius = 3, stroke = F,
+            radius = 3,
+            stroke = F,
             lng = pdata$lon,
             lat = pdata$lat,
             fillOpacity = alpha,
@@ -222,21 +260,31 @@ trajMap <-
 
     # if "group" exists, add a legend
     if (!is.null(colour)) {
+      legend.title <- legend.title %||% colour
+      if (legend.title.autotext) {
+        legend.title <- quickTextHTML(legend.title)
+      }
+
       if (colour %in% names(data)) {
         if ("POSIXct" %in% class(data[[colour]])) {
           map <-
-            leaflet::addLegend(map,
-              title = quickTextHTML(colour),
+            leaflet::addLegend(
+              map,
+              title = legend.title,
+              position = check_legendposition(legend.position, FALSE),
               pal = pal,
               values = as.numeric(data[[colour]], origin = "1964-10-22"),
               labFormat = leaflet::labelFormat(
-                transform = function(x) as.Date.POSIXct(x, origin = "1964-10-22")
+                transform = function(x)
+                  as.Date.POSIXct(x, origin = "1964-10-22")
               )
             )
         } else {
           map <-
-            leaflet::addLegend(map,
-              title = quickTextHTML(colour),
+            leaflet::addLegend(
+              map,
+              title = legend.title,
+              position = check_legendposition(legend.position, FALSE),
               pal = pal,
               values = data[[colour]]
             )
@@ -249,7 +297,8 @@ trajMap <-
       map <-
         leaflet::addLayersControl(
           map,
-          options = leaflet::layersControlOptions(collapsed = collapse.control),
+          position = control.position,
+          options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
           overlayGroups = as.character(unique(data[[type]]))
         )
     }
