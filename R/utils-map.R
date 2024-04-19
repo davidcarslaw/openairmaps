@@ -306,7 +306,7 @@ make_leaflet_map <-
            split_col,
            control.collapsed,
            control.position
-           ) {
+  ) {
     data <- sf::st_as_sf(data, coords = c(longitude, latitude), crs = crs) %>%
       sf::st_transform(crs = 4326)
 
@@ -751,3 +751,26 @@ rm_illegal_chars <- function(x) {
 
   return(x)
 }
+
+#' Create a legend title
+#' @noRd
+create_legend_title <- function(static,
+                                legend.title.autotext,
+                                legend.title,
+                                str) {
+  if (legend.title.autotext) {
+    textfun <- quickTextHTML
+    if (static) {
+      textfun <- openair::quickText
+    }
+  } else {
+    textfun <- function(x) {
+      return(x)
+    }
+  }
+
+  legend.title <- legend.title %||% str
+  legend.title <- textfun(legend.title)
+  return(legend.title)
+}
+

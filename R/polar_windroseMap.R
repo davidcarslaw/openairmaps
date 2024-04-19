@@ -201,17 +201,13 @@ windroseMap <- function(data,
         dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
         tidyr::crossing(intervals)
 
-      if (legend.title.autotext) {
-        textfun <- openair::quickText
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% "Wind Speed"
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = "Wind Speed"
+        )
 
       # add legend
       map <-
@@ -251,17 +247,13 @@ windroseMap <- function(data,
 
     # add legend
     if (legend) {
-      if (legend.title.autotext) {
-        textfun <- quickTextHTML
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% "Wind Speed"
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = "Wind Speed"
+        )
 
       map <-
         leaflet::addLegend(

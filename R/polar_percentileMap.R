@@ -219,16 +219,13 @@ percentileMap <- function(data,
       tidyr::crossing(intervals)
 
     if (legend) {
-      if (legend.title.autotext) {
-        textfun <- openair::quickText
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
-      legend.title <- legend.title %||% "Percentile"
-      legend.title <- textfun(legend.title)
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = "Percentile"
+        )
 
       map <-
         map +
@@ -263,16 +260,13 @@ percentileMap <- function(data,
         control.position
       )
 
-    if (legend.title.autotext) {
-      textfun <- quickTextHTML
-    } else {
-      textfun <- function(x) {
-        return(x)
-      }
-    }
-
-    legend.title <- legend.title %||% "Percentile"
-    legend.title <- textfun(legend.title)
+    legend.title <-
+      create_legend_title(
+        static = static,
+        legend.title.autotext = legend.title.autotext,
+        legend.title = legend.title,
+        str = "Percentile"
+      )
 
     # add legend
     if (all(!is.na(percentile)) & legend) {

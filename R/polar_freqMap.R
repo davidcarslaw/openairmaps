@@ -245,17 +245,13 @@ freqMap <- function(data,
         dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
         tidyr::crossing(intervals)
 
-      if (legend.title.autotext) {
-        textfun <- openair::quickText
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% paste(lab, collapse = ", ")
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(lab, collapse = ", ")
+        )
 
       map <-
         map +
@@ -292,17 +288,13 @@ freqMap <- function(data,
 
     # add legends if breaks are set
     if (!all(is.na(theBreaks)) & legend) {
-      if (legend.title.autotext) {
-        textfun <- quickTextHTML
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% paste(lab, collapse = ",<br>")
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(lab, collapse = ",<br>")
+        )
 
       map <-
         leaflet::addLegend(
