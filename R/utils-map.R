@@ -700,7 +700,9 @@ check_providers <- function(provider, static) {
 #' @noRd
 check_legendposition <- function(position, static) {
   if (static) {
-    position <- position %||% "right"
+    settheme <- ggplot2::theme_get()
+    setposition <- settheme$legend.position %||% "right"
+    position <- position %||% setposition
     rlang::arg_match(position, c("top", "right", "bottom", "left"), multiple = FALSE)
   } else {
     position <- position %||% "topright"
