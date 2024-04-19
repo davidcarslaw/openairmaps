@@ -196,17 +196,13 @@ pollroseMap <- function(data,
         dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
         tidyr::crossing(intervals)
 
-      if (legend.title.autotext) {
-        textfun <- openair::quickText
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% paste(pollutant, collapse = ", ")
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ", ")
+        )
 
       # add legend
       map <-
@@ -244,17 +240,13 @@ pollroseMap <- function(data,
 
     # add legend if breaks are defined
     if (!is.null(breaks) & legend) {
-      if (legend.title.autotext) {
-        textfun <- quickTextHTML
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% paste(pollutant, collapse = ",<br>")
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ",<br>")
+        )
 
       map <-
         leaflet::addLegend(

@@ -238,17 +238,13 @@ diffMap <- function(before,
 
     # create colorbar if limits specified
     if (!all(is.na(theLimits)) & legend) {
-      if (legend.title.autotext) {
-        textfun <- openair::quickText
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% paste(pollutant, collapse = ", ")
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ", ")
+        )
 
       map <-
         map +
@@ -285,17 +281,13 @@ diffMap <- function(before,
 
     # add legend if limits are set
     if (!all(is.na(theLimits)) & legend) {
-      if (legend.title.autotext) {
-        textfun <- quickTextHTML
-      } else {
-        textfun <- function(x) {
-          return(x)
-        }
-      }
-
       legend.title <-
-        legend.title %||% paste(pollutant, collapse = ",<br>")
-      legend.title <- textfun(legend.title)
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ",<br>")
+        )
 
       map <-
         leaflet::addLegend(
