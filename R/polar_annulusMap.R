@@ -50,8 +50,12 @@ annulusMap <- function(data,
                        cols = "turbo",
                        alpha = 1,
                        key = FALSE,
-                       draw.legend = TRUE,
-                       collapse.control = FALSE,
+                       legend = TRUE,
+                       legend.position = NULL,
+                       legend.title = NULL,
+                       legend.title.autotext = TRUE,
+                       control.collapsed = FALSE,
+                       control.position = "topright",
                        d.icon = 200,
                        d.fig = 3.5,
                        static = FALSE,
@@ -59,6 +63,7 @@ annulusMap <- function(data,
                        ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+  legend.position <- check_legendposition(legend.position, static)
 
   # check for old facet/control opts
   type <- type %||% check_facet_control(...)
@@ -208,7 +213,15 @@ annulusMap <- function(data,
       )
 
     # create colorbar if limits specified
-    if (!all(is.na(theLimits)) & draw.legend) {
+    if (!all(is.na(theLimits)) & legend) {
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ", ")
+        )
+
       map <-
         map +
         ggplot2::geom_point(
@@ -220,7 +233,8 @@ annulusMap <- function(data,
           limits = theLimits,
           colours = openair::openColours(scheme = cols)
         ) +
-        ggplot2::labs(color = openair::quickText(paste(pollutant, collapse = ", ")))
+        ggplot2::labs(color = legend.title) +
+        ggplot2::theme(legend.position = legend.position)
     }
   }
 
@@ -237,19 +251,29 @@ annulusMap <- function(data,
         popup,
         label,
         split_col,
-        collapse.control
+        control.collapsed,
+        control.position
       )
 
     # add legend if limits are set
-    if (!all(is.na(theLimits)) & draw.legend) {
+    if (!all(is.na(theLimits)) & legend) {
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = paste(pollutant, collapse = ",<br>")
+        )
+
       map <-
         leaflet::addLegend(
           map,
-          title = quickTextHTML(paste(pollutant, collapse = ",<br>")),
+          title = legend.title,
           pal = leaflet::colorNumeric(
             palette = openair::openColours(scheme = cols),
             domain = theLimits
           ),
+          position = legend.position,
           values = theLimits
         )
     }

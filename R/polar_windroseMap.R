@@ -66,8 +66,12 @@ windroseMap <- function(data,
                         cols = "turbo",
                         alpha = 1,
                         key = FALSE,
-                        draw.legend = TRUE,
-                        collapse.control = FALSE,
+                        legend = TRUE,
+                        legend.position = NULL,
+                        legend.title = NULL,
+                        legend.title.autotext = TRUE,
+                        control.collapsed = FALSE,
+                        control.position = "topright",
                         d.icon = 200,
                         d.fig = 3.5,
                         static = FALSE,
@@ -75,6 +79,7 @@ windroseMap <- function(data,
                         ...) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
+  legend.position <- check_legendposition(legend.position, static)
 
   # check for old facet/control opts
   type <- type %||% check_facet_control(...)
@@ -185,7 +190,7 @@ windroseMap <- function(data,
         provider = provider
       )
 
-    if (draw.legend) {
+    if (legend) {
       # sort out legend
       intervals <- attr(plots_df$plot[[1]]$data, "intervals")
       intervals <- factor(intervals, intervals)
@@ -196,6 +201,14 @@ windroseMap <- function(data,
       dummy <-
         dplyr::distinct(plots_df, .data[[longitude]], .data[[latitude]]) %>%
         tidyr::crossing(intervals)
+
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = "Wind Speed"
+        )
 
       # add legend
       map <-
@@ -209,7 +222,8 @@ windroseMap <- function(data,
           key_glyph = ggplot2::draw_key_rect
         ) +
         ggplot2::scale_fill_manual(values = pal, drop = FALSE) +
-        ggplot2::labs(fill = openair::quickText("ws"))
+        ggplot2::labs(fill = legend.title) +
+        ggplot2::theme(legend.position = legend.position)
     }
 
     return(map)
@@ -228,21 +242,31 @@ windroseMap <- function(data,
         popup,
         label,
         split_col,
-        collapse.control
+        control.collapsed,
+        control.position
       )
 
     # add legend
-    if (draw.legend) {
+    if (legend) {
+      legend.title <-
+        create_legend_title(
+          static = static,
+          legend.title.autotext = legend.title.autotext,
+          legend.title = legend.title,
+          str = "Wind Speed"
+        )
+
       map <-
         leaflet::addLegend(
           map,
+          position = legend.position,
           pal = leaflet::colorBin(
             palette = openair::openColours(cols),
             domain = breaks,
             bins = breaks
           ),
           values = breaks,
-          title = "Wind Speed"
+          title = legend.title
         )
     }
   }
