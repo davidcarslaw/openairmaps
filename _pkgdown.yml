@@ -21,36 +21,29 @@ navbar:
       href: https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html
 
 reference:
+- title: Data
+  desc: In-built data to demonstrate openair functions.
+  contents:
+  - polar_data
+  - traj_data
+
 - title: Network Visualisation
   desc: Quickly visualise UK air quality networks.
   contents:
   - has_concept("uk air quality network mapping functions")
 
 - title: Directional Analysis
-- subtitle: Data
-  desc: Example data to use with directional mapping functions.
-  contents:
-  - polar_data
-- subtitle: Mapping
   desc: Create HTML `leaflet` and static `ggplot2` maps with polar plot markers.
   contents:
   - has_concept("directional analysis maps")
   - addPolarMarkers
 
 - title: Trajectory Analysis
-- subtitle: Data
-  desc: Example data to use witjh trajectory mapping functions.
-  contents:
-  - traj_data
-- subtitle: Interactive
-  desc: Create HTML `leaflet` maps of HYSPLIT trajectories.
+  desc: Create HTML `leaflet` and static `ggplot2` maps of HYSPLIT trajectories.
   contents:
   - has_concept("interactive trajectory maps")
-  - addTrajPaths
-- subtitle: Static
-  desc: Create static `ggplot2` maps of HYSPLIT trajectories.
-  contents:
   - has_concept("static trajectory maps")
+  - addTrajPaths
 
 - title: Utilities
   desc: Tools to assist other openairmaps functions.
