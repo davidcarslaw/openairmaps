@@ -1,4 +1,3 @@
-
 library(webshot2)
 
 devtools::load_all()
@@ -17,9 +16,10 @@ htmlwidgets::saveWidget(polar, "polardata.html")
 webshot("polardata.html", file = "polar.png")
 
 traj <- trajMap(traj_data,
-                colour = "pm10",
-                provider = "CartoDB.DarkMatter",
-                cols = "turbo")
+  colour = "pm10",
+  provider = "CartoDB.DarkMatter",
+  cols = "turbo"
+)
 
 htmlwidgets::saveWidget(traj, "trajdata.html")
 

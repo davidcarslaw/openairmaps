@@ -84,7 +84,7 @@ checkMapPrep <-
       if (wd %in% Names & is.numeric(mydata[, wd])) {
         ## check for wd <0 or > 360
         if (any(sign(mydata[[wd]][!is.na(mydata[[wd]])]) == -1 |
-                mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
+          mydata[[wd]][!is.na(mydata[[wd]])] > 360)) {
           warning("Wind direction < 0 or > 360; removing these data")
           mydata[[wd]][mydata[[wd]] < 0] <- NA
           mydata[[wd]][mydata[[wd]] > 360] <- NA
@@ -234,7 +234,7 @@ assume_latlon <- function(data, latitude, longitude) {
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-                     call = NULL
+        call = NULL
       )
       return(NULL)
     } else if (len == 0) {
@@ -304,7 +304,8 @@ make_leaflet_map <-
            popup,
            label,
            split_col,
-           collapse.control) {
+           control.collapsed,
+           control.position) {
     data <- sf::st_as_sf(data, coords = c(longitude, latitude), crs = crs) %>%
       sf::st_transform(crs = 4326)
 
@@ -317,8 +318,8 @@ make_leaflet_map <-
     }
     for (i in seq_along(provider)) {
       map <- leaflet::addProviderTiles(map,
-                                       provider[[i]],
-                                       group = names(provider)[[i]]
+        provider[[i]],
+        group = names(provider)[[i]]
       )
     }
 
@@ -359,12 +360,13 @@ make_leaflet_map <-
     flag_provider <- dplyr::n_distinct(provider) > 1
     flag_split <- dplyr::n_distinct(data[[split_col]]) > 1
     opts <-
-      leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE)
+      leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE)
 
     if (flag_provider & flag_split) {
       map <-
         leaflet::addLayersControl(
           map,
+          position = control.position,
           baseGroups = quickTextHTML(unique(data[[split_col]])),
           overlayGroups = names(provider),
           options = opts
@@ -372,11 +374,21 @@ make_leaflet_map <-
         leaflet::hideGroup(group = names(provider)[-1])
     } else if (flag_provider & !flag_split) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = names(provider), options = opts) %>%
+        leaflet::addLayersControl(
+          map,
+          position = control.position,
+          baseGroups = names(provider),
+          options = opts
+        ) %>%
         leaflet::hideGroup(group = names(provider)[-1])
     } else if (!flag_provider & flag_split) {
       map <-
-        leaflet::addLayersControl(map, baseGroups = quickTextHTML(unique(data[[split_col]])), options = opts)
+        leaflet::addLayersControl(
+          map,
+          position = control.position,
+          baseGroups = quickTextHTML(unique(data[[split_col]])),
+          options = opts
+        )
     }
 
     return(map)
@@ -437,9 +449,11 @@ create_polar_markers <-
     # check for popup issues
     if (nrow(nested_df) > valid_rows) {
       cli::cli_abort(
-        c("x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
+        c(
+          "x" = "Multiple popups/labels per {.code latitude}/{.code longitude}/{.code control} combination.",
           "i" = "Have you used a numeric column, e.g., a pollutant concentration?",
-          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker.")
+          "i" = "Consider using {.fun buildPopup} to easily create distinct popups per marker."
+        )
       )
     }
 
@@ -471,27 +485,29 @@ create_polar_markers <-
       height <- d.fig[[2]]
     }
 
-    purrr::pwalk(list(
-      plots_df[[latitude]],
-      plots_df[[longitude]],
-      rm_illegal_chars(plots_df[[split_col]]),
-      plots_df$plot
-    ),
-    .f = ~ {
-      grDevices::png(
-        filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-        width = width * 300,
-        height = height * 300,
-        res = 300,
-        bg = "transparent",
-        type = "cairo",
-        antialias = "none"
-      )
+    purrr::pwalk(
+      list(
+        plots_df[[latitude]],
+        plots_df[[longitude]],
+        rm_illegal_chars(plots_df[[split_col]]),
+        plots_df$plot
+      ),
+      .f = ~ {
+        grDevices::png(
+          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
+          width = width * 300,
+          height = height * 300,
+          res = 300,
+          bg = "transparent",
+          type = "cairo",
+          antialias = "none"
+        )
 
-      plot(..4)
+        plot(..4)
 
-      grDevices::dev.off()
-    })
+        grDevices::dev.off()
+      }
+    )
 
     return(plots_df)
   }
@@ -574,7 +590,7 @@ create_static_map <-
       ggplot2::labs(x = NULL, y = NULL)
 
     if (length(pollutant) > 1 |
-        !is.null(facet)) {
+      !is.null(facet)) {
       plt <-
         plt + ggplot2::facet_wrap(ggplot2::vars(.data[[split_col]]), nrow = facet.nrow) +
         ggplot2::theme(strip.text = ggtext::element_markdown())
@@ -683,6 +699,24 @@ check_providers <- function(provider, static) {
   return(provider)
 }
 
+#' Check legend positions are valid
+#' @noRd
+check_legendposition <- function(position, static) {
+  if (static) {
+    settheme <- ggplot2::theme_get()
+    setposition <- settheme$legend.position %||% "right"
+    position <- position %||% setposition
+    rlang::arg_match(position, c("top", "right", "bottom", "left"), multiple = FALSE)
+  } else {
+    position <- position %||% "topright"
+    rlang::arg_match(position,
+      c("topright", "topleft", "bottomright", "bottomleft"),
+      multiple = TRUE
+    )
+  }
+  return(position)
+}
+
 #' strip away illegal characters in path
 #'
 #' This removes illegal characters from a path and replaces them with something
@@ -722,4 +756,26 @@ rm_illegal_chars <- function(x) {
   }
 
   return(x)
+}
+
+#' Create a legend title
+#' @noRd
+create_legend_title <- function(static,
+                                legend.title.autotext,
+                                legend.title,
+                                str) {
+  if (legend.title.autotext) {
+    textfun <- quickTextHTML
+    if (static) {
+      textfun <- openair::quickText
+    }
+  } else {
+    textfun <- function(x) {
+      return(x)
+    }
+  }
+
+  legend.title <- legend.title %||% str
+  legend.title <- textfun(legend.title)
+  return(legend.title)
 }

@@ -45,7 +45,12 @@ trajLevelMap <-
            cols = "turbo",
            alpha = .5,
            tile.border = NA,
-           provider = "OpenStreetMap") {
+           provider = "OpenStreetMap",
+           legend.position = "topright",
+           legend.title = NULL,
+           legend.title.autotext = TRUE,
+           control.collapsed = FALSE,
+           control.position = "topright") {
     # get titles/legend styles
 
     style <- leaflet::labelFormat()
@@ -79,8 +84,12 @@ trajLevelMap <-
       title <- ""
     }
     if (statistic == "sqtba") {
-      title <-
-        stringr::str_glue("SQTBA<br>{quickTextHTML(pollutant)}")
+      title <- stringr::str_glue("SQTBA<br>{pollutant}")
+    }
+
+    legend.title <- legend.title %||% title
+    if (legend.title.autotext) {
+      legend.title <- quickTextHTML(legend.title)
     }
 
     # start map
@@ -172,7 +181,7 @@ trajLevelMap <-
        <b>Count:</b> {gridcount}<br>
        <b>Value:</b> {signif(val, 3)}"
         ),
-       coord = stringr::str_glue("({ygrid}, {xgrid})")
+        coord = stringr::str_glue("({ygrid}, {xgrid})")
       )
 
       if (statistic %in% c("difference", "frequency")) {
@@ -210,7 +219,8 @@ trajLevelMap <-
         group = data[[type %||% "default"]]
       ) %>%
       leaflet::addLegend(
-        title = title,
+        title = legend.title,
+        position = legend.position,
         pal = pal,
         values = data[[pollutant]],
         labFormat = style

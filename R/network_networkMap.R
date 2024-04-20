@@ -21,7 +21,6 @@
 #' "aurn")` and the "AURN" layer control group when `source = c("aurn",
 #' "saqn")`.
 #'
-#'
 #' @param source *One or more UK or European monitoring networks.*
 #'
 #'    *default:* `"aurn"`
@@ -62,7 +61,7 @@
 #'
 #' @param cluster *Cluster markers together when zoomed out?*
 #'
-#'  *default:* `FALSE`
+#'  *default:* `TRUE`
 #'
 #'   When `cluster = TRUE`, markers are clustered together. This may be useful
 #'   for sources like "kcl" where there are many markers very close together.
@@ -81,19 +80,35 @@
 #'   own using a named vector (e.g., `c("Default" = "OpenStreetMap", "Satellite"
 #'   = "Esri.WorldImagery")`)
 #'
-#' @param draw.legend *Draw a shared legend?*
+#' @param legend *Draw a shared legend?*
 #'
-#'  *default:* `TRUE` | *scope:* dynamic & static
+#'  *default:* `TRUE`
 #'
 #'   When multiple `source`s are defined, should a shared legend be created at
 #'   the side of the map?
 #'
-#' @param collapse.control *Show the layer control as a collapsed?*
+#' @param legend.position *Position of the legend*
 #'
-#'  *default:* `FALSE` | *scope:* dynamic
+#'  *default:* `"topright"`
+#'
+#'   Where should the shared legend be placed? One of "topleft", "topright",
+#'   "bottomleft" or "bottomright". Passed to the `position` argument of
+#'   [leaflet::addLayersControl()].
+#'
+#' @param control.collapsed *Show the layer control as a collapsed?*
+#'
+#'  *default:* `FALSE`
 #'
 #'   Should the "layer control" interface be collapsed? If `TRUE`, users will
 #'   have to hover over an icon to view the options.
+#'
+#' @param control.position *Position of the layer control menu*
+#'
+#'  *default:* `"topright"`
+#'
+#'   Where should the "layer control" interface be placed? One of "topleft",
+#'   "topright", "bottomleft" or "bottomright". Passed to the `position`
+#'   argument of [leaflet::addLayersControl()].
 #'
 #' @returns A leaflet object.
 #' @export
@@ -119,8 +134,10 @@ networkMap <-
              "Default" = "OpenStreetMap",
              "Satellite" = "Esri.WorldImagery"
            ),
-           draw.legend = TRUE,
-           collapse.control = FALSE) {
+           legend = TRUE,
+           legend.position = "topright",
+           control.collapsed = FALSE,
+           control.position = "topright") {
     # if year isn't provided, use current year
     if (is.null(year)) {
       year <- lubridate::year(Sys.Date())
@@ -161,7 +178,7 @@ networkMap <-
           "#ff8ee9"
         )
       ) %>%
-      dplyr::mutate(colour2 = ifelse(.data$colour == "white", "gray", "white"))
+      dplyr::mutate(colour2 = ifelse(.data$colour == "#FFFFFF", "#303030", "#FFFFFF"))
 
     # read in data
     meta <-
@@ -228,6 +245,7 @@ networkMap <-
 
     # sort out control
     if (!is.null(control)) {
+      control.position <- check_legendposition(control.position, static = FALSE)
       if (!control %in% names(meta)) {
         trycols <- names(meta)[!names(meta) %in%
           c(
@@ -297,9 +315,10 @@ networkMap <-
             label = dat[["site"]],
             clusterOptions = clusteropts,
             icon = leaflet::makeAwesomeIcon(
+              library = "fa",
+              icon = "info-circle",
               markerColor = dat$colour,
-              iconColor = dat$colour2,
-              icon = "info-sign"
+              iconColor = dat$colour2
             )
           )
       }
@@ -309,7 +328,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars)),
               overlayGroups = names(provider)
             ) %>%
@@ -318,7 +338,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               baseGroups = quickTextHTML(sort(control_vars))
             )
         }
@@ -327,7 +348,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars)),
               baseGroups = names(provider)
             ) %>%
@@ -336,7 +358,8 @@ networkMap <-
           map <-
             leaflet::addLayersControl(
               map,
-              options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+              position = control.position,
+              options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
               overlayGroups = quickTextHTML(sort(control_vars))
             )
         }
@@ -356,9 +379,10 @@ networkMap <-
           label = dat[["site"]],
           clusterOptions = clusteropts,
           icon = leaflet::makeAwesomeIcon(
+            library = "fa",
+            icon = "info-circle",
             markerColor = dat$colour,
-            iconColor = dat$colour2,
-            icon = "info-sign"
+            iconColor = dat$colour2
           )
         )
 
@@ -366,7 +390,8 @@ networkMap <-
         map <-
           leaflet::addLayersControl(
             map,
-            options = leaflet::layersControlOptions(collapsed = collapse.control, autoZIndex = FALSE),
+            position = control.position,
+            options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
             baseGroups = names(provider)
           ) %>%
           leaflet::hideGroup(group = names(provider)[[-1]])
@@ -374,11 +399,12 @@ networkMap <-
     }
 
     # multiple sources - add legend
-    if (length(source) > 1 & draw.legend) {
+    if (length(source) > 1 & legend) {
       map <-
         leaflet::addLegend(
           map,
           opacity = 1,
+          position = check_legendposition(legend.position, static = FALSE),
           title = "Network",
           colors = cols$realcolour,
           labels = paste0("<span style='line-height:1.6'>", cols$network, "</span>")

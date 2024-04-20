@@ -10,8 +10,10 @@ networkMap(
   year = NULL,
   cluster = TRUE,
   provider = c(Default = "OpenStreetMap", Satellite = "Esri.WorldImagery"),
-  draw.legend = TRUE,
-  collapse.control = FALSE
+  legend = TRUE,
+  legend.position = "topright",
+  control.collapsed = FALSE,
+  control.position = "topright"
 )
 }
 \arguments{
@@ -61,7 +63,7 @@ over a range of years. See \code{\link[openair:importMeta]{openair::importMeta()
 
 \item{cluster}{\emph{Cluster markers together when zoomed out?}
 
-\emph{default:} \code{FALSE}
+\emph{default:} \code{TRUE}
 
 When \code{cluster = TRUE}, markers are clustered together. This may be useful
 for sources like "kcl" where there are many markers very close together.
@@ -79,19 +81,35 @@ can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
 own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite" = "Esri.WorldImagery")})}
 
-\item{draw.legend}{\emph{Draw a shared legend?}
+\item{legend}{\emph{Draw a shared legend?}
 
-\emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
+\emph{default:} \code{TRUE}
 
 When multiple \code{source}s are defined, should a shared legend be created at
 the side of the map?}
 
-\item{collapse.control}{\emph{Show the layer control as a collapsed?}
+\item{legend.position}{\emph{Position of the legend}
 
-\emph{default:} \code{FALSE} | \emph{scope:} dynamic
+\emph{default:} \code{"topright"}
+
+Where should the shared legend be placed? One of "topleft", "topright",
+"bottomleft" or "bottomright". Passed to the \code{position} argument of
+\code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
+
+\item{control.collapsed}{\emph{Show the layer control as a collapsed?}
+
+\emph{default:} \code{FALSE}
 
 Should the "layer control" interface be collapsed? If \code{TRUE}, users will
 have to hover over an icon to view the options.}
+
+\item{control.position}{\emph{Position of the layer control menu}
+
+\emph{default:} \code{"topright"}
+
+Where should the "layer control" interface be placed? One of "topleft",
+"topright", "bottomleft" or "bottomright". Passed to the \code{position}
+argument of \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
 }
 \value{
 A leaflet object.
