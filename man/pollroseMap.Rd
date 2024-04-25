@@ -25,6 +25,7 @@ pollroseMap(
   legend.title.autotext = TRUE,
   control.collapsed = FALSE,
   control.position = "topright",
+  control.autotext = TRUE,
   d.icon = 200,
   d.fig = 3.5,
   static = FALSE,
@@ -212,6 +213,14 @@ When \code{type != NULL}, or multiple pollutants are specified, where should the
 "layer control" interface be placed? One of "topleft", "topright",
 "bottomleft" or "bottomright". Passed to the \code{position} argument of
 \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
+
+\item{control.autotext}{\emph{Automatically format the content of the layer
+control menu?}
+
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic
+
+When \code{control.autotext = TRUE}, the content of the "layer control"
+interface will be first run through \code{\link[=quickTextHTML]{quickTextHTML()}}.}
 
 \item{d.icon}{\emph{The diameter of the plot on the map in pixels.}
 

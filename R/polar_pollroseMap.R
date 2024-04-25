@@ -68,6 +68,7 @@ pollroseMap <- function(data,
                         legend.title.autotext = TRUE,
                         control.collapsed = FALSE,
                         control.position = "topright",
+                        control.autotext = TRUE,
                         d.icon = 200,
                         d.fig = 3.5,
                         static = FALSE,
@@ -236,7 +237,8 @@ pollroseMap <- function(data,
         label,
         split_col,
         control.collapsed,
-        control.position
+        control.position,
+        control.autotext
       )
 
     # add legend if breaks are defined

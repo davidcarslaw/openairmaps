@@ -220,6 +220,14 @@
 #'   "bottomleft" or "bottomright". Passed to the `position` argument of
 #'   [leaflet::addLayersControl()].
 #'
+#' @param control.autotext *Automatically format the content of the layer
+#'   control menu?*
+#'
+#'  *default:* `TRUE` | *scope:* dynamic
+#'
+#'   When `control.autotext = TRUE`, the content of the "layer control"
+#'   interface will be first run through [quickTextHTML()].
+#'
 #' @param d.icon *The diameter of the plot on the map in pixels.*
 #'
 #'  *default:* `200` | *scope:* dynamic & static
@@ -295,6 +303,7 @@ polarMap <- function(data,
                      legend.title.autotext = TRUE,
                      control.collapsed = FALSE,
                      control.position = "topright",
+                     control.autotext = TRUE,
                      d.icon = 200,
                      d.fig = 3.5,
                      static = FALSE,
@@ -443,7 +452,8 @@ polarMap <- function(data,
         label,
         split_col,
         control.collapsed,
-        control.position
+        control.position,
+        control.autotext
       )
 
     # add legend if limits are set
