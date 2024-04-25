@@ -20,7 +20,7 @@ produced instead."><meta property="og:image" content="https://davidcarslaw.githu
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -91,6 +91,7 @@ produced instead.</p>
 <span>  legend.title.autotext <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  control.collapsed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  control.position <span class="op">=</span> <span class="st">"topright"</span>,</span>
+<span>  control.autotext <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  d.icon <span class="op">=</span> <span class="fl">200</span>,</span>
 <span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
 <span>  static <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -276,6 +277,14 @@ through <code><a href="quickTextHTML.html">quickTextHTML()</a></code> (<em>dynam
 "layer control" interface be placed? One of "topleft", "topright",
 "bottomleft" or "bottomright". Passed to the <code>position</code> argument of
 <code><a href="https://rstudio.github.io/leaflet/reference/addLayersControl.html" class="external-link">leaflet::addLayersControl()</a></code>.</p></dd>
+
+
+<dt>control.autotext</dt>
+<dd><p><em>Automatically format the content of the layer
+control menu?</em></p>
+<p><em>default:</em> <code>TRUE</code> | <em>scope:</em> dynamic</p>
+<p>When <code>control.autotext = TRUE</code>, the content of the "layer control"
+interface will be first run through <code><a href="quickTextHTML.html">quickTextHTML()</a></code>.</p></dd>
 
 
 <dt>d.icon</dt>
