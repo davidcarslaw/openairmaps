@@ -1,4 +1,4 @@
-#' Automatic text formatting for openairmaps
+#' Automatic text formatting for `openairmaps`
 #'
 #' Workhorse function that automatically applies routine text formatting to
 #' common pollutant names which may be used in the HTML widgets produced by
@@ -19,7 +19,6 @@
 #' @export
 #' @returns a character vector
 #' @author Jack Davison.
-#' @keywords methods
 #' @seealso [openair::quickText()], useful for non-HTML/static maps and plots
 #'
 #' @examples
@@ -27,22 +26,52 @@
 #' quickTextHTML(labs)
 #'
 quickTextHTML <- function(text) {
-  text <- gsub("NO2|no2|No2", "NO<sub>2</sub>", text)
-  text <- gsub("\\bnox\\b|\\bNOx\\b|\\bNox\\b|\\bNOX\\b", "NO<sub>x</sub>", text)
-  text <- gsub("CO2|co2|Co2", "CO<sub>2</sub>", text)
-  text <- gsub("o3|O3", "O<sub>3</sub>", text)
-  text <- gsub("SO2|so2|So2", "SO<sub>2</sub>", text)
-  text <- gsub("\\bno\\b|\\bNO\\b|\\bNo\\b", "NO", text)
-  text <- gsub("pm25|PM25|pm25|pm2.5|PM2.5|Pm2.5", "PM<sub>2.5</sub>", text)
-  text <- gsub("pm10|PM10|Pm10", "PM<sub>10</sub>", text)
-  text <- gsub("pm1|PM1|Pm1", "PM<sub>1</sub>", text)
-  text <- gsub("nh3|NH3|Nh3", "NH<sub>3</sub>", text)
-  text <- gsub("nv10|NV10|Nv10", "NV<sub>10</sub>", text)
-  text <- gsub("v10|V10", "V<sub>10</sub>", text)
-  text <- gsub("nv25|NV25|Nv25|nv2.5|NV2.5|Nv2.5", "NV<sub>2.5</sub>", text)
-  text <- gsub("v25|V25|v2.5|V2.5", "V<sub>2.5</sub>", text)
-  text <- gsub("ug/m3", "\u00B5g m<sup>-3</sup>", text)
-  text <- gsub("m/s", "m s<sup>-1</sup>", text)
+  # gsub, but apply regex bounds and ignore case
+  gsubic <- function(pattern, replacement, ...) {
+    gsub(
+      pattern = paste0("\\b", pattern, "\\b"),
+      replacement = replacement,
+      ignore.case = TRUE,
+      ...
+    )
+  }
+  # gaseous
+  text <- gsubic("no2", "NO<sub>2</sub>", text)
+  text <- gsubic("no", "NO", text)
+  text <- gsubic("nox", "NO<sub>x</sub>", text)
+  text <- gsubic("nh3", "NH<sub>3</sub>", text)
+  text <- gsubic("co", "CO", text)
+  text <- gsubic("nmhc", "NMHC", text)
+  text <- gsubic("o3", "O<sub>3</sub>", text)
+  text <- gsubic("co2", "CO<sub>2</sub>", text)
+  text <- gsubic("so2", "SO<sub>2</sub>", text)
+  text <- gsubic("h2s", "H<sub>2</sub>S", text)
+  text <- gsubic("ch4", "CH<sub>4</sub>", text)
+  text <- gsubic("nv10", "NV<sub>10</sub>", text)
+  text <- gsubic("v10", "V<sub>10</sub>", text)
+  text <- gsubic("nv25", "NV<sub>2.5</sub>", text)
+  text <- gsubic("nv2.5", "NV<sub>2.5</sub>", text)
+  text <- gsubic("v25", "V<sub>2.5</sub>", text)
+  text <- gsubic("v2.5", "V<sub>2.5</sub>", text)
+
+  # particulates
+  text <- gsubic("pm25", "PM<sub>2.5</sub>", text)
+  text <- gsubic("pm2.5", "PM<sub>2.5</sub>", text)
+  text <- gsubic("pm10", "PM<sub>10</sub>", text)
+  text <- gsubic("pm4", "PM<sub>4</sub>", text)
+  text <- gsubic("pm1", "PM<sub>1</sub>", text)
+  text <- gsubic("pmtot", "PM<sub>total</sub>", text)
+  text <- gsubic("pmc", "PM<sub>coarse</sub>", text)
+  text <- gsubic("pmcoarse", "PM<sub>coarse</sub>", text)
+  text <- gsubic("pmf", "PM<sub>fine</sub>", text)
+  text <- gsubic("pmfine", "PM<sub>fine</sub>", text)
+
+  # units
+  text <- gsub("ug/m3", "\u00B5g&nbspm<sup>-3</sup>", text)
+  text <- gsub("ng/m3", "ng&nbspm<sup>-3</sup>", text)
+  text <- gsub("mg/m3", "mg&nbspm<sup>-3</sup>", text)
+  text <- gsub("m/s", "m&nbsps<sup>-1</sup>", text)
+  text <- gsub("m/s2", "m&nbsps<sup>-2</sup>", text)
 
   return(text)
 }
