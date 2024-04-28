@@ -42,6 +42,8 @@
 
 * "illegal" file path characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.
 
+* The colours in the legend of `networkMap()` now better align with the actual colours of the markers, and the layer control menu when `control = "variable"` is now presented in a nicer order with clearer labels.
+
 # openairmaps 0.8.1
 
 This is a minor release of `{openairmaps}`, released mainly to fix an issue with `{ggmap}` but also adding some new functionality for polar marker maps.
