@@ -330,7 +330,7 @@ networkMap <-
               map,
               position = control.position,
               options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
-              baseGroups = quickTextHTML(sort(control_vars)),
+              baseGroups = sort(quickTextHTML(control_vars)),
               overlayGroups = names(provider)
             ) %>%
             leaflet::hideGroup(group = names(provider)[[-1]])
@@ -477,7 +477,8 @@ prepNetworkData <- function(source, year) {
       "135TMB",
       "c2PENTEN",
       "MEPENT",
-      "3MEPENT"
+      "3MEPENT",
+      "NAPHTH"
     )
 
     meta <- dplyr::filter(
