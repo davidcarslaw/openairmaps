@@ -134,10 +134,10 @@
 #'
 #' @param provider *The basemap(s) to be used.*
 #'
-#'  *default:* `NULL` | *scope:* dynamic & static
+#'  *default:* `"OpenStreetMap"` | *scope:* dynamic & static
 #'
 #'   The base map(s) to be used beneath the polar markers. If not provided, will
-#'   default to OpenStreetMap for both dynamic and static maps.
+#'   default to `"OpenStreetMap"`/`"osm"` for both dynamic and static maps.
 #'
 #'   - *Dynamic*: Any number of [leaflet::providers].
 #'   See <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list
@@ -148,6 +148,11 @@
 #'   = "Esri.WorldImagery")`)
 #'
 #'  - *Static*: One of [rosm::osm.types()].
+#'
+#'   There is some overlap in static and dynamic providers. For example,
+#'   `{ggspatial}` uses "osm" to specify "OpenStreetMap". When static providers
+#'   are provided to dynamic maps or vice versa, `{openairmaps}` will attempt to
+#'   substitute the correct provider string.
 #'
 #' @param cols *Colours to use for plotting.*
 #'
@@ -293,7 +298,7 @@ polarMap <- function(data,
                      type = NULL,
                      popup = NULL,
                      label = NULL,
-                     provider = NULL,
+                     provider = "OpenStreetMap",
                      cols = "turbo",
                      alpha = 1,
                      key = FALSE,
