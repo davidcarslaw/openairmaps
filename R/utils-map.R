@@ -696,11 +696,36 @@ geom_sf_richtext <-
 #' Check providers are valid
 #' @noRd
 check_providers <- function(provider, static) {
+  providers_dict <- c(
+    "OpenStreetMap" = "osm",
+    "CyclOSM" = "opencycle",
+    "OpenStreetMap.HOT" = "hotstyle",
+    "WaymarkedTrails.hiking" = "loviniahike",
+    "WaymarkedTrails.cycling" = "loviniacycle",
+    "Stadia.StamenToner" = "stamenbw",
+    "Stadia.StamenWatercolor" = "stamenwatercolor",
+    "Thunderforest.OpenCycleMap" = "osmtransport",
+    "Thunderforest.Landscape" = "thunderforestlandscape",
+    "Thunderforest.Outdoors" = "thunderforestoutdoors",
+    "CartoDB.DarkMatter" = "cartodark",
+    "CartoDB.Positron" = "cartolight"
+  )
+
   if (static) {
     provider <- provider %||% "osm"
+    if (provider %in% names(providers_dict)) {
+      provider <- providers_dict[provider]
+    }
     rlang::arg_match(provider, rosm::osm.types(), multiple = FALSE)
   } else {
     provider <- provider %||% "OpenStreetMap"
+    if (any(provider %in% providers_dict)) {
+      for (i in seq_along(provider)) {
+        if (provider[i] %in% providers_dict) {
+          provider[i] <- unname(names(providers_dict)[providers_dict == provider[i]])
+        }
+      }
+    }
     rlang::arg_match(provider, names(leaflet::providers), multiple = TRUE)
   }
   return(provider)
