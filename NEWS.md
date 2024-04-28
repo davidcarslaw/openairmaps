@@ -28,6 +28,8 @@
 
 * Popups for the dynamic `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
 
+* `quickTextHTML()`'s lookup table has gained new pollutants and units, and ignores the input case of `text` more consistently.
+
 * Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these.
 
 ## Bug fixes
