@@ -18,7 +18,7 @@ formats."><meta property="og:image" content="https://davidcarslaw.github.io/open
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.8.1.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -276,16 +276,19 @@ plotting on the map.</p></dd>
 
 <dt>provider</dt>
 <dd><p><em>The basemap(s) to be used.</em></p>
-<p><em>default:</em> <code>NULL</code> | <em>scope:</em> dynamic &amp; static</p>
+<p><em>default:</em> <code>"OpenStreetMap"</code> | <em>scope:</em> dynamic &amp; static</p>
 <p>The base map(s) to be used beneath the polar markers. If not provided, will
-default to OpenStreetMap for both dynamic and static maps.</p><ul><li><p><em>Dynamic</em>: Any number of <a href="https://rstudio.github.io/leaflet/reference/providers.html" class="external-link">leaflet::providers</a>.
+default to <code>"OpenStreetMap"</code>/<code>"osm"</code> for both dynamic and static maps.</p><ul><li><p><em>Dynamic</em>: Any number of <a href="https://rstudio.github.io/leaflet/reference/providers.html" class="external-link">leaflet::providers</a>.
 See <a href="http://leaflet-extras.github.io/leaflet-providers/preview/" class="external-link">http://leaflet-extras.github.io/leaflet-providers/preview/</a> for a list
 of all base maps that can be used. If multiple base maps are provided, they
 can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
 own using a named vector (e.g., <code>c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")</code>)</p></li>
 <li><p><em>Static</em>: One of <code><a href="https://rdrr.io/pkg/rosm/man/deprecated.html" class="external-link">rosm::osm.types()</a></code>.</p></li>
-</ul></dd>
+</ul><p>There is some overlap in static and dynamic providers. For example,
+<code>{ggspatial}</code> uses "osm" to specify "OpenStreetMap". When static providers
+are provided to dynamic maps or vice versa, <code>{openairmaps}</code> will attempt to
+substitute the correct provider string.</p></dd>
 
 
 <dt>facet</dt>
