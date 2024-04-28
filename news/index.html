@@ -68,6 +68,7 @@
 <li><p>The <code>crs</code> argument has been added to the <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/deprecated-static-polar-maps.html">polarMapStatic()</a></code> families and to <code><a href="../reference/searchNetwork.html">searchNetwork()</a></code>. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> / <a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a>.</p></li>
 <li><p>Users now have greater control over the positions of legends and layer control menus, and the titles of legends, throughout <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> functions, including the <code><a href="../reference/polarMap.html">polarMap()</a></code> family, <code><a href="../reference/trajMap.html">trajMap()</a></code> family, and <code><a href="../reference/networkMap.html">networkMap()</a></code>.</p></li>
 <li><p>Popups for the dynamic <code><a href="../reference/polarMap.html">polarMap()</a></code> family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.</p></li>
+<li><p><code><a href="../reference/quickTextHTML.html">quickTextHTML()</a></code>’s lookup table has gained new pollutants and units, and ignores the input case of <code>text</code> more consistently.</p></li>
 <li><p>Two examples of the use of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> with <a href="https://shiny.posit.co/" class="external-link">shiny</a> have been added to the package. Run <code>shiny::runExample(package = "openairmaps")</code> to view these.</p></li>
 </ul></div>
 <div class="section level3">
@@ -79,6 +80,7 @@
 <code>layerId</code> is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if <code>layerId = "traj"</code>, the first point of the first line has the ID <code>"traj-1-1"</code>, the second point of the first line has ID <code>"traj-1-2"</code>, the first point of the second line has ID <code>"traj-2-1"</code>, and so on.</li>
 </ul></li>
 <li><p>“illegal” file path characters can now be used in the columns provided to the <code>type</code> argument of the <code><a href="../reference/polarMap.html">polarMap()</a></code> family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.</p></li>
+<li><p>The colours in the legend of <code><a href="../reference/networkMap.html">networkMap()</a></code> now better align with the actual colours of the markers, and the layer control menu when <code>control = "variable"</code> is now presented in a nicer order with clearer labels.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
