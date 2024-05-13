@@ -226,10 +226,10 @@ plotting on the map.}
 
 \item{provider}{\emph{The basemap(s) to be used.}
 
-\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+\emph{default:} \code{"OpenStreetMap"} | \emph{scope:} dynamic & static
 
 The base map(s) to be used beneath the polar markers. If not provided, will
-default to OpenStreetMap for both dynamic and static maps.
+default to \code{"OpenStreetMap"}/\code{"osm"} for both dynamic and static maps.
 \itemize{
 \item \emph{Dynamic}: Any number of \link[leaflet:providers]{leaflet::providers}.
 See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
@@ -238,7 +238,12 @@ can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
 own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")})
 \item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
-}}
+}
+
+There is some overlap in static and dynamic providers. For example,
+\code{{ggspatial}} uses "osm" to specify "OpenStreetMap". When static providers
+are provided to dynamic maps or vice versa, \code{{openairmaps}} will attempt to
+substitute the correct provider string.}
 
 \item{facet}{Passed to the \code{type} argument of the relevant \code{polarMap()}
 family function.}

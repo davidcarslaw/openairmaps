@@ -16,7 +16,7 @@ diffMap(
   type = NULL,
   popup = NULL,
   label = NULL,
-  provider = NULL,
+  provider = "OpenStreetMap",
   cols = "RdBu",
   alpha = 1,
   key = FALSE,
@@ -26,6 +26,7 @@ diffMap(
   legend.title.autotext = TRUE,
   control.collapsed = FALSE,
   control.position = "topright",
+  control.autotext = TRUE,
   d.icon = 200,
   d.fig = 3.5,
   static = FALSE,
@@ -124,10 +125,10 @@ useful for the same reasons as popups, though are typically shorter.}
 
 \item{provider}{\emph{The basemap(s) to be used.}
 
-\emph{default:} \code{NULL} | \emph{scope:} dynamic & static
+\emph{default:} \code{"OpenStreetMap"} | \emph{scope:} dynamic & static
 
 The base map(s) to be used beneath the polar markers. If not provided, will
-default to OpenStreetMap for both dynamic and static maps.
+default to \code{"OpenStreetMap"}/\code{"osm"} for both dynamic and static maps.
 \itemize{
 \item \emph{Dynamic}: Any number of \link[leaflet:providers]{leaflet::providers}.
 See \url{http://leaflet-extras.github.io/leaflet-providers/preview/} for a list
@@ -136,7 +137,12 @@ can be toggled between using a "layer control" interface. By default, the
 interface will use the provider names as labels, but users can define their
 own using a named vector (e.g., \code{c("Default" = "OpenStreetMap", "Satellite"   = "Esri.WorldImagery")})
 \item \emph{Static}: One of \code{\link[rosm:deprecated]{rosm::osm.types()}}.
-}}
+}
+
+There is some overlap in static and dynamic providers. For example,
+\code{{ggspatial}} uses "osm" to specify "OpenStreetMap". When static providers
+are provided to dynamic maps or vice versa, \code{{openairmaps}} will attempt to
+substitute the correct provider string.}
 
 \item{cols}{\emph{Colours to use for plotting.}
 
@@ -206,6 +212,14 @@ When \code{type != NULL}, or multiple pollutants are specified, where should the
 "layer control" interface be placed? One of "topleft", "topright",
 "bottomleft" or "bottomright". Passed to the \code{position} argument of
 \code{\link[leaflet:addLayersControl]{leaflet::addLayersControl()}}.}
+
+\item{control.autotext}{\emph{Automatically format the content of the layer
+control menu?}
+
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic
+
+When \code{control.autotext = TRUE}, the content of the "layer control"
+interface will be first run through \code{\link[=quickTextHTML]{quickTextHTML()}}.}
 
 \item{d.icon}{\emph{The diameter of the plot on the map in pixels.}
 
