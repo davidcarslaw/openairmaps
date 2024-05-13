@@ -169,7 +169,7 @@
 #'
 #'   A value between 0 (fully transparent) and 1 (fully opaque).
 #'
-#' @param key *Transparency value for polar markers.*
+#' @param key *Draw individual marker legends?*
 #'
 #'  *default:* `FALSE` | *scope:* dynamic & static
 #'
