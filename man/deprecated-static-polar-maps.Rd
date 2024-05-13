@@ -263,7 +263,7 @@ uniform colours. Read more about this palette at
 
 A value between 0 (fully transparent) and 1 (fully opaque).}
 
-\item{key}{\emph{Transparency value for polar markers.}
+\item{key}{\emph{Draw individual marker legends?}
 
 \emph{default:} \code{FALSE} | \emph{scope:} dynamic & static
 
