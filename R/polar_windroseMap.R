@@ -77,13 +77,14 @@ windroseMap <- function(data,
                         d.fig = 3.5,
                         static = FALSE,
                         static.nrow = NULL,
-                        ...) {
+                        ...,
+                        control = NULL) {
   # check basemap providers are valid
   provider <- check_providers(provider, static)
   legend.position <- check_legendposition(legend.position, static)
 
   # check for old facet/control opts
-  type <- type %||% check_facet_control(...)
+  type <- type %||% check_facet_control(control = control, ...)
 
   # assume lat/lon
   latlon <- assume_latlon(

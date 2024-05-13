@@ -31,7 +31,8 @@ diffMap(
   d.fig = 3.5,
   static = FALSE,
   static.nrow = NULL,
-  ...
+  ...,
+  control = NULL
 )
 }
 \arguments{
@@ -428,6 +429,8 @@ and will be ignored if \code{"quantile.slope"} is not used.}
     \item{\code{plot}}{Should a plot be produced? \code{FALSE} can be useful when
 analysing data to extract plot components and plotting them in other ways.}
   }}
+
+\item{control}{\strong{Deprecated.} Please use \code{type}.}
 }
 \value{
 Either:

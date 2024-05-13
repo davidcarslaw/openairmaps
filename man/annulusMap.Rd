@@ -30,7 +30,8 @@ annulusMap(
   d.fig = 3.5,
   static = FALSE,
   static.nrow = NULL,
-  ...
+  ...,
+  control = NULL
 )
 }
 \arguments{
@@ -355,6 +356,8 @@ and \code{"left"}.}
 titles and axis labels will automatically try and format pollutant names
 and units properly e.g.  by subscripting the `2' in NO2.}
   }}
+
+\item{control}{\strong{Deprecated.} Please use \code{type}.}
 }
 \value{
 Either:
