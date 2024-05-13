@@ -29,7 +29,8 @@ percentileMap(
   d.fig = 3.5,
   static = FALSE,
   static.nrow = NULL,
-  ...
+  ...,
+  control = NULL
 )
 }
 \arguments{
@@ -282,6 +283,8 @@ passed to \code{drawOpenKey} via \code{quickText}, applying the
 arguments currently include \code{"top"}, \code{"right"}, \code{"bottom"}
 and \code{"left"}.}
   }}
+
+\item{control}{\strong{Deprecated.} Please use \code{type}.}
 }
 \value{
 Either:

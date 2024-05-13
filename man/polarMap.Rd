@@ -30,7 +30,8 @@ polarMap(
   d.fig = 3.5,
   static = FALSE,
   static.nrow = NULL,
-  ...
+  ...,
+  control = NULL
 )
 }
 \arguments{
@@ -444,6 +445,8 @@ calculated and plotted, should a formula label be displayed?}
 \code{"quantile.slope"}. Default is \code{0.5} which is equal to the median
 and will be ignored if \code{"quantile.slope"} is not used.}
   }}
+
+\item{control}{\strong{Deprecated.} Please use \code{type}.}
 }
 \value{
 Either:
