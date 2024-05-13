@@ -305,7 +305,14 @@ make_leaflet_map <-
            label,
            split_col,
            control.collapsed,
-           control.position) {
+           control.position,
+           control.autotext) {
+    if (control.autotext) {
+      textfun <- quickTextHTML
+    } else {
+      textfun <- identity
+    }
+
     data <- sf::st_as_sf(data, coords = c(longitude, latitude), crs = crs) %>%
       sf::st_transform(crs = 4326)
 
@@ -344,7 +351,7 @@ make_leaflet_map <-
         popupAnchorX = -.Machine$double.eps,
         popupAnchorY = -(height / 2) * 0.7
       ),
-      group = quickTextHTML(data[[split_col]])
+      group = textfun(data[[split_col]])
     )
 
     if (!is.null(popup)) {
@@ -367,7 +374,7 @@ make_leaflet_map <-
         leaflet::addLayersControl(
           map,
           position = control.position,
-          baseGroups = quickTextHTML(unique(data[[split_col]])),
+          baseGroups = textfun(unique(data[[split_col]])),
           overlayGroups = names(provider),
           options = opts
         ) %>%
@@ -386,7 +393,7 @@ make_leaflet_map <-
         leaflet::addLayersControl(
           map,
           position = control.position,
-          baseGroups = quickTextHTML(unique(data[[split_col]])),
+          baseGroups = textfun(unique(data[[split_col]])),
           options = opts
         )
     }
@@ -689,11 +696,36 @@ geom_sf_richtext <-
 #' Check providers are valid
 #' @noRd
 check_providers <- function(provider, static) {
+  providers_dict <- c(
+    "OpenStreetMap" = "osm",
+    "CyclOSM" = "opencycle",
+    "OpenStreetMap.HOT" = "hotstyle",
+    "WaymarkedTrails.hiking" = "loviniahike",
+    "WaymarkedTrails.cycling" = "loviniacycle",
+    "Stadia.StamenToner" = "stamenbw",
+    "Stadia.StamenWatercolor" = "stamenwatercolor",
+    "Thunderforest.OpenCycleMap" = "osmtransport",
+    "Thunderforest.Landscape" = "thunderforestlandscape",
+    "Thunderforest.Outdoors" = "thunderforestoutdoors",
+    "CartoDB.DarkMatter" = "cartodark",
+    "CartoDB.Positron" = "cartolight"
+  )
+
   if (static) {
     provider <- provider %||% "osm"
+    if (provider %in% names(providers_dict)) {
+      provider <- providers_dict[provider]
+    }
     rlang::arg_match(provider, rosm::osm.types(), multiple = FALSE)
   } else {
     provider <- provider %||% "OpenStreetMap"
+    if (any(provider %in% providers_dict)) {
+      for (i in seq_along(provider)) {
+        if (provider[i] %in% providers_dict) {
+          provider[i] <- unname(names(providers_dict)[providers_dict == provider[i]])
+        }
+      }
+    }
     rlang::arg_match(provider, names(leaflet::providers), multiple = TRUE)
   }
   return(provider)

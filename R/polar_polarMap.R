@@ -134,10 +134,10 @@
 #'
 #' @param provider *The basemap(s) to be used.*
 #'
-#'  *default:* `NULL` | *scope:* dynamic & static
+#'  *default:* `"OpenStreetMap"` | *scope:* dynamic & static
 #'
 #'   The base map(s) to be used beneath the polar markers. If not provided, will
-#'   default to OpenStreetMap for both dynamic and static maps.
+#'   default to `"OpenStreetMap"`/`"osm"` for both dynamic and static maps.
 #'
 #'   - *Dynamic*: Any number of [leaflet::providers].
 #'   See <http://leaflet-extras.github.io/leaflet-providers/preview/> for a list
@@ -148,6 +148,11 @@
 #'   = "Esri.WorldImagery")`)
 #'
 #'  - *Static*: One of [rosm::osm.types()].
+#'
+#'   There is some overlap in static and dynamic providers. For example,
+#'   `{ggspatial}` uses "osm" to specify "OpenStreetMap". When static providers
+#'   are provided to dynamic maps or vice versa, `{openairmaps}` will attempt to
+#'   substitute the correct provider string.
 #'
 #' @param cols *Colours to use for plotting.*
 #'
@@ -220,6 +225,14 @@
 #'   "bottomleft" or "bottomright". Passed to the `position` argument of
 #'   [leaflet::addLayersControl()].
 #'
+#' @param control.autotext *Automatically format the content of the layer
+#'   control menu?*
+#'
+#'  *default:* `TRUE` | *scope:* dynamic
+#'
+#'   When `control.autotext = TRUE`, the content of the "layer control"
+#'   interface will be first run through [quickTextHTML()].
+#'
 #' @param d.icon *The diameter of the plot on the map in pixels.*
 #'
 #'  *default:* `200` | *scope:* dynamic & static
@@ -287,7 +300,7 @@ polarMap <- function(data,
                      type = NULL,
                      popup = NULL,
                      label = NULL,
-                     provider = NULL,
+                     provider = "OpenStreetMap",
                      cols = "turbo",
                      alpha = 1,
                      key = FALSE,
@@ -297,6 +310,7 @@ polarMap <- function(data,
                      legend.title.autotext = TRUE,
                      control.collapsed = FALSE,
                      control.position = "topright",
+                     control.autotext = TRUE,
                      d.icon = 200,
                      d.fig = 3.5,
                      static = FALSE,
@@ -446,7 +460,8 @@ polarMap <- function(data,
         label,
         split_col,
         control.collapsed,
-        control.position
+        control.position,
+        control.autotext
       )
 
     # add legend if limits are set

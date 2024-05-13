@@ -69,7 +69,7 @@ freqMap <- function(data,
                     type = NULL,
                     popup = NULL,
                     label = NULL,
-                    provider = NULL,
+                    provider = "OpenStreetMap",
                     cols = "turbo",
                     alpha = 1,
                     key = FALSE,
@@ -79,6 +79,7 @@ freqMap <- function(data,
                     legend.title.autotext = TRUE,
                     control.collapsed = FALSE,
                     control.position = "topright",
+                    control.autotext = TRUE,
                     d.icon = 200,
                     d.fig = 3.5,
                     static = FALSE,
@@ -285,7 +286,8 @@ freqMap <- function(data,
         label,
         split_col,
         control.collapsed,
-        control.position
+        control.position,
+        control.autotext
       )
 
     # add legends if breaks are set

@@ -55,7 +55,7 @@ percentileMap <- function(data,
                           type = NULL,
                           popup = NULL,
                           label = NULL,
-                          provider = NULL,
+                          provider = "OpenStreetMap",
                           cols = "turbo",
                           alpha = 1,
                           key = FALSE,
@@ -65,6 +65,7 @@ percentileMap <- function(data,
                           legend.title.autotext = TRUE,
                           control.collapsed = FALSE,
                           control.position = "topright",
+                          control.autotext = TRUE,
                           d.icon = 200,
                           d.fig = 3.5,
                           static = FALSE,
@@ -259,7 +260,8 @@ percentileMap <- function(data,
         label,
         split_col,
         control.collapsed,
-        control.position
+        control.position,
+        control.autotext
       )
 
     legend.title <-

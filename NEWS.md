@@ -28,6 +28,8 @@
 
 * Popups for the dynamic `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
 
+* `quickTextHTML()`'s lookup table has gained new pollutants and units, and ignores the input case of `text` more consistently.
+
 * Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these.
 
 ## Bug fixes
@@ -39,6 +41,8 @@
     * `layerId` is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if `layerId = "traj"`, the first point of the first line has the ID `"traj-1-1"`, the second point of the first line has ID `"traj-1-2"`, the first point of the second line has ID `"traj-2-1"`, and so on.
 
 * "illegal" file path characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.
+
+* The colours in the legend of `networkMap()` now better align with the actual colours of the markers, and the layer control menu when `control = "variable"` is now presented in a nicer order with clearer labels.
 
 # openairmaps 0.8.1
 

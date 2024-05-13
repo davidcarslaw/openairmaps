@@ -166,9 +166,19 @@ networkMap <-
           "lightgray",
           "black",
           "pink"
+        ),
+        realcolour = c(
+          "#d33d29",
+          "#f49630",
+          "#36a5d7",
+          "#70ad25",
+          "#cf51b6",
+          "#a3a3a3",
+          "#303030",
+          "#ff8ee9"
         )
       ) %>%
-      dplyr::mutate(colour2 = ifelse(.data$colour == "white", "gray", "white"))
+      dplyr::mutate(colour2 = ifelse(.data$colour == "#FFFFFF", "#303030", "#FFFFFF"))
 
     # read in data
     meta <-
@@ -305,9 +315,10 @@ networkMap <-
             label = dat[["site"]],
             clusterOptions = clusteropts,
             icon = leaflet::makeAwesomeIcon(
+              library = "fa",
+              icon = "info-circle",
               markerColor = dat$colour,
-              iconColor = dat$colour2,
-              icon = "info-sign"
+              iconColor = dat$colour2
             )
           )
       }
@@ -319,7 +330,7 @@ networkMap <-
               map,
               position = control.position,
               options = leaflet::layersControlOptions(collapsed = control.collapsed, autoZIndex = FALSE),
-              baseGroups = quickTextHTML(sort(control_vars)),
+              baseGroups = sort(quickTextHTML(control_vars)),
               overlayGroups = names(provider)
             ) %>%
             leaflet::hideGroup(group = names(provider)[[-1]])
@@ -368,9 +379,10 @@ networkMap <-
           label = dat[["site"]],
           clusterOptions = clusteropts,
           icon = leaflet::makeAwesomeIcon(
+            library = "fa",
+            icon = "info-circle",
             markerColor = dat$colour,
-            iconColor = dat$colour2,
-            icon = "info-sign"
+            iconColor = dat$colour2
           )
         )
 
@@ -391,10 +403,11 @@ networkMap <-
       map <-
         leaflet::addLegend(
           map,
+          opacity = 1,
           position = check_legendposition(legend.position, static = FALSE),
           title = "Network",
-          colors = cols$colour,
-          labels = cols$network
+          colors = cols$realcolour,
+          labels = paste0("<span style='line-height:1.6'>", cols$network, "</span>")
         )
     }
 
@@ -464,7 +477,8 @@ prepNetworkData <- function(source, year) {
       "135TMB",
       "c2PENTEN",
       "MEPENT",
-      "3MEPENT"
+      "3MEPENT",
+      "NAPHTH"
     )
 
     meta <- dplyr::filter(

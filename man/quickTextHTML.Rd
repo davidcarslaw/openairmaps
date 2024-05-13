@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{quickTextHTML}
 \alias{quickTextHTML}
-\title{Automatic text formatting for openairmaps}
+\title{Automatic text formatting for \code{openairmaps}}
 \usage{
 quickTextHTML(text)
 }
@@ -39,4 +39,3 @@ quickTextHTML(labs)
 \author{
 Jack Davison.
 }
-\keyword{methods}
