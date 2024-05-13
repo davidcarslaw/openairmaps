@@ -1,10 +1,10 @@
 #' Function for back-compatibility with the facet/control args
 #' @param ... inherited from parent function
 #' @noRd
-check_facet_control <- function(...) {
+check_facet_control <- function(control, ...) {
   dots <- rlang::list2(...)
 
-  if ("control" %in% names(dots)) {
+  if ("control" %in% names(dots) | !is.null(control)) {
     lifecycle::deprecate_warn(
       env = rlang::caller_env(),
       user_env = rlang::caller_env(2),
@@ -13,7 +13,11 @@ check_facet_control <- function(...) {
       with = "polarMap(type)",
       details = "This change has been made for better consistency with openair, and between dynamic and static maps."
     )
-    return(dots$control)
+    if ("control" %in% names(dots)) {
+      return(dots$control)
+    } else {
+      return(control)
+    }
   }
 
   if ("facet" %in% names(dots)) {

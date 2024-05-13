@@ -29,7 +29,8 @@ windroseMap(
   d.fig = 3.5,
   static = FALSE,
   static.nrow = NULL,
-  ...
+  ...,
+  control = NULL
 )
 }
 \arguments{
@@ -319,6 +320,8 @@ feature. The user can therefore set \code{angle.scale} to another value
 \code{angle.scale = 45} will draw the scale heading in a NE direction.}
     \item{\code{border}}{Border colour for shaded areas. Default is no border.}
   }}
+
+\item{control}{\strong{Deprecated.} Please use \code{type}.}
 }
 \value{
 Either:
