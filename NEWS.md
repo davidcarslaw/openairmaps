@@ -2,7 +2,7 @@
 
 ## Breaking changes
 
-* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added. Other benefits of this switch include a greater number of available base maps (see: `rosm::osm.types()`) and the ability to simply change the extent of the map axes using `ggplot2::coord_sf()`.
+* BREAKING: The `polarMapStatic()` family is now powered by `{ggspatial}` rather than `{ggmap}` as it does not require an API key. This means the `ggmap` argument has been removed and the `provider` argument has been added. Other benefits of this switch include a greater number of available base maps (see: `rosm::osm.types()`) and the ability to simply change the extent of the map axes using `ggplot2::coord_sf()`. (#52)
 
 * BREAKING: The `control` and `facet` arguments have been deprecated in favour of `type` in all functions. These arguments will eventually be removed, but as of this version of `{openairmaps}` users will be warned away from their use. This brings `{openairmaps}` in-line with the `{openair}` package.
 
@@ -12,7 +12,7 @@
 
 ## New features
 
-* The `polarMapStatic()` family of functions have been combined with the `polarMap()` family, with static maps available to be accessed using the `static` argument. The `polarMapStatic()` family are therefore deprecated, and will later be removed from `{openairmaps}`. The justification for this is as follows:
+* The `polarMapStatic()` family of functions have been combined with the `polarMap()` family, with static maps available to be accessed using the `static` argument. (#59) The `polarMapStatic()` family are therefore deprecated, and will later be removed from `{openairmaps}`. The justification for this is as follows:
 
     * The combined functions allows for a more simple, consistent API for users (e.g., avoiding needing to switch between `facet` and `control`).
     
@@ -22,15 +22,15 @@
 
     * Combining these functions has reduced repetition in the source code of `{openairmaps}`, reducing the likelihood of oversights and bugs, and allowing for more rapid development.
 
-* The `crs` argument has been added to the `polarMap()` and `polarMapStatic()` families and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}` / `{ggspatial}`.
+* The `crs` argument has been added to the `polarMap()` and `polarMapStatic()` families and to `searchNetwork()`. This argument allows for users to specify that their data is using an alternative coordinate system to the standard longitude/latitude (e.g., the British National Grid CRS). Alternate CRS will be re-projected to longitude/latitude for plotting as this is expected by `{leaflet}` / `{ggspatial}`. (#56)
 
-* Users now have greater control over the positions of legends and layer control menus, and the titles of legends, throughout `{openairmaps}` functions, including the `polarMap()` family, `trajMap()` family, and `networkMap()`.
+* Users now have greater control over the positions of legends and layer control menus, and the titles of legends, throughout `{openairmaps}` functions, including the `polarMap()` family, `trajMap()` family, and `networkMap()`. 
 
-* Popups for the dynamic `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible.
+* Popups for the dynamic `polarMap()` family will now be near the top of the plot rather than the centre. This will obscure less of the plot itself while the marker is visible. (#55)
 
 * `quickTextHTML()`'s lookup table has gained new pollutants and units, and ignores the input case of `text` more consistently.
 
-* Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these.
+* Two examples of the use of `{openairmaps}` with `{shiny}` have been added to the package. Run `shiny::runExample(package = "openairmaps")` to view these. (#60)
 
 ## Bug fixes
 
@@ -40,7 +40,7 @@
 
     * `layerId` is now the base on which the actual layerId is built, with each real layerId in the form BASE-LN-PN where LN is the line number and PN is the point number. For example, if `layerId = "traj"`, the first point of the first line has the ID `"traj-1-1"`, the second point of the first line has ID `"traj-1-2"`, the first point of the second line has ID `"traj-2-1"`, and so on.
 
-* "illegal" file path characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on.
+* "illegal" file path characters can now be used in the columns provided to the `type` argument of the `polarMap()` family. Most relevant to most users is that this will allow them to provide their own custom HTML tags - e.g., for formatting superscripts, subscripts, and so on. (#63)
 
 * The colours in the legend of `networkMap()` now better align with the actual colours of the markers, and the layer control menu when `control = "variable"` is now presented in a nicer order with clearer labels.
 
