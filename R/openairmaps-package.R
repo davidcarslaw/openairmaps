@@ -40,6 +40,7 @@
 
 ## usethis namespace: start
 #' @importFrom lifecycle deprecated
+#' @importFrom prettymapr makebbox
 #' @importFrom rlang %||%
 #' @importFrom rlang .data
 #' @importFrom tibble tibble

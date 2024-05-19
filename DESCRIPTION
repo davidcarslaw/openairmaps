@@ -29,6 +29,7 @@ Imports:
     magrittr,
     mgcv,
     openair (>= 2.13),
+    prettymapr,
     purrr (>= 1.0.0),
     rlang,
     rosm,
