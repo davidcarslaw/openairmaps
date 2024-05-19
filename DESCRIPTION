@@ -23,7 +23,7 @@ Imports:
     ggplot2,
     ggspatial,
     ggtext,
-    leaflet,
+    leaflet (>= 2.2.0),
     lifecycle,
     lubridate,
     magrittr,
