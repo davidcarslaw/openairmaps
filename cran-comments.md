@@ -1,18 +1,16 @@
 # Submission
 
-This is a patch release primarily to fix issues relating to `ggmap`. It also adds some quality-of-life features, and a two new functions.
+This is a minor version release of openairmaps, refining the API for creating static and interactive directional analysis maps, improving documentation, and fixing bugs.
 
 ## Test environments
 
-* local Windows 10 install, R 4.2.3
+* local Windows 11 install, R 4.4.0 Patched
 * win-builder (devel)
 * win-builder (release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 notes
-
-The 1 NOTE is due to changing the contact email associated with the package.
+0 errors | 0 warnings | 0 notes
 
 ## Downstream dependencies
 
