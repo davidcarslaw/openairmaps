@@ -48,7 +48,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.9.0" id="openairmaps-090">openairmaps 0.9.0<a class="anchor" aria-label="anchor" href="#openairmaps-090"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.9.0" id="openairmaps-090">openairmaps 0.9.0<a class="anchor" aria-label="anchor" href="#openairmaps-090"></a></h2><p class="text-muted">CRAN release: 2024-05-19</p>
 <div class="section level3">
 <h3 id="breaking-changes-0-9-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-9-0"></a></h3>
 <ul><li><p>BREAKING: The <code><a href="../reference/deprecated-static-polar-maps.html">polarMapStatic()</a></code> family is now powered by <a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a> rather than <a href="https://github.com/dkahle/ggmap" class="external-link">ggmap</a> as it does not require an API key. This means the <code>ggmap</code> argument has been removed and the <code>provider</code> argument has been added. Other benefits of this switch include a greater number of available base maps (see: <code><a href="https://rdrr.io/pkg/rosm/man/deprecated.html" class="external-link">rosm::osm.types()</a></code>) and the ability to simply change the extent of the map axes using <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::coord_sf()</a></code>. (<a href="https://github.com/davidcarslaw/openairmaps/issues/52" class="external-link">#52</a>)</p></li>
