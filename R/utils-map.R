@@ -621,7 +621,7 @@ quick_popup <- function(data, popup, latitude, longitude, control) {
     columns = names,
     latitude = latitude,
     longitude = longitude,
-    type = control
+    type = control %||% "default"
   )
 }
 

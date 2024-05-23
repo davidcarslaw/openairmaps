@@ -1,5 +1,9 @@
 # openairmaps (development version)
 
+## Bug fixes
+
+* Vectors greater than length 1 passed to `popup` in the `polarMap()` argument will no longer error when `type = NULL`.
+
 # openairmaps 0.9.0
 
 ## Breaking changes
