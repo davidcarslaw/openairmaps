@@ -116,7 +116,7 @@ annulusMap <- function(data,
   }
 
   # cut data
-  data <- quick_cutdata(data = data, type = type)
+  data <- openair::cutData(x = data, type = type, ...)
 
   # deal with popups
   if (length(popup) > 1) {

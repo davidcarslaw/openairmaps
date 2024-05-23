@@ -110,6 +110,8 @@
 #'
 #' @param control Deprecated. Please use `type`.
 #'
+#' @inheritDotParams openair::cutData -x -type
+#'
 #' @returns A leaflet object.
 #' @export
 #'
@@ -136,7 +138,8 @@ trajMap <-
            legend.title.autotext = TRUE,
            control.collapsed = FALSE,
            control.position = "topright",
-           control = NULL) {
+           control = NULL,
+           ...) {
     # handle deprecated argument
     if (!is.null(control)) {
       lifecycle::deprecate_soft(
@@ -158,8 +161,8 @@ trajMap <-
     data$datef <- factor(data$date)
 
     # if no "type", get a fake column
-    data <- quick_cutdata(data, type)
     type <- type %||% "default"
+    data <- openair::cutData(x = data, type = type, ...)
 
     # initialise map
     map <- leaflet::leaflet() %>%
@@ -406,7 +409,7 @@ trajMap <-
 #'
 #' @param facet Deprecated. Please use `type`.
 #'
-#' @inheritDotParams ggplot2::coord_sf -xlim -ylim -crs -default_crs
+#' @inheritDotParams openair::cutData -x -type
 #'
 #' @returns a `ggplot2` plot
 #' @export
@@ -462,7 +465,7 @@ trajMapStatic <-
     type <- type %||% facet
 
     # cut data
-    data <- quick_cutdata(data, type)
+    data <- openair::cutData(x = data, type = type, ...)
 
     # make plot
     plt <-
@@ -512,15 +515,13 @@ trajMapStatic <-
           xlim = xlim,
           ylim = ylim,
           default_crs = sf::st_crs(4326),
-          crs = crs,
-          ...
+          crs = crs
         )
     } else {
       coords <-
         ggplot2::coord_sf(
           xlim = xlim,
-          ylim = ylim,
-          ...
+          ylim = ylim
         )
     }
 

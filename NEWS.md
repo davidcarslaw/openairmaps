@@ -4,6 +4,8 @@
 
 * Vectors greater than length 1 passed to `popup` in the `polarMap()` argument will no longer error when `type = NULL`.
 
+* `...` will successfully pass to `openair::cutData()` in the `polarMap()` and `trajMap()` families of functions.
+
 # openairmaps 0.9.0
 
 ## Breaking changes

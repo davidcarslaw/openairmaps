@@ -153,8 +153,8 @@ diffMap <- function(before,
   }
 
   # cut data
-  before <- quick_cutdata(data = before, type = type)
-  after <- quick_cutdata(data = after, type = type)
+  before <- openair::cutData(x = before, type = type %||% "default", ...)
+  after <- openair::cutData(x = after, type = type %||% "default", ...)
 
   # prep data
   before <-

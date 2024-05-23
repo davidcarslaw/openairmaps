@@ -625,14 +625,6 @@ quick_popup <- function(data, popup, latitude, longitude, control) {
   )
 }
 
-#' does 'cutdata'
-#' @param data,type inherited from parent function
-#' @noRd
-quick_cutdata <- function(data, type) {
-  if (is.null(type)) type <- "default"
-  openair::cutData(data, type = type)
-}
-
 #' checks if multiple pollutants have been provided with a "fixed" scale
 #' @noRd
 check_multipoll <- function(vec, pollutant) {
