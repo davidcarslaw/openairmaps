@@ -81,7 +81,8 @@ different layers.</p>
 <span>  legend.title.autotext <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  control.collapsed <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  control.position <span class="op">=</span> <span class="st">"topright"</span>,</span>
-<span>  control <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  control <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -189,6 +190,38 @@ argument of <code><a href="https://rstudio.github.io/leaflet/reference/addLayers
 
 <dt>control</dt>
 <dd><p>Deprecated. Please use <code>type</code>.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Arguments passed on to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData</a></code></p><dl><dt><code>hemisphere</code></dt>
+<dd><p>Can be <code>"northern"</code> or <code>"southern"</code>, used to
+split data into seasons.</p></dd>
+
+    <dt><code>n.levels</code></dt>
+<dd><p>Number of quantiles to split numeric data into.</p></dd>
+
+    <dt><code>start.day</code></dt>
+<dd><p>What day of the week should the <code>type = "weekday"</code>
+start on?  The user can change the start day by supplying an integer
+between 0 and 6. Sunday = 0, Monday = 1, ... For example to start the
+weekday plots on a Saturday, choose <code>start.day = 6</code>.</p></dd>
+
+    <dt><code>is.axis</code></dt>
+<dd><p>A logical (<code>TRUE</code>/<code>FALSE</code>), used to request
+shortened cut labels for axes.</p></dd>
+
+    <dt><code>local.tz</code></dt>
+<dd><p>Used for identifying whether a date has daylight savings time
+(DST) applied or not. Examples include <code>local.tz = "Europe/London"</code>,
+<code>local.tz = "America/New_York"</code> i.e. time zones that assume DST.
+<a href="https://en.wikipedia.org/wiki/List_of_zoneinfo_time_zones" class="external-link">https://en.wikipedia.org/wiki/List_of_zoneinfo_time_zones</a> shows time
+zones that should be valid for most systems. It is important that the
+original data are in GMT (UTC) or a fixed offset from GMT. See
+<code>import</code> and the openair manual for information on how to import data
+and ensure no DST is applied.</p></dd>
+
+  
+</dl></dd>
 
 </dl></div>
     <div class="section level2">

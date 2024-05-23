@@ -208,77 +208,32 @@ draws solid lines.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">ggplot2::coord_sf</a></code></p><dl><dt><code>expand</code></dt>
-<dd><p>If <code>TRUE</code>, the default, adds a small expansion factor to
-the limits to ensure that data and axes don't overlap. If <code>FALSE</code>,
-limits are taken exactly from the data or <code>xlim</code>/<code>ylim</code>.</p></dd>
+<dd><p>Arguments passed on to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData</a></code></p><dl><dt><code>hemisphere</code></dt>
+<dd><p>Can be <code>"northern"</code> or <code>"southern"</code>, used to
+split data into seasons.</p></dd>
 
-    <dt><code>datum</code></dt>
-<dd><p>CRS that provides datum to use when generating graticules.</p></dd>
+    <dt><code>n.levels</code></dt>
+<dd><p>Number of quantiles to split numeric data into.</p></dd>
 
-    <dt><code>label_graticule</code></dt>
-<dd><p>Character vector indicating which graticule lines should be labeled
-where. Meridians run north-south, and the letters <code>"N"</code> and <code>"S"</code> indicate that
-they should be labeled on their north or south end points, respectively.
-Parallels run east-west, and the letters <code>"E"</code> and <code>"W"</code> indicate that they
-should be labeled on their east or west end points, respectively. Thus,
-<code>label_graticule = "SW"</code> would label meridians at their south end and parallels at
-their west end, whereas <code>label_graticule = "EW"</code> would label parallels at both
-ends and meridians not at all. Because meridians and parallels can in general
-intersect with any side of the plot panel, for any choice of <code>label_graticule</code> labels
-are not guaranteed to reside on only one particular side of the plot panel. Also,
-<code>label_graticule</code> can cause labeling artifacts, in particular if a graticule line
-coincides with the edge of the plot panel. In such circumstances, <code>label_axes</code> will
-generally yield better results and should be used instead.</p>
-<p>This parameter can be used alone or in combination with <code>label_axes</code>.</p></dd>
+    <dt><code>start.day</code></dt>
+<dd><p>What day of the week should the <code>type = "weekday"</code>
+start on?  The user can change the start day by supplying an integer
+between 0 and 6. Sunday = 0, Monday = 1, ... For example to start the
+weekday plots on a Saturday, choose <code>start.day = 6</code>.</p></dd>
 
-    <dt><code>label_axes</code></dt>
-<dd><p>Character vector or named list of character values
-specifying which graticule lines (meridians or parallels) should be labeled on
-which side of the plot. Meridians are indicated by <code>"E"</code> (for East) and
-parallels by <code>"N"</code> (for North). Default is <code>"--EN"</code>, which specifies
-(clockwise from the top) no labels on the top, none on the right, meridians
-on the bottom, and parallels on the left. Alternatively, this setting could have been
-specified with <code>list(bottom = "E", left = "N")</code>.</p>
-<p>This parameter can be used alone or in combination with <code>label_graticule</code>.</p></dd>
+    <dt><code>is.axis</code></dt>
+<dd><p>A logical (<code>TRUE</code>/<code>FALSE</code>), used to request
+shortened cut labels for axes.</p></dd>
 
-    <dt><code>lims_method</code></dt>
-<dd><p>Method specifying how scale limits are converted into
-limits on the plot region. Has no effect when <code>default_crs = NULL</code>.
-For a very non-linear CRS (e.g., a perspective centered
-around the North pole), the available methods yield widely differing results, and
-you may want to try various options. Methods currently implemented include <code>"cross"</code>
-(the default), <code>"box"</code>, <code>"orthogonal"</code>, and <code>"geometry_bbox"</code>. For method <code>"cross"</code>,
-limits along one direction (e.g., longitude) are applied at the midpoint of the
-other direction (e.g., latitude). This method avoids excessively large limits for
-rotated coordinate systems but means that sometimes limits need to be expanded a
-little further if extreme data points are to be included in the final plot region.
-By contrast, for method <code>"box"</code>, a box is generated out of the limits along both directions,
-and then limits in projected coordinates are chosen such that the entire box is
-visible. This method can yield plot regions that are too large. Finally, method
-<code>"orthogonal"</code> applies limits separately along each axis, and method
-<code>"geometry_bbox"</code> ignores all limit information except the bounding boxes of any
-objects in the <code>geometry</code> aesthetic.</p></dd>
-
-    <dt><code>ndiscr</code></dt>
-<dd><p>Number of segments to use for discretising graticule lines;
-try increasing this number when graticules look incorrect.</p></dd>
-
-    <dt><code>default</code></dt>
-<dd><p>Is this the default coordinate system? If <code>FALSE</code> (the default),
-then replacing this coordinate system with another one creates a message alerting
-the user that the coordinate system is being replaced. If <code>TRUE</code>, that warning
-is suppressed.</p></dd>
-
-    <dt><code>clip</code></dt>
-<dd><p>Should drawing be clipped to the extent of the plot panel? A
-setting of <code>"on"</code> (the default) means yes, and a setting of <code>"off"</code>
-means no. In most cases, the default of <code>"on"</code> should not be changed,
-as setting <code>clip = "off"</code> can cause unexpected results. It allows
-drawing of data points anywhere on the plot, including in the plot margins. If
-limits are set via <code>xlim</code> and <code>ylim</code> and some data points fall outside those
-limits, then those data points may show up in places such as the axes, the
-legend, the plot title, or the plot margins.</p></dd>
+    <dt><code>local.tz</code></dt>
+<dd><p>Used for identifying whether a date has daylight savings time
+(DST) applied or not. Examples include <code>local.tz = "Europe/London"</code>,
+<code>local.tz = "America/New_York"</code> i.e. time zones that assume DST.
+<a href="https://en.wikipedia.org/wiki/List_of_zoneinfo_time_zones" class="external-link">https://en.wikipedia.org/wiki/List_of_zoneinfo_time_zones</a> shows time
+zones that should be valid for most systems. It is important that the
+original data are in GMT (UTC) or a fixed offset from GMT. See
+<code>import</code> and the openair manual for information on how to import data
+and ensure no DST is applied.</p></dd>
 
   
 </dl></dd>
