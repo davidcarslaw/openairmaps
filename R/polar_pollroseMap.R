@@ -92,7 +92,7 @@ pollroseMap <- function(data,
   longitude <- latlon$longitude
 
   # cut data
-  data <- quick_cutdata(data = data, type = type)
+  data <- openair::cutData(x = data, type = type %||% "default", ...)
 
   # deal with popups
   if (length(popup) > 1) {
