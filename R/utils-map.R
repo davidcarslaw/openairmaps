@@ -156,7 +156,7 @@ checkMapPrep <-
 #' Prep data for mapping
 #' @noRd
 prepMapData <-
-  function(data, pollutant, control, ..., .to_narrow = TRUE) {
+  function(data, pollutant, control, ..., .to_narrow = TRUE, .pairwise = FALSE) {
     # check pollutant is there
     if (is.null(pollutant)) {
       cli::cli_abort(
@@ -179,7 +179,7 @@ prepMapData <-
     }
 
     # check if more than one pollutant & is.null split
-    if (length(pollutant) > 1 & !is.null(control)) {
+    if (length(pollutant) > 1 & !is.null(control) & !.pairwise) {
       cli::cli_warn(
         c(
           "!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",

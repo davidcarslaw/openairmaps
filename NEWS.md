@@ -1,5 +1,9 @@
 # openairmaps (development version)
 
+## New features
+
+* Pairwise statistics (e.g., `"robust_slope"`) are now supported by `polarMap()`. (#72)
+
 ## Bug fixes
 
 * Vectors greater than length 1 passed to `popup` in the `polarMap()` argument will no longer error when `type = NULL`.
