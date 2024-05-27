@@ -182,8 +182,8 @@ prepMapData <-
     if (length(pollutant) > 1 & !is.null(control) & !.pairwise) {
       cli::cli_warn(
         c(
-          "!" = "Multiple pollutants {.emph and} {.code control/facet} option specified",
-          "i" = "Please only specify multiple pollutants {.emph or} a {.code control/facet} option",
+          "!" = "Multiple pollutants {.emph and} {.code type} option specified",
+          "i" = "Please only specify multiple pollutants {.emph or} a {.code type} option",
           "i" = "Defaulting to splitting by {.code pollutant}"
         )
       )
