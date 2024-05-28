@@ -20,7 +20,7 @@ produced instead."><meta property="og:image" content="https://davidcarslaw.githu
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,6 +95,7 @@ produced instead.</p>
 <span>  d.fig <span class="op">=</span> <span class="fl">3.5</span>,</span>
 <span>  static <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  static.nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  progress <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  control <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -314,6 +315,14 @@ for DOCX or PDF outputs (e.g., academic papers).</p></dd>
 <code>pollutant</code>s or <code>type</code> are specified; passed to the <code>nrow</code> argument of
 <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">ggplot2::facet_wrap()</a></code>. The default, <code>NULL</code>, results in a roughly square
 grid of panels.</p></dd>
+
+
+<dt>progress</dt>
+<dd><p><em>Show a progress bar?</em></p>
+<p><em>default:</em> <code>TRUE</code> | <em>scope:</em> dynamic &amp; static</p>
+<p>By default, a progress bar is shown to visualise the function's progress
+creating individual polar markers. This option allows this to be turned
+off, if desired.</p></dd>
 
 
 <dt>...</dt>
