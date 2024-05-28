@@ -51,13 +51,15 @@ used in conjunction with \code{crs}).}
 \strong{required} | \emph{scope:} dynamic & static
 
 The column name(s) of the pollutant(s) to plot. If multiple pollutants are
-specified the \code{type} argument will no longer be able to be used, and:
+specified and a non-pairwise statistic is supplied, the \code{type} argument
+will no longer be able to be used and:
 \itemize{
 \item \emph{Dynamic}: The pollutants can be toggled between using a "layer control" menu.
 \item \emph{Static:}: The pollutants will each appear in a different panel.
 }
 
-Multiple \code{pollutants} prohibit the use of the \code{type} argument.}
+Multiple \code{pollutants} prohibit the use of the \code{type} argument for
+non-pairwise statistics.}
 
 \item{statistic}{\emph{The statistic that should be applied to each wind
 speed/direction bin.}
