@@ -80,6 +80,7 @@ diffMap <- function(before,
                     d.fig = 3.5,
                     static = FALSE,
                     static.nrow = NULL,
+                    progress = TRUE,
                     ...,
                     control = NULL) {
   # check basemap providers are valid
@@ -220,7 +221,8 @@ diffMap <- function(before,
       split_col = split_col,
       d.fig = d.fig,
       popup = popup,
-      label = label
+      label = label,
+      progress = progress
     )
 
   if (static) {
@@ -323,7 +325,8 @@ create_polar_diffmarkers <-
            popup = NULL,
            label = NULL,
            d.fig,
-           dropcol = "conc") {
+           dropcol = "conc",
+           progress = TRUE) {
     # make temp directory
     dir <- tempdir()
 
@@ -400,7 +403,7 @@ create_polar_diffmarkers <-
         by = c(latitude, longitude, split_col)
       ) %>%
       dplyr::mutate(
-        plot = purrr::map2(before, after, fun, .progress = "Creating Polar Markers"),
+        plot = purrr::map2(before, after, fun, .progress = ifelse(progress, "Creating Polar Markers", FALSE)),
         url = paste0(dir, "/", .data[[latitude]], "_", .data[[longitude]], "_", .data[[split_col]], "_", id, ".png")
       )
 

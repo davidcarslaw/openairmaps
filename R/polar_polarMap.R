@@ -269,6 +269,14 @@
 #'   [ggplot2::facet_wrap()]. The default, `NULL`, results in a roughly square
 #'   grid of panels.
 #'
+#' @param progress *Show a progress bar?*
+#'
+#'  *default:* `TRUE` | *scope:* dynamic & static
+#'
+#'   By default, a progress bar is shown to visualise the function's progress
+#'   creating individual polar markers. This option allows this to be turned
+#'   off, if desired.
+#'
 #' @param control **Deprecated.** Please use `type`.
 #'
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
@@ -317,6 +325,7 @@ polarMap <- function(data,
                      d.fig = 3.5,
                      static = FALSE,
                      static.nrow = NULL,
+                     progress = TRUE,
                      ...,
                      control = NULL) {
   # list pairwise statistics
@@ -473,7 +482,8 @@ polarMap <- function(data,
       d.fig = d.fig,
       popup = popup,
       label = label,
-      dropcol = funpoll
+      dropcol = funpoll,
+      progress = progress
     )
 
   if (!static) {
