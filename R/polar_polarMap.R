@@ -44,13 +44,15 @@
 #'   **required** | *scope:* dynamic & static
 #'
 #'   The column name(s) of the pollutant(s) to plot. If multiple pollutants are
-#'   specified the `type` argument will no longer be able to be used, and:
+#'   specified and a non-pairwise statistic is supplied, the `type` argument
+#'   will no longer be able to be used and:
 #'
 #'   - *Dynamic*: The pollutants can be toggled between using a "layer control" menu.
 #'
 #'   - *Static:*: The pollutants will each appear in a different panel.
 #'
-#'   Multiple `pollutants` prohibit the use of the `type` argument.
+#'   Multiple `pollutants` prohibit the use of the `type` argument for
+#'   non-pairwise statistics.
 #'
 #' @param x *The radial axis variable.*
 #'
@@ -317,6 +319,21 @@ polarMap <- function(data,
                      static.nrow = NULL,
                      ...,
                      control = NULL) {
+  # list pairwise statistics
+  pairwise_stats <- c("r",
+                      "Pearson",
+                      "Spearman",
+                      "robust_slope",
+                      "quantile.slope",
+                      "york_slope")
+  dots <- rlang::list2(...)
+  pairwise_flag <- FALSE
+  if ("statistic" %in% names(dots)) {
+    if (dots$statistic %in% pairwise_stats) {
+      pairwise_flag <- TRUE
+    }
+  }
+
   # check basemap providers are valid
   provider <- check_providers(provider, static)
   legend.position <- check_legendposition(legend.position, static)
@@ -334,7 +351,9 @@ polarMap <- function(data,
   longitude <- latlon$longitude
 
   # auto limits
-  limits <- check_multipoll(limits, pollutant)
+  if (!pairwise_flag) {
+    limits <- check_multipoll(limits, pollutant)
+  }
 
   if ("fixed" %in% limits) {
     data <-
@@ -403,24 +422,34 @@ polarMap <- function(data,
       latitude,
       longitude,
       popup,
-      label
+      label,
+      .to_narrow = !pairwise_flag,
+      .pairwise = pairwise_flag
     )
 
   # identify splitting column (defaulting to pollutant)
-  if (length(pollutant) > 1) {
+  if (length(pollutant) > 1 && !pairwise_flag) {
     split_col <- "pollutant_name"
   } else if (!is.null(type)) {
     data[type] <- as.factor(data[[type]])
     split_col <- type
+  } else if (pairwise_flag) {
+    data$pollutant_name <- "DUMMY"
+    split_col <- "pollutant_name"
   } else {
     split_col <- "pollutant_name"
   }
 
   # define function
+  if (pairwise_flag) {
+    funpoll <- pollutant
+  } else {
+    funpoll <- "conc"
+  }
   fun <- function(data) {
     openair::polarPlot(
       data,
-      pollutant = "conc",
+      pollutant = funpoll,
       x = x,
       plot = FALSE,
       limits = theLimits,
@@ -443,7 +472,8 @@ polarMap <- function(data,
       split_col = split_col,
       d.fig = d.fig,
       popup = popup,
-      label = label
+      label = label,
+      dropcol = funpoll
     )
 
   if (!static) {
