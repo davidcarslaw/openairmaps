@@ -18,7 +18,7 @@ formats."><meta property="og:image" content="https://davidcarslaw.github.io/open
     
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -219,9 +219,11 @@ used in conjunction with <code>crs</code>).</p></dd>
 <dd><p><em>Pollutant name(s).</em></p>
 <p><strong>required</strong> | <em>scope:</em> dynamic &amp; static</p>
 <p>The column name(s) of the pollutant(s) to plot. If multiple pollutants are
-specified the <code>type</code> argument will no longer be able to be used, and:</p><ul><li><p><em>Dynamic</em>: The pollutants can be toggled between using a "layer control" menu.</p></li>
+specified and a non-pairwise statistic is supplied, the <code>type</code> argument
+will no longer be able to be used and:</p><ul><li><p><em>Dynamic</em>: The pollutants can be toggled between using a "layer control" menu.</p></li>
 <li><p><em>Static:</em>: The pollutants will each appear in a different panel.</p></li>
-</ul><p>Multiple <code>pollutants</code> prohibit the use of the <code>type</code> argument.</p></dd>
+</ul><p>Multiple <code>pollutants</code> prohibit the use of the <code>type</code> argument for
+non-pairwise statistics.</p></dd>
 
 
 <dt>x</dt>
