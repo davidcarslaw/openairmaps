@@ -70,6 +70,7 @@ percentileMap <- function(data,
                           d.fig = 3.5,
                           static = FALSE,
                           static.nrow = NULL,
+                          progress = TRUE,
                           ...,
                           control = NULL) {
   # check basemap providers are valid
@@ -187,7 +188,8 @@ percentileMap <- function(data,
       split_col = split_col,
       d.fig = d.fig,
       popup = popup,
-      label = label
+      label = label,
+      progress = progress
     )
 
   if (static) {

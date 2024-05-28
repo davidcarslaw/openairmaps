@@ -61,6 +61,7 @@ annulusMap <- function(data,
                        d.fig = 3.5,
                        static = FALSE,
                        static.nrow = NULL,
+                       progress = TRUE,
                        ...,
                        control = NULL) {
   # check basemap providers are valid
@@ -116,7 +117,7 @@ annulusMap <- function(data,
   }
 
   # cut data
-  data <- openair::cutData(x = data, type = type, ...)
+  data <- openair::cutData(x = data, type = type %||% "default", ...)
 
   # deal with popups
   if (length(popup) > 1) {
@@ -195,7 +196,8 @@ annulusMap <- function(data,
       split_col = split_col,
       d.fig = d.fig,
       popup = popup,
-      label = label
+      label = label,
+      progress = progress
     )
 
   if (static) {

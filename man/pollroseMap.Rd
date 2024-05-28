@@ -30,6 +30,7 @@ pollroseMap(
   d.fig = 3.5,
   static = FALSE,
   static.nrow = NULL,
+  progress = TRUE,
   ...,
   control = NULL
 )
@@ -263,6 +264,14 @@ Controls the number of rows of panels on a static map when multiple
 \code{pollutant}s or \code{type} are specified; passed to the \code{nrow} argument of
 \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}. The default, \code{NULL}, results in a roughly square
 grid of panels.}
+
+\item{progress}{\emph{Show a progress bar?}
+
+\emph{default:} \code{TRUE} | \emph{scope:} dynamic & static
+
+By default, a progress bar is shown to visualise the function's progress
+creating individual polar markers. This option allows this to be turned
+off, if desired.}
 
 \item{...}{
   Arguments passed on to \code{\link[openair:pollutionRose]{openair::pollutionRose}}

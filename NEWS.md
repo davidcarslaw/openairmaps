@@ -4,6 +4,8 @@
 
 * Pairwise statistics (e.g., `"robust_slope"`) are now supported by `polarMap()`. (#72)
 
+* The `polarMap()` family has gained the `progress` argument, allowing users to switch the progress bar on and off.
+
 ## Bug fixes
 
 * Vectors greater than length 1 passed to `popup` in the `polarMap()` argument will no longer error when `type = NULL`.

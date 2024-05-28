@@ -423,7 +423,8 @@ create_polar_markers <-
            popup = NULL,
            label = NULL,
            d.fig,
-           dropcol = "conc") {
+           dropcol = "conc",
+           progress = TRUE) {
     # make temp directory
     dir <- tempdir()
 
@@ -468,7 +469,7 @@ create_polar_markers <-
     plots_df <-
       nested_df %>%
       dplyr::mutate(
-        plot = purrr::map(data, fun, .progress = "Creating Polar Markers"),
+        plot = purrr::map(data, fun, .progress = ifelse(progress, "Creating Polar Markers", FALSE)),
         url = paste0(
           dir,
           "/",
