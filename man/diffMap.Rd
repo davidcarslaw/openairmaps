@@ -17,7 +17,7 @@ diffMap(
   popup = NULL,
   label = NULL,
   provider = "OpenStreetMap",
-  cols = "RdBu",
+  cols = rev(openair::openColours("RdBu", 10)),
   alpha = 1,
   key = FALSE,
   legend = TRUE,
@@ -147,7 +147,7 @@ substitute the correct provider string.}
 
 \item{cols}{\emph{Colours to use for plotting.}
 
-\emph{default:} \code{"RdBu"} | \emph{scope:} dynamic & static
+\emph{default:} \code{rev(openair::openColours("RdBu", 10))} | \emph{scope:} dynamic & static
 
 The colours used for plotting, passed to \code{\link[openair:openColours]{openair::openColours()}}.  It is
 recommended to use a "diverging" colour palette (along with a symmetrical
