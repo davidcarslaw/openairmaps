@@ -1,96 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/404.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/index.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/addPolarMarkers.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/addTrajPaths.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/annulusMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/buildPopup.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/convertPostcode.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/deprecated-static-polar-maps.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/diffMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/freqMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/networkMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/openairmaps-package.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/percentileMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/polarMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/polar_data.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/pollroseMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/quickTextHTML.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/searchNetwork.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/trajLevelMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/trajLevelMapStatic.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/trajMap.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/trajMapStatic.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/traj_data.html</loc>
-  </url>
-  <url>
-    <loc>https://davidcarslaw.github.io/openairmaps/reference/windroseMap.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://davidcarslaw.github.io/openairmaps/404.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/CONTRIBUTING.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/LICENSE.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/authors.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/index.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/news/index.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/addPolarMarkers.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/addTrajPaths.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/annulusMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/buildPopup.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/convertPostcode.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/deprecated-static-polar-maps.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/diffMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/freqMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/index.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/networkMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/openairmaps-package.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/percentileMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/pipe.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/polarMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/polar_data.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/pollroseMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/quickTextHTML.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/searchNetwork.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/trajLevelMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/trajLevelMapStatic.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/trajMap.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/trajMapStatic.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/traj_data.html</loc></url>
+<url><loc>https://davidcarslaw.github.io/openairmaps/reference/windroseMap.html</loc></url>
 </urlset>
+
