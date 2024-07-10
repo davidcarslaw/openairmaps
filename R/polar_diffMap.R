@@ -29,11 +29,12 @@
 #'
 #' @param cols *Colours to use for plotting.*
 #'
-#'  *default:* `"RdBu"` | *scope:* dynamic & static
+#'  *default:* `rev(openair::openColours("RdBu", 10))` | *scope:* dynamic & static
 #'
 #'  The colours used for plotting, passed to [openair::openColours()].  It is
 #'  recommended to use a "diverging" colour palette (along with a symmetrical
 #'  `limit` scale) for effective visualisation.
+#' 
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -key.footer -key.header -key.position -units -angle.scale -alpha
 #'   -plot
@@ -66,7 +67,7 @@ diffMap <- function(before,
                     popup = NULL,
                     label = NULL,
                     provider = "OpenStreetMap",
-                    cols = "RdBu",
+                    cols = rev(openair::openColours("RdBu", 10)),
                     alpha = 1,
                     key = FALSE,
                     legend = TRUE,
