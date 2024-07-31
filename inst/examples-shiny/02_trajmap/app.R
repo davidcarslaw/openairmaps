@@ -3,11 +3,6 @@ traj_data <- openairmaps::traj_data
 `%>%` <- magrittr::`%>%`
 dates <- unique(traj_data$date)
 
-# get combos for layerId removal
-combos <- expand.grid(1:100, 1:100)
-pcombos <- paste("traj", combos$Var1, combos$Var2, sep = "-")
-lcombos <- paste("traj", combos$Var1, sep = "-")
-
 # create initial map
 map <- leaflet::leaflet() %>%
   leaflet::addProviderTiles(provider = leaflet::providers$CartoDB.Voyager) %>%
@@ -41,15 +36,16 @@ server <- function(input, output, session) {
 
   observeEvent(input$slider, {
     leaflet::leafletProxy("map") %>%
-      leaflet::removeMarker(pcombos) %>%
-      leaflet::removeShape(lcombos)
+      leaflet::clearGroup("trajpaths")
 
     thedates <-
       dates[dates >= min(input$slider) & dates <= max(input$slider)]
 
     thedata <- traj_data[traj_data$date %in% thedates, ]
     leaflet::leafletProxy("map") %>%
-      openairmaps::addTrajPaths(layerId = "traj", data = thedata)
+      openairmaps::addTrajPaths(layerId = "traj",
+                                data = thedata,
+                                group = "trajpaths")
   })
 }
 

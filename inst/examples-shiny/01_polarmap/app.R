@@ -39,7 +39,7 @@ server <- function(input, output, session) {
 
   observeEvent(input$button, {
     leaflet::leafletProxy("map") %>%
-      leaflet::removeMarker(layerId = sites)
+      leaflet::clearGroup("polarmarkers")
 
     for (i in seq_along(input$sites)) {
       thedata <- polar_data[polar_data$site == input$sites[i], ]
@@ -51,7 +51,8 @@ server <- function(input, output, session) {
           layerId = input$sites[i],
           cols = "turbo",
           lng = "lon",
-          lat = "lat"
+          lat = "lat",
+          group = "polarmarkers"
         )
     }
   })
