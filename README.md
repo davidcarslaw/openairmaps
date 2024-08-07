@@ -11,7 +11,7 @@
 [![R-CMD-check](https://github.com/davidcarslaw/openairmaps/workflows/R-CMD-check/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
-![](http://cranlogs.r-pkg.org/badges/grand-total/openairmaps)
+[![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)](https://cran.r-project.org/package=openairmaps)
 
 [![github](https://img.shields.io/badge/CODE-github-black?logo=github)](https://github.com/davidcarslaw/openairmaps)
 [![website](https://img.shields.io/badge/DOCS-website-black)](https://davidcarslaw.github.io/openairmaps)
