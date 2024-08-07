@@ -1,8 +1,9 @@
 url: https://davidcarslaw.github.io/openairmaps/
 template:
   bootstrap: 5
-  bootswatch: lumen
-  pkgdown-nav-height: 100px
+  bslib:
+    bootswatch: lumen
+    pkgdown-nav-height: 100px
 
 navbar:
   title: openairmaps

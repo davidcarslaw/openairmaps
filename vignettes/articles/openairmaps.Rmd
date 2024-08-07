@@ -1,0 +1,74 @@
+---
+title: "Examples of {openairmaps} Functionality"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  out.width = "100%"
+)
+```
+
+This vignette outlines some core functionality in `{openairmaps}`. For further examples, please see the [online book](https://bookdown.org/david_carslaw/openair/).
+
+```{r setup}
+library(openairmaps)
+```
+
+# Acess UK Monitoring Data with Lat/Lng Information
+
+`openair::importUKAQ()` has the `meta` argument which appends the latitude and longitude of each site to the returned data. If not using data from `importUKAQ()`, ensure that your data has coordinate data appended in a similar way.
+
+```{r read}
+london_data <-
+  openair::importUKAQ(site = c("my1", "hors", "cll2"),
+                      year = 2020,
+                      meta = TRUE)
+
+london_data
+
+names(london_data)
+```
+
+To find sites to import data from, you can visualise UK monitoring networks using `networkMap()`. Alternatively, `searchNetwork()` will allow you to target a specific region.
+
+```{r network}
+networkMap(source = c("aurn", "aqe"),
+           year = 2020,
+           control = "variable")
+```
+
+# Polar Plot Maps
+
+The `polarMap()` family includes `polarMap()`, `annulusMap()`, `freqMap()`, `percentileMap()`, `windroseMap()`, `pollroseMap()`, and `diffMap()`, and all work similarly to create interactive air quality maps:
+
+```{r polar}
+polarMap(london_data,
+         c("no2", "pm10"), 
+         popup = c("site", "site_type"),
+         label = "site")
+```
+
+By setting `static` to `TRUE` you will recieve a static version of the map, which may be more useful for academic articles.
+
+```{r polarstatic}
+polarMap(london_data,
+         c("no2", "pm10"),
+         static = TRUE,
+         d.icon = 100)
+```
+
+# Trajectory Maps
+
+`trajMap()` has almost identical arguments to `openair::trajPlot()`, and likewise `trajLevelMap()` with `openair::trajLevel()`.
+
+```{r trajmap}
+trajMap(traj_data, colour = "pm10")
+```
+
+```{r trajlevel}
+trajLevelMap(traj_data)
+```
