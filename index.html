@@ -38,6 +38,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/openairmaps.html">Get started</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Functions</a></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">News</a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html">Book (External)</a></li>
@@ -54,43 +55,71 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header">
-<img src="logo.png" class="logo" alt=""><h1 id="openairmaps-tools-to-create-maps-of-air-pollution-data-">openairmaps: tools to create maps of air pollution data <a class="anchor" aria-label="anchor" href="#openairmaps-tools-to-create-maps-of-air-pollution-data-"></a>
-</h1>
-</div>
+  <main id="main" class="col-md-9"><div align="center">
+<p><img src="reference/figures/logo.png" height="200"></p>
+<div class="section level2">
+<h2 id="openairmaps">
+<strong>openairmaps</strong><a class="anchor" aria-label="anchor" href="#openairmaps"></a>
+</h2>
+<div class="section level3">
+<h3 id="open-source-tools-to-create-maps-of-air-pollution-data">open source tools to create maps of air pollution data<a class="anchor" aria-label="anchor" href="#open-source-tools-to-create-maps-of-air-pollution-data"></a>
+</h3>
 <!-- badges: start -->
 
-<!-- badges: end -->
-<p>The main goal of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> is to combine the robust analytical methods found in <a href="https://davidcarslaw.github.io/openair/" class="external-link"><code>{openair}</code></a> on a range of dynamic and static maps. Core functionality includes visualising UK AQ networks (<code><a href="reference/networkMap.html">networkMap()</a></code>), putting “polar directional markers” on maps (e.g., <code><a href="reference/polarMap.html">polarMap()</a></code>) and overlaying HYSPLIT trajectories on maps (e.g., <code><a href="reference/trajMap.html">trajMap()</a></code>), all using the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> package. Static equivalents of most functions are also available for insertion into traditional reports and academic articles.</p>
+<p><a href="https://github.com/davidcarslaw/openairmaps" class="external-link"><img src="https://img.shields.io/badge/CODE-github-black?logo=github" alt="github"></a> <a href="https://davidcarslaw.github.io/openairmaps"><img src="https://img.shields.io/badge/DOCS-website-black" alt="website"></a> <a href="https://bookdown.org/david_carslaw/openair/" class="external-link"><img src="https://img.shields.io/badge/DOCS-book-black" alt="book"></a> <!-- badges: end --></p>
+</div>
+</div>
+</div>
+<p><strong>openairmaps</strong> combines the robust analytical methods found in <a href="https://davidcarslaw.github.io/openair/" class="external-link"><strong>openair</strong></a> with a range of dynamic and static mapping capability. Core functionality includes visualising UK AQ networks (<code><a href="reference/networkMap.html">networkMap()</a></code>), putting “polar directional markers” on maps (e.g., <code><a href="reference/polarMap.html">polarMap()</a></code>) and overlaying HYSPLIT trajectories on maps (e.g., <code><a href="reference/trajMap.html">trajMap()</a></code>), all using the <a href="https://rstudio.github.io/leaflet/" class="external-link">leaflet</a> package. Static equivalents of most functions are also available for insertion into traditional reports and academic articles.</p>
+<div align="center">
+<p><em>Part of the openair toolkit</em></p>
+<p><a href="https://davidcarslaw.github.io/openair" class="external-link"><img src="https://img.shields.io/badge/openair_core-06D6A0?style=flat-square" alt="openair"></a> | <a href="https://davidcarslaw.github.io/worldmet" class="external-link"><img src="https://img.shields.io/badge/worldmet-26547C?style=flat-square" alt="worldmet"></a> | <a href="https://davidcarslaw.github.io/openairmaps"><img src="https://img.shields.io/badge/openairmaps-FFD166?style=flat-square" alt="openairmaps"></a> | <a href="https://davidcarslaw.github.io/deweather" class="external-link"><img src="https://img.shields.io/badge/deweather-EF476F?style=flat-square" alt="deweather"></a></p>
+</div>
+<hr>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="id_-core-features">💡 Core Features<a class="anchor" aria-label="anchor" href="#id_-core-features"></a>
 </h2>
-<p>You can install the release version of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> from CRAN with:</p>
+<p><strong>openairmaps</strong> has developed at pace to align <strong>openair</strong> with R’s modern geospatial ecosystem.</p>
+<ul>
+<li><p><strong>Network visualisation</strong> of many UK-based monitoring networks through <code><a href="reference/networkMap.html">networkMap()</a></code>, all of which can also be searched using <code><a href="reference/searchNetwork.html">searchNetwork()</a></code>.</p></li>
+<li><p><strong>Directional analysis maps</strong> to place <code><a href="https://davidcarslaw.github.io/openair/reference/polarPlot.html" class="external-link">openair::polarPlot()</a></code> and other “polar coordinate” plots on maps.</p></li>
+<li><p><strong>Trajectory analysis maps</strong> (such as <code><a href="reference/trajMap.html">trajMap()</a></code> and <code><a href="reference/trajLevelMap.html">trajLevelMap()</a></code>) for interactive implementations of the <code><a href="https://davidcarslaw.github.io/openair/reference/trajPlot.html" class="external-link">openair::trajPlot()</a></code> family.</p></li>
+<li><p><strong>Flexible map conditioning</strong> aligned with the <strong>openair</strong> <code>type</code> option to easily condition maps by season, day of the week, and so on.</p></li>
+<li><p><strong>Map building utilities</strong> such as building popups for interactive maps, formatting common pollutant names and units, and converting UK postcodes to lat/lng coordinates.</p></li>
+</ul>
+<div align="center">
+<p><img src="reference/figures/feature-banner.png" width="800"></p>
+</div>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="id_-documentation">📖 Documentation<a class="anchor" aria-label="anchor" href="#id_-documentation"></a>
+</h2>
+<p>All <strong>openairmaps</strong> functions are fully documented; access documentation using R in your IDE of choice.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"openairmaps"</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the development version of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> from GitHub with:</p>
+<code class="sourceCode R"><span><span class="op">?</span><span class="fu">openairmaps</span><span class="fu">::</span><span class="va"><a href="reference/polarMap.html">polarMap</a></span></span></code></pre></div>
+<p>Documentation is also hosted online on the <strong>package website</strong>.</p>
+<p><a href="https://davidcarslaw.github.io/openairmaps"><img src="https://img.shields.io/badge/website-documentation-blue" alt="website"></a></p>
+<p>A guide to the openair toolkit can be found in the <strong>online book</strong>, which contains lots of code snippets, demonstrations of functionality, and ideas for the application of <strong>openair</strong>’s various functions.</p>
+<p><a href="https://bookdown.org/david_carslaw/openair/" class="external-link"><img src="https://img.shields.io/badge/book-code_demos_and_ideas-blue" alt="book"></a></p>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="id_️-installation">🗃️ Installation<a class="anchor" aria-label="anchor" href="#id_%EF%B8%8F-installation"></a>
+</h2>
+<p><strong>openairmaps</strong> can be installed from <strong>CRAN</strong> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"openairmaps"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also install the development version of <strong>openairmaps</strong> from GitHub using <a href="https://pak.r-lib.org/" class="external-link">pak</a>:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"davidcarslaw/openairmaps"</span><span class="op">)</span></span></code></pre></div>
+<hr>
+<p>🏛️ <strong>openairmaps</strong> is primarily maintained by <a href="https://github.com/jack-davison" class="external-link">Jack Davison</a>.</p>
+<p>📃 <strong>openairmaps</strong> is licensed under the <a href="https://davidcarslaw.github.io/openairmaps/LICENSE.html">GNU General Public License</a>.</p>
+<p>🧑‍💻 Contributions are welcome from the wider community. See the <a href="https://davidcarslaw.github.io/openairmaps/CONTRIBUTING.html">contributing guide</a> and <a href="https://davidcarslaw.github.io/openairmaps/CODE_OF_CONDUCT.html">code of conduct</a> for more information.</p>
 </div>
-<div class="section level2">
-<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
-</h2>
-<p>All functions in <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> are thoroughly documented. The <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps website</a> contains all documentation and a change log of new features. There are also many examples of <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> functionality the <a href="https://bookdown.org/david_carslaw/openair/sections/maps/maps-overview.html" class="external-link">openair book</a>, which goes into great detail about its various functions.</p>
-<p><img src="reference/figures/README-patchwork.png" alt="An assembly of openairmaps maps, all of which are screenshots of dynamic leaflet maps. Top right: bivaraite polar plots. Bottom right: HYSPLIT trajectories. Right: markers displaying the locations of UK AURN sites." width="100%"></p>
-</div>
-<div class="section level2">
-<h2 id="the-openair-toolkit">The <code>{openair}</code> toolkit<a class="anchor" aria-label="anchor" href="#the-openair-toolkit"></a>
-</h2>
-<ul>
-<li><p><a href="https://davidcarslaw.github.io/openair/" class="external-link"><code>{openair}</code></a>: Import, analyse, and visualise air quality and atmospheric composition data.</p></li>
-<li><p><a href="https://davidcarslaw.github.io/worldmet/" class="external-link"><code>{worldmet}</code></a>: Access world meteorological data from NOAA’s Integrated Surface Database.</p></li>
-<li><p><a href="https://davidcarslaw.github.io/openairmaps/"><code>{openairmaps}</code></a>: Visualise air quality data on interactive and static maps.</p></li>
-<li><p><a href="https://davidcarslaw.github.io/deweather/" class="external-link"><code>{deweather}</code></a>: Use machine learning to remove the effects of meteorology on air quality time series.</p></li>
-</ul>
-</div>
-</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -134,7 +163,7 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/davidcarslaw/openairmaps/actions" class="external-link"><img src="https://github.com/davidcarslaw/openairmaps/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://CRAN.R-project.org/package=openairmaps" class="external-link"><img src="https://www.r-pkg.org/badges/version/openairmaps" alt="CRAN status"></a></li>
 </ul>
 </div>

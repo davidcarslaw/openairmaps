@@ -1,8 +1,9 @@
 pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2024-07-31T17:34Z
+articles:
+  articles/openairmaps: openairmaps.html
+last_built: 2024-08-07T14:22Z
 urls:
   reference: https://davidcarslaw.github.io/openairmaps/reference
   article: https://davidcarslaw.github.io/openairmaps/articles
