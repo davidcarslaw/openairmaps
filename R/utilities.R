@@ -65,16 +65,16 @@ quickTextHTML <- function(text) {
   text <- gsubic("pmcoarse", "PM<sub>coarse</sub>", text)
   text <- gsubic("pmf", "PM<sub>fine</sub>", text)
   text <- gsubic("pmfine", "PM<sub>fine</sub>", text)
-  text <- gsubic("gr25", "PM<sub>2.5</sub>&nbsp(grav.)", text)
-  text <- gsubic("gr2.5", "PM<sub>2.5</sub>&nbsp(grav.)", text)
-  text <- gsubic("gr10", "PM<sub>10</sub>&nbsp(grav.)", text)
+  text <- gsubic("gr25", "PM<sub>2.5</sub>&nbsp;(grav.)", text)
+  text <- gsubic("gr2.5", "PM<sub>2.5</sub>&nbsp;(grav.)", text)
+  text <- gsubic("gr10", "PM<sub>10</sub>&nbsp;(grav.)", text)
 
   # units
-  text <- gsub("ug/m3", "\u00B5g&nbspm<sup>-3</sup>", text)
-  text <- gsub("ng/m3", "ng&nbspm<sup>-3</sup>", text)
-  text <- gsub("mg/m3", "mg&nbspm<sup>-3</sup>", text)
-  text <- gsub("m/s", "m&nbsps<sup>-1</sup>", text)
-  text <- gsub("m/s2", "m&nbsps<sup>-2</sup>", text)
+  text <- gsub("ug/m3", "\u00B5g&nbsp;m<sup>-3</sup>", text)
+  text <- gsub("ng/m3", "ng&nbsp;m<sup>-3</sup>", text)
+  text <- gsub("mg/m3", "mg&nbsp;m<sup>-3</sup>", text)
+  text <- gsub("m/s", "m&nbsp;s<sup>-1</sup>", text)
+  text <- gsub("m/s2", "m&nbsp;s<sup>-2</sup>", text)
 
   return(text)
 }

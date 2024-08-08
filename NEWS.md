@@ -14,6 +14,8 @@
 
 * The default `diffMap()` colour scale will no longer appear inverted compared to `openair::polarDiff()`.
 
+* Fixed an issue in which `quickTextHTML()` would incorrectly format non breaking spaces when doing, e.g., `quickTextHTML("ug/m3")`.
+
 # openairmaps 0.9.0
 
 ## Breaking changes
