@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9004</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,6 +45,7 @@
 <ul><li><p>Vectors greater than length 1 passed to <code>popup</code> in the <code><a href="../reference/polarMap.html">polarMap()</a></code> argument will no longer error when <code>type = NULL</code>.</p></li>
 <li><p><code>...</code> will successfully pass to <code><a href="https://davidcarslaw.github.io/openair/reference/cutData.html" class="external-link">openair::cutData()</a></code> in the <code><a href="../reference/polarMap.html">polarMap()</a></code> and <code><a href="../reference/trajMap.html">trajMap()</a></code> families of functions.</p></li>
 <li><p>The default <code><a href="../reference/diffMap.html">diffMap()</a></code> colour scale will no longer appear inverted compared to <code><a href="https://davidcarslaw.github.io/openair/reference/polarDiff.html" class="external-link">openair::polarDiff()</a></code>.</p></li>
+<li><p>Fixed an issue in which <code><a href="../reference/quickTextHTML.html">quickTextHTML()</a></code> would incorrectly format non breaking spaces when doing, e.g., <code>quickTextHTML("ug/m3")</code>.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
