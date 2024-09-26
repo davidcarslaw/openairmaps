@@ -18,6 +18,8 @@
 
 * Fixed an issue in which `quickTextHTML()` would incorrectly format non breaking spaces when doing, e.g., `quickTextHTML("ug/m3")`.
 
+* The order in which `trajMapStatic()` draws points and paths has been tweaked, which should ensure that markers are drawn on top of their respective path, rather than on top of all paths.
+
 # openairmaps 0.9.0
 
 ## Breaking changes
