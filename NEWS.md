@@ -6,6 +6,8 @@
 
 * The `polarMap()` family has gained the `progress` argument, allowing users to switch the progress bar on and off.
 
+* `trajMapStatic()` has gained the `size` and `linewidth` arguments, which directly map onto the arguments in `ggplot2::geom_point()` and `ggplot2::geom_path()`, respectively. These can either be a column of the data (like `colour`), or can be an absolute value (e.g., `2L`). Note that, by default, `linewidth` takes the value of `size`, but both can be set independently.
+
 ## Bug fixes
 
 * Vectors greater than length 1 passed to `popup` in the `polarMap()` argument will no longer error when `type = NULL`.

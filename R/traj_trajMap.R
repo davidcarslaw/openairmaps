@@ -328,6 +328,27 @@ trajMap <-
 #'
 #' @inheritParams trajMap
 #'
+#' @param colour *Data column to map to the colour of the trajectories.*
+#'
+#'  *default:* `NULL`
+#'
+#'   This column may be numeric, character, factor or date(time). This will
+#'   commonly be a pollutant concentration which has been joined (e.g., by
+#'   [dplyr::left_join()]) to the trajectory data by "date". The scale can be
+#'   edited after the fact using [ggplot2::scale_color_continuous()] or similar.
+#'
+#' @param size,linewidth *Data column to map to the size/width of the trajectory
+#'   marker/paths, or absolute size value.*
+#'
+#'  *default:* `NULL`
+#'
+#'   Similar to the `colour` argument, this defines a column to map to the size
+#'   of the circular markers or the width of the paths. These scales can be
+#'   edited after the fact using [ggplot2::scale_size_continuous()],
+#'   [ggplot2::scale_linewidth_continuous()], or similar. If numeric, the value
+#'   will be directly provided to `ggplot2::geom_point(size = )` or
+#'   `ggplot2::geom_path(linewidth = )`.
+#'
 #' @param type *A method to condition the `data` for separate plotting.*
 #'
 #'  *default:* `NULL`
@@ -405,7 +426,7 @@ trajMap <-
 #'
 #'  *default:* `TRUE`
 #'
-#'  When `TRUE`, the receptor point(s) are marked with black circles.
+#'   When `TRUE`, the receptor point(s) are marked with black circles.
 #'
 #' @param facet Deprecated. Please use `type`.
 #'
@@ -439,6 +460,8 @@ trajMapStatic <-
            colour = "height",
            type = NULL,
            group = NULL,
+           size = NULL,
+           linewidth = size,
            longitude = "lon",
            latitude = "lat",
            npoints = 12,
@@ -464,7 +487,14 @@ trajMapStatic <-
     }
     type <- type %||% facet
 
+    # create dummy group if no group given
+    if (is.null(group)) {
+      data$openairmaps_group <- "group"
+      group <- "openairmaps_group"
+    }
+
     # cut data
+    type <- type %||% "default"
     data <- openair::cutData(x = data, type = type, ...)
 
     # make plot
@@ -501,11 +531,26 @@ trajMapStatic <-
 
     points_df <- dplyr::filter(data, .data$hour.inc %% npoints == 0)
 
-    if (!is.null(group)) {
-      plt_aes <-
-        ggplot2::aes(group = interaction(.data$date, .data[[group]]), color = .data[[colour]])
-    } else {
-      plt_aes <- ggplot2::aes(group = .data$date, color = .data[[colour]])
+    plt_aes <-
+      ggplot2::aes(group = interaction(.data$date, .data[[group]]),
+                   color = .data[[colour]])
+    plt_aes_point <- plt_aes
+    plt_aes_path <- plt_aes
+
+    if (!is.null(linewidth)) {
+      if (is.character(linewidth)) {
+        plt_aes_path <-
+          utils::modifyList(plt_aes_path,
+                            ggplot2::aes(linewidth = .data[[linewidth]]))
+      }
+    }
+
+    if (!is.null(size)) {
+      if (is.character(size)) {
+        plt_aes_point <-
+          utils::modifyList(plt_aes_point,
+                            ggplot2::aes(size = .data[[size]]))
+      }
     }
 
     # create coordinate system
@@ -525,13 +570,34 @@ trajMapStatic <-
         )
     }
 
-    plt <- plt +
-      ggplot2::geom_path(mapping = plt_aes) +
-      ggplot2::geom_point(data = points_df, mapping = plt_aes) +
-      theme_static() +
-      coords
+    ourGeomPoint <- ggplot2::geom_point
+    if (!is.null(size)) {
+      if (is.numeric(size)) {
+        ourGeomPoint <- function(...) {
+          ggplot2::geom_point(size = size, ...)
+        }
+      }
+    }
 
-    if (!is.null(type)) {
+    ourGeomPath <- ggplot2::geom_path
+    if (!is.null(linewidth)) {
+      if (is.numeric(linewidth)) {
+        ourGeomPath <- function(...) {
+          ggplot2::geom_path(linewidth = linewidth, ...)
+        }
+      }
+    }
+
+    for (i in unique(data$date)) {
+      plt <-
+        plt +
+        ourGeomPath(data = dplyr::filter(data, date == i), mapping = plt_aes_path) +
+        ourGeomPoint(data = dplyr::filter(points_df, date == i), mapping = plt_aes_point)
+    }
+
+    plt <- plt + coords
+
+    if (all(type != "default")) {
       plt <-
         plt + ggplot2::facet_wrap(ggplot2::vars(.data[[type]]))
     }

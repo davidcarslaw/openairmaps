@@ -9,6 +9,8 @@ trajMapStatic(
   colour = "height",
   type = NULL,
   group = NULL,
+  size = NULL,
+  linewidth = size,
   longitude = "lon",
   latitude = "lat",
   npoints = 12,
@@ -35,13 +37,14 @@ with \code{\link[openair:importTraj]{openair::importTraj()}}.}
 A data frame containing HYSPLIT model outputs. If this data were not
 obtained using \code{\link[openair:importTraj]{openair::importTraj()}}.}
 
-\item{colour}{\emph{Column to be used for colouring each trajectory.}
+\item{colour}{\emph{Data column to map to the colour of the trajectories.}
 
 \emph{default:} \code{NULL}
 
 This column may be numeric, character, factor or date(time). This will
 commonly be a pollutant concentration which has been joined (e.g., by
-\code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the trajectory data by "date".}
+\code{\link[dplyr:mutate-joins]{dplyr::left_join()}}) to the trajectory data by "date". The scale can be
+edited after the fact using \code{\link[ggplot2:scale_colour_continuous]{ggplot2::scale_color_continuous()}} or similar.}
 
 \item{type}{\emph{A method to condition the \code{data} for separate plotting.}
 
@@ -57,6 +60,18 @@ as different panels. Passed to \code{\link[openair:cutData]{openair::cutData()}}
 By default, trajectory paths are distinguished using the arrival date.
 \code{group} allows for additional columns to be used (e.g., \code{"receptor"} if
 multiple receptors are being plotted).}
+
+\item{size, linewidth}{\emph{Data column to map to the size/width of the trajectory
+marker/paths, or absolute size value.}
+
+\emph{default:} \code{NULL}
+
+Similar to the \code{colour} argument, this defines a column to map to the size
+of the circular markers or the width of the paths. These scales can be
+edited after the fact using \code{\link[ggplot2:scale_size]{ggplot2::scale_size_continuous()}},
+\code{\link[ggplot2:scale_linewidth]{ggplot2::scale_linewidth_continuous()}}, or similar. If numeric, the value
+will be directly provided to \code{ggplot2::geom_point(size = )} or
+\code{ggplot2::geom_path(linewidth = )}.}
 
 \item{latitude, longitude}{\emph{The decimal latitude/longitude.}
 
