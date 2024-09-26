@@ -15,7 +15,7 @@ arguments, which should be more flexible for post-hoc changes."><meta property="
 
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.0.9005</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,8 @@ arguments, which should be more flexible for post-hoc changes.</p>
 <span>  colour <span class="op">=</span> <span class="st">"height"</span>,</span>
 <span>  type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  group <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  size <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  linewidth <span class="op">=</span> <span class="va">size</span>,</span>
 <span>  longitude <span class="op">=</span> <span class="st">"lon"</span>,</span>
 <span>  latitude <span class="op">=</span> <span class="st">"lat"</span>,</span>
 <span>  npoints <span class="op">=</span> <span class="fl">12</span>,</span>
@@ -88,11 +90,12 @@ obtained using <code><a href="https://davidcarslaw.github.io/openair/reference/i
 
 
 <dt id="arg-colour">colour<a class="anchor" aria-label="anchor" href="#arg-colour"></a></dt>
-<dd><p><em>Column to be used for colouring each trajectory.</em></p>
+<dd><p><em>Data column to map to the colour of the trajectories.</em></p>
 <p><em>default:</em> <code>NULL</code></p>
 <p>This column may be numeric, character, factor or date(time). This will
 commonly be a pollutant concentration which has been joined (e.g., by
-<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) to the trajectory data by "date".</p></dd>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">dplyr::left_join()</a></code>) to the trajectory data by "date". The scale can be
+edited after the fact using <code><a href="https://ggplot2.tidyverse.org/reference/scale_colour_continuous.html" class="external-link">ggplot2::scale_color_continuous()</a></code> or similar.</p></dd>
 
 
 <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
@@ -108,6 +111,18 @@ as different panels. Passed to <code><a href="https://davidcarslaw.github.io/ope
 <p>By default, trajectory paths are distinguished using the arrival date.
 <code>group</code> allows for additional columns to be used (e.g., <code>"receptor"</code> if
 multiple receptors are being plotted).</p></dd>
+
+
+<dt id="arg-size-linewidth">size, linewidth<a class="anchor" aria-label="anchor" href="#arg-size-linewidth"></a></dt>
+<dd><p><em>Data column to map to the size/width of the trajectory
+marker/paths, or absolute size value.</em></p>
+<p><em>default:</em> <code>NULL</code></p>
+<p>Similar to the <code>colour</code> argument, this defines a column to map to the size
+of the circular markers or the width of the paths. These scales can be
+edited after the fact using <code><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">ggplot2::scale_size_continuous()</a></code>,
+<code><a href="https://ggplot2.tidyverse.org/reference/scale_linewidth.html" class="external-link">ggplot2::scale_linewidth_continuous()</a></code>, or similar. If numeric, the value
+will be directly provided to <code>ggplot2::geom_point(size = )</code> or
+<code>ggplot2::geom_path(linewidth = )</code>.</p></dd>
 
 
 <dt id="arg-latitude-longitude">latitude, longitude<a class="anchor" aria-label="anchor" href="#arg-latitude-longitude"></a></dt>
@@ -268,7 +283,7 @@ and ensure no DST is applied.</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
