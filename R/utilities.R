@@ -167,7 +167,8 @@ buildPopup <-
            fun.dttm = function(x) paste(lubridate::floor_date(range(x, na.rm = TRUE), "day"), collapse = " to "),
            ...) {
     # check for old facet/control opts
-    type <- type %||% check_facet_control(...)
+    dots <- rlang::list2(...)
+    type <- type %||% check_facet_control(control = dots$control)
 
     # assume latitude/longitude
     latlon <- assume_latlon(

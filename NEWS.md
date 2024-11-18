@@ -20,6 +20,8 @@
 
 * The order in which `trajMapStatic()` draws points and paths has been tweaked, which should ensure that markers are drawn on top of their respective path, rather than on top of all paths.
 
+* `buildPopup()` will now work correctly if no `type` is provided.
+
 # openairmaps 0.9.0
 
 ## Breaking changes
