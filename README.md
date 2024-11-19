@@ -13,7 +13,7 @@ status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-projec
 [![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)](https://cran.r-project.org/package=openairmaps)
 <br>
 [![github](https://img.shields.io/badge/CODE-github-black?logo=github)](https://github.com/davidcarslaw/openairmaps)
-[![website](https://img.shields.io/badge/DOCS-website-black)](https://davidcarslaw.github.io/openairmaps)
+[![website](https://img.shields.io/badge/DOCS-website-black)](https://davidcarslaw.github.io/openairmaps/)
 [![book](https://img.shields.io/badge/DOCS-book-black)](https://bookdown.org/david_carslaw/openair/)
 <!-- badges: end -->
 
