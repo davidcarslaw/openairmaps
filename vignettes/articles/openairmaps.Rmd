@@ -18,7 +18,7 @@ This vignette outlines some core functionality in `{openairmaps}`. For further e
 library(openairmaps)
 ```
 
-# Acess UK Monitoring Data with Lat/Lng Information
+# Access UK Monitoring Data with Lat/Lng Information
 
 `openair::importUKAQ()` has the `meta` argument which appends the latitude and longitude of each site to the returned data. If not using data from `importUKAQ()`, ensure that your data has coordinate data appended in a similar way.
 
@@ -52,7 +52,7 @@ polarMap(london_data,
          label = "site")
 ```
 
-By setting `static` to `TRUE` you will recieve a static version of the map, which may be more useful for academic articles.
+By setting `static` to `TRUE` you will receive a static version of the map, which may be more useful for academic articles.
 
 ```{r polarstatic}
 polarMap(london_data,
