@@ -262,6 +262,10 @@ direction values with which the first can be compared. See
     \item{\code{angle}}{Default angle of \dQuote{spokes} is 30. Other potentially useful
 angles are 45 and 10. Note that the width of the wind speed interval may
 need adjusting using \code{width}.}
+    \item{\code{calm.thresh}}{By default, conditions are considered to be calm when the
+wind speed is zero. The user can set a different threshold for calms be
+setting \code{calm.thresh} to a higher value. For example,
+\code{calm.thresh = 0.5} will identify wind speeds \strong{below} 0.5 as calm.}
     \item{\code{bias.corr}}{When \code{angle} does not divide exactly into 360 a bias is
 introduced in the frequencies when the wind direction is already supplied
 rounded to the nearest 10 degrees, as is often the case. For example, if
