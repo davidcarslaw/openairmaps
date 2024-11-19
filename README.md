@@ -64,7 +64,7 @@ All **openairmaps** functions are fully documented; access documentation using R
 
 Documentation is also hosted online on the **package website**.
 
-[![website](https://img.shields.io/badge/website-documentation-blue)](https://davidcarslaw.github.io/openairmaps)
+[![website](https://img.shields.io/badge/website-documentation-blue)](https://davidcarslaw.github.io/openairmaps/)
 
 A guide to the openair toolkit can be found in the **online book**, which contains lots of code snippets, demonstrations of functionality, and ideas for the application of **openair**'s various functions.
 
