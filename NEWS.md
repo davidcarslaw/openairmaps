@@ -179,7 +179,7 @@ This is a patch release primarily to fix a few bugs in `{openairmaps}`, and impl
 
 ## New features
 
-* Functions now use Google's "turbo" colour palette rather than "jet" by default. More about this palette and the advantages of using it over "jet" can be read at <https://ai.googleblog.com/2019/08/turbo-improved-rainbow-colormap-for.html>.
+* Functions now use the `"turbo"` colour palette rather than `"jet"` by default, which is still a rainbow palette but with more perceptually uniform colours.
 
 ## Bug fixes
 

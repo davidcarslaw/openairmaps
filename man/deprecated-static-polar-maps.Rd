@@ -256,8 +256,7 @@ family function.}
 
 The colours used for plotting, passed to \code{\link[openair:openColours]{openair::openColours()}}. The
 default, \code{"turbo"}, is a rainbow palette with relatively perceptually
-uniform colours. Read more about this palette at
-\url{https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/}.}
+uniform colours.}
 
 \item{alpha}{\emph{Transparency value for polar markers.}
 

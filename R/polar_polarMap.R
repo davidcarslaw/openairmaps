@@ -162,8 +162,7 @@
 #'
 #'   The colours used for plotting, passed to [openair::openColours()]. The
 #'   default, `"turbo"`, is a rainbow palette with relatively perceptually
-#'   uniform colours. Read more about this palette at
-#'   <https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/>.
+#'   uniform colours.
 #'
 #' @param alpha *Transparency value for polar markers.*
 #'

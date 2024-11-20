@@ -8,8 +8,7 @@
 #' @inheritParams openair::trajLevel
 #' @param cols The colours used for plotting, passed to
 #'   [openair::openColours()]. The default, `"turbo"`, is a rainbow palette with
-#'   relatively perceptually uniform colours. Read more about this palette at
-#'   <https://research.google/blog/turbo-an-improved-rainbow-colormap-for-visualization/>.
+#'   relatively perceptually uniform colours.
 #' @param alpha Opacity of the tiles. Must be between `0` and `1`.
 #' @param tile.border Colour to use for the border of binned tiles. Defaults to
 #'   `NA`, which draws no border.
