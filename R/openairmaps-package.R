@@ -40,9 +40,8 @@
 
 ## usethis namespace: start
 #' @importFrom lifecycle deprecated
-#' @importFrom prettymapr makebbox
 #' @importFrom rlang %||%
 #' @importFrom rlang .data
-#' @importFrom tibble tibble
+#' @importFrom dplyr tibble
 ## usethis namespace: end
 NULL

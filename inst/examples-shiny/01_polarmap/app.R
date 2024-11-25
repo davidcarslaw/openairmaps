@@ -1,6 +1,6 @@
 
 polar_data <- openairmaps::polar_data
-`%>%` <- magrittr::`%>%`
+`%>%` <- openairmaps::`%>%`
 
 # get list of sites in data
 sites <- unique(polar_data$site)

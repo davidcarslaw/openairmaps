@@ -6,6 +6,8 @@
 
 * The progress bar shown when `progress = TRUE` now better reflects the actual time until function completion.
 
+* `{ggplot2}`, `{ggspatial}`, `{prettymapr}` and `{ggtext}`, the packages which support static mapping, have been moved to `Suggests` from `Imports`. This gives the package a smaller size for users who only use `{openairmaps}` for interactive mapping. On first trying to use a static mapping function, users will be prompted to install these packages.
+
 # openairmaps 0.9.1
 
 ## New features

@@ -573,6 +573,13 @@ create_static_map <-
            d.icon,
            facet,
            facet.nrow) {
+    rlang::check_installed(c("ggplot2", "ggspatial", "prettymapr", "ggtext"))
+
+    # silence R CMD check
+    if (FALSE) {
+      prettymapr::makebbox(1, 1, 1, 1)
+    }
+
     # work out width/height
     if (length(d.icon) == 1) {
       width <- d.icon
@@ -731,7 +738,7 @@ check_providers <- function(provider, static) {
     if (provider %in% names(providers_dict)) {
       provider <- providers_dict[provider]
     }
-    rlang::arg_match(provider, rosm::osm.types(), multiple = FALSE)
+    rlang::arg_match(provider, unname(providers_dict), multiple = FALSE)
   } else {
     provider <- provider %||% "OpenStreetMap"
     if (any(provider %in% providers_dict)) {

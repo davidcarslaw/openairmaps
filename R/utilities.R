@@ -141,7 +141,7 @@ quickTextHTML <- function(text) {
 #'
 #' @param ... **Not currently used.**
 #'
-#' @returns a [tibble::tibble()]
+#' @returns a [tibble][tibble::tibble()]
 #' @export
 #'
 #' @examples
@@ -263,8 +263,7 @@ buildPopup <-
 #'   <https://github.com/ropensci/PostcodesioR/>
 #' @source <https://postcodes.io/>
 convertPostcode <- function(postcode) {
-  rlang::check_installed("httr")
-  rlang::check_installed("jsonlite")
+  rlang::check_installed(c("httr", "jsonlite"))
 
   postcode <- stringr::str_remove_all(postcode, " ")
   api <- stringr::str_glue("api.postcodes.io/postcodes/{postcode}")

@@ -477,6 +477,8 @@ trajMapStatic <-
            map.lty = 1,
            facet = NULL,
            ...) {
+    rlang::check_installed("ggplot2")
+
     # handle deprecated argument
     if (!is.null(facet)) {
       lifecycle::deprecate_soft(

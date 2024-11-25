@@ -1,6 +1,6 @@
 
 traj_data <- openairmaps::traj_data
-`%>%` <- magrittr::`%>%`
+`%>%` <- openairmaps::`%>%`
 dates <- unique(traj_data$date)
 
 # create initial map
