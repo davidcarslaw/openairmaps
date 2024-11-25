@@ -65,6 +65,10 @@ annulusMap <- function(data,
                        n.core = 1L,
                        ...,
                        control = NULL) {
+  if (static) {
+    rlang::check_installed("ggplot2")
+  }
+
   # check basemap providers are valid
   provider <- check_providers(provider, static)
   legend.position <- check_legendposition(legend.position, static)
