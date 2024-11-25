@@ -424,7 +424,8 @@ create_polar_markers <-
            label = NULL,
            d.fig,
            dropcol = "conc",
-           progress = TRUE) {
+           progress = TRUE,
+           ncores) {
     # make temp directory
     dir <- tempdir()
 
@@ -467,22 +468,19 @@ create_polar_markers <-
 
     # create plots
     plots_df <-
-      nested_df %>%
-      dplyr::mutate(
-        plot = purrr::map(data, fun, .progress = ifelse(progress, "Creating Polar Markers", FALSE)),
-        url = paste0(
-          dir,
-          "/",
-          .data[[latitude]],
-          "_",
-          .data[[longitude]],
-          "_",
-          rm_illegal_chars(.data[[split_col]]),
-          "_",
-          id,
-          ".png"
-        )
-      )
+      dplyr::mutate(nested_df,
+                    url = paste0(
+                      dir,
+                      "/",
+                      .data[[latitude]],
+                      "_",
+                      .data[[longitude]],
+                      "_",
+                      rm_illegal_chars(.data[[split_col]]),
+                      "_",
+                      id,
+                      ".png"
+                    ))
 
     # work out w/h
     if (length(d.fig) == 1) {
@@ -493,29 +491,53 @@ create_polar_markers <-
       height <- d.fig[[2]]
     }
 
-    purrr::pwalk(
-      list(
-        plots_df[[latitude]],
-        plots_df[[longitude]],
-        rm_illegal_chars(plots_df[[split_col]]),
-        plots_df$plot
-      ),
-      .f = ~ {
-        grDevices::png(
-          filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
-          width = width * 300,
-          height = height * 300,
-          res = 300,
-          bg = "transparent",
-          type = "cairo",
-          antialias = "none"
-        )
+    save_plot <- function(data, url) {
+      grDevices::pdf(NULL)
 
-        plot(..4)
+      plot <- fun(data)
 
-        grDevices::dev.off()
+      grDevices::png(
+        filename = url,
+        width = width * 300,
+        height = height * 300,
+        res = 300,
+        bg = "transparent",
+        type = "cairo",
+        antialias = "none"
+      )
+
+      print(plot)
+
+      grDevices::dev.off()
+
+      return(plot)
+    }
+
+    if (ncores == 1L) {
+      plots_df$plot <- purrr::pmap(
+        .l = dplyr::select(plots_df, "data", "url"),
+        .f = save_plot,
+        .progress = progress
+      )
+    } else {
+      rlang::check_installed("mirai")
+      if (progress) {
+        plots_df$plot <-
+          with(mirai::daemons(ncores),
+               mirai::mirai_map(
+                 .x = dplyr::select(plots_df, "data", "url"),
+                 .f = save_plot
+               )[mirai::.progress_cli, mirai::.stop])
+
+      } else {
+        plots_df$plot <-
+          with(mirai::daemons(ncores),
+               mirai::mirai_map(
+                 .x = dplyr::select(plots_df, "data", "url"),
+                 .f = save_plot
+               )[mirai::.stop])
       }
-    )
+    }
 
     return(plots_df)
   }

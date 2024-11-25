@@ -30,6 +30,7 @@ windroseMap(
   static = FALSE,
   static.nrow = NULL,
   progress = TRUE,
+  n.core = 1L,
   ...,
   control = NULL
 )
@@ -251,6 +252,15 @@ By default, a progress bar is shown to visualise the function's progress
 creating individual polar markers. This option allows this to be turned
 off, if desired.}
 
+\item{n.core}{\emph{Number of cores to use in parallel processing.}
+
+\emph{default:} \code{1L} | \emph{scope:} dynamic & static
+
+By default, each polar marker is drawn and saved sequentially. For big maps
+with a lot of markers, this can be slow. Adjusting \code{n.core} to a number
+greater than \code{1} will use \link[mirai:mirai-package]{mirai} to create markers
+in parallel.}
+
 \item{...}{
   Arguments passed on to \code{\link[openair:windRose]{openair::windRose}}
   \describe{
@@ -262,6 +272,10 @@ direction values with which the first can be compared. See
     \item{\code{angle}}{Default angle of \dQuote{spokes} is 30. Other potentially useful
 angles are 45 and 10. Note that the width of the wind speed interval may
 need adjusting using \code{width}.}
+    \item{\code{calm.thresh}}{By default, conditions are considered to be calm when the
+wind speed is zero. The user can set a different threshold for calms be
+setting \code{calm.thresh} to a higher value. For example,
+\code{calm.thresh = 0.5} will identify wind speeds \strong{below} 0.5 as calm.}
     \item{\code{bias.corr}}{When \code{angle} does not divide exactly into 360 a bias is
 introduced in the frequencies when the wind direction is already supplied
 rounded to the nearest 10 degrees, as is often the case. For example, if
