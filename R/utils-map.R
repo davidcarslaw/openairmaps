@@ -404,6 +404,7 @@ make_leaflet_map <-
 #' theme for static maps
 #' @noRd
 theme_static <- function() {
+  rlang::check_installed("ggplot2")
   ggplot2::`%+replace%`(
     ggplot2::theme_minimal(),
     ggplot2::theme(panel.border = ggplot2::element_rect(fill = NA, color = "black"))
@@ -690,6 +691,7 @@ geom_sf_richtext <-
            show.legend = NA,
            inherit.aes = TRUE,
            fun.geometry = NULL) {
+    rlang::check_installed("ggplot2")
     if (!missing(nudge_x) || !missing(nudge_y)) {
       if (!missing(position)) {
         cli::cli_abort("Specify either {.arg position} or {.arg nudge_x}/{.arg nudge_y}")
