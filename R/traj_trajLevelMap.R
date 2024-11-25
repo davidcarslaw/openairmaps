@@ -446,6 +446,7 @@ trajLevelMapStatic <-
 #' Smooth grid for trajectories
 #' @noRd
 smooth_trajgrid <- function(mydata, z, k = 50, dist = 0.05) {
+  rlang::check_installed("mgcv")
   myform <-
     stats::formula(stringr::str_glue("{z}^0.5 ~ s(xgrid, ygrid, k = {k})"))
 
