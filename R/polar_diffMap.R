@@ -34,7 +34,7 @@
 #'  The colours used for plotting, passed to [openair::openColours()].  It is
 #'  recommended to use a "diverging" colour palette (along with a symmetrical
 #'  `limit` scale) for effective visualisation.
-#' 
+#'
 #' @inheritDotParams openair::polarPlot -mydata -pollutant -x -limits -type
 #'   -cols -key -key.footer -key.header -key.position -units -angle.scale -alpha
 #'   -plot
@@ -82,6 +82,7 @@ diffMap <- function(before,
                     static = FALSE,
                     static.nrow = NULL,
                     progress = TRUE,
+                    n.core = 1L,
                     ...,
                     control = NULL) {
   # check basemap providers are valid

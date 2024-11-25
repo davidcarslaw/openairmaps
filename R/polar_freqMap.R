@@ -85,6 +85,7 @@ freqMap <- function(data,
                     static = FALSE,
                     static.nrow = NULL,
                     progress = TRUE,
+                    n.core = 1L,
                     ...,
                     control = NULL) {
   # check basemap providers are valid
@@ -216,7 +217,8 @@ freqMap <- function(data,
       d.fig = d.fig,
       popup = popup,
       label = label,
-      progress = progress
+      progress = progress,
+      ncores = n.core
     )
 
   if (static) {

@@ -130,7 +130,8 @@ addPolarMarkers <-
         d.fig = d.fig,
         popup = popup,
         label = label,
-        dropcol = pollutant
+        dropcol = pollutant,
+        ncores = 1L
       )
 
     # work out width/height
