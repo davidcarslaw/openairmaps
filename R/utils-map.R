@@ -523,7 +523,7 @@ create_polar_markers <-
       rlang::check_installed("mirai")
       if (progress) {
         plots_df$plot <-
-          with(mirai::daemons(ncores),
+          with(mirai::daemons(as.integer(ncores)),
                mirai::mirai_map(
                  .x = dplyr::select(plots_df, "data", "url"),
                  .f = save_plot
@@ -531,7 +531,7 @@ create_polar_markers <-
 
       } else {
         plots_df$plot <-
-          with(mirai::daemons(ncores),
+          with(mirai::daemons(as.integer(ncores)),
                mirai::mirai_map(
                  .x = dplyr::select(plots_df, "data", "url"),
                  .f = save_plot
