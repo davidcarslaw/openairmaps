@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,7 @@
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
 <ul><li><p>Polar marker functions have gained the <code>n.core</code> argument, which allows for the use of <a href="https://shikokuchuo.net/mirai/" class="external-link">mirai</a> for parallel plot creation. <a href="https://shikokuchuo.net/mirai/" class="external-link">mirai</a> is not imported by <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> by default, but users will be prompted to download it if they set <code>n.core</code> to be greater than <code>1L</code>.</p></li>
 <li><p>The progress bar shown when <code>progress = TRUE</code> now better reflects the actual time until function completion.</p></li>
+<li><p><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>, <a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a>, <a href="https://github.com/paleolimbot/prettymapr" class="external-link">prettymapr</a> and <a href="https://wilkelab.org/ggtext/" class="external-link">ggtext</a>, the packages which support static mapping, have been moved to <code>Suggests</code> from <code>Imports</code>. This gives the package a smaller size for users who only use <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> for interactive mapping. On first trying to use a static mapping function, users will be prompted to install these packages.</p></li>
 </ul></div>
 </div>
     <div class="section level2">
