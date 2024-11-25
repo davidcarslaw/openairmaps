@@ -338,7 +338,7 @@ polarMap <- function(data,
                      ...,
                      control = NULL) {
   if (static) {
-    rlang::check_installed("ggplot2")
+    rlang::check_installed(c("ggplot2", "ggspatial", "prettymapr", "ggtext"))
   }
   # list pairwise statistics
   pairwise_stats <- c("r",
