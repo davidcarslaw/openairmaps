@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">openairmaps</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.9.1.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,7 @@
 <ul><li><p><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a>, <a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a>, <a href="https://github.com/paleolimbot/prettymapr" class="external-link">prettymapr</a> and <a href="https://wilkelab.org/ggtext/" class="external-link">ggtext</a>, the packages which support static mapping, have been moved to <code>Suggests</code> from <code>Imports</code>. This gives the package a smaller size for users who only use <a href="https://davidcarslaw.github.io/openairmaps/">openairmaps</a> for interactive mapping. On first trying to use a static mapping function, users will be prompted to install these packages.</p></li>
 <li><p><code>{mgcv}</code> has been moved to <code>Suggests</code> as it is only used in one place (<code>trajLevelMap(smooth = TRUE)</code>)</p></li>
 <li><p><code><a href="../reference/convertPostcode.html">convertPostcode()</a></code> now uses <a href="https://jeroen.r-universe.dev/curl" class="external-link">curl</a> over <a href="https://httr.r-lib.org/" class="external-link">httr</a>.</p></li>
+<li><p>Removed dependency on <a href="https://forcats.tidyverse.org/" class="external-link">forcats</a>.</p></li>
 <li><p><a href="https://davidcarslaw.github.io/worldmet/index.html" class="external-link">worldmet</a> is no longer a suggested package.</p></li>
 </ul></div>
 </div>
