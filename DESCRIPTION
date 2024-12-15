@@ -1,7 +1,7 @@
 Type: Package
 Package: openairmaps
 Title: Create Maps of Air Pollution Data
-Version: 0.9.1.9004
+Version: 0.9.1.9005
 Authors@R: c(
     person("Jack", "Davison", , "jack.davison@ricardo.com", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0003-2653-6615")),
@@ -35,15 +35,14 @@ Suggests:
     ggplot2,
     ggspatial,
     ggtext,
-    httr,
+    curl,
     jsonlite,
     knitr,
     mgcv,
     mirai,
     prettymapr,
     rmarkdown,
-    shiny,
-    worldmet
+    shiny
 Encoding: UTF-8
 Language: en-GB
 LazyData: true

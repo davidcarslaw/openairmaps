@@ -8,9 +8,15 @@
 
 ## Refactoring
 
+This release includes several changes to make `{openairmaps}` more lightweight.
+
 * `{ggplot2}`, `{ggspatial}`, `{prettymapr}` and `{ggtext}`, the packages which support static mapping, have been moved to `Suggests` from `Imports`. This gives the package a smaller size for users who only use `{openairmaps}` for interactive mapping. On first trying to use a static mapping function, users will be prompted to install these packages.
 
 * `{mgcv}` has been moved to `Suggests` as it is only used in one place (`trajLevelMap(smooth = TRUE)`)
+
+* `convertPostcode()` now uses `{curl}` over `{httr}`.
+
+* `{worldmet}` is no longer a suggested package.
 
 # openairmaps 0.9.1
 
