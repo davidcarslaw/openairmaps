@@ -292,8 +292,8 @@ networkMap <-
         meta[[control]][is.na(meta[[control]])] <- "Other"
         meta[[control]] <- factor(meta[[control]])
         if ("Other" %in% levels(meta[[control]])) {
-          meta[[control]] <-
-            forcats::fct_relevel(meta[[control]], "Other", after = Inf)
+          cur_levels <- levels(meta[[control]])
+          levels(meta[[control]]) <- c(cur_levels[cur_levels != "Other"], "Other")
         }
       }
 

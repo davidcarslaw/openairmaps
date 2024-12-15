@@ -16,6 +16,8 @@ This release includes several changes to make `{openairmaps}` more lightweight.
 
 * `convertPostcode()` now uses `{curl}` over `{httr}`.
 
+* Removed dependency on `{forcats}`.
+
 * `{worldmet}` is no longer a suggested package.
 
 # openairmaps 0.9.1
