@@ -211,8 +211,9 @@ prepMapData <-
   }
 
 #' guess latlon
+#' @param quiet Used to silence cli informs
 #' @noRd
-assume_latlon <- function(data, latitude, longitude) {
+assume_latlon <- function(data, latitude, longitude, quiet = FALSE) {
   guess_latlon <- function(data, latlon = c("lat", "lon")) {
     x <- names(data)
     if (latlon == "lat") {
@@ -223,25 +224,22 @@ assume_latlon <- function(data, latitude, longitude) {
       str <- c("longitude", "longitud", "lon", "long", "lng")
     }
     str <-
-      c(
-        str,
+      c(str,
         toupper(str),
         tolower(str),
-        stringr::str_to_title(str)
-      )
+        stringr::str_to_title(str))
     id <- x %in% str
     out <- x[id]
     len <- length(out)
     if (len > 1) {
       cli::cli_abort("Cannot identify {name}: Multiple possible matches ({out})",
-                     call = NULL
-      )
-      return(NULL)
+                     call = NULL)
     } else if (len == 0) {
       cli::cli_abort("Cannot identify {name}: No clear match.", call = NULL)
-      return(NULL)
     } else {
-      cli::cli_alert_info("Assuming {name} is '{out}'")
+      if (!quiet) {
+        cli::cli_alert_info("Assuming {name} is '{out}'")
+      }
       return(out)
     }
   }
@@ -250,19 +248,21 @@ assume_latlon <- function(data, latitude, longitude) {
     if (is.null(latitude)) {
       latitude <- guess_latlon(data, "lat")
     } else {
-      cli::cli_alert_success("Latitude provided as '{latitude}'")
+      if (!quiet) {
+        cli::cli_alert_success("Latitude provided as '{latitude}'")
+      }
     }
     if (is.null(longitude)) {
       longitude <- guess_latlon(data, "lon")
     } else {
-      cli::cli_alert_success("Latitude provided as '{longitude}'")
+      if (!quiet) {
+        cli::cli_alert_success("Longitude provided as '{longitude}'")
+      }
     }
   }
 
-  out <- list(
-    latitude = latitude,
-    longitude = longitude
-  )
+  out <- list(latitude = latitude,
+              longitude = longitude)
 }
 
 #' get breaks for the "rose" functions
@@ -507,6 +507,8 @@ create_polar_markers <-
       )
 
       print(plot)
+
+      grDevices::dev.off()
 
       grDevices::dev.off()
 

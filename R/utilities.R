@@ -270,17 +270,13 @@ buildPopup <-
 #' @source <https://postcodes.io/>
 convertPostcode <- function(postcode) {
   rlang::check_installed(c("curl", "jsonlite"))
+  response <- curl::curl_fetch_memory(fmt_api_call(postcode))
 
-  postcode <- tolower(postcode)
-  postcode <- gsub(" ", "", postcode)
-
-  response <- curl::curl_fetch_memory(paste0("api.postcodes.io/postcodes/", postcode))
-
-  content <- jsonlite::fromJSON(rawToChar(response$content))
-
-  if (content$status != 200L) {
-    cli::cli_abort(content$error, call = NULL)
+  if (response$status_code != 200L) {
+    cli::cli_abort(raw_to_json(response$content)$error, call = NULL)
   }
+
+  content <- raw_to_json(response$content)
 
   list(
     lat = content$result$latitude,
@@ -289,3 +285,14 @@ convertPostcode <- function(postcode) {
   )
 }
 
+#' @noRd
+fmt_api_call <- function(postcode) {
+  postcode <- tolower(postcode)
+  postcode <- gsub(" ", "", postcode)
+  paste0("api.postcodes.io/postcodes/", postcode)
+}
+
+#' @noRd
+raw_to_json <- function(x) {
+  jsonlite::fromJSON(rawToChar(x))
+}
