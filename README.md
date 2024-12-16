@@ -7,7 +7,7 @@
 ### open source tools to create maps of air pollution data
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/davidcarslaw/openairmaps/workflows/R-CMD-check/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions)
+[![R-CMD-check](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/davidcarslaw/openairmaps/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/openairmaps)](https://CRAN.R-project.org/package=openairmaps)
 [![metacran downloads](https://cranlogs.r-pkg.org/badges/grand-total/openairmaps)](https://cran.r-project.org/package=openairmaps)
