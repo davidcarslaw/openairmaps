@@ -22,7 +22,6 @@ test_that("polarMap works", {
     polarMap(
       input,
       c("no2","pm10"),
-      static = TRUE,
       progress = FALSE,
       latitude = "lat",
       longitude = "lon",
@@ -36,7 +35,6 @@ test_that("polarMap works", {
     polarMap(
       input,
       c("no2"),
-      static = TRUE,
       progress = FALSE,
       latitude = "lat",
       longitude = "lon",
@@ -51,7 +49,6 @@ test_that("polarMap works", {
     polarMap(
       input,
       c("no2", "pm10"),
-      static = TRUE,
       progress = FALSE,
       latitude = "lat",
       longitude = "lon",
@@ -69,7 +66,6 @@ test_that("polarMap works", {
         dplyr::slice_head(n = 1000, by = site),
       c("no2", "pm10"),
       statistic = "Pearson",
-      static = TRUE,
       progress = FALSE,
       latitude = "lat",
       longitude = "lon"
