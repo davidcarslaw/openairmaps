@@ -29,7 +29,8 @@ Imports:
     rlang,
     sf,
     stringr,
-    tidyr
+    tidyr,
+    withr
 Suggests:
     ggplot2,
     ggspatial,

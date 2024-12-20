@@ -492,27 +492,31 @@ create_polar_markers <-
     }
 
     save_plot <- function(data, url) {
-      grDevices::pdf(NULL)
+      # suppress Rplots.pdf
+      withr::with_cairo_pdf(
+        tempfile("PDFSINK"),
+        {
+          # create plot
+          plot <- fun(data)
 
-      plot <- fun(data)
+          # save plot
+          grDevices::png(
+            filename = url,
+            width = width * 300,
+            height = height * 300,
+            res = 300,
+            bg = "transparent",
+            type = "cairo",
+            antialias = "none"
+          )
+          print(plot)
+          grDevices::dev.off()
 
-      grDevices::png(
-        filename = url,
-        width = width * 300,
-        height = height * 300,
-        res = 300,
-        bg = "transparent",
-        type = "cairo",
-        antialias = "none"
+          # return plot
+          return(plot)
+        }
       )
 
-      print(plot)
-
-      while (grDevices::dev.cur() != 1L) {
-        grDevices::dev.off()
-      }
-
-      return(plot)
     }
 
     if (ncores == 1L) {
