@@ -17,6 +17,19 @@ test_that("polarMap works", {
     )
   )
 
+  # static map
+  staticplot <- polarMap(
+    input,
+    "no2",
+    progress = FALSE,
+    latitude = "lat",
+    longitude = "lon",
+    key = TRUE,
+    static = TRUE,
+    k = 50
+  )
+  testthat::expect_true(inherits(staticplot, "ggplot"))
+
   # multiple pollutants
   testthat::expect_no_error(
     polarMap(
