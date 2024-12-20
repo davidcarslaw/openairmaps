@@ -424,14 +424,12 @@ create_polar_diffmarkers <-
 
     purrr::pwalk(list(plots_df[[latitude]], plots_df[[longitude]], plots_df[[split_col]], plots_df$plot),
       .f = ~ {
-        grDevices::png(
+        ragg::agg_png(
           filename = paste0(dir, "/", ..1, "_", ..2, "_", ..3, "_", id, ".png"),
           width = width * 300,
           height = height * 300,
           res = 300,
-          bg = "transparent",
-          type = "cairo",
-          antialias = "none"
+          background = "transparent"
         )
 
         plot(..4)
