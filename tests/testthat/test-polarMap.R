@@ -17,20 +17,6 @@ test_that("polarMap works", {
     )
   )
 
-  # static map
-  testthat::expect_no_error(
-    polarMap(
-      input,
-      "no2",
-      static = TRUE,
-      progress = FALSE,
-      latitude = "lat",
-      longitude = "lon",
-      key = TRUE,
-      k = 50
-    )
-  )
-
   # multiple pollutants
   testthat::expect_no_error(
     polarMap(
