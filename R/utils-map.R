@@ -508,9 +508,9 @@ create_polar_markers <-
 
       print(plot)
 
-      grDevices::dev.off()
-
-      grDevices::dev.off()
+      while (grDevices::dev.cur() != 1L) {
+        grDevices::dev.off()
+      }
 
       return(plot)
     }
