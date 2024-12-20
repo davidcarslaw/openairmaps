@@ -493,21 +493,19 @@ create_polar_markers <-
 
     save_plot <- function(data, url) {
       # suppress Rplots.pdf
-      withr::with_cairo_pdf(
+      withr::with_pdf(
         tempfile("PDFSINK"),
         {
           # create plot
           plot <- fun(data)
 
           # save plot
-          grDevices::png(
+          ragg::agg_png(
             filename = url,
             width = width * 300,
             height = height * 300,
             res = 300,
-            bg = "transparent",
-            type = "cairo",
-            antialias = "none"
+            background = "transparent"
           )
           print(plot)
           grDevices::dev.off()

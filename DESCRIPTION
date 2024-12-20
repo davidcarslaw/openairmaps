@@ -26,6 +26,7 @@ Imports:
     lubridate,
     openair (>= 2.13),
     purrr (>= 1.0.0),
+    ragg,
     rlang,
     sf,
     stringr,
